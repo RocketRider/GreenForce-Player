@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://www.purebasic.com/namespace" version="1.0" creator="PureBasic 5.22 LTS (Windows - x86)">
+  <section name="config">
+    <options closefiles="1" openmode="4" name="GreenForce-Player"/>
+    <comment>
+      GreenForce-Player is a MediaPlayer
+    </comment>
+  </section>
+  <section name="data">
+    <explorer view="include\" pattern="0"/>
+    <log show="1"/>
+    <lastopen date="2014-09-06 18:24" user="Admin" host="ACER"/>
+  </section>
+  <section name="files">
+    <file name="GFP_Main.pb">
+      <config load="1" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
+      <fingerprint md5="c7144b9126a92e655b4932b1b2bfc0df"/>
+    </file>
+    <file name="include\GFP_AudioCD.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="e6c5adb0831bea4274da178ed2f6d661"/>
+    </file>
+    <file name="include\GFP_CacheSystem.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="60a2b010e80092e1a2eb52440acd4f25"/>
+    </file>
+    <file name="include\GFP_Database.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="b526387644fe9f018e5022d4bfe4a172"/>
+    </file>
+    <file name="include\GFP_FileType.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="d076daafb065ecc7b55af0f757af61a7"/>
+    </file>
+    <file name="include\GFP_SpecialFolder.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="43f7a5e2d78291049b173ae5c842a043"/>
+    </file>
+    <file name="include\GFP_Mediadet.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="e3c22f437cb395190ebe9c35b81ce1de"/>
+    </file>
+    <file name="include\GFP_Language.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="ac6c1d17f553088d8b9b9b7c3ae23e54"/>
+    </file>
+    <file name="include\GFP_LogFile.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="a8b015873a6aecfbc096dd4bdff3929c"/>
+    </file>
+    <file name="include\GFP_MediaLib.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="a65e7c8e912ce895cad2fdf36e1d2b34"/>
+    </file>
+    <file name="include\GFP_MediaTags.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="fc07680d606bdc162c3b21c63374ca6f"/>
+    </file>
+    <file name="include\GFP_PasswordLib.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="128de70c7b5d127f9d05b560c84a0339"/>
+    </file>
+    <file name="include\GFP_Playlist.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="21f43a6904f2878644e26f644dd686fe"/>
+    </file>
+    <file name="include\GFP_Protection_DWM.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="3bced008fc022e7b139826091703ea93"/>
+    </file>
+    <file name="include\GFP_Protection_Misc.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="90afe4ad726f873824145d6155146547"/>
+    </file>
+    <file name="include\GFP_Protection_WndCallback3.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="38940ac3a84c9263850df0686e9070ae"/>
+    </file>
+    <file name="include\GFP_Settings.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="33cfea9114d9495f086b35533a7444f4"/>
+    </file>
+    <file name="include\GFP_SoundEx.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="ea03d014b31e137b0820993ce7c93cb7"/>
+    </file>
+    <file name="include\GFP_TrackBar_2.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="a4014a72703714654fc5d648d573f206"/>
+    </file>
+    <file name="include\GFP_VideoDVD.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="10c89279926ff04a29a003f878454ec1"/>
+    </file>
+    <file name="include\GFP_Visualization.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="74b054d0de84367ef4e7c3178ccb9013"/>
+    </file>
+    <file name="include\GFP_WndProtection3.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="13aec1c7809100d6857174d0f4716c04"/>
+    </file>
+    <file name="include\GFP_Covers.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="e8cc606f0df54834849aea8d3247e7ca"/>
+    </file>
+    <file name="include\GFP_Appcommand.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="f48829d0459f30248db3104e4d03f30d"/>
+    </file>
+    <file name="include\GFP_VIS_Simple.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="8c6f67eda0e00e1d0924d69d0123245f"/>
+    </file>
+    <file name="include\GFP_VIS_DCT.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="a10b57c77e01d69f35716dde4e6ef271"/>
+    </file>
+    <file name="include\GFP_D3D.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="f75372a4710bfa46b0db6298057a1a4b"/>
+    </file>
+    <file name="include\GFP_CheckRunning.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="2b59c120193d5cb6d31cd08716307453"/>
+    </file>
+    <file name="include\GFP_VIS_WhiteLight.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="6a684f720f21457886e05003df34f64a"/>
+    </file>
+    <file name="include\GFP_VIS_Coverflow.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="54fc9e866d27ae746f1d7c70f14e1d14"/>
+    </file>
+    <file name="include\GFP_Sprite2D.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="6b5bd81d0524e0182d0e27bb975c99c0"/>
+    </file>
+    <file name="include\GFP_Sprite2D_Framework.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="1afb447b05bb442aeddfa2930aa3c689"/>
+    </file>
+    <file name="include\GFP_Limitations.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="53977f627935b771f490238230097b49"/>
+    </file>
+    <file name="include\GFP_OwnRequester.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="fe65da4cbd68befcbadcd92f8d23838e"/>
+    </file>
+    <file name="include\GFP_DLLRegister.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="9b8d3b021452f2f030826dccf2f692ff"/>
+    </file>
+    <file name="include\GFP_INIReader.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="4888c24e16139fad23e611a291a3c7c2"/>
+    </file>
+    <file name="include\GFP_CodecInstaller.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="38235f3f59562212a91b8522672514c6"/>
+    </file>
+    <file name="include\GFP_MYLIST.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="b416e593addbdea96a93b024f269a388"/>
+    </file>
+    <file name="include\GFP_Subtitles.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="5f9d9ac636a5eb0a0de6e4534d35f684"/>
+    </file>
+    <file name="include\GFP_ResMod37.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="74bdf2af9c8f44f89a2d7f99ad41a50d"/>
+    </file>
+    <file name="include\GFP_SWF.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="3a70025710299b4d2753a4166ca9cc46"/>
+    </file>
+    <file name="include\GFP_FLVPlayer.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="bc4d76acd1147c46852c7863ee784390"/>
+    </file>
+    <file name="include\GFP_exe-attachment4.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="5534fbecb9420e531074350f7880995d"/>
+    </file>
+    <file name="include\GFP_ProcessRequester.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="b9068f5e97be6711b7d8fd0e4cdba52d"/>
+    </file>
+    <file name="include\GFP_Cryption4_Unicode.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="ab5e51a76eef038d1889c888874629cf"/>
+    </file>
+    <file name="include\GFP_StringCommands_3.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="b478511e183a8bac0b1112179953fa13"/>
+    </file>
+    <file name="include\GFP_VisualCanvas_8.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="9034fdee61e6b1cc81602e4e366b03e7"/>
+    </file>
+    <file name="include\GFP_Flash12.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="997257fc7915a490ec91c9c9fb8b43ef"/>
+    </file>
+    <file name="include\GFP_URLAutoComplete.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="bf4f555957f1d0d13a190e9d2469023f"/>
+    </file>
+    <file name="include\GFP_ThumbButton.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="80d5098c0c7441c32b5abb39e7738d25"/>
+    </file>
+    <file name="include\GFP_MultipleReadExclusiveWrite_Mutex.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="74066653126392ad236772175ef39061"/>
+    </file>
+    <file name="include\GFP_BIT_HELPER.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="c11510dbeb86a09a8883c48419e14757"/>
+    </file>
+    <file name="include\GFP_SkinGadget.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="c7d128f285e1ba9b5b586953243e0c2e"/>
+    </file>
+    <file name="include\GFP_StreamingManager.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="48adbaf7d276b822b8a8918599f23086"/>
+    </file>
+    <file name="include\GFP_Simple_URL.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="df74d71d49335b8d7a85e0c9ac0c0f01"/>
+    </file>
+    <file name="include\GFP_API_File2.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="d28fca3c1179a7ac51887cdbb1ce9240"/>
+    </file>
+    <file name="include\GFP_VirtualFile_80_Unicode_OwnString_WIN8.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="4c47dc4b210980f02fca89d28fe00572"/>
+    </file>
+    <file name="include\GFP_VIS_Buffering.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="dcbef2505641ea58bc1677c60de9860c"/>
+    </file>
+    <file name="include\GFP_TIMER_FUNCS.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="16e9ace07496615f782878a8193bcb4d"/>
+    </file>
+    <file name="include\GFP_WINHTTP55.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="2f04b91ec0d397491e2afdadd732e283"/>
+    </file>
+    <file name="include\GFP_DShow_140.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="574386fcd46efd64914d2589341dd193"/>
+    </file>
+    <file name="include\GFP_VMDetect.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="1d996f5c3d8a8107fed599e1353b9ba6"/>
+    </file>
+    <file name="include\GFP_RandomGenerator2.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="cbf3195275f34e62bbbc7e0783e978ec"/>
+    </file>
+    <file name="include\GFP_MemoryStream.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="f1d12bd46a0c031e4dec9893324f1ef9"/>
+    </file>
+    <file name="include\GFP_DRMHeaderV2_52_Unicode.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="8b2a08174f452240a41895381b21d3c7"/>
+    </file>
+    <file name="include\GFP_Detect_WINE.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="1f12cb34bfef7d314c6046029a880600"/>
+    </file>
+    <file name="include\GFP_Protection_User.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="1509e4a5df1094bb9ee8eae50996c647"/>
+    </file>
+    <file name="include\GFP_LEAK_DEBUG.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="1fe4f2929dff6420e411db2a70db3dc2"/>
+    </file>
+    <file name="include\GFP_DShow_Header.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="de183863371839a9672c4365fc6a52f0"/>
+    </file>
+    <file name="include\GFP_DShow_Helper2.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="40c08ec1e9ac4f91f154dc61528ce1ad"/>
+    </file>
+    <file name="include\GFP_UxTheme.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="b71fe1adbecbeb978673c7bc56f3fc06"/>
+    </file>
+    <file name="GFPTool_Crypt_GUI.pb">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
+      <fingerprint md5="70e5bd5acb37b52be3ab03143b8ce58d"/>
+    </file>
+    <file name="GFPTool_Crypt.pb">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
+      <fingerprint md5="d0f00272029ab2d91c8b87b5ad642ff5"/>
+    </file>
+    <file name="GFPDll_Crypt2.pb">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
+      <fingerprint md5="dc1708ebc9160fa3a32840afdcaccb1e"/>
+    </file>
+    <file name="include\GFP_ANTI_HOOK_3.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="4c23e531d96493a53a6df9c9ee09de05"/>
+    </file>
+    <file name="include\GFP_Design.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="f99ec8aa3661c5ad9a3e0bfa253677ad"/>
+    </file>
+    <file name="include\GFP_RSA_Crypt.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="acbcbd8e60ad4018690b2602c52637ae"/>
+    </file>
+    <file name="include\GFP_MachineID.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="f8c49081b2f8044a1a740666a2377a18"/>
+    </file>
+    <file name="include\GFP_VolumeGadGet.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="5b966d79ce5edffbbb2c997d9c873eb8"/>
+    </file>
+    <file name="include\GFP_AntiDebug.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="d128af8a2d4483319ed39ced21cf95d9"/>
+    </file>
+    <file name="include\GFP_DRMHelpFunctions.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="ed1205c3a7e49edcfec8225ce72d7eed"/>
+    </file>
+    <file name="include\GFP_CPU-Throttle.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="3d73868801b8ae2d62162856be66955c"/>
+    </file>
+    <file name="GFP_OEM.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
+      <fingerprint md5="22e36e511b9ec0db0f152329868ddc72"/>
+    </file>
+    <file name="include\GFP_ParentTrusted.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="8ae62f5ddb537f262a688dbe274d9ea6"/>
+    </file>
+  </section>
+  <section name="targets">
+    <target name="Release" enabled="1" default="1">
+      <inputfile value="GFP_Main.pb"/>
+      <outputfile value="GreenForce-Player.exe"/>
+      <executable value="GreenForce-Player.exe"/>
+      <options unicode="1" thread="1" xpskin="1" user="1" onerror="1" debug="1"/>
+      <icon enable="1">
+        data\GFP.ico
+      </icon>
+      <warnings custom="1" type="display"/>
+      <compilecount enable="1" value="10352"/>
+      <buildcount enable="1" value="2329"/>
+      <execonstant enable="1"/>
+      <versioninfo enable="1">
+        <field0 value="1,2,1,0"/>
+        <field1 value="1,2,1,0"/>
+        <field2 value="RRSoftware"/>
+        <field3 value="GreenForce-Player"/>
+        <field4 value="1.21"/>
+        <field5 value="1.21"/>
+        <field6 value="GreenForce-Player - The alternative mediaplayer"/>
+        <field7 value="GreenForce-Player"/>
+        <field8 value="GreenForce-Player.exe"/>
+        <field9 value="(c) 2009 - 2013 RocketRider"/>
+        <field13 value="Support@GFP.RRSoftware.de"/>
+        <field14 value="http://GFP.RRSoftware.de"/>
+        <field15 value="VOS_NT_WINDOWS32"/>
+        <field16 value="VFT_APP"/>
+      </versioninfo>
+      <constants>
+        <constant value="#USE_OEM_VERSION = 0" enable="1"/>
+      </constants>
+    </target>
+    <target name="OEM" enabled="1" default="0">
+      <inputfile value="GFP_Main.pb"/>
+      <outputfile value="OEM-Version\Video-Player.exe"/>
+      <executable value="OEM-Version\Video-Player.exe"/>
+      <options unicode="1" thread="1" xpskin="1" user="1" onerror="1" debug="1"/>
+      <icon enable="1">
+        OEM-data\oem.ico
+      </icon>
+      <warnings custom="1" type="display"/>
+      <compilecount enable="1" value="7160"/>
+      <buildcount enable="1" value="2328"/>
+      <execonstant enable="1"/>
+      <constants>
+        <constant value="#USE_OEM_VERSION = 1" enable="1"/>
+      </constants>
+    </target>
+    <target name="GFP_Crypt_GUI" enabled="1" default="0">
+      <inputfile value="GFPTool_Crypt_GUI.pb"/>
+      <outputfile value="GFP-SDK\GFPCrypt-GUI\GFPCrypt-GUI.exe"/>
+      <executable value="GFP-SDK\GFPCrypt-GUI\GFPCrypt-GUI.exe"/>
+      <options unicode="1" thread="1" xpskin="1" onerror="1" debug="1"/>
+      <icon enable="1">
+        data\Save.ico
+      </icon>
+      <warnings custom="1" type="display"/>
+      <compilecount enable="1" value="470"/>
+      <buildcount enable="1" value="430"/>
+      <execonstant enable="1"/>
+      <versioninfo enable="1">
+        <field0 value="1,1,3,0"/>
+        <field1 value="1,1,3,0"/>
+        <field2 value="RRSoftware"/>
+        <field3 value="GFPCrypt GUI"/>
+        <field4 value="1.13"/>
+        <field5 value="1.13"/>
+        <field6 value="GreenForce-Player Crypt GUI"/>
+        <field7 value="GreenForce-Player Crypt GUI"/>
+        <field8 value="GreenForce-Player Crypt GUI"/>
+        <field9 value="(c) 2012 RocketRider"/>
+        <field13 value="support@gfp.rrsoftware.de"/>
+        <field14 value="http://gfp.rrsoftware.de"/>
+      </versioninfo>
+      <constants>
+        <constant value="#USE_OEM_VERSION = 0" enable="1"/>
+      </constants>
+    </target>
+    <target name="GFP_Crypt_GUI_OEM" enabled="1" default="0">
+      <inputfile value="GFPTool_Crypt_GUI.pb"/>
+      <outputfile value="OEM-Version\GFP-SDK\VideoCrypt-GUI\Crypt-GUI.exe"/>
+      <executable value="OEM-Version\GFP-SDK\VideoCrypt-GUI\Crypt-GUI.exe"/>
+      <options unicode="1" thread="1" xpskin="1" onerror="1" debug="1"/>
+      <icon enable="1">
+        OEM-data\Crypt\video-encrypt.ico
+      </icon>
+      <warnings custom="1" type="display"/>
+      <compilecount enable="1" value="448"/>
+      <buildcount enable="1" value="427"/>
+      <execonstant enable="1"/>
+      <constants>
+        <constant value="#USE_OEM_VERSION = 1" enable="1"/>
+      </constants>
+    </target>
+    <target name="GFP_Crypt" enabled="1" default="0">
+      <inputfile value="GFPTool_Crypt.pb"/>
+      <outputfile value="GFP-SDK\GFPCrypt\GFPCrypt.exe"/>
+      <executable value="GFP-SDK\GFPCrypt\GFPCrypt.exe"/>
+      <options unicode="1" thread="1" xpskin="1" onerror="1"/>
+      <icon enable="1">
+        data\Save.ico
+      </icon>
+      <format exe="console" cpu="0"/>
+      <warnings custom="1" type="display"/>
+      <compilecount enable="1" value="483"/>
+      <buildcount enable="1" value="434"/>
+      <execonstant enable="1"/>
+      <versioninfo enable="1">
+        <field0 value="1,1,3,0"/>
+        <field1 value="1,1,3,0"/>
+        <field2 value="RRSoftware"/>
+        <field3 value="GFPCrypt"/>
+        <field4 value="1.13"/>
+        <field5 value="1.13"/>
+        <field6 value="GreenForce-Player Crypt"/>
+        <field7 value="GreenForce-Player Crypt"/>
+        <field8 value="GreenForce-Player Crypt"/>
+        <field9 value="(c) 2012 RocketRider"/>
+        <field13 value="support@gfp.rrsoftware.de"/>
+        <field14 value="http://gfp.rrsoftware.de"/>
+      </versioninfo>
+      <constants>
+        <constant value="#USE_OEM_VERSION = 0" enable="1"/>
+      </constants>
+    </target>
+    <target name="GFP_Crypt_OEM" enabled="1" default="0">
+      <inputfile value="GFPTool_Crypt.pb"/>
+      <outputfile value="OEM-Version\GFP-SDK\VideoCrypt\VideoCrypt.exe"/>
+      <executable value="OEM-Version\GFP-SDK\VideoCrypt\VideoCrypt.exe"/>
+      <options unicode="1" thread="1" xpskin="1" onerror="1" debug="1"/>
+      <icon enable="1">
+        OEM-data\Crypt\video-encrypt.ico
+      </icon>
+      <format exe="console" cpu="0"/>
+      <warnings custom="1" type="display"/>
+      <compilecount enable="1" value="433"/>
+      <buildcount enable="1" value="430"/>
+      <execonstant enable="1"/>
+      <constants>
+        <constant value="#USE_OEM_VERSION = 1" enable="1"/>
+      </constants>
+    </target>
+    <target name="GFP_Crypt_Dll" enabled="1" default="0">
+      <inputfile value="GFPDll_Crypt2.pb"/>
+      <outputfile value="GFP-SDK\GFPCrypt-DLL\GPFCrypt.dll"/>
+      <executable value="GFP-SDK\GFPCrypt-DLL\GPFCrypt.dll"/>
+      <options unicode="1" thread="1" onerror="1" debug="1"/>
+      <icon enable="0">
+        data\Save.ico
+      </icon>
+      <format exe="dll" cpu="0"/>
+      <warnings custom="1" type="display"/>
+      <compilecount enable="1" value="449"/>
+      <buildcount enable="1" value="436"/>
+      <execonstant enable="1"/>
+      <versioninfo enable="1">
+        <field0 value="1,1,3,0"/>
+        <field1 value="1,1,3,0"/>
+        <field2 value="RRSoftware"/>
+        <field3 value="GFPCrypt Dll"/>
+        <field4 value="1.13"/>
+        <field5 value="1.13"/>
+        <field6 value="GreenForce-Player Crypt Dll"/>
+        <field7 value="GreenForce-Player Crypt Dll"/>
+        <field8 value="GreenForce-Player Crypt Dll"/>
+        <field9 value="(c) 2012 RocketRider"/>
+        <field13 value="support@gfp.rrsoftware.de"/>
+        <field14 value="http://gfp.rrsoftware.de"/>
+      </versioninfo>
+      <constants>
+        <constant value="#USE_OEM_VERSION = 0" enable="1"/>
+      </constants>
+    </target>
+    <target name="GFP_Crypt_Dll_OEM" enabled="1" default="0">
+      <inputfile value="GFPDll_Crypt2.pb"/>
+      <outputfile value="OEM-Version\GFP-SDK\VideoCrypt-DLL\Crypt.dll"/>
+      <executable value="OEM-Version\GFP-SDK\VideoCrypt-DLL\Crypt.dll"/>
+      <options unicode="1" thread="1" onerror="1" debug="1"/>
+      <icon enable="0">
+        data\Save.ico
+      </icon>
+      <format exe="dll" cpu="0"/>
+      <warnings custom="1" type="display"/>
+      <compilecount enable="1" value="438"/>
+      <buildcount enable="1" value="434"/>
+      <execonstant enable="1"/>
+      <constants>
+        <constant value="#USE_OEM_VERSION = 1" enable="1"/>
+      </constants>
+    </target>
+  </section>
+</project>

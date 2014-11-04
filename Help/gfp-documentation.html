@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Documentation of the GreenForce-Player</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="description" content="New portable video player"/>
+		<meta name="author" content="RocketRider"/>
+		<meta name="keywords" content="Media Player, Protection, Protect Video, DRM, Portable"/>
+		<link rel="stylesheet" type="text/css" href="css/greenforce-player-styling.css"/>
+	</head>
+
+	<body>
+		<div class="container">
+			<h1>Documentation of GreenForce-Player</h1>
+			<h2>Overview<a name="overview"></a></h2>
+			<a href="#introduction">Introduction&nbsp;</a><br/>
+			<a href="#terms_and_conditions">Terms and conditions</a><br/>
+			<a href="#install">Installation</a><br/>
+			<a href="#playmedia">Play a media file</a><br/>
+			<a href="#organize_playlists">Organize playlists</a><br/>
+			<a href="#coverflow">Coverflow</a><br/>
+			<a href="#protect_media">Protect a media file</a><br/>
+			<a href="#options">Options</a><br/>
+			<a href="#contact">Contact</a><br/>			
+			<a href="#acknowledgements">Acknowledgements</a><br/>
+			
+
+			<div class="textblock">
+				<h2>Introduction <a name="introduction"></a></h2>
+				<p>GreenForce-Player is a portable alternative media player, with many additional features.
+				One of these features is to protect media files.
+				You can encrypt your audio and video files with a password and protect them against screenshots.
+				An other nice feature is the coverflow. It allows you to start playback by clicking on the cover of your favorite music. 
+				Last but not least, there is a cache system. It is used to reduce usage of your hard disc.
+				The software has been developed for Windows. It was tested with Windows XP, Vista, 7 and 8.
+				GFP is easy to install and use and ist therefore ideal for beginners. However, there are also advanced features for professional usage. It suits perfectly on USB sticks, because it is compact, portable and does not require an installations. You just need to copy one single executable with a size of 3.5MB on the stick (just GreenForce-Player.exe is required). 
+				</p>
+			</div>
+			<div class="textblock">
+				<h2>Terms and conditions<a name="terms_and_conditions"></a></h2>
+				<h3>GreenForce Player</h3>
+				<p>This program is provided &quot;AS IT IS&quot;.
+				The author is not responsible for any damage (or damages) caused by GreenForce-Player or caused by the use of the GreenForce-Player.
+				This is except for damages which cannot be excluded because of law.
+				You are warned that you use this software at your own risk. 
+				No warranties are implied or given by the author or any other representative.
+				All components are copyrighted by the author.
+				You are not allowed to reverse engineer the whole or parts of the software.
+				You are also not allowed to modify or patch executables and other files of this software.
+				</p>
+				<p>You are allowed to use this software in noncommercial and commercial products. 
+				If the software is used within commercial products a mention of the author and a donate would be desirable but is not necessary.</p>
+				<h3>OpenJPEG</h3>
+					Copyright (c) 2002-2012, Communications and Remote Sensing Laboratory, Universite catholique de Louvain (UCL), Belgium
+					Copyright (c) 2002-2012, Professor Benoit Macq
+					Copyright (c) 2003-2012, Antonin Descampe
+					Copyright (c) 2003-2009, Francois-Olivier Devaux
+					Copyright (c) 2005, Herve Drolon, FreeImage Team
+					Copyright (c) 2002-2003, Yannick Verschueren
+					Copyright (c) 2001-2003, David Janssens
+					All rights reserved.
+					<br/>
+					Redistribution and use in source and binary forms, with or without
+					modification, are permitted provided that the following conditions
+					are met:<br />
+					1. Redistributions of source code must retain the above copyright
+					   notice, this list of conditions and the following disclaimer.<br/>
+					2. Redistributions in binary form must reproduce the above copyright
+					   notice, this list of conditions and the following disclaimer in the
+					   documentation and/or other materials provided with the distribution.<br/>
+					THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS `AS IS'
+					AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+					IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+					ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+					LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+					CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+					SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+					INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+					CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+					ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+					POSSIBILITY OF SUCH DAMAGE.						
+				
+				<h2>Installation<a name="install"></a></h2>
+				<p>The GreenForce-Player does not need an installation. It requires only the GreenForce-Player.exe.
+				Therefore it is ideal for use on a portable media like an USB stick.
+				The file extension &quot;.gfp&quot; will be registered automatically at the first start of the application. Additionally the protocol &quot;gfp://&quot; will be available to open media files directly from the browser (e.g. with an url like gfp://www.your-domain.tld/your-video.gfp). This allows streaming of media files via the HTTP protocol.
+				Note that despite the name of the protocol it can be also used to stream unencrypted media files (e.g. gfp://www.your-domain.tld/your-video.wmv is also possible). Internally &quot;gfp://&quot; will be replaced by &quot;http://&quot;.
+				There is also an Installer available which will create additional entries in the program menu and on the desktop.</p>
+			</div>
+
+			<div class="textblock">
+				<h2>Play a media file<a name="playmedia"></a></h2>
+				<p>You can load media files with the menu item &quot;Load&quot; or you can use the Drag and Drop function.
+				It is also possible to use playlists where you can load media files from. The video/audio will play automatically.
+				The supported audio and video formats depend on installed codecs of the operating system. There is a build in support for .ogg and .flac files.
+				</p>
+			</div>
+
+			<div class="textblock">
+				<h2>Organize playlists<a name="organize_playlists"></a></h2>
+				<p>To use a playlist choose the menu item &quot;Playlist&quot; in the menu &quot;Media&quot;.
+				There are the following commands in the toolbar.</p><p>Playlists can be organized with the following functionality:</p>
+				<div class="leftscreenshot">
+					<ul>
+						<li><img class="playlisticons" src="img/icon-playlist-add.png" alt="add playlist"/>Create a playlist</li>
+						<li><img class="playlisticons" src="img/icon-playlist-remove.png" alt="remove playlist"/>Delete a playlist</li>
+						<li><img class="playlisticons" src="img/icon-playlist-import.png" alt="import playlist"/>Import a complete playlist</li>
+						<li><img class="playlisticons" src="img/icon-playlist-export.png" alt="export playlist"/>Export a complete playlist</li>
+						<li><img class="playlisticons" src="img/icon-playlist-play.png" alt="play"/>Play the selected file of the active playlist</li>
+					</ul>	
+					<p>Media resources can be organized with the following functionality:</p>
+					<ul>
+						<li><img class="playlisticons" src="img/icon-file-media.png" alt="add file"/>add a file to the active playlist</li>
+						<li><img class="playlisticons" src="img/icon-file-folder.png" alt="add folder"/>add a complete folder to the activ e playlist</li>
+						<li><img class="playlisticons" src="img/icon-file-url.png" alt="add url"/>add a URL to the playlist</li>
+						<li><img class="playlisticons" src="img/icon-file-remove.png" alt="remove file"/>remove a file from the playlist</li>
+					</ul>
+				</div>
+				<div class="rightscreenshot">
+					<a href="img/greenforce-player-screenshot-playlist.png"><img src="img/greenforce-player-screenshot-playlist-mini.png" width="280" alt="GreenForce-Player screenshot of playlist"/></a>
+				</div>
+			</div>
+
+			<div class="textblock">
+				<h2>Coverflow<a name="coverflow"></a></h2>
+				<p>To use the coverflow&nbsp;choose the menu item &quot;Coverflow&quot; in the menu &quot;Media&quot;.
+				<a href="#organize_playlists">You need a playlist to use it, because the coverflow shows all files from all playlists.</a>
+				The coverflow has two different modes to presentation the covers &quot;2D&quot; and &quot;3D&quot;.</p>
+			</div>
+
+			<div class="textblock">
+				<h2>Protect a media file<a name="protect_media"></a></h2>
+				<div class="leftscreenshot">
+					To protect a media file with a password choose the menu item &quot;Protect media&quot; in the menu &quot;DRM&quot;.
+					You must set the password, source file (the media file which should be protected) and the destination file.
+					For the password you can set a tip/hint to help you remembering your password.
+					You can also set tags and a cover (.bmp, .jpg, .jp2, .png, .tga and .tiff) for your protected media file.
+					By default password protected media files are protected against screenshots. All options regarding portection can be found on the tab &quot;Protection&quot;. 
+					Beside the &quot;Disallow screenshots&quot; option there is an additional option to enforce screenshot protection. This can be done by deselecting the checkbox &quot;Not enforce screenshot protection&quot;. 
+					Note that this could completly prevent playback of the media file if the operating system does not fit the requirements (e.g. old operating systems, virtual machines). But keep in mind that this will be no 100% solution to protect the content. It is still possible to make a photography of the monitor with a camera.
+					Further possiblities are setting an expire date for the protected media file or allowing it to run only on a certain machine (possible by setting the &quot;Machine ID&quot; field).
+					A really nifty option is to create a standalone EXE file which includes the player and the protected media file.
+					To do this, you just need to check &quot;add player to the media file&quot;. The big advantage then is that you do not need to have GreenForce Player installed to play the protected media. All necessary files are directly included in the prtected file (however a codec is still required on the system).
+					Creating a standalone EXE file also allows you to choose your own icon of the executable. The icon must be an .ico file. You can also additional command line parameters to your standalone executable (e.g. /fullscreen to start your protected media file in fullscreen mode). Just click on the &quot;?&quot; button to list possible parameters.
+					If this sounds interesting to you also download the GreenForce Player SDK, there you will find an additional tools. The SDK includes a tool to automate crateion of .gfp files, a tool to create executables with can contain more than one media file in one executable and many more interesting tools.
+				</div>
+				<div class="rightscreenshot">
+					<a href="img/greenforce-player-screenshot-protect-video.png"><img src="img/greenforce-player-screenshot-protect-video-mini.png" width="280" alt="GreenForce-Player DRM functionality"/></a>
+				</div>
+			</div>
+
+			<div class="textblock">
+				<p>&nbsp;</p>
+				<h2>Options<a name="options"></a></h2>
+				<div class="leftscreenshot">
+					To change the options of the player choose the menu item &quot;Options&quot; in the menu &quot;File&quot;.<br/>
+					<h3>Language</h3>
+					Here you can select the language of the player.<br/>
+					<h3>Loglevel</h3>
+					 The loglevel has three different options:<br/>
+					&quot;None&quot; Nothing will be logged.<br/>
+					&quot;Error&quot; &nbsp;Errors will be logged.<br/>
+					&quot;Debug&quot; Debug info and errors will be logged, use this option to report a bug.<br/>
+					You will find log files in the path &quot;%APPDATA%\GF-Player&quot;.<br/>	
+					<h3>Only show in systray when minimized</h3>
+					This options influence that the player isn't in your taskbar if its minimized.
+					You can control it over the systray.
+					<h3>Automatic updates</h3>
+					If this option is selected the player checks at every program start the latest version.
+					If there are updates it will install it automatically.
+					<h3>Single instance</h3>
+					This means the player can be opened only once at one time.
+					If you load another media file it will use the existing instance of the player.
+				</div>
+				<div class="rightscreenshot">
+					<a href="img/greenforce-player-screenshot-options1.png"><img src="img/greenforce-player-screenshot-options1-mini.png" width="280" alt="GreenForce Player options"/></a>
+				</div>
+			</div>
+			 
+			<div class="textblock">
+				<div class="leftscreenshot"> 
+					<h3>Video renderer</h3>
+					If you have problems with the presentation of videos you can test another renderer.
+					<h3>Audio renderer</h3>
+					If you have problems with the audio of the player, you can test another audio renderer.
+					<h3>Size of RAM cache</h3>
+					This is the maximal size(in MB) of all media files that will cached in the RAM.
+					<h3>Size of RAM cache per file</h3>
+					This is the maximal size(in MB) of a file for the RAM cache. Do not use to huge values here because this will result in longer loading times.
+					We recommend to use values between 10 and 30 MB.
+					<h3>Snapshot path</h3>
+					Here you can select the path where the snapshots will be saved.
+					<h3>Snapshot format</h3>
+					Here you can choose the format of the snapshots (.jpg, .png, .jpeg2000)
+					<h3>Background color</h3>
+					The color of the video background.
+					<h3>Theme</h3>
+					You can choose a theme/iconset for the main window of the player (Default, Classic, Basic, Black, Gray).
+				</div>
+				<div class="rightscreenshot">
+					<a href="img/greenforce-player-screenshot-options2.png"><img src="img/greenforce-player-screenshot-options2-mini.png" width="280" alt="GreenForce Player optins"/></a>
+				</div>
+			</div>
+			<div class="textblock">
+				<ul>
+					<li>
+						<h3>Default</h3>
+						<a href="img/greenforce-player-theme-default.png"><img src="img/greenforce-player-theme-default-mini.png" width="280" alt="default theme"/></a>
+					</li>
+					<li>
+						<h3>Classic</h3>
+						<a href="img/greenforce-player-theme-classic.png"><img src="img/greenforce-player-theme-classic-mini.png" width="280" alt="classic theme"/></a>
+					</li>
+					<li>
+						<h3>Black</h3>
+						<a href="img/greenforce-player-theme-black.png"><img src="img/greenforce-player-theme-black-mini.png" width="280" alt="black theme"/></a>
+					</li>
+					<li>
+						<h3>Gray</h3>
+						<a href="img/greenforce-player-theme-gray.png"><img src="img/greenforce-player-theme-gray-mini.png" alt="Gray theme" width="280"/></a>
+					</li>
+					<li>
+						<h3>Basic</h3>
+						<a href="img/greenforce-player-theme-basic.png"><img src="img/greenforce-player-theme-basic-mini.png" width="280" alt="Basic theme"/></a>
+					</li>
+				</ul>
+			</div>	
+
+			<div class="textblock">	
+				<h2>Contact<a name="contact"></a></h2>				
+				<h3>Address:</h3>
+				Michael Moebius<br/>
+				Karl-Rehm Str. 5 <br/>
+				88326 Aulendorf<br/>
+				Germany<br/>
+				<h3>E-Mail:</h3>
+				<a href="mailto:support@gfp.rrsoftware.de?subject=GreenForce-Player support">support@gfp.rrsoftware.de</a>
+				<p>&nbsp;</p>
+			</div>			
+			
+			<div class="textblock">
+				<h2>Acknowledgements<a name="acknowledgements"></a></h2>
+				<ul>
+					<li>
+						<h3>Warkering</h3>for the great French translation
+					</li>
+					<li>
+						<h3>Saner Apaydin</h3>for the great Turkish translation
+					</li>
+					<li>
+						<h3>Carl Peeraer</h3>for the great Nederlands translation
+					</li>
+					<li>
+						<h3>Mauricio Cant&uacute;n Caamal</h3>for the great Spanish translation
+					</li>
+					<li>
+						<h3>Jacobus</h3>for the fantastic green iconset
+					</li>
+					<li>
+						<h3>http://Xiph.org Xiph.org Foundation</h3>for the fantastic ogg and flac decoder
+					</li>		
+					<li>
+						<h3>Independent JPEG Group</h3>this software is based in part on the work of the Independent JPEG Group
+					</li>						
+					<li>
+						<h3>OpenJPEG</h3>for the JPEG2000 codec
+					</li>						
+				</ul>
+				<p>&nbsp;</p>
+			</div>
+
+		</div>
+	</body>
+</html>

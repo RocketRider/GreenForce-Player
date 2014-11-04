@@ -1,0 +1,24 @@
+C:\Users\Admin\AppData\Local\Temporary Projects\GFPCrypt\obj\x86\Debug\MainWindow.baml
+C:\Users\Admin\AppData\Local\Temporary Projects\GFPCrypt\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Admin\AppData\Local\Temporary Projects\GFPCrypt\obj\x86\Debug\App.g.cs
+C:\Users\Admin\AppData\Local\Temporary Projects\GFPCrypt\obj\x86\Debug\GFPCrypt_MarkupCompile.cache
+C:\Users\Admin\AppData\Local\Temporary Projects\GFPCrypt\obj\x86\Debug\GFPCrypt.g.resources
+C:\Users\Admin\AppData\Local\Temporary Projects\GFPCrypt\obj\x86\Debug\GFPCrypt.Properties.Resources.resources
+C:\Users\Admin\AppData\Local\Temporary Projects\GFPCrypt\obj\x86\Debug\GFPCrypt.csproj.GenerateResource.Cache
+C:\Users\Admin\AppData\Local\Temporary Projects\GFPCrypt\bin\Debug\GFPCrypt.exe
+C:\Users\Admin\AppData\Local\Temporary Projects\GFPCrypt\bin\Debug\GFPCrypt.pdb
+C:\Users\Admin\AppData\Local\Temporary Projects\GFPCrypt\obj\x86\Debug\GFPCrypt.exe
+C:\Users\Admin\AppData\Local\Temporary Projects\GFPCrypt\obj\x86\Debug\GFPCrypt.pdb
+C:\Users\Admin\documents\visual studio 2010\Projects\GFPCrypt\GFPCrypt\obj\x86\Debug\GFPCrypt.exe
+C:\Users\Admin\documents\visual studio 2010\Projects\GFPCrypt\GFPCrypt\obj\x86\Debug\GFPCrypt.pdb
+C:\Users\Admin\documents\visual studio 2010\Projects\GFPCrypt\GFPCrypt\bin\Debug\GFPCrypt.exe
+C:\Users\Admin\documents\visual studio 2010\Projects\GFPCrypt\GFPCrypt\bin\Debug\GFPCrypt.pdb
+C:\Users\Admin\documents\visual studio 2010\Projects\GFPCrypt\GFPCrypt\obj\x86\Debug\MainWindow.baml
+C:\Users\Admin\documents\visual studio 2010\Projects\GFPCrypt\GFPCrypt\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Admin\documents\visual studio 2010\Projects\GFPCrypt\GFPCrypt\obj\x86\Debug\App.g.cs
+C:\Users\Admin\documents\visual studio 2010\Projects\GFPCrypt\GFPCrypt\obj\x86\Debug\GFPCrypt_MarkupCompile.cache
+C:\Users\Admin\documents\visual studio 2010\Projects\GFPCrypt\GFPCrypt\obj\x86\Debug\GFPCrypt.g.resources
+C:\Users\Admin\documents\visual studio 2010\Projects\GFPCrypt\GFPCrypt\obj\x86\Debug\GFPCrypt.Properties.Resources.resources
+C:\Users\Admin\documents\visual studio 2010\Projects\GFPCrypt\GFPCrypt\obj\x86\Debug\GFPCrypt.csproj.GenerateResource.Cache
+D:\Projekte\PureBasic\GreenForce-Player\GFP-SDK\GFPCrypt-DLL\GFPCrypt_CSharp\GFPCrypt\obj\x86\Debug\GFPCrypt.exe
+D:\Projekte\PureBasic\GreenForce-Player\GFP-SDK\GFPCrypt-DLL\GFPCrypt_CSharp\GFPCrypt\obj\x86\Debug\GFPCrypt.pdb

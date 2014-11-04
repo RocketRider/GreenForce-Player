@@ -1,0 +1,445 @@
+GF-Player V1.21:
+- Added: SWF Support
+- Added: OEM Player
+- Added: Support for Windows 2008 R2
+- Added: How to create your own design
+- Added: command /position to set the start position of a video
+- Added: command /hidedrm to hide the drm menu (used for creating a standalone player video)
+- Added: multible Machine IDs in one file (just put them behind each other KEY1KEY2KEY3...)
+- Improved: Windows 8 support
+- Improved: Menu color
+- Improved: Cleaned Source code
+- Improved: Compatible with PureBasic 5.21
+- Improved: Video Protection
+- Corrected: Crash with old ffdirctshow and Win Vista
+- Corrected: Subtitles
+- Corrected: Fullscreen comand
+- Corrected: Database comand
+
+
+GF-Player V1.20:
+- Added: Parallels Workstation detection
+- Added: Change icon of created standalone executable
+- Added: Create machine ID of current machine 
+- Added: Greek language
+- Added: Portuguese language
+- Added: Italian language
+- Added: Bulgarian language
+- Added: Russian language
+- Added: Serbian language
+- Added: Swedish language
+- Added: new small default skin
+- Added: commandline parameter for the standalone exe
+- Added: Sample icons
+- Added: GFPCrypt C# sample
+- Added: VNC Protection
+- Improved: Screencapture protection by checking the Clipboard 
+- Improved: Windows 8 support(RTM)
+- Improved: Screenshot protection
+- Improved: English language
+- Improved: Spanish language
+- Improved: French language
+- Improved: Nederlands language
+- Improved: Coverflow loading after changing a playlist
+- Improved: Removed statusbar
+- Improved: unicode password
+- Improved: Crypt GUI tool
+- Improved: faster player close
+- Improved: Overall speed
+- Improved: Don't register file extensions on removebal device
+- Corrected: Memory leak by changing the icon of an exe
+- Corrected: Memory leak by internet streaming
+- Corrected: FC by no internet connection
+- Corrected: Play Video DVD
+- Corrected: "00:00:00" will be now empty in playlists
+- Corrected: slow start if DVD is in the DVD-Drive
+- Corrected: crash with coverflow and random play option
+- Corrected: restore database
+- Corrected: save password
+- Corrected: decrypt file with gfp crypt tool
+- Corrected: /ahook
+- Corrected: redraw issues
+- Corrected: disabled update with standalone exe
+
+GF-Player V1.12:
+- Added: Snapshot shortcut
+- Added: Player version check before play encrypted media
+- Added: Video risizing option 1:2
+- Added: Video risizing option 2:1
+- Added: Minimal video height 200px
+- Added: RSA encrypted password transmission (sample is in the GFP-SDK)
+- Added: Windows 8 support(Beta)
+- Added: GFP-Crypt dll sample for lazarus&delphi
+- Added: GFP-Crypt dll sample for AutoIt
+- Added: Basic skin
+- Added: New Design management
+- Added: command /closeafterplayback
+- Added: command /usedesign
+- Added: command /installdesign
+- Added: anti debugging
+- Added: Design example to SDK
+- Improved: Classic design
+- Improved: Black design
+- Improved: Database speed
+- Improved: Whitelight visualization
+- Improved: Proxy settings requester
+- Improved: not enforce screencapture protection is now default
+- Improved: Crypt tool
+- Improved: Coverflow
+- Improved: Crypt GUI tool
+- Corrected: loading of files with relativ paths
+- Corrected: http/https streaming
+- Corrected: getting the size of the trackbar
+- Corrected: coverflow issue with integrated files in player exec
+- Corrected: decrypt video with GFPCrypt tool
+- Corrected: /? command
+- Corrected: screencapture protection win xp with audio files
+- Corrected: mute video DVD
+
+GF-Player V1.11:
+- Added: Message if playing a video is missing a codec
+- Added: After restart the player it loads the playing video again
+- Improved: Add tracks to playlist speed
+- Improved: French language thx to Ar-S
+- Improved: Coverflow
+- Improved: recommended codec is now K-Lite
+- Improved: Crypt GUI tool
+- Improved: Design of Protect Video/Audio window
+- Improved: little speed tweaks
+- Corrected: screencapture protected file loading under XP
+
+GF-Player V1.10:
+- Added: Option to not enforce screenshot protection
+- Added: Show codec download link if encrypted file is not playable
+- Added: GFP Protocoll, use "gfp://" to stream a video directly from the browser
+- Improved: Video capturing protection under windows xp
+- Improved: Visualisation
+- Improved: Icons
+- Improved: English and German language
+- Improved: Crypt tool
+- Improved: Crypt Dll
+- Improved: Crypt GUI tool
+- Improved: Playlist window
+- Improved: Playlist rename
+- Improved: Playlist play
+- Improved: Options window
+- Improved: About window
+- Improved: Log window
+- Improved: Screencapture protection
+- Improved: Loading speed of encrypted(protected .gfp) files
+- Corrected: Multimedia file loading
+- Corrected: URL Requester
+- Corrected: Crash at restarting player
+- Corrected: Crash at defect gfp file
+- Corrected: Video executable used wrong path for database
+
+GF-Player V1.09:
+- Added: Language Spanish(Thx to Mauricio Cantún Caamal)
+- Added: Icons
+- Added: Show video title in player title
+- Added: Thumbnail buttons
+- Added: Streaming from internet of media files
+- Added: Streaming of protected multimedia files
+- Added: Protection against screenshots with virtual machines detection
+- Added: Ask before delete playlist
+- Added: Expire date for password protected multimedia files 
+- Improved: Scroll in video with mouse wheel
+- Improved: Renamed the style names
+- Improved: Select snapshot path
+- Improved: Keyboard query
+- Improved: Options window
+- Improved: Icons
+- Improved: URL requester
+- Improved: GFPCrypt tool
+- Improved: GFPCrypt DLL
+- Improved: GFPCrypt GUI tool
+- Improved: Delete file if abort the encryption
+- Improved: Documentation
+- Improved: Renamed visualizations
+- Improved: The .gfp DRM fileformat (now Version 2)
+- Improved: Fullscreen/Minimal view popup menu
+- Improved: Screencapture protection
+- Corrected: Set media volume in the about/playlist window with mouse wheel
+- Corrected: Error-Requester
+- Corrected: Button highlighting
+- Corrected: Coverflow with very large playlists
+- Corrected: create snapshots
+- Corrected: Black margin by playing a video without menu
+- Corrected: Visualization at first playing
+- Corrected: Multimedia pack with medium without cover
+- Corrected: Mirror driver detection
+- Corrected: Volume controll
+
+GF-Player V1.08:
+- Added: Missing file extesions (.mkv, .m2v, .m4v, .m2ts)
+- Added: Icons to message boxes
+- Added: Rename playlists
+- Added: language Nederlands (Thx to Carl Peeraer)
+- Improved: Password requester
+- Improved: Playlist already used requester
+- Improved: Own renderer is now default
+- Corrected: Popupmenu playing a DVD
+- Corrected: Mousecontrolling in DVD menu
+- Corrected: DVD fullscreen controll 
+
+GF-Player V1.07:
+- Added: Turkish OS language detection
+- Added: New tresor icon in password requester
+- Added: Tooltips in the playlist window
+- Improved: Documentation
+- Corrected: loading bad playlists
+- Corrected: Get graphicard name
+- Corrected: Load files with the explorer if an other video is playing.
+- Corrected: Open documentation
+- Corrected: Coverflow
+
+GF-Player V1.06:
+- Added: DLL Hijacking protection
+- Added: Unicode support
+- Added: Unicode support for language tool
+- Added: Unicode support for GFP-Crypt
+- Added: Turkish language (Thx to Saner Apaydin)
+- Corrected: Language in crypt tool
+
+GF-Player V1.05:
+- Added: New icons in menu(donate and fullscreen)
+- Added: Include media files in player executable
+- Improved: Add playlist files speed improved
+- Improved: Own renderer
+- Improved: Protect media functions
+- Improved: Encrypt media tool (GFPCrypt-GUI.exe)
+- Improved: layout of log file
+- Improved: Save media position
+- Improved: Gray skin
+- Improved: Black skin
+- Improved: Trackbar
+- Corrected: Drawing issue with high DPI (Windows 7 only)
+- Corrected: Language (German, English and French)
+- Corrected: Path dialog
+
+GF-Player V1.04:
+- Added: simple brute force protection
+- Added: Save media position
+- Added: Subtitle support (sub and srt files)
+- Added: Change subtitle size
+- Added: Overlay images for DShow
+- Improved: Send bug report
+- Improved: Gray skin
+- Improved: Virtual files
+- Improved: Own renderer (problems with HD videos)
+- Corrected: crash with corrupt media files
+- Corrected: loading issue with mkv files
+- Corrected: Automatic updater
+- Corrected: Redraw issue with own renderer
+- Corrected: Path dialog
+- Corrected: About window
+
+GF-Player V1.03:
+- Added: Updater EXE updates the readme file
+- Improved: Faster database update
+- Improved: Playlists
+- Improved: Next track
+- Improved: Capturing protection
+- Improved: Popup menu
+- Improved: Performance of the complete player
+- Corrected: seeking in different movies (wmv files)
+- Corrected: bufix for madflac
+- Corrected: Crash with flac and ogg using visualization
+
+GF-Player V1.02:
+- Added: "/encryption" command line same as "/password"
+- Added: check for empty language
+- Added: show warning if media could not load (protect video)
+- Improved: Error handler
+- Corrected: Close window at fullscreen (Thx to Blackskyliner)
+- Corrected: Stack corruption
+- Corrected: Open/Save/Path dialog
+
+GF-Player V1.01:
+- Added: New error dialog with send report option
+- Added: New error dialog with an option to restore the DB
+- Added: Own Trackbar
+- Added: "default" password (if you don't want to use a pw you can use "default")
+- Added: GFP to the "open with" dialog
+- Added: .ogm, .ogv, .divx, .ram,... file extensions
+- Added: Codec installation (with ".gfp-codec" files)
+- Added: graphical GFPCrypt tool to encrypt a multiple files at once
+- Improved: Logging
+- Improved: Prefer DShow for ogg and flac files
+- Improved: Aspect ratio
+- Improved: Button order
+- Improved: About window
+- Corrected: Loading failed for different file types (mp3, wmv,... files)
+- Corrected: Settings for loading from URL
+- Corrected: Set file extensions
+- Corrected: Access violation
+- Corrected: Playlist title lenghts
+- Corrected: Add playlist tracks
+- Corrected: Set OS language
+
+GF-Player V1.00:
+- Added: Iconset Black
+- Added: Iconset Gray (new default)
+- Added: Documentation
+- Improved: Playlist play button
+- Improved: Open file dialog
+- Improved: FAQ
+- Corrected: Automatic updater
+- Corrected: mp4 files from RAM
+- Corrected: Double items in temporary playlists
+- Corrected: Play track of the chronic while playing a playlist
+- Corrected: Play track after using a playlist
+
+GF-Player V0.99:
+- Added: command line option  "/videorenderer"
+- Added: command line option  "/audiorenderer"
+- Added: command line option "/restoredatabase"
+- Added: command line accepts different prefixes ("/", "\" or "-")
+- Added: Donate menu item
+- Improved: FAQ
+- Improved: Help window
+- Improved: Statusbar refresh bug
+- Corrected: Restore default DB
+- Corrected: Play track of a playlist hangs
+- Corrected: Single instance
+- Corrected: Password dialog by unprotecting the media
+- Corrected: Active snapshot protection
+
+GF-Player V0.98:
+- Added: command line "loglevel"
+- Added: Most recent list
+- Added: Option for own  D3D9 based video renderer
+- Improved: startup performance
+- Improved: exe size (-200 KB)
+- Corrected: add a cover without defining an interpreter and album
+- Corrected: log file path
+
+GF-Player V0.97:
+- Added: GFPCrypt Dll
+- Improved: Cover support for protected media files
+- Improved: GFPCrypt tool
+- Corrected: Snapshot button
+- Corrected: Open/Save file dialog
+
+GF-Player V0.96:
+- Added: Cover support for protected media files
+- Added: Set database file per commad line "/database"
+- Added: command line "/ImportList"
+- Improved: GFPCrypt tool
+- Corrected: command line "/invisible"
+- Corrected: invalid dshow reference in visual canvas
+
+GF-Player V0.95:
+- Improved: Coverflow 3D 
+- Corrected: Break/Play at Video DVD
+- Corrected: Video size was not correct if coverflow was active
+- Corrected: Crash when loading video from coverflow
+- Corrected: Resizing in fullscreen mode
+
+GF-Player V0.94:
+- Added: Shortcuts Alt+N(next title) and Alt+V(previous title)
+- Added: Coverflow scrolling
+- Added: 3D Coverflow
+- Added: own D3D9 based renderer
+- Improved: Green iconset (Thx to Jacobus)
+- Improved: Close visualization if a video was loaded (Thx to adra)
+- Improved: select a video DVD source
+- Improved: No covers available screen
+
+GF-Player V0.93:
+- Added: Windowed renderer
+- Added: Coverflow V0.1
+- Added: Save screenshots as JPEG2000
+- Added: Fullscreen control
+- Added: Green iconset (Thx to Jacobus)
+- Improved: Windows XP support
+- Corrected: Resizing in fullscreen mode
+- Corrected: Empty items at the playlist
+- Corrected: Inverted volume buttons (Thx to HB)
+- Corrected: Automatic aspect settings
+- Corrected: a wrong playlist was selected when the popup menu was used
+
+GF-Player V0.92:
+- Added: Change cover function
+- Added: Context sub menu to show and select the items of the current playlist
+- Added: Function to cache a complete playlist
+- Added: Play playlists without importing them
+- Improved: Playlist performance
+- Improved: Video/Audio protection
+- Improved: Logos, icons and about window
+- Improved: Large video support
+- Corrected: Eject Video-DVD
+
+GF-Player V0.91:
+- Corrected: Visualization DCT
+- Corrected: Visualization Whitelight
+
+GF-Player V0.90:
+- Added: Remote control support
+- Added: Visualization simple
+- Added: Visualization DCT
+- Added: Save player window position (thx to Mr. walker)
+- Added: "Snapshot path" dialog (thx to Mr. walker)
+- Added: Single instance mode (thx to Mr. walker)
+- Improved: Errors at the "Protect video" window
+- Improved: Autoresizing when loading movies (thx to Mr. walker)
+- Improved: Enumerating snapshots (thx to Mr. walker)
+- Corrected: Language
+- Corrected: Load MPG files as playlists (thx to Mr. walker)
+
+GF-Player V0.81:
+- Added: support to load a complete folder
+- Added: mpc file extension  (thx to Mr. walker)
+- Added: pls file extension
+- Added: xspf file extension
+- Corrected: Wrong artist selection  (thx to Mr. walker)
+- Corrected: PLS playlist import  (thx to Mr. walker)
+- Corrected: DB update function
+- Corrected: Volume selection (thx to Mr. WPo)
+
+GF-Player V0.80:
+- Added: M3U playlist import
+- Added: PLS playlist import
+- Added: ASX playlist import
+- Added: XSPF playlist import
+- Added: Visualization
+- Added: Playlist play button
+- Added: Select/Deselect all file extensions button
+- Added: Cover support
+- Improved: Debug window
+- Improved: Playlist selection
+- Corrected: Add tracks to playlists when playing media
+- Corrected: auto select language (thx to OldSkoolGamer)
+- Corrected: Crash with mp3 files (thx to walker)
+- Corrected: Wrong artist selection
+- Corrected: Resizing bug with minimal mode and sticky window
+- Corrected: A memory leak in password manage
+
+GF-Player V0.70:
+- Added: Minimal mode
+- Added: Checkboxes in aspect ratio sub menu
+- Added: Stay on top menu item
+- Added: Mute button
+- Added: drag and drop support for multiple files
+- Added: multi select file support for open file dialog
+- Improved: Playlist selection
+- Improved: Show open dialog at the path of the loaded file
+- Improved: Move window in minimalmode
+- Improved: About box
+- Corrected: Update function
+- Corrected: Resizing for fullscreen bug
+- Corrected: The exe hangs at the when quitting if a file was downloaded from the internet
+- Corrected: Crash at the end (thx to ts-soft and adra)
+
+GF-Player V0.60:
+- Added: Shortcut(space) to resume/pause the playback
+- Added: Load DVD media from directory
+- Added: GFPCrypt command line tool to encrypt/decrypt without the player
+- Added: Automatic database update function
+- Improved: volume control (now can be used with pressed mouse button) 
+- Improved: Fullscreen mode, optimized for multiple desktops (thx to STARGÅTE and ts-soft)
+- Corrected: French language updated (thx to Mr. Warkering)
+- Corrected: now log file will be saved in Appdata folder
+- Corrected: major bug in Playlists (thx to Mr. walker)
+- Corrected: Update function (Thx to walker)
+- Corrected: Volume was not set correctly (Thx to walker)

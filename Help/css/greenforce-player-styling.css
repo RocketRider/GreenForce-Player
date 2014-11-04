@@ -1,0 +1,18 @@
+	
+body { font-family:"Segoe UI",Tahoma,sans-serif,Arial; font-size:14px; color: #666; background-color: #CCC }
+h1 { font-family:"Segoe UI",Tahoma,sans-serif,Arial; font-weight:bolder; font-size:22px; color: #348; text-align: center; }
+h2 { font-family:"Segoe UI",Tahoma,sans-serif,Arial; font-weight:bolder; font-size:20px; color: #48B; }
+h3 { font-family:"Segoe UI",Tahoma,sans-serif,Arial; font-weight:bolder; font-size:14px; color: #333; }
+ul {list-style-type:none;}
+a:link { font-size:16px; color: #669; text-decoration:none; }
+a:visited { font-size:16px; color: #669; text-decoration:none; }
+a:active { font-size:16px; color: #49C; text-decoration:none; }
+a:hover { font-size:16px; color: #49C; font-style: italic; text-decoration:none; }
+
+.overview {clear:left;}
+.textblock {clear:left;}
+.rightscreenshot {padding-top: 25px; }
+.leftscreenshot {float: left; width: 50%; padding-right: 100px;}
+
+.playlisticons {vertical-align:middle; width: 48px; height: 48px;}
+.container {width: 980px; margin: auto; background-color: #FFF; padding: 10px; }
