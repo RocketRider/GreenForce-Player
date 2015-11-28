@@ -1,4 +1,0 @@
-Graphiccard name: AMD Radeon HD 5800 Series, Processor name: AMD Phenom(tm) II X6 1055T Processor, Windows: Windows 8 x64, Programversion: 1.21.0 Bulid: 2329, DPI: 96
-
-
------------------------------------------------------------------
