@@ -4,8 +4,8 @@
 ;*** (c) 2009 - 2012 RocketRider *******
 ;***************************************
 EnableExplicit
-XIncludeFile "include\GFP_Detect_WINE.pbi"
-XIncludeFile "include\GFP_MachineID.pbi"
+XIncludeFile "GFP_Detect_WINE.pbi"
+XIncludeFile "GFP_MachineID.pbi"
 
 
 
@@ -359,9 +359,9 @@ EndProcedure
 
 
 
-; IDE Options = PureBasic 5.21 LTS (Windows - x86)
-; CursorPosition = 307
-; FirstLine = 292
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 7
+; FirstLine = 2
 ; Folding = --
 ; EnableThread
 ; EnableXP

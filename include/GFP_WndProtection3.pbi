@@ -8,10 +8,10 @@
 Declare __ChangeDWMProtection(hWnd)
   
 
-XIncludeFile "include\GFP_Protection_DWM.pbi"
-XIncludeFile "include\GFP_Protection_Misc.pbi"
-XIncludeFile "include\GFP_Protection_User.pbi"
-XIncludeFile "include\GFP_Protection_WndCallback3.pbi"
+XIncludeFile "GFP_Protection_DWM.pbi"
+XIncludeFile "GFP_Protection_Misc.pbi"
+XIncludeFile "GFP_Protection_User.pbi"
+XIncludeFile "GFP_Protection_WndCallback3.pbi"
 EnableExplicit
 
 Structure GLOBAL_PROTECTION
@@ -480,9 +480,9 @@ EndProcedure
 
 
 
-; IDE Options = PureBasic 5.11 (Windows - x86)
-; CursorPosition = 477
-; FirstLine = 424
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 13
+; FirstLine = 6
 ; Folding = --
 ; EnableXP
 ; Executable = WndProtector.exe

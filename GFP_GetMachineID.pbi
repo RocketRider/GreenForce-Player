@@ -5,6 +5,7 @@
 ;***************************************
 EnableExplicit
 
+XIncludeFile "include\GFP_PBCompatibility.pbi"
 XIncludeFile "include\GFP_MachineID.pbi"
 
 CoInitialize_(0)

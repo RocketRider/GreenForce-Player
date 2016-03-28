@@ -57,7 +57,7 @@ Procedure OpenEXEAttachements(sFile.s = "")
   EndIf
   
   ZeroMemory_(@g_EXEAttachments,SizeOf(EXE_ATTACHMENT_GLOBALS))
-  iFile = ReadFile(#PB_Any, sFile)
+  iFile = ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
   If iFile  
     qSize = Lof(iFile)
     If qSize > SizeOf(EXE_ATTACHMENT_FOOTER)
@@ -103,7 +103,7 @@ Procedure ReadEXEAttachment(index, *fileentry.EXE_ATTACHMENT_FILEENTRY)
   Protected bResult = #False, iFile.i, position.q, idx.i
   
   If *fileentry And index >= 0 And index < g_EXEAttachments\footer\numFiles
-    iFile = ReadFile(#PB_Any, g_EXEAttachments\filename)
+    iFile = ReadFile(#PB_Any, g_EXEAttachments\filename, #PB_File_SharedRead )
     If iFile     
       position.q = g_EXEAttachments\offset
       For idx = 0 To index
@@ -129,7 +129,7 @@ Procedure ReadEXEAttachmentByName(name.s, *fileentry.EXE_ATTACHMENT_FILEENTRY)
   Protected bResult = #False, iFile.i, position.q, idx.i
   name = UCase(name)
   If *fileentry And g_EXEAttachments\footer\numFiles > 0 
-    iFile = ReadFile(#PB_Any, g_EXEAttachments\filename)
+    iFile = ReadFile(#PB_Any, g_EXEAttachments\filename, #PB_File_SharedRead )
     If iFile     
       position.q = g_EXEAttachments\offset
       For idx = 0 To g_EXEAttachments\footer\numFiles - 1
@@ -160,7 +160,7 @@ Procedure ExtractEXEAttachmentToMem(name.s)
   Protected tmp.EXE_ATTACHMENT_FILEENTRY
   Protected bOk = #False, iFile.i, *CompressedMem, *DecompressedMem, *Mem
   If ReadEXEAttachmentByName(name, tmp)
-    iFile = ReadFile(#PB_Any, g_EXEAttachments\filename)
+    iFile = ReadFile(#PB_Any, g_EXEAttachments\filename, #PB_File_SharedRead )
     If iFile      
       
       FileSeek(iFile, tmp\absoluteOffset)      
@@ -174,7 +174,7 @@ Procedure ExtractEXEAttachmentToMem(name.s)
               
               ;If UnpackMemory(*CompressedMem, *DecompressedMem) = tmp\size
               ;2013-04-02
-              If UncompressMemory(*CompressedMem, tmp\compressedSize, *DecompressedMem, tmp\size, #PB_PackerPlugin_LZMA ) = tmp\size
+              If UncompressMemory(*CompressedMem, tmp\compressedSize, *DecompressedMem, tmp\size, #PB_PackerPlugin_Lzma ) = tmp\size
                 CopyMemory(*DecompressedMem, *Mem, tmp\size)
                 bOk = #True
               Else
@@ -278,7 +278,7 @@ Procedure AttachMemoryToEXEFile(sFile.s, *Mem, iSize.i, bCompress = #True)
             
             ;iPackedSize = PackMemory(*Mem, *TempMem, iSize, 9)
             ;2013-04-02
-            iPackedSize = CompressMemory(*Mem, iSize, *TempMem, iSize + 32000,  #PB_PackerPlugin_LZMA )
+            iPackedSize = CompressMemory(*Mem, iSize, *TempMem, iSize + 32000,  #PB_PackerPlugin_Lzma )
     
             If iPackedSize = 0
               __EXEA_Debug("Warn: Compressing buffer failed!")
@@ -323,7 +323,7 @@ EndProcedure
 
 Procedure AttachSmallFileToEXEFile(sFile.s, bCompress = #True)
   Protected bResult = #False, iFile.i, iSize.i, *Mem
-  iFile = ReadFile(#PB_Any, sFile)
+  iFile = ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
   If iFile
     iSize = Lof(iFile)
     If iSize > 0
@@ -351,7 +351,7 @@ Procedure __WriteFileContent(iDestFile, sSrcFile.s, *header.EXE_ATTACHMENT_FILEE
   
   *Mem = AllocateMemory($FFFF)
   If *Mem
-    iSrcFile = ReadFile(#PB_Any, sSrcFile)
+    iSrcFile = ReadFile(#PB_Any, sSrcFile, #PB_File_SharedRead )
     If iSrcFile
       WriteData(iDestFile, *header, SizeOf(EXE_ATTACHMENT_FILEENTRY))
       qRemaining.q = Lof(iSrcFile)
@@ -443,9 +443,9 @@ EndProcedure
 ;}
 
 
-; IDE Options = PureBasic 5.21 LTS Beta 1 (Windows - x86)
-; CursorPosition = 280
-; FirstLine = 278
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 353
+; FirstLine = 352
 ; Folding = ---
 ; EnableXP
 ; EnableOnError

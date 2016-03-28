@@ -4,7 +4,7 @@
 ;*** (c) 2009 - 2012 RocketRider *******
 ;***************************************
 EnableExplicit
-XIncludeFile "include\GFP_D3D.pbi"
+XIncludeFile "GFP_D3D.pbi"
 
 #OATRUE = -1
 #OAFALSE = 0
@@ -751,7 +751,8 @@ DEFINE_GUID(MEDIATYPE_Audio, $73647561, $0000, $0010, $80, $00, $00, $aa, $00, $
 DEFINE_GUID(MEDIATYPE_Text, $73747874,  $0000, $0010, $80, $00, $00, $aa, $00, $38, $9b, $71)
 
 DEFINE_GUID(MEDIASUBTYPE_Overlay, $e436eb7f, $524f, $11ce, $9f, $53, $00, $20, $af, $0b, $a7, $70)
-; IDE Options = PureBasic 5.11 (Windows - x86)
-; CursorPosition = 40
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 6
+; FirstLine = 2
 ; Folding = -
 ; EnableXP

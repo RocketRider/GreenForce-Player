@@ -23,6 +23,7 @@ Procedure Requester_Cant_Update()
   
 EndProcedure  
 
+XIncludeFile "include\GFP_PBCompatibility.pbi"
 XIncludeFile "include\GFP_MachineID.pbi"
 XIncludeFile "include\GFP_Settings.pbi"
 XIncludeFile "include\GFP_Language.pbi"

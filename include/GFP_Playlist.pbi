@@ -472,7 +472,7 @@ Procedure PLS_ExportPlaylist(sFile.s="")
 EndProcedure
 Procedure.s _PLS_ImportPlaylist_GetType(sFile.s, iReadFlag.i)
 Protected iFile.i, sMediaFile.s
-  iFile=ReadFile(#PB_Any, sFile)
+  iFile=ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
   If iFile
     While Eof(iFile) = 0 And sMediaFile=""
       sMediaFile=UCase(Trim(ReadString(iFile, iReadFlag.i)))
@@ -527,7 +527,7 @@ Procedure _PLS_ImportPlaylist_M3U_Simple(sFile.s, sName.s, iReadFlag.i, iImport=
     NewList TempPlaylist.s()
   EndIf
   
-  iFile=ReadFile(#PB_Any, sFile)
+  iFile=ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
   If iFile
     While Eof(iFile) = 0
       sMediaFile=Trim(ReadString(iFile, iReadFlag.i))
@@ -574,7 +574,7 @@ Procedure _PLS_ImportPlaylist_M3U_Ext(sFile.s, sName.s, iReadFlag.i, iImport=#Tr
     NewList TempPlaylist.PlsArray()
   EndIf
   
-  iFile=ReadFile(#PB_Any, sFile)
+  iFile=ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
   If iFile
     While Eof(iFile) = 0
       sMediaFile=Trim(ReadString(iFile, iReadFlag.i))
@@ -630,7 +630,7 @@ Procedure _PLS_ImportPlaylist_PLS(sFile.s, sName.s, iReadFlag.i, iImport=#True)
     SetWindowTitle(#WINDOW_LIST, #PLAYER_NAME+" - " + Language(#L_PLAYLIST)+" "+sName)
   EndIf
   
-  iFile=ReadFile(#PB_Any, sFile)
+  iFile=ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
   If iFile
     While Eof(iFile) = 0
       sMediaFile=UCase(Trim(ReadString(iFile, iReadFlag.i)))
@@ -710,7 +710,7 @@ Procedure _PLS_ImportPlaylist_ASX(sFile.s, sName.s, iReadFlag.i, iImport=#True)
     NewList TempPlaylist.PlsArray()
   EndIf
   
-  iFile=ReadFile(#PB_Any, sFile)
+  iFile=ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
   If iFile
     length = Lof(iFile) 
     If length
@@ -808,7 +808,7 @@ Procedure _PLS_ImportPlaylist_XSPF(sFile.s, sName.s, iReadFlag.i, iImport=#True)
     NewList TempPlaylist.PlsArray()
   EndIf
   
-  iFile=ReadFile(#PB_Any, sFile)
+  iFile=ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
   If iFile
     length = Lof(iFile) 
     If length
@@ -952,10 +952,10 @@ EndProcedure
 
 
 
-; IDE Options = PureBasic 5.21 LTS (Windows - x86)
-; CursorPosition = 448
-; FirstLine = 81
-; Folding = QBAQ-
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 810
+; FirstLine = 429
+; Folding = RJof-
 ; EnableXP
 ; EnableUser
 ; UseMainFile = Player.pb

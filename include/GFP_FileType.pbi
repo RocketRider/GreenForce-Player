@@ -73,7 +73,7 @@ iBinaryCount.i = 0
 
 iResult = #DATATYPE_TEXT_UNKNOWN
 
-iFile.i = ReadFile(#PB_Any, sFile)
+iFile.i = ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
 
 If iFile
   iSize = Lof(iFile)
@@ -144,9 +144,10 @@ EndProcedure
 ;}
 
 
-; IDE Options = PureBasic 4.61 Beta 1 (Windows - x86)
-; CursorPosition = 3
-; Folding = Q-
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 75
+; FirstLine = 41
+; Folding = Y-
 ; EnableXP
 ; UseMainFile = Player.pb
 ; EnableCompileCount = 2

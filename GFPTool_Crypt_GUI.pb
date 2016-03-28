@@ -1,7 +1,7 @@
 ;***************************************
 ;*** GreenForce Player *** GF-Player ***
 ;*** http://GFP.RRSoftware.de **********
-;*** (c) 2009 - 2013 RocketRider *******
+;*** (c) 2009 - 2016 RocketRider *******
 ;***************************************
 #USE_PB_OGG = #True
 
@@ -97,6 +97,7 @@ Procedure GetDPI()
   
 EndProcedure  
 
+XIncludeFile "include\GFP_PBCompatibility.pbi"
 XIncludeFile "include\GFP_Language.pbi"
 XIncludeFile "include\GFP_SkinGadget.pbi"
 XIncludeFile "include\GFP_DRMHeaderV2_52_Unicode.pbi"

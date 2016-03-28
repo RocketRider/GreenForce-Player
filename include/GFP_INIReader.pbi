@@ -19,7 +19,7 @@ EndProcedure
 Procedure.s INI_Load(sFile.s)
   Protected sResult.s, iFile, length, *MemoryID
   If sFile
-    iFile=ReadFile(#PB_Any, sFile)
+    iFile=ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
     If iFile
       length = Lof(iFile)
       If length
@@ -76,8 +76,9 @@ EndProcedure
 ;}
 
 
-; IDE Options = PureBasic 4.61 Beta 1 (Windows - x86)
-; CursorPosition = 3
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 21
+; FirstLine = 17
 ; Folding = v
 ; EnableXP
 ; EnableUser

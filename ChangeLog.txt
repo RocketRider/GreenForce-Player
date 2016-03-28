@@ -1,3 +1,9 @@
+GF-Player V1.22:
+- Improved: Updated to PureBasic 5.42
+- Corrected: Playlist window
+- added /showmsgbox and /showmsgcheck commandline option
+- optimized png files
+
 GF-Player V1.21:
 - Added: SWF Support
 - Added: OEM Player

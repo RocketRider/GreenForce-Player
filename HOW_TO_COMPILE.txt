@@ -1,4 +1,4 @@
--You need PureBasic V5.21(http://purebasic.com) to compile this Project.
+-You need PureBasic V5.42(http://purebasic.com) to compile this Project.
 -Open GreenForce-Player.pbp
 -Open GFP_OEM.pbi to change the oem version
 -Compile the project (Compiler->Built all Targets)

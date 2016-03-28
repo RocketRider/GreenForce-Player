@@ -55,7 +55,7 @@ CompilerIf #USE_OEM_VERSION
   
   DataSection
     FLVPlayerStart:
-      IncludeBinary "oem-data\player.swf"
+      IncludeBinary "..\oem-data\player.swf"
     FLVPlayerEnd:
   EndDataSection  
   
@@ -65,7 +65,9 @@ CompilerEndIf
 
 
 
-; IDE Options = PureBasic 5.11 (Windows - x86)
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 57
+; FirstLine = 37
 ; Folding = -
 ; EnableXP
 ; EnableUser

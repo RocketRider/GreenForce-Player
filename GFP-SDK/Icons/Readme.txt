@@ -1,0 +1,1 @@
+Icons can be used freely

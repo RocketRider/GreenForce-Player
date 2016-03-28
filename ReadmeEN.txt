@@ -1,4 +1,4 @@
-*************************************** Version: 1.21
+*************************************** Version: 1.22
 *** GreenForce Player *** GF-Player ***
 ***************************************
 *** (c) 2009 - 2013 RocketRider *******
@@ -7,9 +7,8 @@
 Support@GFP.RRSoftware.de
 
 
-
-It is an alternative player to play video and audio media and it allows to password protect videos. 
-It's specifically designed for reducing the hard drives access by using a cache system to extend the battery life of laptops. 
+It is an alternative player to play video and audio media and it allows to password protect video and audio files. 
+It is specifically designed for reducing the hard drive access by using a cache system to extend the battery life of laptops. 
 In addition, the player supports the ability to encrypt media files to protect them with a password from unauthorized access.
 
 Bug reports and suggestions are very welcome.
@@ -43,7 +42,7 @@ Currently supported features:
 - Minimal screen mode
 - Intelligent file extension links 
 - Command line switch (/aspect, /fullscreen, /?, /volume, /password, /hidden, /Invisible,...) 
-- Standalone EXE with only 3 MB (there are no other files required) 
+- Standalone EXE with only ~4 MB (there are no other files required) 
 - Fully developed in PureBasic 
 
 
@@ -87,7 +86,8 @@ Commandline params:
 /disablestreaming	disables the streaming
 /passwordpipe		reads the password out of an rsa encrypted pipe
 /position		set the start position of the video
-
+/showmsgbox			- Shows a messagebox with title and text at startup
+/showmsgcheck		- Shows a messagebox with title and text at startup with the possiblility to not show it again
 
 Acknowledgements
 ----------------

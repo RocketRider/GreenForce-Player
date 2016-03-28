@@ -17,9 +17,9 @@ EndProcedure
 
 
 
-XIncludeFile "include\GFP_DRMHelpFunctions.pbi" ; 2012-08-03 <PSSWORD FIX>
-XIncludeFile "include\GFP_MemoryStream.pbi"
-XIncludeFile "include\GFP_Cryption4_Unicode.pbi"
+XIncludeFile "GFP_DRMHelpFunctions.pbi" ; 2012-08-03 <PSSWORD FIX>
+XIncludeFile "GFP_MemoryStream.pbi"
+XIncludeFile "GFP_Cryption4_Unicode.pbi"
 
 
 #DRM_OK = 0
@@ -427,7 +427,7 @@ Procedure ReadDRMHeader(sFile.s, *header.DRM_HEADER, sPassword.s, qOffset.q = 0)
   Protected iResult.i, iFile.i, lCheckSum.l
   iResult = #DRM_ERROR_FAIL
   If *header
-    iFile.i = ReadFile(#PB_Any, sFile)
+    iFile.i = ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
     If iFile
       FileSeek(iFile, qOffset)
       ReadData(iFile, *header, SizeOf(DRM_HEADER))   
@@ -665,7 +665,7 @@ Procedure DecryptDRMFileToMemory(sFile.s, sPassword.s)
   iResult = #E_FAIL 
   iDRMResult = ReadDRMHeader(sFile, @header, sPassword) 
   If iDRMResult = #DRM_OK
-    iFile.i = ReadFile(#PB_Any, sFile)
+    iFile.i = ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
     If iFile  
       iSize = Lof(iFile) - SizeOf(DRM_HEADER)
       *cryptBuffer = GenerateCryptionBuffer(sPassword)
@@ -705,7 +705,7 @@ Procedure EncryptFile(sFile.s, sEncFile.s, sPassword.s, *header.DRM_HEADER, cb.c
   If *tmp
     *cryptBuffer = GenerateCryptionBuffer(sPassword)
     If *cryptBuffer
-      iReadFile.i = ReadFile(#PB_Any, sFile)
+      iReadFile.i = ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
       If iReadFile
         iCreateFile.i = CreateFile(#PB_Any, sEncFile)
         If iCreateFile
@@ -764,7 +764,7 @@ Procedure DecryptFile(sEncFile.s, sFile.s, sPassword.s, cb.cryptionCB)
   If *tmp
     *cryptBuffer = GenerateCryptionBuffer(sPassword)
     If *cryptBuffer
-      iReadFile.i = ReadFile(#PB_Any, sEncFile)
+      iReadFile.i = ReadFile(#PB_Any, sEncFile, #PB_File_SharedRead )
       If iReadFile
         iCreateFile.i = CreateFile(#PB_Any, sFile)
         If iCreateFile
@@ -1444,7 +1444,7 @@ Procedure _DRMV2_ReadHeaderFromFile(fileName.s, password.s, qOffset.q = 0, *resu
   Protected *header = #Null
   Protected genHeader.DRM_HEADER_GENERIC, file, *memory
   
-  file = ReadFile(#PB_Any, fileName)
+  file = ReadFile(#PB_Any, fileName, #PB_File_SharedRead)
   If file
     FileSeek(file, qOffset)
     If ReadData(file, @genHeader, SizeOf(DRM_HEADER_GENERIC)) = SizeOf(DRM_HEADER_GENERIC)
@@ -1492,7 +1492,7 @@ Procedure _DecryptDRMV2FileToMemory(sFile.s, sPassword.s)
   *header = _DRMV2_ReadHeaderFromFile(sFile, sPassword, 0, @iDRMResult)
   
   If iDRMResult = #DRM_OK And *header
-    iFile.i = ReadFile(#PB_Any, sFile)
+    iFile.i = ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
     If iFile  
       iSize = Lof(iFile) - _DRMV2_GetOrginalHeaderSize(*header)
       
@@ -1538,7 +1538,7 @@ Procedure _EncryptFileV2(sFile.s, sEncFile.s, sPassword.s, *header.DRM_HEADER_V2
   If *tmp
     *cryptBuffer = _DRMV2_AllocateCryptionBuffer(*header, sPassword)
     If *cryptBuffer
-      iReadFile.i = ReadFile(#PB_Any, sFile)
+      iReadFile.i = ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
       If iReadFile
         iCreateFile.i = CreateFile(#PB_Any, sEncFile)
         If iCreateFile
@@ -1602,7 +1602,7 @@ Procedure _DecryptFileV2(sEncFile.s, sFile.s, sPassword.s, cb.cryptionCB)
       
       If *header
         iHeaderSize = _DRMV2_GetOrginalHeaderSize(*header)
-        iReadFile.i = ReadFile(#PB_Any, sEncFile)
+        iReadFile.i = ReadFile(#PB_Any, sEncFile, #PB_File_SharedRead )
         If iReadFile
           iCreateFile.i = CreateFile(#PB_Any, sFile)
           If iCreateFile
@@ -2178,9 +2178,9 @@ EndProcedure
 ; ;EncryptFileV2("D:\test-video.mp4", "D:\test-video.gpf", "psw", *head, #Null)
 ; 
 ; ;DecryptFileV2("D:\test-video.gpf", "D:\test-video.mp4", "psw", #Null)
-; IDE Options = PureBasic 5.11 (Windows - x86)
-; CursorPosition = 2109
-; FirstLine = 2054
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 1444
+; FirstLine = 1381
 ; Folding = fw4Dw----------0
 ; EnableXP
 ; DisableDebugger

@@ -1,5 +1,5 @@
 ﻿#PLAYER_COPYRIGHT = ""
-#PLAYER_NAME = "GreenFoce-Player"
+#PLAYER_NAME = "Video-Player-OEM"
 #PLAYER_GLOBAL_MUTEX = "Video-Player-OEM"
 #GFP_PATTERN_PROTECTED_MEDIA = "VideoPlayer (*.oemvideo)|*.oemvideo;|All Files (*.*)|*.*"
 #GFP_PROTECTED_FILE_EXTENTION = ".oemvideo"   
@@ -39,7 +39,7 @@ Procedure OEM_MenuLimitation();Hide Menu options
   MenuLimitations(10)=#True
   MenuLimitations(36)=#True
 EndProcedure  
-; IDE Options = PureBasic 5.21 LTS (Windows - x86)
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
 ; CursorPosition = 1
 ; Folding = -
 ; EnableXP

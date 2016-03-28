@@ -42,8 +42,8 @@
 
 EnableExplicit
 
-XIncludeFile "include\GFP_MYLIST.pbi"
-XIncludeFile "include\GFP_StringCommands_3.pbi"
+XIncludeFile "GFP_MYLIST.pbi"
+XIncludeFile "GFP_StringCommands_3.pbi"
 
 ; Import "Kernel32.lib"
 ;   GetProcAddress_(hMod.i, Name.p-ascii) As "_GetProcAddress@8"
@@ -3952,10 +3952,10 @@ EndProcedure
 CompilerIf #PB_Compiler_Thread = #False
   CompilerError "Enable Threadsafe"  
 CompilerEndIf
-; IDE Options = PureBasic 5.21 LTS (Windows - x86)
-; CursorPosition = 937
-; FirstLine = 916
-; Folding = ----------------
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 45
+; FirstLine = 40
+; Folding = ------------------
 ; EnableUnicode
 ; EnableThread
 ; EnableXP

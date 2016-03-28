@@ -4,8 +4,8 @@
 ;*** (c) 2009 - 2012 RocketRider *******
 ;***************************************
 
-XIncludeFile "include\GFP_RandomGenerator2.pbi"
-XIncludeFile "include\GFP_DRMHelpFunctions.pbi" ; 2012-08-03 <PSSWORD FIX>
+XIncludeFile "GFP_RandomGenerator2.pbi"
+XIncludeFile "GFP_DRMHelpFunctions.pbi" ; 2012-08-03 <PSSWORD FIX>
 
 EnableExplicit
 #DECRYPTION_BLOCK_SIZEA = 67231
@@ -201,9 +201,9 @@ EndProcedure
 ;  Next
 ;}
 
-; IDE Options = PureBasic 4.61 Beta 1 (Windows - x86)
-; CursorPosition = 33
-; FirstLine = 12
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 7
+; FirstLine = 2
 ; Folding = 4
 ; EnableXP
 ; EnableCompileCount = 1

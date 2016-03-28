@@ -41,7 +41,7 @@ Procedure LoadMedia(filename.s, Parent=0, VidRenderer=0, AudRenderer=0, UseDShow
   Protected *p, file.i, long.l, iUseFLVPlayer.i
   If filename
     If UseDShow=#False
-      file=ReadFile(#PB_Any, filename)
+      file=ReadFile(#PB_Any, filename, #PB_File_SharedRead )
       If file
         CompilerIf #USE_PB_OGG
           long=ReadLong(file)
@@ -653,7 +653,7 @@ Procedure CheckMedia(sFile.s, *MC.MEDIACHECK)
   Protected Result, iSound.i, iMedia.i, file, long.l
   
   iMedia = #MEDIALIBRARY_DSHOW
-  file = ReadFile(#PB_Any, sfile)
+  file = ReadFile(#PB_Any, sfile, #PB_File_SharedRead )
   If file
     long=ReadLong(file)
     If long = 1399285583 Or long = 1130450022;'CaLf';'SggO'
@@ -721,10 +721,10 @@ Procedure LoadMediaPos(*p, sFilename.s, offset.q)
 EndProcedure
 CompilerEndIf
 
-; IDE Options = PureBasic 5.11 (Windows - x86)
-; CursorPosition = 106
-; FirstLine = 75
-; Folding = 0xPBAAi-
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 655
+; FirstLine = 408
+; Folding = 0zPBAAi---
 ; EnableXP
 ; UseMainFile = Player.pb
 ; EnableCompileCount = 0

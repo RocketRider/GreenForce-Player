@@ -88,7 +88,7 @@ EndInterface
 #wbemFlagReturnImmediately=16 
 #wbemFlagForwardOnly=32 
 #IFlags = #wbemFlagReturnImmediately + #wbemFlagForwardOnly 
-#WBEM_INFINITE=$FFFFFFFF 
+;#WBEM_INFINITE=$FFFFFFFF 
 
 #HW_PROFILE_GUIDLEN = $27
 #MAX_PROFILE_LEN = $50
@@ -151,6 +151,10 @@ Procedure.s GetWindows()
     sResult = "Windows 7"
   Case #PB_OS_Windows_8
     sResult = "Windows 8"
+  Case #PB_OS_Windows_8_1
+    sResult = "Windows Unknown" ; For compatibility reason
+  Case #PB_OS_Windows_10
+    sResult = "Windows Unknown"  ; For compatibility reason   
   Case #PB_OS_Windows_Future
     sResult = "Windows Unknown"
   Case #PB_OS_Windows_Server_2003
@@ -423,8 +427,8 @@ DataSection
   Data.b $88, $4D, $00, $AA, $00, $4B, $2E, $24 
 EndDataSection
 
-; IDE Options = PureBasic 5.11 (Windows - x86)
-; CursorPosition = 378
-; FirstLine = 334
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 156
+; FirstLine = 279
 ; Folding = -0-
 ; EnableXP

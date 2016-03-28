@@ -38,7 +38,7 @@ EndProcedure
 ;-> Unicode, UTF8 Unterstützen (PeekS)
 Procedure LoadLimitations(sFile.s)
   Protected iFile.i, MenuID.i
-  iFile = ReadFile(#PB_Any, sFile)
+  iFile = ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
   If iFile
     While Eof(iFile) = 0
       MenuID=Val(ReadString(iFile, #PB_Ascii))
@@ -57,8 +57,9 @@ Procedure LoadLimitations(sFile.s)
 EndProcedure
 
 
-; IDE Options = PureBasic 5.11 (Windows - x86)
-; CursorPosition = 5
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 40
+; FirstLine = 17
 ; Folding = 0
 ; EnableXP
 ; EnableUser

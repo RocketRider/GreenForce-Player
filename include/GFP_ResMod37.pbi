@@ -53,7 +53,7 @@ EndProcedure
 
 Procedure __LoadFileToMemory(sFile.s)
   Protected iFile.i, iFileSize.i, *addr
-  iFile = ReadFile(#PB_Any, sFile)
+  iFile = ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
   If iFile
     iFileSize = Lof(iFile)
     *addr = AllocateMemory(iFileSize)
@@ -670,9 +670,9 @@ EndProcedure
 ; Debug ResMod_AddIconGrp("D:\test\mpplayer.exe", "D:\test\Laptop.ico")
 ; 
 ;}
-; IDE Options = PureBasic 5.11 (Windows - x86)
-; CursorPosition = 670
-; FirstLine = 614
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 55
+; FirstLine = 54
 ; Folding = -----
 ; EnableXP
 ; EnableCompileCount = 16

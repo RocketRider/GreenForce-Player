@@ -1,7 +1,7 @@
-*************************************** Version: 1.21
+*************************************** Version: 1.22
 *** GreenForce Player *** GF-Player ***
 ***************************************
-*** (c) 2009 - 2013 RocketRider *******
+*** (c) 2009 - 2016 RocketRider *******
 *** http://GFP.RRSoftware.de ********** 
 ***************************************
 Support@GFP.RRSoftware.de
@@ -42,13 +42,13 @@ Momentan unterstützte Funktionalitäten:
 - Minimalmodus
 - Intelligente Dateiverknüpfungen
 - Kommandozeilenparameter (/aspect, /fullscreen, /?, /volume, /password, /hidden, /Invisible,...)
-- Standalone EXE mit nur 3 MB (es werden keine weiteren Dateien benötigt)
+- Standalone EXE mit nur ~4 MB (es werden keine weiteren Dateien benötigt)
 - Komplett in PureBasic entwickelt
 
 
-Commandozeilenparameter:
+Kommandozeilenparameter:
 ------------------------
-/?,/help,/h        - Zeigt EXE Optionen an
+/?,/help,/h        - Zeigt EXE-Optionen an
 /fullscreen        - Player im Fullscreenmodus starten 
 /volume            - Lautstärke setzen
 /password          - Passwort 
@@ -58,16 +58,18 @@ Automatische Pfadersetzungen:
 [APPDATA],[DESKTOP],[DOCUMENTS],[HOME],[TEMP],[PROGRAM]
 z.B:
 [APPDATA]\GFP\1234567.sqlite
+/showmsgbox			- Zeigt eine Meldung mit Titel und Tebxt beim Start an
+/showmsgcheck		- Zeigt eine Meldung mit Titel und Tebxt beim Start an mit der Möglichkeit diese nicht mehr anzeigen zu lassen
 
 /importlist - Abspielliste importieren
 /aspect     - aspect ratio vordefinieren z.B: "16:9", "4:3", ...
-/loglevel   - setzt das loglevel 0=None, 1=Error, 2=Debug
+/loglevel   - setzt das Loglevel 0=None, 1=Error, 2=Debug
 /videorenderer - setzt den video renderer (0=Default, 1=VMR9_Windowless, 2=VMR7_Windowless, 3=OldVideoRenderer, 4=OverlayMixer, 5=DSHOWDEFAULT, 6=VMR9_Windowed, 7=VMR7_Windowed, 8=OWN_RENDERER)
 /audiorenderer - setzt den audio renderer (0=Default, 1=WAVEOUTRENDERER, 2=DIRECTSOUNDRENDERER)
-/restoredatabase - Wiederherstellung der Ursprünglichen Datenbank
+/restoredatabase - Wiederherstellung der ursprünglichen Datenbank
 ...
 
-
+Für weitere Parameter siehe englische Readme(ReadmeEN.txt).
 
 Acknowledgements
 ----------------

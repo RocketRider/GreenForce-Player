@@ -20,6 +20,7 @@ EndMacro
 
 
 Declare __AnsiString(str.s)
+XIncludeFile "include\GFP_PBCompatibility.pbi"
 XIncludeFile "include\GFP_Cryption4_Unicode.pbi"
 XIncludeFile "include\GFP_DRMHeaderV2_52_Unicode.pbi"
 XIncludeFile "include\GFP_Mediadet.pbi"

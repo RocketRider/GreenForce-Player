@@ -6,8 +6,8 @@
 
 
 ;XIncludeFile "GFP_BIT_HELPER.pbi"
-XIncludeFile "include\GFP_MultipleReadExclusiveWrite_Mutex.pbi"
-XIncludeFile "include\GFP_WINHTTP55.pbi"
+XIncludeFile "GFP_MultipleReadExclusiveWrite_Mutex.pbi"
+XIncludeFile "GFP_WINHTTP55.pbi"
 EnableExplicit
 Global STREAMING_BLOCK_SIZE.i = 1024*150;Darf nicht während dem Herunterladen geändert werden
 Global StreamingThreadsNotEnd.i=#False
@@ -821,10 +821,10 @@ EndProcedure
 ; HTTPCONTEXT_UnInitialize()
 ;}
 
-; IDE Options = PureBasic 5.21 LTS (Windows - x86)
-; CursorPosition = 62
-; FirstLine = 51
-; Folding = ----
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 8
+; FirstLine = 4
+; Folding = -----
 ; EnableUnicode
 ; EnableThread
 ; EnableXP

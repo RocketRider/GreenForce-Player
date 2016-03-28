@@ -6,7 +6,7 @@
 
 ;Create the Language table:
 ;CREATE TABLE LANGUAGE (id INT UNIQUE, DE VARCHAR(500), EN VARCHAR(500), FR VARCHAR(500))
-XIncludeFile "include\GFP_Database.pbi"
+XIncludeFile "GFP_Database.pbi"
 ;XIncludeFile "include\GFP_LogFile.pbi"
 EnableExplicit
 
@@ -367,7 +367,7 @@ Procedure AddNewLanguage(sDBFile.s, sNewLanguageFile.s)
   Protected *LngDB, iRow.i, iNewLng.i, sLine.s, iColumn.i, sColumn.s, iID.i, update=#False, i.i
   *LngDB = DB_Open(sDBFile)
   If *LngDB
-    iNewLng.i = ReadFile(#PB_Any, sNewLanguageFile.s)
+    iNewLng.i = ReadFile(#PB_Any, sNewLanguageFile.s, #PB_File_SharedRead )
     If iNewLng
       sLine.s = Trim(ReadString(iNewLng, #PB_Unicode))
       
@@ -423,7 +423,7 @@ Procedure ChangeLanguage(sDBFile.s, sNewLanguageFile.s)
   Protected *LngDB, iRow.i, iNewLng.i, sLine.s, iColumn.i, sColumn.s, iID.i
   *LngDB = DB_Open(sDBFile)
   If *LngDB
-    iNewLng.i = ReadFile(#PB_Any, sNewLanguageFile.s)
+    iNewLng.i = ReadFile(#PB_Any, sNewLanguageFile.s, #PB_File_SharedRead )
     If iNewLng
       sLine.s = ReadString(iNewLng)
       ;DB_UpdateSync(*LngDB, "ALTER TABLE LANGUAGE ADD COLUMN "+sLine+" VARCHAR(500)")
@@ -470,10 +470,10 @@ EndProcedure
 ; Debug Language(#L_ENGLISH)
 ;}
 
-; IDE Options = PureBasic 4.70 Beta 1 (Windows - x86)
-; CursorPosition = 463
-; FirstLine = 213
-; Folding = A-
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 369
+; FirstLine = 277
+; Folding = w-
 ; EnableXP
 ; EnableUser
 ; EnableOnError

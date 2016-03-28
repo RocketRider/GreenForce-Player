@@ -1,7 +1,7 @@
-;*************************************** Version: 1.21
+;*************************************** Version: 1.22
 ;*** GreenForce Player *** GF-Player ***
 ;*** http://GFP.RRSoftware.de **********
-;*** (c) 2009 - 2013 RocketRider *******
+;*** (c) 2009 - 2016 RocketRider *******
 ;***************************************
 EnableExplicit
 #USE_VIRTUAL_FILE = #True;#False;
@@ -143,11 +143,11 @@ CompilerEndIf
   CompilerEndIf 
   #PANEL_HEIGHT_FLV_PLAYER = 82
     
-  #PLAYER_VERSION = "1.21"
+  #PLAYER_VERSION = "1.22"
   
   
   CompilerIf #USE_OEM_VERSION = #False
-    #PLAYER_COPYRIGHT = "© 2009 - 2013 RocketRider"
+    #PLAYER_COPYRIGHT = "© 2009 - 2016 RocketRider"
     
     #PLAYER_GLOBAL_MUTEX = "GreenForce-Player"
     #GFP_PATTERN_PROTECTED_MEDIA = "GF-Player (*.gfp)|*.gfp;|All Files (*.*)|*.*"
@@ -838,6 +838,8 @@ CompilerEndIf
   Define *DBDesign
   Define *DB
   Define ElapsedMillisecondsFails=0
+  Define sMsgTitle.s, sMsgText.s
+          
   
   Declare CreateListWindow()
   Declare CreateOptionsWindow()
@@ -897,6 +899,9 @@ CompilerEndIf
   
 ;}
 ;{ Include
+  
+  XIncludeFile "include\GFP_PBCompatibility.pbi"
+  
   CompilerIf #USE_LEAK_DEBUG
     XIncludeFile "include\GFP_LEAK_DEBUG.pbi"
   CompilerEndIf  
@@ -1632,7 +1637,7 @@ EndProcedure
 Procedure isFileEncrypted(sFile.s)
   Protected iFile, iResult.i
   iResult=#False
-  iFile = ReadFile(#PB_Any, sFile)
+  iFile = ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
   If iFile
     If ReadLong(iFile)=1145392472;'DEMX'
       iResult = #True
@@ -2469,7 +2474,7 @@ Procedure LoadAttachedMedia(sFile.s, sMediaTitle.s="", qOffset.q=0);ADD DRM V2
         If ReadEXEAttachment(iIndex, FileStruc)
           qOffset = FileStruc\absoluteOffset
           
-          iFile=ReadFile(#PB_Any, sFile)
+          iFile=ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
           If iFile
 
             ;If qOffset:FileStruc\absoluteOffset=qOffset:EndIf
@@ -2979,7 +2984,7 @@ Procedure _LoadMediaFile(sFile.s, iAddPrevious.i = #True, sMediaTitle.s = "", qO
     iMediaObject=0
     ChangeContainer(#GADGET_CONTAINER)
     MediaFile\sRealFile = sFile
-    iFile.i = ReadFile(#PB_Any, sFile)
+    iFile.i = ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
     If iFile Or sProtokoll="http" Or sProtokoll="https"
       If Playlist\iID;isPlaylist
         If iAddPrevious:AddPreviousFile(sFile.s, Playlist\iCurrentMedia):EndIf
@@ -5704,7 +5709,7 @@ EndProcedure
 
     *thumbButtons=TB_Create()
     If *thumbButtons
-      TB_SetProgressState(*thumbButtons, WindowID(#WINDOW_MAIN), #TBPF_NoProgress)
+      TB_SetProgressState(*thumbButtons, WindowID(#WINDOW_MAIN), #tbpf_noprogress)
       
       
       ThumbButtons(0)\iId=#GADGET_TB_PREVIOUS
@@ -6078,9 +6083,10 @@ EndProcedure
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Feel the green force!")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Team members:")
-          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-RocketRider(Michael Möbius)")
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-RocketRider(Michael Möbius)")     
+          
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
-          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Thanks to")
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Thanks to:")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Warkering (French language)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Saner Apaydin (Turkish language)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Carl Peeraer (Nederlands language)")
@@ -6095,7 +6101,11 @@ EndProcedure
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "http://GFP.RRSoftware.de")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Support@GFP.RRSoftware.de")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
-          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Copyright (c) 2009-2013 RocketRider")
+        
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Source code:")
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "https://github.com/RocketRider/GreenForce-Player")     
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")           
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Copyright (c) 2009-2016 RocketRider")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "This software is provided 'as-is',")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "without any express or implied warranty.")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "In no event will the authors be held")
@@ -6109,9 +6119,7 @@ EndProcedure
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS `AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.")
-
-          
-          
+  
         Else
           WriteLog("Can't open about window!")
         EndIf
@@ -6124,7 +6132,7 @@ EndProcedure
   Procedure CreateListWindow()
     Protected hTB, hOldIList, hNewIList
     If IsWindow(#WINDOW_LIST) = #False
-      OpenWindow(#WINDOW_LIST, 0, 0, 400, 300, #PLAYER_NAME+" - " + Language(#L_PLAYLIST),#PB_Window_ScreenCentered|#PB_Window_SizeGadget|#PB_Window_SystemMenu|#PB_Window_MinimizeGadget)
+      OpenWindow(#WINDOW_LIST, 0, 0, 400-1, 300-1, #PLAYER_NAME+" - " + Language(#L_PLAYLIST),#PB_Window_ScreenCentered|#PB_Window_SizeGadget|#PB_Window_SystemMenu|#PB_Window_MinimizeGadget)
       WriteLog("Open Playlist window", #LOGLEVEL_DEBUG)
       
       CompilerIf #USE_OEM_VERSION
@@ -6169,8 +6177,7 @@ EndProcedure
       ToolBarToolTip(#TOOLBAR_PLAYLIST, #TOOLBAR_BUTTON_ADDTRACK, Language(#L_ADD_TRACK)) 
       ToolBarToolTip(#TOOLBAR_PLAYLIST, #TOOLBAR_BUTTON_ADDFOLDERTRACKS, Language(#L_ADD_FOLDER)) 
       ToolBarToolTip(#TOOLBAR_PLAYLIST, #TOOLBAR_BUTTON_ADDURL, Language(#L_ADD_URL)) 
-      ToolBarToolTip(#TOOLBAR_PLAYLIST, #TOOLBAR_BUTTON_DELETETRACK, Language(#L_REMOVE_TRACK)) 
-      
+      ToolBarToolTip(#TOOLBAR_PLAYLIST, #TOOLBAR_BUTTON_DELETETRACK, Language(#L_REMOVE_TRACK))  
       
       ContainerGadget(#GADGET_LIST_CONTAINER, 0, 0, 0, 0)
         ListIconGadget(#GADGET_LIST_PLAYLIST, 0, 0, 0, 0, Language(#L_PLAYLIST), 100, #PB_ListIcon_FullRowSelect|#PB_ListIcon_AlwaysShowSelection )
@@ -6217,6 +6224,11 @@ EndProcedure
       SetActiveWindow(#WINDOW_LIST)  
       
     EndIf
+    
+    ;Prevent display errors...
+    ResizeWindow(#WINDOW_LIST,#PB_Ignore,#PB_Ignore,WindowWidth(#WINDOW_LIST)+1,WindowHeight(#WINDOW_LIST)+1)  
+    ;Repeat
+    ;Until WindowEvent() = 0
   EndProcedure
   Procedure CreateOptionsWindow()
     Protected sVideoRender.s, iAudioRenderer.i, DriveType.i
@@ -7989,6 +8001,18 @@ EndProcedure
       Case "/volume"
         StartParams\iVolume = Val(_ProgramParameter())
         
+      Case "/showmsgcheck"
+        sMsgTitle = _ProgramParameter()
+        sMsgText = _ProgramParameter()
+        UseCRC32Fingerprint()
+        MessageBoxCheck(sMsgTitle, sMsgText, #MB_ICONINFORMATION, StringFingerprint(sMsgText, #PB_Cipher_CRC32))
+        
+      Case "/showmsgbox"
+        sMsgTitle = _ProgramParameter()
+        sMsgText = _ProgramParameter()
+        UseCRC32Fingerprint()
+        MessageRequester(sMsgTitle, sMsgText, #MB_ICONINFORMATION)
+        
       Case "/password"
         StartParams\sPassword = _ProgramParameter()
         sGlobalPassword = StartParams\sPassword
@@ -8380,7 +8404,7 @@ EndProcedure
   
   
   If StartParams\sPasswordFile
-    iFile = ReadFile(#PB_Any, StartParams\sPasswordFile)
+    iFile = ReadFile(#PB_Any, StartParams\sPasswordFile, #PB_File_SharedRead )
     If iFile
       sGlobalPassword = ReadString(iFile)
       CloseFile(iFile)
@@ -9082,10 +9106,10 @@ Until iQuit=#True
 
 
 
-; IDE Options = PureBasic 5.21 LTS (Windows - x86)
-; CursorPosition = 2360
-; FirstLine = 840
-; Folding = QDAEAAAAAAAA0DAAAAAAACEAAg----------------
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 6121
+; FirstLine = 3533
+; Folding = QbBcAAAAgBAA0DEgPAAHACEAAg----------------
 ; EnableThread
 ; EnableXP
 ; EnableUser

@@ -72,8 +72,8 @@ Global Dim Settings.Settings(#SETTINGS_LAST)
 Global iLastSettingsItem.i
 Settings(#SETTINGS_LOGLEVEL)\sValue = "1"
 
-XIncludeFile "include\GFP_LogFile.pbi"
-XIncludeFile "include\GFP_Database.pbi"
+XIncludeFile "GFP_LogFile.pbi"
+XIncludeFile "GFP_Database.pbi"
 EnableExplicit
 
 
@@ -155,8 +155,9 @@ EndProcedure
 ;}
 
 
-; IDE Options = PureBasic 4.61 (Windows - x86)
-; CursorPosition = 25
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 75
+; FirstLine = 67
 ; Folding = z
 ; EnableThread
 ; EnableXP

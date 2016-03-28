@@ -26,6 +26,7 @@ Structure MediaFile
 EndStructure
 Global MediaFile.MediaFile
 
+XIncludeFile "include\GFP_PBCompatibility.pbi"
 XIncludeFile "include\GFP_Settings.pbi"
 XIncludeFile "include\GFP_LogFile.pbi"
 XIncludeFile "include\GFP_Database.pbi"
@@ -104,7 +105,7 @@ EndIf
 ReplaceLanguageTable(*DB, *OrgDB)
 DB_Close(*OrgDB)
 DB_Close(*DB)
-MessageRequester("Finish","Finsih!")
+MessageRequester("Finish","Finshed!")
 
 
 ; IDE Options = PureBasic 5.11 (Windows - x86)

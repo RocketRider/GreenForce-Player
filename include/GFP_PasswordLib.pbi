@@ -8,7 +8,7 @@ EnableExplicit
 Global Dim PasswordMgr.s(1)
 Global iLastPasswordMgrItem.i
 
-XIncludeFile "include\GFP_DRMHelpFunctions.pbi"; 2012-08-03 <PASSWORD FIX>
+XIncludeFile "GFP_DRMHelpFunctions.pbi"; 2012-08-03 <PASSWORD FIX>
 
 
 
@@ -98,8 +98,9 @@ EndProcedure
 
 
 
-; IDE Options = PureBasic 4.70 Beta 1 (Windows - x86)
-; CursorPosition = 13
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 10
+; FirstLine = 6
 ; Folding = -
 ; EnableXP
 ; EnableUser

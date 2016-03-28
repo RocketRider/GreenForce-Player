@@ -747,12 +747,13 @@ ProcedureDLL VIS_Coverflow_Run(*p.IVisualisationCanvas)
         ;Draw GUI
         Draw_VIS_CF_Menu(iHeight.i, iWidth.i, iMouseX.i, iMouseY.i, iLeftMButton.i)
         
-        VIS_Coverflow_Counter+10
-        If 70-(VIS_Coverflow_Counter)/10>0
-          Sprite2D_Zoom(VIS_Coverflow_GFP_Sprite, VIS_Coverflow_Counter, VIS_Coverflow_Counter)
-          Sprite2D_Rotate(VIS_Coverflow_GFP_Sprite, 1, 1)
-          Sprite2D_DisplayEx(VIS_Coverflow_GFP_Sprite, (iWidth-VIS_Coverflow_Counter)/2, (iHeight-VIS_Coverflow_Counter)/2, 70-(VIS_Coverflow_Counter)/10)
-        EndIf
+        
+        ;VIS_Coverflow_Counter+10
+        ;If 70-(VIS_Coverflow_Counter)/10>0
+        ;  Sprite2D_Zoom(VIS_Coverflow_GFP_Sprite, VIS_Coverflow_Counter, VIS_Coverflow_Counter)
+        ;  Sprite2D_Rotate(VIS_Coverflow_GFP_Sprite, 1, 1)
+        ;  Sprite2D_DisplayEx(VIS_Coverflow_GFP_Sprite, (iWidth-VIS_Coverflow_Counter)/2, (iHeight-VIS_Coverflow_Counter)/2, 70-(VIS_Coverflow_Counter)/10)
+        ;EndIf
         
         Sprite2D_Stop()
       EndIf
@@ -831,9 +832,9 @@ Procedure LoadCoverFlow()
 EndProcedure  
 
 
-; IDE Options = PureBasic 5.21 LTS Beta 1 (Windows - x86)
-; CursorPosition = 189
-; FirstLine = 170
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 755
+; FirstLine = 613
 ; Folding = hD+
 ; EnableXP
 ; EnableUser
