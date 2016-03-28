@@ -8,15 +8,15 @@
   <section name="data">
     <explorer view="include\" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2016-03-28 03:37" user="benutzer" host="PC1"/>
+    <lastopen date="2016-03-28 04:01" user="benutzer" host="PC1"/>
   </section>
   <section name="files">
     <file name="GFP_Main.pb">
-      <config load="1" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
+      <config load="1" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
       <fingerprint md5="2bbafee4507ac3a2d361925a4bff7b2e"/>
     </file>
     <file name="GFP_OEM.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
       <fingerprint md5="fb5d4975d78bf1188c877f23bf06c5b3"/>
     </file>
     <file name="GFPDll_Crypt2.pb">
@@ -68,7 +68,7 @@
       <fingerprint md5="a6672f5f5925f9cd44d8c961b142a65e"/>
     </file>
     <file name="include\GFP_Covers.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
       <fingerprint md5="6129bf820004fcbae1c38bc4bfeee701"/>
     </file>
     <file name="include\GFP_CPU-Throttle.pbi">
@@ -76,7 +76,7 @@
       <fingerprint md5="1c1f8649103c2b7763e4e6cdbeabe1aa"/>
     </file>
     <file name="include\GFP_Cryption4_Unicode.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
       <fingerprint md5="cfb94d2dba30f4ff47219050dfb8867f"/>
     </file>
     <file name="include\GFP_D3D.pbi">
@@ -156,7 +156,7 @@
       <fingerprint md5="8e71a3aad4cc6c6a7efb58a619e6e87a"/>
     </file>
     <file name="include\GFP_MachineID.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
       <fingerprint md5="943ab52e1f354ef71d4d112b2ecfeccb"/>
     </file>
     <file name="include\GFP_Mediadet.pbi">
@@ -260,7 +260,7 @@
       <fingerprint md5="7ff91c1f836cdd5b4da0aaa61f9c9120"/>
     </file>
     <file name="include\GFP_Sprite2D_Framework.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
       <fingerprint md5="dac35526c0d501dc05f85664452adb73"/>
     </file>
     <file name="include\GFP_StreamingManager.pbi">
@@ -312,7 +312,7 @@
       <fingerprint md5="06b2aeb8610d2a64a5b09a3564096172"/>
     </file>
     <file name="include\GFP_VIS_Coverflow.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
       <fingerprint md5="63316789f5c286060811491c7dacd1b8"/>
     </file>
     <file name="include\GFP_VIS_DCT.pbi">
@@ -360,8 +360,8 @@
       <options unicode="1" thread="1" xpskin="1" user="1" onerror="1" debug="1"/>
       <icon enable="1">data\GFP.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="10401"/>
-      <buildcount enable="1" value="2371"/>
+      <compilecount enable="1" value="10405"/>
+      <buildcount enable="1" value="2373"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="1,2,2,0"/>
@@ -390,8 +390,8 @@
       <options unicode="1" thread="1" xpskin="1" user="1" onerror="1" debug="1"/>
       <icon enable="1">OEM-data\oem.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="7168"/>
-      <buildcount enable="1" value="2336"/>
+      <compilecount enable="1" value="7170"/>
+      <buildcount enable="1" value="2338"/>
       <execonstant enable="1"/>
       <constants>
         <constant value="#USE_OEM_VERSION = 1" enable="1"/>
@@ -404,8 +404,8 @@
       <options unicode="1" thread="1" xpskin="1" onerror="1" debug="1"/>
       <icon enable="1">data\Save.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="478"/>
-      <buildcount enable="1" value="438"/>
+      <compilecount enable="1" value="480"/>
+      <buildcount enable="1" value="440"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="1,1,3,0"/>
@@ -432,8 +432,8 @@
       <options unicode="1" thread="1" xpskin="1" onerror="1" debug="1"/>
       <icon enable="1">OEM-data\Crypt\video-encrypt.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="456"/>
-      <buildcount enable="1" value="435"/>
+      <compilecount enable="1" value="458"/>
+      <buildcount enable="1" value="437"/>
       <execonstant enable="1"/>
       <constants>
         <constant value="#USE_OEM_VERSION = 1" enable="1"/>
@@ -447,8 +447,8 @@
       <icon enable="1">data\Save.ico</icon>
       <format exe="console" cpu="0"/>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="491"/>
-      <buildcount enable="1" value="442"/>
+      <compilecount enable="1" value="493"/>
+      <buildcount enable="1" value="444"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="1,1,3,0"/>
@@ -476,8 +476,8 @@
       <icon enable="1">OEM-data\Crypt\video-encrypt.ico</icon>
       <format exe="console" cpu="0"/>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="441"/>
-      <buildcount enable="1" value="438"/>
+      <compilecount enable="1" value="443"/>
+      <buildcount enable="1" value="440"/>
       <execonstant enable="1"/>
       <constants>
         <constant value="#USE_OEM_VERSION = 1" enable="1"/>
@@ -491,8 +491,8 @@
       <icon enable="0">data\Save.ico</icon>
       <format exe="dll" cpu="0"/>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="457"/>
-      <buildcount enable="1" value="444"/>
+      <compilecount enable="1" value="459"/>
+      <buildcount enable="1" value="446"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="1,1,3,0"/>
@@ -520,8 +520,8 @@
       <icon enable="0">data\Save.ico</icon>
       <format exe="dll" cpu="0"/>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="446"/>
-      <buildcount enable="1" value="442"/>
+      <compilecount enable="1" value="448"/>
+      <buildcount enable="1" value="444"/>
       <execonstant enable="1"/>
       <constants>
         <constant value="#USE_OEM_VERSION = 1" enable="1"/>
