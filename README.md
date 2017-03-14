@@ -11,6 +11,7 @@ Currently supported features:
 - Audio playback (depending on the installed DirectShow codecs) 
 - E.g. Windows 7: ogg, flac, wma, mp3, wav, ... 
 - Integrated Ogg and Flac Decoder!
+- automatic download of LAV Filter codecs
 - Custom container format (*. gfp) for password protected media (provides configuration options to prevent screenshots and to restore the original file). 
 - For more codecs you can install a codec pack like K-Lite codecs (http://www.codecguide.com)
 - Audio CD playback 
