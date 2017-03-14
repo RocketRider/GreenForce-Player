@@ -610,7 +610,7 @@ CompilerEndIf
     #SPRITE_MENU_LANGUAGE_BULGARIA
     #SPRITE_MENU_LANGUAGE_SERBIA
     #SPRITE_MENU_LANGUAGE_PERSIAN
-    
+    #SPRITE_MENU_PLAYFILE    
   EndEnumeration
   
   
@@ -3999,6 +3999,8 @@ Procedure LoadPlayerData()
   
   
   CatchImage(#SPRITE_MENU_PLAYLIST, ?DS_menu_playlist)
+  CatchImage(#SPRITE_MENU_PLAYFILE, ?DS_menu_PlayFile)
+  
   CatchImage(#SPRITE_MENU_LOAD, ?DS_menu_load)
   CatchImage(#SPRITE_MENU_END, ?DS_menu_end)
   CatchImage(#SPRITE_MENU_HOMEPAGE, ?DS_menu_homepage)
@@ -5840,7 +5842,7 @@ EndProcedure
             __MenuItem(#MENU_CHRONIC_CLEAR, Language(#L_CLEAR_CHRONIC), ImageID(#SPRITE_MENU_BRUSH))
             MenuBar()
             For i=0 To 9
-              __MenuItem(#MENU_CHRONIC_1+i, "-", ImageID(#SPRITE_MENU_LOAD))
+              __MenuItem(#MENU_CHRONIC_1+i, "-", ImageID(#SPRITE_MENU_PLAYFILE ))
             Next
           CloseSubMenu()
           CompilerIf #USE_OEM_VERSION=#False   
@@ -9197,7 +9199,8 @@ Until iQuit=#True
     IncludeBinary "Data\Icons\Icons-16x16\DVD-Movie.ico"
     DS_menu_Snapshot:
     IncludeBinary "Data\Icons\Icons-16x16\snapshot-16x16.ico"
-    
+     DS_menu_PlayFile:
+    IncludeBinary "Data\Icons\Icons-16x16\PLAY_FILE.ico"   
     
     
     CompilerIf #USE_OEM_VERSION
@@ -9244,8 +9247,8 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 2329
-; FirstLine = 1566
+; CursorPosition = 612
+; FirstLine = 565
 ; Folding = X8h9PBQgQ+AQg+BSyHiiDADGMs5----------------
 ; EnableThread
 ; EnableXP

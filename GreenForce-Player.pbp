@@ -8,12 +8,12 @@
   <section name="data">
     <explorer view="include\" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2017-03-14 22:22" user="admin" host="DESKTOP-1NUDIVF"/>
+    <lastopen date="2017-03-14 23:35" user="admin" host="DESKTOP-1NUDIVF"/>
   </section>
   <section name="files">
     <file name="GFP_Main.pb">
-      <config load="1" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
-      <fingerprint md5="81ebd476477315488e1eac7c6d81d2bd"/>
+      <config load="1" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
+      <fingerprint md5="ebdd549db0527271024a48db052c0594"/>
     </file>
     <file name="GFP_OEM.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
@@ -140,7 +140,7 @@
       <fingerprint md5="c1147f0fd69f102d3a378ea4fa0525c5"/>
     </file>
     <file name="include\GFP_Language.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
       <fingerprint md5="c5d7d805107a621a40285d40cdb5f2c5"/>
     </file>
     <file name="include\GFP_LAVFilters.pbi">
@@ -157,11 +157,11 @@
     </file>
     <file name="include\GFP_LogFile.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
-      <fingerprint md5="86189229b721f9213ec2d272fd5a4105"/>
+      <fingerprint md5="84aaca226acff8022acd0fccdb1194d6"/>
     </file>
     <file name="include\GFP_MachineID.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
-      <fingerprint md5="8037cee6b860418e802886214956170c"/>
+      <fingerprint md5="78a0376a6243f9409fbc34a454f914cf"/>
     </file>
     <file name="include\GFP_Mediadet.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
@@ -364,8 +364,8 @@
       <options unicode="1" thread="1" xpskin="1" user="1" onerror="1" debug="1"/>
       <icon enable="1">data\GFP.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="10612"/>
-      <buildcount enable="1" value="2423"/>
+      <compilecount enable="1" value="10624"/>
+      <buildcount enable="1" value="2427"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="2,0,0,0"/>
@@ -394,8 +394,8 @@
       <options unicode="1" thread="1" xpskin="1" user="1" onerror="1" debug="1"/>
       <icon enable="1">OEM-data\oem.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="7203"/>
-      <buildcount enable="1" value="2371"/>
+      <compilecount enable="1" value="7207"/>
+      <buildcount enable="1" value="2375"/>
       <execonstant enable="1"/>
       <constants>
         <constant value="#USE_OEM_VERSION = 1" enable="1"/>
@@ -408,8 +408,8 @@
       <options unicode="1" thread="1" xpskin="1" onerror="1" debug="1"/>
       <icon enable="1">data\Save.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="512"/>
-      <buildcount enable="1" value="472"/>
+      <compilecount enable="1" value="516"/>
+      <buildcount enable="1" value="476"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="1,1,3,0"/>
@@ -436,8 +436,8 @@
       <options unicode="1" thread="1" xpskin="1" onerror="1" debug="1"/>
       <icon enable="1">OEM-data\Crypt\video-encrypt.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="490"/>
-      <buildcount enable="1" value="469"/>
+      <compilecount enable="1" value="494"/>
+      <buildcount enable="1" value="473"/>
       <execonstant enable="1"/>
       <constants>
         <constant value="#USE_OEM_VERSION = 1" enable="1"/>
@@ -451,8 +451,8 @@
       <icon enable="1">data\Save.ico</icon>
       <format exe="console" cpu="0"/>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="527"/>
-      <buildcount enable="1" value="478"/>
+      <compilecount enable="1" value="531"/>
+      <buildcount enable="1" value="482"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="1,1,3,0"/>
@@ -480,8 +480,8 @@
       <icon enable="1">OEM-data\Crypt\video-encrypt.ico</icon>
       <format exe="console" cpu="0"/>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="477"/>
-      <buildcount enable="1" value="474"/>
+      <compilecount enable="1" value="481"/>
+      <buildcount enable="1" value="478"/>
       <execonstant enable="1"/>
       <constants>
         <constant value="#USE_OEM_VERSION = 1" enable="1"/>
@@ -495,8 +495,8 @@
       <icon enable="0">data\Save.ico</icon>
       <format exe="dll" cpu="0"/>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="493"/>
-      <buildcount enable="1" value="480"/>
+      <compilecount enable="1" value="497"/>
+      <buildcount enable="1" value="484"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="1,1,3,0"/>
@@ -524,8 +524,8 @@
       <icon enable="0">data\Save.ico</icon>
       <format exe="dll" cpu="0"/>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="482"/>
-      <buildcount enable="1" value="478"/>
+      <compilecount enable="1" value="486"/>
+      <buildcount enable="1" value="482"/>
       <execonstant enable="1"/>
       <constants>
         <constant value="#USE_OEM_VERSION = 1" enable="1"/>
