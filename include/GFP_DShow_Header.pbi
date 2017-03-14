@@ -751,8 +751,11 @@ DEFINE_GUID(MEDIATYPE_Audio, $73647561, $0000, $0010, $80, $00, $00, $aa, $00, $
 DEFINE_GUID(MEDIATYPE_Text, $73747874,  $0000, $0010, $80, $00, $00, $aa, $00, $38, $9b, $71)
 
 DEFINE_GUID(MEDIASUBTYPE_Overlay, $e436eb7f, $524f, $11ce, $9f, $53, $00, $20, $af, $0b, $a7, $70)
-; IDE Options = PureBasic 5.42 LTS (Windows - x86)
-; CursorPosition = 6
-; FirstLine = 2
+
+DEFINE_GUID(LAV_Splitter,       $171252A0,$8820,$4AFE,$9D,$F8,$5C,$92,$B2,$D6,$6B,$04)
+
+; IDE Options = PureBasic 5.60 (Windows - x86)
+; CursorPosition = 727
+; FirstLine = 705
 ; Folding = -
 ; EnableXP

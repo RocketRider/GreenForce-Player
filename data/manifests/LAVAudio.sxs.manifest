@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+<assemblyIdentity
+    type="win32"
+    name="LAVAudio.sxs"
+    version="1.0.0.0" />
+
+<file name="LAVAudio.ax">
+
+    <comClass
+        description="LAV Audio Decoder"
+        clsid="{E8E73B6B-4CB3-44A4-BE99-4F7BCB96E491}"
+        threadingModel="Both" />
+
+    <comClass
+        description="LAV Audio Properties"
+        clsid="{2D8F1801-A70D-48F4-B76B-7F5AE022AB54}"
+        threadingModel="Both" />
+
+    <comClass
+        description="LAV Audio Mixer"
+        clsid="{C89FC33C-E60A-4C97-BEF4-ACC5762B6404}"
+        threadingModel="Both" />
+
+    <comClass
+        description="LAV Audio Format Settings"
+        clsid="{BD72668E-6BFF-4CD1-8480-D465708B336B}"
+        threadingModel="Both" />
+
+    <comClass
+        description="LAV Audio Status"
+        clsid="{20ED4A03-6AFD-4FD9-980B-2F6143AA0892}"
+        threadingModel="Both" />
+
+</file>
+
+</assembly>

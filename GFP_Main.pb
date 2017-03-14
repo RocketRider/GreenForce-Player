@@ -1,4 +1,4 @@
-;*************************************** Version: 1.23
+;*************************************** Version: 2.0
 ;*** GreenForce Player *** GF-Player ***
 ;*** http://GFP.RRSoftware.de **********
 ;*** (c) 2009 - 2017 RocketRider *******
@@ -31,6 +31,7 @@ EnableExplicit
 #USE_OPENLOG_AFTER_CLOSE = #False;#True
 #USE_NEED_SECURE_ENVIRONMENT = #False
 #USE_SC_HONEYPOT = #False
+#USE_ENABLE_LAVFILTERS_DOWNLOAD = #True
 
 CompilerIf #PB_editor_createexecutable
   #USE_LEAK_DEBUG = #False
@@ -43,7 +44,6 @@ UseCRC32Fingerprint()
 Import "Kernel32.lib";Hotfix
    GetProcAddress_(hMod.i, Name.p-ascii) As "_GetProcAddress@8"
 EndImport
- 
  
 
 
@@ -145,7 +145,7 @@ CompilerEndIf
   CompilerEndIf 
   #PANEL_HEIGHT_FLV_PLAYER = 82
     
-  #PLAYER_VERSION = "1.23"
+  #PLAYER_VERSION = "2.0"
   
   
   CompilerIf #USE_OEM_VERSION = #False
@@ -712,6 +712,7 @@ CompilerEndIf
     bFullscreen.i
     bHelp.i
     iVolume.i
+    iDisableLAVFilters.i 
     sPassword.s
     bHidden.i
     sFile.s
@@ -923,6 +924,8 @@ CompilerEndIf
   XIncludeFile "include\GFP_API_File2.pbi"
   XIncludeFile "include\GFP_Settings.pbi"
   XIncludeFile "include\GFP_LogFile.pbi"
+  XIncludeFile "include\GFP_SkinGadget.pbi"  
+  XIncludeFile "include\GFP_LAVFilters.pbi"    
   XIncludeFile "include\GFP_Database.pbi"
   XIncludeFile "include\GFP_Design.pbi"
   XIncludeFile "include\GFP_VolumeGadget.pbi"
@@ -939,7 +942,6 @@ CompilerEndIf
   CompilerIf #USE_IMAGEPLUGIN_LIB
     XIncludeFile "include\GFP_ImagePlugin.pbi"
   CompilerEndIf
-  XIncludeFile "include\GFP_SkinGadget.pbi"
   XIncludeFile "include\GFP_ProcessRequester.pbi"
   XIncludeFile "include\GFP_WINHTTP55.pbi"
   ;XIncludeFile "include\GFP_ResMod37.pbi"
@@ -1393,6 +1395,8 @@ Procedure RestartPlayer()
 ;   If sGlobalPassword<>""
 ;     Password=" /password "+Chr(34)+sGlobalPassword+Chr(34)
 ;   EndIf  
+  StickyWindow(#WINDOW_MAIN, #False)
+  HideWindow(#WINDOW_MAIN, #True)
   RunProgram(ProgramFilename(), Chr(34)+MediaFile\sRealFile+Chr(34)+Password, GetCurrentDirectory())
   EndPlayer()
   End
@@ -4315,7 +4319,9 @@ Procedure _EndPlayer()
       EndIf
     EndIf
   CompilerEndIf
+ 
   
+  ;LAVFilters_DeRegister() ;causes crash
   If sTmpRegisteredDLL.s <> ""
   SafeRegister(sTmpRegisteredDLL.s,#False, #True)
   EndIf
@@ -4708,7 +4714,7 @@ Procedure ProtectVideo_UpdateWindow(iImage.i=#SPRITE_BIGKEY, sTitle.s="", iCance
     ImageGadget(#PB_Any, 5, 5, 24, 24, ImageID(iImage))
   EndIf
   ProgressBarGadget(#GADGET_PV_PROCCESS_PROGRESSBAR, 10, 70, 280, 22, 0, 100, #PB_ProgressBar_Smooth)
-  TintGadget(#GADGET_PV_PROCCESS_PROGRESSBAR, 10000, 10000, 10000, 0, -100, 0, 0, #False)
+  ;TintGadget(#GADGET_PV_PROCCESS_PROGRESSBAR, 10000, 10000, 10000, 0, -100, 0, 0, #False)
   SetGadgetState(#GADGET_PV_PROCCESS_PROGRESSBAR, 0)
   If iCancel
     ButtonGadget(#GADGET_PV_PROCCESS_CANCEL, 220, 125, 70, 20, Language(#L_CANCEL))
@@ -8101,6 +8107,9 @@ EndProcedure
       Case "/terminatenow"
         End
         
+      Case  "/disablelavfilters"
+        StartParams\iDisableLAVFilters = #True
+        
       Case "/protectprocess"
         ProtectProcess()
         
@@ -8592,6 +8601,19 @@ CompilerEndIf
 
 
 WriteLog("PLAYER-STARTS", #LOGLEVEL_DEBUG)
+
+CompilerIf #USE_ENABLE_LAVFILTERS_DOWNLOAD
+  If Not StartParams\iDisableLAVFilters
+    If LAVFilters_Download(#PLAYER_NAME, "Downloading codecs...")
+      LAVFilters_Register()  
+      If LAVFilters_IsFreshInstallation()
+        RestartPlayer()
+      EndIf  
+    EndIf
+  EndIf
+CompilerEndIf
+
+
 Repeat
 
 
@@ -9218,9 +9240,9 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 8110
-; FirstLine = 6260
-; Folding = W8B9PBAAQ+AQg+BCyHiiDABGMg5----------------
+; CursorPosition = 1398
+; FirstLine = 1144
+; Folding = X8h9PBAgQ+AQg+BCyHiiDABGMk5----------------
 ; EnableThread
 ; EnableXP
 ; EnableUser

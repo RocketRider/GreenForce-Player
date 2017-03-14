@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+<assemblyIdentity
+    type="win32"
+    name="LAVSplitter.sxs"
+    version="1.0.0.0" />
+
+<file name="LAVSplitter.ax">
+
+    <comClass
+        description="LAV Splitter"
+        clsid="{171252A0-8820-4AFE-9DF8-5C92B2D66B04}"
+        threadingModel="Both" />
+
+    <comClass
+        description="LAV Splitter Source"
+        clsid="{B98D13E7-55DB-4385-A33D-09FD1BA26338}"
+        threadingModel="Both" />
+
+    <comClass
+        description="LAV Splitter Properties"
+        clsid="{A19DE2F2-2F74-4927-8436-61129D26C141}"
+        threadingModel="Both" />
+
+    <comClass
+        description="LAV Splitter Input Formats"
+        clsid="{56904B22-091C-4459-A2E6-B1F4F946B55F}"
+        threadingModel="Both" />
+
+</file>
+
+</assembly>

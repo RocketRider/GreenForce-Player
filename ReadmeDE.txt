@@ -1,4 +1,4 @@
-*************************************** Version: 1.23
+*************************************** Version: 2.0
 *** GreenForce Player *** GF-Player ***
 ***************************************
 *** (c) 2009 - 2017 RocketRider *******
@@ -17,6 +17,7 @@ Bitte wenden Sie sich an Support@GFP.RRSoftware.de.
 
 Momentan unterstützte Funktionalitäten:
 ---------------------------------------
+- Automatischer Download von Codecs (LAVFilters)
 - Video Dateien Abspielen (abhängig von den installierten DirectShow Codecs)
 - z.B. unter Windows 7: wmv, avi, mpg, mpeg, vob, asf, ...
 - Audio Dateien Abspielen (abhängig von den installierten DirectShow Codecs)

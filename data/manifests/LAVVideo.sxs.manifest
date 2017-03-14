@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+<assemblyIdentity
+    type="win32"
+    name="LAVVideo.sxs"
+    version="1.0.0.0" />
+
+<file name="LAVVideo.ax">
+
+    <comClass
+        description="LAV Video Decoder"
+        clsid="{EE30215D-164F-4A92-A4EB-9D4C13390F9F}"
+        threadingModel="Both" />
+
+    <comClass
+        description="LAV Video Properties"
+        clsid="{278407C2-558C-4BED-83A0-B6FA454200BD}"
+        threadingModel="Both" />
+
+    <comClass
+        description="LAV Video Format Settings"
+        clsid="{2D4D6F88-8B41-40A2-B297-3D722816648B}"
+        threadingModel="Both" />
+
+</file>
+
+</assembly>
