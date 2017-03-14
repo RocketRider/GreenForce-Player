@@ -164,7 +164,7 @@ EndProcedure
 Procedure WriteWindowsVersion(File.i)
   Protected System.s
   If File
-    System.s = "User:" + GetUserName()+ "Graphics: " + GetGraphicCardName() + ", Processor: " + GetCPUName() + ", Windows: " + GetWindows() + ", Programversion: "+#PLAYER_VERSION+"."+Str(#USE_OEM_VERSION)+" Bulid: " + Str(#PB_Editor_BuildCount) +", DPI: "+Str(GetDPI())
+    System.s = "User:" + GetUserName()+ ", Graphics: " + GetGraphicCardName() + ", Processor: " + GetCPUName() + ", Windows: " + GetWindows() + ", Program version: "+#PLAYER_VERSION+"."+Str(#USE_OEM_VERSION)+" Bulid: " + Str(#PB_Editor_BuildCount) +", DPI: "+Str(GetDPI())
     If Lof(File)=0 
       WriteStringN(File, System)
     EndIf
@@ -354,8 +354,8 @@ EndProcedure
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 173
-; FirstLine = 96
+; CursorPosition = 184
+; FirstLine = 21
 ; Folding = 5---
 ; EnableXP
 ; EnableOnError

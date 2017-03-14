@@ -71,11 +71,20 @@ EndProcedure
 
 Procedure __Thread_Download_LAVFilters(*Parameters)
   Protected failed = #False
-  Protected file
+  Protected file, isDownload = #True
   Protected tmpFile.s = GetTemporaryDirectory() + "tmp_" + Hex(GetTickCount_())+".zip"
   
   Protected codec_dst.s = __LAVFilters_GetSpecialFolder(#CSIDL_APPDATA) + #LAVFILTERS_PATH + "\"
-  ReceiveHTTPFile("https://github.com/Nevcairiel/LAVFilters/releases/download/0.69/LAVFilters-0.69-x86.zip", tmpFile.s)
+  
+  If FileSize(GetPathPart(ProgramFilename()) + "LAVFilters-x86.zip") > 0
+    tmpFile.s = GetPathPart(ProgramFilename()) + "LAVFilters-x86.zip"
+    isDownload = #False 
+  ElseIf FileSize(GetPathPart(ProgramFilename()) + "LAVFilters-0.69-x86.zip") > 0
+    tmpFile.s = GetPathPart(ProgramFilename()) + "LAVFilters-0.69-x86.zip"
+    isDownload = #False    
+  Else 
+    ReceiveHTTPFile("https://github.com/Nevcairiel/LAVFilters/releases/download/0.69/LAVFilters-0.69-x86.zip", tmpFile.s)
+  EndIf
   UseZipPacker()   
   If OpenPack(0, tmpFile.s,#PB_PackerPlugin_Zip) 
     CreateDirectory(codec_dst) ;Ignore result, could already exists    
@@ -130,7 +139,9 @@ Procedure __Thread_Download_LAVFilters(*Parameters)
     __LAVFilterError("cannot open file " + tmpFile.s)
     failed = #True    
   EndIf
-  DeleteFile_(tmpFile)
+  If isDownload
+    DeleteFile_(tmpFile)
+  EndIf
   
   If failed = #False
     file = CreateFile(#PB_Any, codec_dst.s + "INSTALLED")
@@ -325,7 +336,7 @@ EndDataSection
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 145
-; FirstLine = 134
+; CursorPosition = 81
+; FirstLine = 68
 ; Folding = ---
 ; EnableXP

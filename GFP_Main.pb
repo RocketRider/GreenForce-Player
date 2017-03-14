@@ -609,6 +609,7 @@ CompilerEndIf
     #SPRITE_MENU_LANGUAGE_RUSSIA
     #SPRITE_MENU_LANGUAGE_BULGARIA
     #SPRITE_MENU_LANGUAGE_SERBIA
+    #SPRITE_MENU_LANGUAGE_PERSIAN
     
   EndEnumeration
   
@@ -1385,7 +1386,7 @@ Procedure GetWindowKeyState(iEvent.i, iWindow.i=#WINDOW_MAIN)
 EndProcedure
 
 Procedure RestartPlayer()
-  Protected Password.s
+  Protected Password.s,program, programID
   ;iQuit = #True
   If hMutexAppRunning
     CloseHandle_(hMutexAppRunning)
@@ -1395,8 +1396,8 @@ Procedure RestartPlayer()
 ;   If sGlobalPassword<>""
 ;     Password=" /password "+Chr(34)+sGlobalPassword+Chr(34)
 ;   EndIf  
-  StickyWindow(#WINDOW_MAIN, #False)
-  HideWindow(#WINDOW_MAIN, #True)
+  ;StickyWindow(#WINDOW_MAIN, #False)
+  ;HideWindow(#WINDOW_MAIN, #True)
   RunProgram(ProgramFilename(), Chr(34)+MediaFile\sRealFile+Chr(34)+Password, GetCurrentDirectory())
   EndPlayer()
   End
@@ -4023,6 +4024,7 @@ Procedure LoadPlayerData()
   CatchImage(#SPRITE_MENU_LANGUAGE_RUSSIA, ?DS_menu_language_russia)
   CatchImage(#SPRITE_MENU_LANGUAGE_BULGARIA, ?DS_menu_language_bulgaria)
   CatchImage(#SPRITE_MENU_LANGUAGE_SERBIA, ?DS_menu_language_serbien)
+  CatchImage(#SPRITE_MENU_LANGUAGE_PERSIAN, ?DS_menu_language_persian)  
   CatchImage(#SPRITE_MENU_FORWARD, ?DS_menu_Forward)
   CatchImage(#SPRITE_MENU_PLAY, ?DS_menu_Play)
   CatchImage(#SPRITE_MENU_BACKWARD, ?DS_menu_Backward)
@@ -5785,6 +5787,7 @@ EndProcedure
     ;SetWindowColor(#WINDOW_MAIN, Val(Settings(#SETTINGS_WINDOW_BK_COLOR)\sValue))
     SmartWindowRefresh(#WINDOW_MAIN, #True) 
     EnableWindowDrop(#WINDOW_MAIN, #PB_Drop_Files, #PB_Drag_Copy)
+    ;SetForegroundWindow_(WindowID(#WINDOW_MAIN))
     
     AddSysTrayIcon(#SYSTRAY_MAIN, WindowID(#WINDOW_MAIN), ImageID(#SPRITE_SYSTRAY))
     SysTrayIconToolTip(#SYSTRAY_MAIN, #PLAYER_NAME)
@@ -5969,7 +5972,9 @@ EndProcedure
                 
               Case "BG"
                 __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_BULGARIA))  
-                                
+                
+              Case "FA"
+                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_PERSIAN))                  
               Default
                 __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE))
                 
@@ -6147,9 +6152,8 @@ EndProcedure
     SetWindowCallback(@CBMainWindow())
     
     ResizeWindow_(#WINDOW_MAIN, #PB_Ignore, #PB_Ignore, #PB_Ignore, #PB_Ignore)
-    ProcessAllEvents()
-    
-    
+    ProcessAllEvents()   
+
     
   EndProcedure
   Procedure CreateAboutWindow()
@@ -6176,7 +6180,7 @@ EndProcedure
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Feel the green force!")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Team members:")
-          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-RocketRider(Michael Möbius)")     
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-RocketRider (Michael Möbius)")     
           
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Thanks to:")
@@ -6184,11 +6188,12 @@ EndProcedure
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Saner Apaydin (Turkish language)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Carl Peeraer (Nederlands language)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Mauricio Cantún Caamal (Spanish language)")
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Surena Karimpour (Persian language)")          
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Jacobus (Green iconset)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Xiph.org Foundation (Ogg and flac decoder)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Independent JPEG Group(this software is based in part on the work of the Independent JPEG Group)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-OpenJPEG(for the JPEG2000 codec)")
-          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-LAVFilters(for multimedia codecs)")          
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-LAV Filters(for multimedia codecs)")          
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Special thanks to all users and beta-testers!")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
@@ -9106,6 +9111,8 @@ Until iQuit=#True
     IncludeBinary "data\Icons\Icons-16x16\Bulgaria.ico"
     DS_menu_language_serbien:
     IncludeBinary "data\Icons\Icons-16x16\Serbia.ico"
+    DS_menu_language_persian:
+    IncludeBinary "data\Icons\Icons-16x16\Persian.ico"   
     DS_menu_Action:
     IncludeBinary "Data\Icons\Icons-16x16\Action-16x16.ico"
     
@@ -9241,9 +9248,9 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 6185
-; FirstLine = 4293
-; Folding = X8h9PBAgQ+AQg+BCyHiiDABGMk5----------------
+; CursorPosition = 6184
+; FirstLine = 4582
+; Folding = X8h9PBQgQ+AQg+BSyHiiDADGMs5----------------
 ; EnableThread
 ; EnableXP
 ; EnableUser
