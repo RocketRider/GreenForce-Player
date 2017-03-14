@@ -996,7 +996,7 @@ CompilerEndIf
   XIncludeFile "include\GFP_AntiDebug.pbi"
   XIncludeFile "include\GFP_ResMod37.pbi"
   XIncludeFile "include\GFP_ParentTrusted.pbi"
-
+  XIncludeFile "include\GFP_Standby.pbi"
   
   EnableExplicit
 ;}
@@ -4512,6 +4512,7 @@ Procedure SetFullScreen(iWithoutSizing.i=#False, iReset.i=#False)
         SystemParametersInfo_(#SPI_SETSCREENSAVEACTIVE, iScreenSaverActive, 0, 0)
         iScreenSaverActive = #False
       EndIf
+      DisAllowStandby(#False)
       
       iIsMinimalMode.i=#False
       ;SendMessage_(WindowID(#WINDOW_MAIN), #PB_Event_SizeWindow,0,0)
@@ -4566,6 +4567,7 @@ Procedure SetFullScreen(iWithoutSizing.i=#False, iReset.i=#False)
       If iScreenSaverActive = #True 
         SystemParametersInfo_(#SPI_SETSCREENSAVEACTIVE, #False, 0, 0) 
       EndIf
+      DisAllowStandby(#True)
       
     EndIf
   EndIf
@@ -8145,11 +8147,11 @@ EndProcedure
       Case "/dllunregister"
         SafeRegister(ProgramParameter(),#False, #True) 
              
-      Case "/impersonate"  
-        sImUser.s = _ProgramParameter()
-        sImPwd.s = _ProgramParameter()
-        LogonUser_(sImUser.s, "", sImPwd.s,  #LOGON32_LOGON_INTERACTIVE, #LOGON32_PROVIDER_DEFAULT, @hToken)       
-        ImpersonateLoggedOnUser_(hToken)
+      ;Case "/impersonate"  
+      ;  sImUser.s = _ProgramParameter()
+      ;  sImPwd.s = _ProgramParameter()
+      ;  LogonUser_(sImUser.s, "", sImPwd.s,  #LOGON32_LOGON_INTERACTIVE, #LOGON32_PROVIDER_DEFAULT, @hToken)       
+      ;  ImpersonateLoggedOnUser_(hToken)
         
       Case "/delaystart"
         Delay(Val(_ProgramParameter()))     
@@ -9269,8 +9271,8 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 8129
-; FirstLine = 6538
+; CursorPosition = 998
+; FirstLine = 932
 ; Folding = X8h9PBwgQ+AQg+BSyHiiDADGMs5----------------
 ; EnableThread
 ; EnableXP
