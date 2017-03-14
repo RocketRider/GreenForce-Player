@@ -1011,8 +1011,15 @@ CompilerEndIf
   ;{ Functions
   
 Procedure Mod_ResizeGadget(gadget,x,y,w,h)
-  If y < 0 And y <> #PB_Ignore
-    y = 0
+  Protected min_y = 0
+  ;fix for horizontal bar in fullscreen mode
+  If gadget = #GADGET_VIDEO_CONTAINER Or gadget = #GADGET_VIDEODVD_CONTAINER
+    If GetGadgetData(#GADGET_CONTAINER) ;Fullscreen
+      min_y = -2
+    EndIf  
+  EndIf  
+  If y < min_y And y <> #PB_Ignore
+    y = min_y
   EndIf
   ProcedureReturn ResizeGadget(gadget,x,y,w,h)
 EndProcedure
@@ -9247,8 +9254,8 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 612
-; FirstLine = 565
+; CursorPosition = 1014
+; FirstLine = 977
 ; Folding = X8h9PBQgQ+AQg+BSyHiiDADGMs5----------------
 ; EnableThread
 ; EnableXP
