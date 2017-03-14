@@ -156,7 +156,7 @@ CompilerEndIf
     #GFP_PROTECTED_FILE_EXTENTION = ".gfp"
     #GFP_CODEC_EXTENSION = "gfp-codec"
     #GFP_STREAMING_AGENT = ""
-    #GFP_PATTERN_MEDIA = "Media(*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v)|*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v|All Files (*.*)|*.*"
+    #GFP_PATTERN_MEDIA = "Multimedia(*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v)|*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v|All Files (*.*)|*.*"
     
     #GFP_GUID = "{46AF8ADF-E3F8-4E47-A31E-98B7CD1D5BF0}"
     
@@ -175,7 +175,7 @@ CompilerEndIf
   
   #GFP_PATTERN_PLAYLIST_EXPORT = "M3U (*.m3u)|*.m3u;|All Files (*.*)|*.*"
   #GFP_PATTERN_PLAYLIST_IMPORT = "Playlist(*.m3u;*.asx;*.pls;*.xspf)|*.m3u;*.asx;*.pls;*.xspf|All Files (*.*)|*.*"
-  #GFP_PATTERN_IMAGE = "Image(*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;*.gif)|*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;*.gif|All Files (*.*)|*.*"
+  #GFP_PATTERN_IMAGE = "Image files(*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;*.gif)|*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;*.gif|All Files (*.*)|*.*"
   #GFP_PATTERN_SUBTILTES = "Subtitles(*.sub;*.srt;*.txt;*.idx;*.aqt;*.jss;*.ttxt;*.pjs;*.psb;*.rt;*.smi;*.ssf;*.gsub;*.ssa;*.ass;*.usf)|*.sub;*.srt;*.txt;*.idx;*.aqt;*.jss;*.ttxt;*.pjs;*.psb;*.rt;*.smi;*.ssf;*.gsub;*.ssa;*.ass;*.usf|All Files (*.*)|*.*"
   #GFP_PATTERN_PROTECTED_MEDIA_EXE = "Executable (*.exe)|*.exe;|All Files (*.*)|*.*"
   
@@ -827,6 +827,7 @@ CompilerEndIf
   
   Global Dim MenuLimitations.i(#MENU_LAST_ITEM+1)
   Global sLimitationsFile.s
+  Global sTmpRegisteredDLL.s = ""
   
   Define iEvent.i, iWidth.i, iHeight.i, sFile.s, iCount.i, i.i
   Define iImage.i, sLoadFile.s, iDBFile.i, iFile.i
@@ -840,6 +841,7 @@ CompilerEndIf
   Define *DB
   Define ElapsedMillisecondsFails=0
   Define sMsgTitle.s, sMsgText.s
+  Define sImUser.s, sImPwd.s, hToken   
           
   
   Declare CreateListWindow()
@@ -4313,6 +4315,10 @@ Procedure _EndPlayer()
       EndIf
     EndIf
   CompilerEndIf
+  
+  If sTmpRegisteredDLL.s <> ""
+  SafeRegister(sTmpRegisteredDLL.s,#False, #True)
+  EndIf
   
   SavePlayerSettings()
   FreeVolumeGadget(iVolumeGadget)
@@ -8074,7 +8080,7 @@ EndProcedure
         StartParams\bHelp = #True
         
       Case "/help"
-        StartParams\bHelp = #True;         
+        StartParams\bHelp = #True
         
       Case "/h"
         StartParams\bHelp = #True
@@ -8092,8 +8098,32 @@ EndProcedure
         sMsgText = _ProgramParameter()
         MessageRequester(sMsgTitle, sMsgText, #MB_ICONINFORMATION)
         
+      Case "/terminatenow"
+        End
+        
       Case "/protectprocess"
         ProtectProcess()
+        
+      Case "/dlltmpregister"
+        If sTmpRegisteredDLL = "" ;only one dll supported
+          sTmpRegisteredDLL.s = ProgramParameter()
+          SafeRegister(sTmpRegisteredDLL.s,#False, #False)
+        EndIf
+      
+      Case "/dllregister"
+        SafeRegister(ProgramParameter(), #False, #False)
+        
+      Case "/dllunregister"
+        SafeRegister(ProgramParameter(),#False, #True) 
+             
+      Case "/impersonate"  
+        sImUser.s = _ProgramParameter()
+        sImPwd.s = _ProgramParameter()
+        LogonUser_(sImUser.s, "", sImPwd.s,  #LOGON32_LOGON_INTERACTIVE, #LOGON32_PROVIDER_DEFAULT, @hToken)       
+        ImpersonateLoggedOnUser_(hToken)
+        
+      Case "/delaystart"
+        Delay(Val(_ProgramParameter()))     
         
       Case "/password"
         StartParams\sPassword = _ProgramParameter()
@@ -8114,7 +8144,6 @@ EndProcedure
         
       Case "/usedesign"  
         StartParams\iUseSkin = Val(_ProgramParameter())
-        
         
       Case "/database"
         sDataBaseFile=_ProgramParameter()
@@ -8157,7 +8186,6 @@ EndProcedure
     Case "/disablehook"
       IsVirtualFileUsed=#False
       
-
     Case "/disablemenu"
       StartParams\iDisableMenu=#True
       
@@ -9190,8 +9218,9 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; FirstLine = 1010
-; Folding = W8B9PBAAQ+AQg+BCyHCgDABGEg5----------------
+; CursorPosition = 8110
+; FirstLine = 6260
+; Folding = W8B9PBAAQ+AQg+BCyHiiDABGMg5----------------
 ; EnableThread
 ; EnableXP
 ; EnableUser
