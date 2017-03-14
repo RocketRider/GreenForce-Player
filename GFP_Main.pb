@@ -6176,18 +6176,19 @@ EndProcedure
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Feel the green force!")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Team members:")
-          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-RocketRider(Michael MÃ¶bius)")     
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-RocketRider(Michael Möbius)")     
           
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Thanks to:")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Warkering (French language)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Saner Apaydin (Turkish language)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Carl Peeraer (Nederlands language)")
-          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Mauricio CantÃºn Caamal (Spanish language)")
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Mauricio Cantún Caamal (Spanish language)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Jacobus (Green iconset)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Xiph.org Foundation (Ogg and flac decoder)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Independent JPEG Group(this software is based in part on the work of the Independent JPEG Group)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-OpenJPEG(for the JPEG2000 codec)")
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-LAVFilters(for multimedia codecs)")          
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Special thanks to all users and beta-testers!")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
@@ -9240,8 +9241,8 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 1398
-; FirstLine = 1144
+; CursorPosition = 6185
+; FirstLine = 4293
 ; Folding = X8h9PBAgQ+AQg+BCyHiiDABGMk5----------------
 ; EnableThread
 ; EnableXP
