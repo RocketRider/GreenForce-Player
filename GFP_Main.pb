@@ -38,7 +38,7 @@ CompilerElse
   #USE_LEAK_DEBUG = #True
 CompilerEndIf
 
-
+UseCRC32Fingerprint()
 
 Import "Kernel32.lib";Hotfix
    GetProcAddress_(hMod.i, Name.p-ascii) As "_GetProcAddress@8"
@@ -48,7 +48,7 @@ EndImport
 
 
 ;{ SetDllDirectory
-;FIX Für problematisschen DLL-Loadverhalten (wenn die bei LoadLibrary angegebene DLL nicht vorhanden ist)
+;FIX FÃ¼r problematisschen DLL-Loadverhalten (wenn die bei LoadLibrary angegebene DLL nicht vorhanden ist)
   CompilerIf #PB_Compiler_Unicode
     Prototype.i SetDllDirectory(Path.p-Unicode);(Path.p-ascii)
     Define hModuleHandle, SetDllDirectory.SetDllDirectory
@@ -149,22 +149,21 @@ CompilerEndIf
   
   
   CompilerIf #USE_OEM_VERSION = #False
-    #PLAYER_COPYRIGHT = "© 2009 - 2017 RocketRider"
+    #PLAYER_COPYRIGHT = "Â© 2009 - 2017 RocketRider"
     
     #PLAYER_GLOBAL_MUTEX = "GreenForce-Player"
     #GFP_PATTERN_PROTECTED_MEDIA = "GF-Player (*.gfp)|*.gfp;|All Files (*.*)|*.*"
     #GFP_PROTECTED_FILE_EXTENTION = ".gfp"
     #GFP_CODEC_EXTENSION = "gfp-codec"
     #GFP_STREAMING_AGENT = ""
-    #GFP_PATTERN_MEDIA = "Media|*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v;|All Files (*.*)|*.*"
+    #GFP_PATTERN_MEDIA = "Media(*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v)|*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v|All Files (*.*)|*.*"
     
     #GFP_GUID = "{46AF8ADF-E3F8-4E47-A31E-98B7CD1D5BF0}"
     
     #PLAYER_NAME = "GreenForce-Player"
     #UPDATE_VERSION_URL = "http://GFP.RRSoftware.de/update/update.txt"
     #UPDATE_FILE_URL = "http://GFP.RRSoftware.de/update/update.data"
-
-    
+   
     #UPDATE_AGENT = "GF-PLAYER_UPDATE "+#PLAYER_VERSION
     
     #USE_DISABLEMENU = #False;#True;
@@ -175,9 +174,9 @@ CompilerEndIf
   
   
   #GFP_PATTERN_PLAYLIST_EXPORT = "M3U (*.m3u)|*.m3u;|All Files (*.*)|*.*"
-  #GFP_PATTERN_PLAYLIST_IMPORT = "Playlist|*.m3u;*.asx;*.pls;*.xspf;|All Files (*.*)|*.*"
-  #GFP_PATTERN_IMAGE = "Image|*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;*.gif|All Files (*.*)|*.*"
-  #GFP_PATTERN_SUBTILTES = "Subtitles|*.sub;*.srt;*.txt;*.idx;*.aqt;*.jss;*.ttxt;*.pjs;*.psb;*.rt;*.smi;*.ssf;*.gsub;*.ssa;*.ass;*.usf;|All Files (*.*)|*.*"
+  #GFP_PATTERN_PLAYLIST_IMPORT = "Playlist(*.m3u;*.asx;*.pls;*.xspf)|*.m3u;*.asx;*.pls;*.xspf|All Files (*.*)|*.*"
+  #GFP_PATTERN_IMAGE = "Image(*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;*.gif)|*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;*.gif|All Files (*.*)|*.*"
+  #GFP_PATTERN_SUBTILTES = "Subtitles(*.sub;*.srt;*.txt;*.idx;*.aqt;*.jss;*.ttxt;*.pjs;*.psb;*.rt;*.smi;*.ssf;*.gsub;*.ssa;*.ass;*.usf)|*.sub;*.srt;*.txt;*.idx;*.aqt;*.jss;*.ttxt;*.pjs;*.psb;*.rt;*.smi;*.ssf;*.gsub;*.ssa;*.ass;*.usf|All Files (*.*)|*.*"
   #GFP_PATTERN_PROTECTED_MEDIA_EXE = "Executable (*.exe)|*.exe;|All Files (*.*)|*.*"
   
   #GFP_FORMAT_MEDIA = ";vis-dll;gfp;mpvideo;ogg;flac;3g2;2gp;asf;avi;aud;acx;voc;flv;mka;mov;mp4;m4a;mpg;rm;swf;vob;wmv;aac;aif;aiff;iff;midi;mid;mp3;mpa;ra;wav;wma;mpeg;mp1;mp2;qt;divx;ts;tsp;ram;rmvb;ogm;ogv;m2ts;mkv;m2v;m4v"
@@ -194,8 +193,8 @@ CompilerEndIf
   #GFP_DRM_SCREENCAPTURE_PROTECTION_FORCE = 2
   
   
-  ;Bei änderung auch hier CheckForScreenCapture() aktualisieren!!!
-  #PROTECTWINDOW_BLACKLIST = "|FRAPS general|FRAPS fps|FRAPS movies|FRAPS screenshots|Audiorecorder|Audacity|WinVNC Tray Icon|WinVNC|RealVNC.vncserver-ui (service).TrayIcon|vnc::ClipboardWindow|RealVNC.vncserver.SuspendNotifier|RealVNC.vncserver.WMMonitor|smartision ScreenCopy|FRAPS|Start Fraps minimized|Fraps window always on top|Run Fraps when Windows starts|WeGame|Back to WeGame »|PlayClaw|This is unregistered trial version of PlayClaw|E.M. Free Game Capture|Starte Bandicam beim Computerstart|Starte Bandicam minimiert|Bandicam (Nicht Registriert)|Bandicam|Bandicam64|Taksi - |Taksi Config|Hot Keys are pressed to activate Taksi from inside other applications|Game Cam|If you have any questions or if you have any good ideas on FastCapPro, please feel free to contact us.|FastCapProp window always on top|FastcapPro|"
+  ;Bei Ã¤nderung auch hier CheckForScreenCapture() aktualisieren!!!
+  #PROTECTWINDOW_BLACKLIST = "|FRAPS general|FRAPS fps|FRAPS movies|FRAPS screenshots|Audiorecorder|Audacity|WinVNC Tray Icon|WinVNC|RealVNC.vncserver-ui (service).TrayIcon|vnc::ClipboardWindow|RealVNC.vncserver.SuspendNotifier|RealVNC.vncserver.WMMonitor|smartision ScreenCopy|FRAPS|Start Fraps minimized|Fraps window always on top|Run Fraps when Windows starts|WeGame|Back to WeGame Â»|PlayClaw|This is unregistered trial version of PlayClaw|E.M. Free Game Capture|Starte Bandicam beim Computerstart|Starte Bandicam minimiert|Bandicam (Nicht Registriert)|Bandicam|Bandicam64|Taksi - |Taksi Config|Hot Keys are pressed to activate Taksi from inside other applications|Game Cam|If you have any questions or if you have any good ideas on FastCapPro, please feel free to contact us.|FastCapProp window always on top|FastcapPro|"
   #PROTECTHOOCK_BLACKLIST = "|FRAPS32.DLL|bdcap32.dll|playclawhook.dll|TaksiCommon.dll|TaksiDll.dll|bdcap32.dll|bdcam.dll|d3d8cap.dll|d3d9cap.dll|oglcap.dll|ddrawcap.dll|echelon_45.dll|echelon_46.dll|echelon_47.dll|echelon_48.dll|echelon_49.dll|echelon_50.dll|VideoStreamCapture.dll|"
   
   
@@ -1013,17 +1012,6 @@ Procedure Mod_ResizeGadget(gadget,x,y,w,h)
   ProcedureReturn ResizeGadget(gadget,x,y,w,h)
 EndProcedure
 
-; Procedure Mod_ResizeWindow(wnd,x,y,w,h)
-;   If h <> #PB_Ignore
-;     If GetMenu_(WindowID(wnd))
-;       h + MenuHeight()
-;       Debug h
-;     EndIf    
-;   EndIf
-;   ProcedureReturn ResizeWindow(wnd,x,y,w,h)
-; EndProcedure
-
-
  Procedure Mod_WindowBounds(wnd,min_w,min_h,max_w,max_h)
    If min_h <> #PB_Ignore And max_h <> #PB_Ignore
      If GetMenu_(WindowID(wnd))
@@ -1046,11 +1034,32 @@ Macro WindowBounds
   Mod_WindowBounds
 EndMacro
 
+#OWNER_SECURITY_INFORMATION    =   $00000001
+#GROUP_SECURITY_INFORMATION    =   $00000002
+#DACL_SECURITY_INFORMATION     =   $00000004
+#SACL_SECURITY_INFORMATION     =   $00000008
+#LABEL_SECURITY_INFORMATION    =   $00000010
+ 
+#PROTECTED_DACL_SECURITY_INFORMATION   =  $80000000
+#PROTECTED_SACL_SECURITY_INFORMATION   =  $40000000
+#UNPROTECTED_DACL_SECURITY_INFORMATION =  $20000000
+#UNPROTECTED_SACL_SECURITY_INFORMATION =  $10000000
 
-; Macro ResizeWindow
-;   Mod_ResizeWindow
-; EndMacro
 
+Procedure ProtectProcess()
+  Protected *pACL.ACL
+  Protected cbACL = 1024;
+   
+  ; Initialize a security descriptor.
+  Protected *pSD.SECURITY_DESCRIPTOR = AllocateMemory(#SECURITY_DESCRIPTOR_MIN_LENGTH)
+  InitializeSecurityDescriptor_(*pSD, #SECURITY_DESCRIPTOR_REVISION)
+  *pACL = AllocateMemory(cbACL);
+  InitializeAcl_(*pACL, cbACL, #ACL_REVISION2)
+  SetSecurityDescriptorDacl_(*pSD, #True, *pACL, #False)
+   
+  ;SetFileSecurity_("C:\TEST.TXT",#DACL_SECURITY_INFORMATION, *pSD) ; <-- remove all rights from a certain file
+  SetKernelObjectSecurity_(GetCurrentProcess_(), #DACL_SECURITY_INFORMATION, *pSD) ; <-- now you cannot close the process with the task manager
+EndProcedure
 
 Global DRMV2_Cached_File.s, DRMV2_Cached_Password.s, DRMV2_Cached_Offset.q, *DRMV2_Cached_headerObj.DRMV2_HEADER_READ_OBJECT
 Procedure __DRMV2_ReadHeaderFromStreamingFile(*StreamingFile, password.s, qOffset.q = 0, *result.integer = #Null)
@@ -1216,7 +1225,7 @@ Procedure.s OpenFileRequesterEx_Win(Titel.s, StandardDatei.s, Pattern.s, Pattern
       EndIf
     CompilerEndIf  
   EndIf
-  GetWindowKeyState(#VK_RBUTTON);Wird benötigt da der status später sonst noch aktiv ist.
+  GetWindowKeyState(#VK_RBUTTON);Wird benÃ¶tigt da der status spÃ¤ter sonst noch aktiv ist.
   ProcedureReturn Result
 EndProcedure
 Procedure.s SaveFileRequesterEx_Win(Titel.s, StandardDatei.s, Pattern.s, PatternPosition.i)
@@ -1238,7 +1247,7 @@ Procedure.s SaveFileRequesterEx_Win(Titel.s, StandardDatei.s, Pattern.s, Pattern
       EndIf
     CompilerEndIf  
   EndIf
-  GetWindowKeyState(#VK_RBUTTON);Wird benötigt da der status später sonst noch aktiv ist.
+  GetWindowKeyState(#VK_RBUTTON);Wird benÃ¶tigt da der status spÃ¤ter sonst noch aktiv ist.
   ProcedureReturn Result
 EndProcedure
 Procedure.s PathRequesterEx_Win(Titel.s, Path.s)
@@ -1260,7 +1269,7 @@ Procedure.s PathRequesterEx_Win(Titel.s, Path.s)
       EndIf
     CompilerEndIf  
   EndIf
-  GetWindowKeyState(#VK_RBUTTON);Wird benötigt da der status später sonst noch aktiv ist.
+  GetWindowKeyState(#VK_RBUTTON);Wird benÃ¶tigt da der status spÃ¤ter sonst noch aktiv ist.
   ProcedureReturn Result
 EndProcedure
 
@@ -1919,7 +1928,7 @@ Procedure TestDecryptPW(sFile.s="", qOffset.q=0, *Stream=#Null)
       If sPWTip<>""
         sPWTip = " ("+sPWTip+")"
       EndIf
-      sXorKeys.s = DRMV2Read_GetBlockString(*GFP_DRM_HEADER_V2, #DRMV2_HEADER_MEDIA_MACHINEID);Muss zur überprüfung immer geladen werden, auch wenn das PW schon gefunden wurde!
+      sXorKeys.s = DRMV2Read_GetBlockString(*GFP_DRM_HEADER_V2, #DRMV2_HEADER_MEDIA_MACHINEID);Muss zur Ã¼berprÃ¼fung immer geladen werden, auch wenn das PW schon gefunden wurde!
       
       
       For i=0 To iLastPasswordMgrItem;Password from password mgr
@@ -2203,7 +2212,7 @@ Procedure SetSnapshotAllowed(TakeOff.i=#False)
       EndIf
 
     If IsSnapshotAllowed = #GFP_DRM_SCREENCAPTURE_PROTECTION_FORCE
-      ;Kein Layered Window für Windows XP, da dies mit Overlay flackert!
+      ;Kein Layered Window fÃ¼r Windows XP, da dies mit Overlay flackert!
       If OSVersion()<#PB_OS_Windows_Vista;XP, 2000
         WriteLog("Use DETECTMIRRORDRIVERS and DISABLEPRINTHOTKEYS", #LOGLEVEL_DEBUG)
         ProtectWindow(WindowID(#WINDOW_MAIN), #PROTECT_DETECTMIRRORDRIVERS|#PROTECT_DISABLEPRINTHOTKEYS, @ProtectWindow_Ende())
@@ -4189,7 +4198,7 @@ Procedure SetDefaultLng()
   SetSetting(sDataBaseFile, #SETTINGS_LANGUAGE, Settings(#SETTINGS_LANGUAGE)\sValue)
 EndProcedure
 
-Procedure.l DownloadToMem(AgentName.s, URL$, ptr.l, Size.l);Scheint unzuverlässig zu sein. schneidet zu früh ab
+Procedure.l DownloadToMem(AgentName.s, URL$, ptr.l, Size.l);Scheint unzuverlÃ¤ssig zu sein. schneidet zu frÃ¼h ab
   Protected net, Result , readsize
   net = InternetOpen_(AgentName, 0, 0, 0, 0)
   If net
@@ -4352,7 +4361,7 @@ Procedure _EndPlayer()
     EndIf  
   CompilerEndIf
   
-  ;Hier logfile freigeben, führte zu Crash mit Virtual file und Kompartibilität.
+  ;Hier logfile freigeben, fÃ¼hrte zu Crash mit Virtual file und KompartibilitÃ¤t.
   If IsWindow(#WINDOW_MAIN)
     RemoveAppCmdCallback(WindowID(#WINDOW_MAIN))
     CloseWindow(#WINDOW_MAIN)
@@ -5544,7 +5553,7 @@ Procedure CBMainWindow(WindowID, Message, wParam, lParam)
       EndIf
     EndIf
     
-    ;ThumbButtons können nicht mit PB Events abgefragt werden.
+    ;ThumbButtons kÃ¶nnen nicht mit PB Events abgefragt werden.
     If Message = #WM_COMMAND
       Select wParam&$FFFF
       Case #GADGET_TB_PREVIOUS
@@ -5730,7 +5739,7 @@ Procedure __MyGetSysColor(idx)
   If _g_menu_real_GetSysColor
     ProcedureReturn CallFunctionFast(_g_menu_real_GetSysColor,idx)
   EndIf 
-  ProcedureReturn (idx + 1)&1 * $FFFFFF ; Schwarzweiss notlösung
+  ProcedureReturn (idx + 1)&1 * $FFFFFF ; Schwarzweiss notlÃ¶sung
 EndProcedure  
 
 
@@ -6155,14 +6164,14 @@ EndProcedure
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Feel the green force!")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Team members:")
-          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-RocketRider(Michael Möbius)")     
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-RocketRider(Michael MÃ¶bius)")     
           
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Thanks to:")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Warkering (French language)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Saner Apaydin (Turkish language)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Carl Peeraer (Nederlands language)")
-          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Mauricio Cantún Caamal (Spanish language)")
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Mauricio CantÃºn Caamal (Spanish language)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Jacobus (Green iconset)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Xiph.org Foundation (Ogg and flac decoder)")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "-Independent JPEG Group(this software is based in part on the work of the Independent JPEG Group)")
@@ -6356,7 +6365,7 @@ EndProcedure
         AddOptionsOption(#GADGET_OPTIONS_ITEM_ICONSET, Language(#L_THEME), GetPlayerDesigns(sDataBaseFile), #OPTIONS_COMBOBOX, Val(Settings(#SETTINGS_ICONSET)\sValue)-1, #SPRITE_THEME)
         
         ;Rahmen Farbe einstellen (Schwarze Balken)
-        ;Verknüpfte datein. altes merken
+        ;VerknÃ¼pfte datein. altes merken
         DriveType.i = GetDriveType_(Left(ProgramFilename(),1)+":\")
         If UCase(Left(ProgramFilename(),1))=UCase(Left(GetSystemDirectory(),1)):DriveType=#DRIVE_FIXED:EndIf
         If DriveType = #DRIVE_FIXED Or DriveType = #DRIVE_REMOTE 
@@ -8046,7 +8055,7 @@ EndProcedure
     ;MessageRequester("",sParam)
     ;Debug sParam
     If sParam
-      ;WriteLog("Param: "+sParam, #LOGLEVEL_DEBUG);Kann hier nicht ausgegeb werden, da log noch nicht initialisiert ist.(abhängig von Parameter)
+      ;WriteLog("Param: "+sParam, #LOGLEVEL_DEBUG);Kann hier nicht ausgegeb werden, da log noch nicht initialisiert ist.(abhÃ¤ngig von Parameter)
       sParamOrg=sParam
       sParam=LCase(sParam)
       If Left(sParam,1)="-":sParam="/"+Mid(sParam, 2):EndIf
@@ -8076,14 +8085,15 @@ EndProcedure
       Case "/showmsgcheck"
         sMsgTitle = _ProgramParameter()
         sMsgText = _ProgramParameter()
-        UseCRC32Fingerprint()
         MessageBoxCheck(sMsgTitle, sMsgText, #MB_ICONINFORMATION, StringFingerprint(sMsgText, #PB_Cipher_CRC32))
         
       Case "/showmsgbox"
         sMsgTitle = _ProgramParameter()
         sMsgText = _ProgramParameter()
-        UseCRC32Fingerprint()
         MessageRequester(sMsgTitle, sMsgText, #MB_ICONINFORMATION)
+        
+      Case "/protectprocess"
+        ProtectProcess()
         
       Case "/password"
         StartParams\sPassword = _ProgramParameter()
@@ -8330,7 +8340,7 @@ EndProcedure
     
   
   
-  InitNetwork();Wird benötigt das die exe beim beenden nicht hengt, wenn etwas aus dem Internet geladen wurde.
+  InitNetwork();Wird benÃ¶tigt das die exe beim beenden nicht hengt, wenn etwas aus dem Internet geladen wurde.
   InitErrorHandler()
   CompilerIf #PB_Editor_CreateExecutable And #USE_APPDATA_FOLDER
     CheckDatabase(sDataBaseFile)
@@ -8581,7 +8591,7 @@ Repeat
     EventCounter+1
     iEvent = WindowEvent()
     Events(iEvent)
-  Until iEvent = #WM_NULL Or EventCounter>100;EventCounter damit er in derschleife nicht hängt
+  Until iEvent = #WM_NULL Or EventCounter>100;EventCounter damit er in derschleife nicht hÃ¤ngt
   Event_KeyBoard()
   HoverGadgetImages()
   
@@ -9180,9 +9190,8 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 180
-; FirstLine = 119
-; Folding = QbB9nAAAIfAIQ-AB6DBwBgADCQ9----------------
+; FirstLine = 1010
+; Folding = W8B9PBAAQ+AQg+BCyHCgDABGEg5----------------
 ; EnableThread
 ; EnableXP
 ; EnableUser
