@@ -174,6 +174,10 @@ Procedure.s GetWindows()
   EndIf
 ProcedureReturn sResult.s
 EndProcedure
+
+
+
+
 Procedure.s GetGraphicCardName()
   Protected DDD.DISPLAY_DEVICE, GraphicCardName.s
   If Log_GPUName=""
@@ -427,8 +431,8 @@ DataSection
   Data.b $88, $4D, $00, $AA, $00, $4B, $2E, $24 
 EndDataSection
 
-; IDE Options = PureBasic 5.42 LTS (Windows - x86)
-; CursorPosition = 156
-; FirstLine = 279
+; IDE Options = PureBasic 5.60 (Windows - x86)
+; CursorPosition = 177
+; FirstLine = 165
 ; Folding = -0-
 ; EnableXP

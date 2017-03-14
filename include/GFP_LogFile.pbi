@@ -161,10 +161,58 @@ Procedure.s __GetModuleFunctionOfAddress(*addr)
 ProcedureReturn sResult
 EndProcedure
 
+Procedure.s GetWindowsName()
+  Protected sResult.s
+  sResult = "Unknown"
+  Select OSVersion()
+  Case #PB_OS_Windows_95
+    sResult = "Windows 95"
+  Case #PB_OS_Windows_98
+    sResult = "Windows 98"
+  Case #PB_OS_Windows_NT3_51
+    sResult = "Windows NT"
+  Case #PB_OS_Windows_NT_4
+    sResult = "Windows NT"
+  Case #PB_OS_Windows_ME
+    sResult = "Windows ME"
+  Case #PB_OS_Windows_2000
+    sResult = "Windows 2000"
+  Case #PB_OS_Windows_XP
+    sResult = "Windows XP"
+  Case #PB_OS_Windows_Vista
+    sResult = "Windows Vista"
+  Case #PB_OS_Windows_7
+    sResult = "Windows 7"
+  Case #PB_OS_Windows_8
+    sResult = "Windows 8"
+  Case #PB_OS_Windows_8_1
+    sResult = "Windows 8.1"
+  Case #PB_OS_Windows_10
+    sResult = "Windows 10"
+  Case #PB_OS_Windows_Future
+    sResult = "Windows Unknown"
+  Case #PB_OS_Windows_Server_2003
+    sResult = "Windows Server 2003"
+  Case #PB_OS_Windows_Server_2008
+    sResult = "Windows Server 2008"
+  Case #PB_OS_Windows_Server_2008_R2
+    sResult = "Windows Server 2008 R2"
+  Case #PB_OS_Windows_Server_2012
+    sResult = "Windows Server 2012"
+  EndSelect
+  
+  If IsWow64()
+    sResult = sResult + " x64"
+  Else
+    sResult = sResult + " x86"
+  EndIf
+ProcedureReturn sResult.s
+EndProcedure
+
 Procedure WriteWindowsVersion(File.i)
   Protected System.s
   If File
-    System.s = "User:" + GetUserName()+ ", Graphics: " + GetGraphicCardName() + ", Processor: " + GetCPUName() + ", Windows: " + GetWindows() + ", Program version: "+#PLAYER_VERSION+"."+Str(#USE_OEM_VERSION)+" Bulid: " + Str(#PB_Editor_BuildCount) +", DPI: "+Str(GetDPI())
+    System.s = "User:" + GetUserName()+ ", Graphics: " + GetGraphicCardName() + ", Processor: " + GetCPUName() + ", Windows: " + GetWindowsName() + ", Program version: "+#PLAYER_VERSION+"."+Str(#USE_OEM_VERSION)+" Bulid: " + Str(#PB_Editor_BuildCount) +", DPI: "+Str(GetDPI())
     If Lof(File)=0 
       WriteStringN(File, System)
     EndIf
@@ -354,8 +402,8 @@ EndProcedure
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 184
-; FirstLine = 21
+; CursorPosition = 214
+; FirstLine = 121
 ; Folding = 5---
 ; EnableXP
 ; EnableOnError
