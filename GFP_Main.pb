@@ -1,7 +1,7 @@
-;*************************************** Version: 1.22
+;*************************************** Version: 1.23
 ;*** GreenForce Player *** GF-Player ***
 ;*** http://GFP.RRSoftware.de **********
-;*** (c) 2009 - 2016 RocketRider *******
+;*** (c) 2009 - 2017 RocketRider *******
 ;***************************************
 EnableExplicit
 #USE_VIRTUAL_FILE = #True;#False;
@@ -43,6 +43,8 @@ CompilerEndIf
 Import "Kernel32.lib";Hotfix
    GetProcAddress_(hMod.i, Name.p-ascii) As "_GetProcAddress@8"
 EndImport
+ 
+ 
 
 
 ;{ SetDllDirectory
@@ -143,11 +145,11 @@ CompilerEndIf
   CompilerEndIf 
   #PANEL_HEIGHT_FLV_PLAYER = 82
     
-  #PLAYER_VERSION = "1.22"
+  #PLAYER_VERSION = "1.23"
   
   
   CompilerIf #USE_OEM_VERSION = #False
-    #PLAYER_COPYRIGHT = "© 2009 - 2016 RocketRider"
+    #PLAYER_COPYRIGHT = "© 2009 - 2017 RocketRider"
     
     #PLAYER_GLOBAL_MUTEX = "GreenForce-Player"
     #GFP_PATTERN_PROTECTED_MEDIA = "GF-Player (*.gfp)|*.gfp;|All Files (*.*)|*.*"
@@ -174,7 +176,7 @@ CompilerEndIf
   
   #GFP_PATTERN_PLAYLIST_EXPORT = "M3U (*.m3u)|*.m3u;|All Files (*.*)|*.*"
   #GFP_PATTERN_PLAYLIST_IMPORT = "Playlist|*.m3u;*.asx;*.pls;*.xspf;|All Files (*.*)|*.*"
-  #GFP_PATTERN_IMAGE = "Image|*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;|All Files (*.*)|*.*"
+  #GFP_PATTERN_IMAGE = "Image|*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;*.gif|All Files (*.*)|*.*"
   #GFP_PATTERN_SUBTILTES = "Subtitles|*.sub;*.srt;*.txt;*.idx;*.aqt;*.jss;*.ttxt;*.pjs;*.psb;*.rt;*.smi;*.ssf;*.gsub;*.ssa;*.ass;*.usf;|All Files (*.*)|*.*"
   #GFP_PATTERN_PROTECTED_MEDIA_EXE = "Executable (*.exe)|*.exe;|All Files (*.*)|*.*"
   
@@ -1002,7 +1004,53 @@ CompilerEndIf
 
 
 
-;{ Functions
+  ;{ Functions
+  
+Procedure Mod_ResizeGadget(gadget,x,y,w,h)
+  If y < 0 And y <> #PB_Ignore
+    y = 0
+  EndIf
+  ProcedureReturn ResizeGadget(gadget,x,y,w,h)
+EndProcedure
+
+; Procedure Mod_ResizeWindow(wnd,x,y,w,h)
+;   If h <> #PB_Ignore
+;     If GetMenu_(WindowID(wnd))
+;       h + MenuHeight()
+;       Debug h
+;     EndIf    
+;   EndIf
+;   ProcedureReturn ResizeWindow(wnd,x,y,w,h)
+; EndProcedure
+
+
+ Procedure Mod_WindowBounds(wnd,min_w,min_h,max_w,max_h)
+   If min_h <> #PB_Ignore And max_h <> #PB_Ignore
+     If GetMenu_(WindowID(wnd))
+       min_h + MenuHeight()
+     EndIf   
+     If min_h > max_h
+       max_h = min_h
+     EndIf  
+   EndIf
+   
+   ProcedureReturn WindowBounds(wnd,min_w,min_h,max_w,max_h)
+ EndProcedure
+
+
+Macro ResizeGadget
+  Mod_ResizeGadget
+EndMacro
+
+Macro WindowBounds
+  Mod_WindowBounds
+EndMacro
+
+
+; Macro ResizeWindow
+;   Mod_ResizeWindow
+; EndMacro
+
 
 Global DRMV2_Cached_File.s, DRMV2_Cached_Password.s, DRMV2_Cached_Offset.q, *DRMV2_Cached_headerObj.DRMV2_HEADER_READ_OBJECT
 Procedure __DRMV2_ReadHeaderFromStreamingFile(*StreamingFile, password.s, qOffset.q = 0, *result.integer = #Null)
@@ -1505,7 +1553,7 @@ Procedure SetMediaSizeToVIS()
         EndIf  
       EndIf
     Else
-      WindowBounds(#WINDOW_MAIN, 460, Design_Container_Size+3+_StatusBarHeight(0), #PB_Ignore, Design_Container_Size+3+_StatusBarHeight(0))
+       WindowBounds(#WINDOW_MAIN, 460, Design_Container_Size+3+_StatusBarHeight(0), #PB_Ignore, Design_Container_Size+3+_StatusBarHeight(0))
       ResizeWindow_(#WINDOW_MAIN, #PB_Ignore, #PB_Ignore, #PB_Ignore, Design_Container_Size+3+_StatusBarHeight(0))
     EndIf
   EndIf
@@ -5386,6 +5434,23 @@ Procedure CBMainWindow(WindowID, Message, wParam, lParam)
   Protected width, height, midX, midY, offset, re.rect,pt.point, bHighlight = #False
   Result = #PB_ProcessPureBasicEvents
   
+  ;EDIT:
+  If Message = #WM_SIZING 
+    
+    If WindowID = WindowID(#WINDOW_MAIN)
+      ResizeMainWindow()
+      ProcedureReturn #True
+    EndIf
+    If WindowID = WindowID(#WINDOW_LIST)
+      ResizeGadget(#GADGET_LIST_SPLITTER, 0, ToolBarHeight(#TOOLBAR_PLAYLIST), WindowWidth(#WINDOW_LIST), WindowHeight(#WINDOW_LIST)-ToolBarHeight(#TOOLBAR_PLAYLIST))
+      ResizeGadget(#GADGET_LIST_PLAYLIST, 0, 0, GadgetWidth(#GADGET_LIST_CONTAINER), GadgetHeight(#GADGET_LIST_CONTAINER)-100)
+      ResizeGadget(#GADGET_LIST_IMAGE, (GadgetWidth(#GADGET_LIST_CONTAINER)-100)/2, GadgetHeight(#GADGET_LIST_CONTAINER)-100, #PB_Ignore, #PB_Ignore)
+      ProcedureReturn #True
+    EndIf  
+  EndIf  
+  
+  
+  
   If Message = #WM_CTLCOLORSTATIC 
     If GetProp_(lParam, "player")
       If Design_BK_Color <> -1
@@ -5401,8 +5466,7 @@ Procedure CBMainWindow(WindowID, Message, wParam, lParam)
     If GetProp_(lParam, "passwordCheckBox")
       SetBkMode_(wParam, #TRANSPARENT)
       ProcedureReturn GetStockObject_(#WHITE_BRUSH)              
-    EndIf   
-    
+    EndIf       
   EndIf   
   
   If Message = #WM_NOTIFY
@@ -5657,7 +5721,7 @@ EndProcedure
 
 
 ;Die compiler option "Request User mode for Windows Vista (no virtualisation)" sollte angehakt werden, da unter vista ansonsten ffdshow.ax bei zumindest einem video crasht! (vista-crash-ffdshow-ax-without-user-mode.avi)
-#MENU_MODERNLOOK_COLOR = $A0A0A0
+#MENU_MODERNLOOK_COLOR = $909090
 Global _g_menu_imp__GetSysColor= #Null , _g_menu_new_imp_GetSysColor= #Null, _g_menu_real_GetSysColor = #Null
 Procedure __MyGetSysColor(idx)
   If idx = 13
@@ -5683,10 +5747,18 @@ EndProcedure
     WinY = Val(Settings(#SETTINGS_WINDOW_Y)\sValue)
     WinW = 360;Val(Settings(#SETTINGS_WINDOW_WIDTH)\sValue)
     WinH = 105;Val(Settings(#SETTINGS_WINDOW_HEIGHT)\sValue)
+    
+    ;EDIT:
+    If StartParams\iDisableMenu=#False
+      WinH + MenuHeight()
+    EndIf
+    
     If GetUsedDesktopXYWH(WinX, WinY, WinW, WinH)=-1
       WinX = 0
       WinY = 0
     EndIf
+    
+
     
     OpenWindow(#WINDOW_MAIN, WinX, WinY, WinW, WinH, #PLAYER_NAME, #PB_Window_SystemMenu|#PB_Window_SizeGadget|#PB_Window_MaximizeGadget|#PB_Window_MinimizeGadget)   
     ;SetWindowColor(#WINDOW_MAIN, Val(Settings(#SETTINGS_WINDOW_BK_COLOR)\sValue))
@@ -6105,7 +6177,7 @@ EndProcedure
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Source code:")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "https://github.com/RocketRider/GreenForce-Player")     
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")           
-          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Copyright (c) 2009-2016 RocketRider")
+          AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Copyright (c) 2009-2017 RocketRider")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "This software is provided 'as-is',")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "without any express or implied warranty.")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "In no event will the authors be held")
@@ -7052,7 +7124,7 @@ EndProcedure
 
       EndSelect
     EndIf
-  
+   
     If iEvent = #PB_Event_SizeWindow
       ResizeMainWindow()
     EndIf
@@ -7861,7 +7933,7 @@ EndProcedure
       EndSelect
     EndIf
     
-    If iEventWindow = iLogWindow
+    If iEventWindow = iLogWindow          
       If iEvent = #PB_Event_SizeWindow
         If iLogWindow_View
           If IsGadget(iLogWindow_View)
@@ -8202,6 +8274,7 @@ EndProcedure
 
   UsedDPI=GetDPI()
   
+  UseGIFImageDecoder()
   UsePNGImageDecoder()
   UsePNGImageEncoder()
   UseJPEGImageDecoder()
@@ -9106,10 +9179,10 @@ Until iQuit=#True
 
 
 
-; IDE Options = PureBasic 5.42 LTS (Windows - x86)
-; CursorPosition = 6121
-; FirstLine = 3533
-; Folding = QbBcAAAAgBAA0DEgPAAHACEAAg----------------
+; IDE Options = PureBasic 5.60 (Windows - x86)
+; CursorPosition = 180
+; FirstLine = 119
+; Folding = QbB9nAAAIfAIQ-AB6DBwBgADCQ9----------------
 ; EnableThread
 ; EnableXP
 ; EnableUser

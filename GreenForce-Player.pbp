@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://www.purebasic.com/namespace" version="1.0" creator="PureBasic 5.42 LTS (Windows - x86)">
+<project xmlns="http://www.purebasic.com/namespace" version="1.0" creator="PureBasic 5.60 (Windows - x86)">
   <section name="config">
     <options closefiles="1" openmode="4" name="GreenForce-Player"/>
     <comment>GreenForce-Player is a MediaPlayer</comment>
@@ -8,12 +8,12 @@
   <section name="data">
     <explorer view="include\" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2016-03-28 04:01" user="benutzer" host="PC1"/>
+    <lastopen date="2017-03-14 10:17" user="admin" host="DESKTOP-1NUDIVF"/>
   </section>
   <section name="files">
     <file name="GFP_Main.pb">
-      <config load="1" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
-      <fingerprint md5="2bbafee4507ac3a2d361925a4bff7b2e"/>
+      <config load="1" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
+      <fingerprint md5="0ff245394def3c9de9d285e13bd1cb06"/>
     </file>
     <file name="GFP_OEM.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
@@ -96,7 +96,7 @@
       <fingerprint md5="4244d4955c4b6bd3a3828f2b9caaaf61"/>
     </file>
     <file name="include\GFP_DLLRegister.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
       <fingerprint md5="49f1ada312cbb289cf4f697e19e308a6"/>
     </file>
     <file name="include\GFP_DRMHeaderV2_52_Unicode.pbi">
@@ -172,7 +172,7 @@
       <fingerprint md5="c89807360c17822913c5d4e13534ad14"/>
     </file>
     <file name="include\GFP_MemoryStream.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
       <fingerprint md5="aacffc57eee1219a5d0e0064286ee895"/>
     </file>
     <file name="include\GFP_MultipleReadExclusiveWrite_Mutex.pbi">
@@ -184,20 +184,20 @@
       <fingerprint md5="d8304cbdf8540000710e84cb7f09bfe1"/>
     </file>
     <file name="include\GFP_OwnRequester.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
-      <fingerprint md5="42c9a1373d577eed0fdd4cfcca54b07c"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <fingerprint md5="5c712a1916aaf999694e922e415e457c"/>
     </file>
     <file name="include\GFP_ParentTrusted.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
       <fingerprint md5="0ebdbcb67fa1e4ff5b20776207b8300d"/>
     </file>
     <file name="include\GFP_PasswordLib.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
       <fingerprint md5="6107728e0acadffeab73dcd696e1eae5"/>
     </file>
-    <file name="include\GFP_PBCompatibility.pb">
+    <file name="include\GFP_PBCompatibility.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
-      <fingerprint md5=""/>
+      <fingerprint md5="c836a30fd354480199ab21227d6159a2"/>
     </file>
     <file name="include\GFP_Playlist.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
@@ -360,20 +360,20 @@
       <options unicode="1" thread="1" xpskin="1" user="1" onerror="1" debug="1"/>
       <icon enable="1">data\GFP.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="10405"/>
-      <buildcount enable="1" value="2373"/>
+      <compilecount enable="1" value="10456"/>
+      <buildcount enable="1" value="2376"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
-        <field0 value="1,2,2,0"/>
-        <field1 value="1,2,2,0"/>
+        <field0 value="1,2,3,0"/>
+        <field1 value="1,2,3,0"/>
         <field2 value="RRSoftware"/>
         <field3 value="GreenForce-Player"/>
-        <field4 value="1.22"/>
-        <field5 value="1.22"/>
+        <field4 value="1.23"/>
+        <field5 value="1.23"/>
         <field6 value="GreenForce-Player - The alternative mediaplayer"/>
         <field7 value="GreenForce-Player"/>
         <field8 value="GreenForce-Player.exe"/>
-        <field9 value="(c) 2009 - 2016 RocketRider"/>
+        <field9 value="(c) 2009 - 2017 RocketRider"/>
         <field13 value="Support@GFP.RRSoftware.de"/>
         <field14 value="http://GFP.RRSoftware.de"/>
         <field15 value="VOS_NT_WINDOWS32"/>
@@ -390,8 +390,8 @@
       <options unicode="1" thread="1" xpskin="1" user="1" onerror="1" debug="1"/>
       <icon enable="1">OEM-data\oem.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="7170"/>
-      <buildcount enable="1" value="2338"/>
+      <compilecount enable="1" value="7171"/>
+      <buildcount enable="1" value="2339"/>
       <execonstant enable="1"/>
       <constants>
         <constant value="#USE_OEM_VERSION = 1" enable="1"/>
@@ -404,8 +404,8 @@
       <options unicode="1" thread="1" xpskin="1" onerror="1" debug="1"/>
       <icon enable="1">data\Save.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="480"/>
-      <buildcount enable="1" value="440"/>
+      <compilecount enable="1" value="481"/>
+      <buildcount enable="1" value="441"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="1,1,3,0"/>
@@ -432,8 +432,8 @@
       <options unicode="1" thread="1" xpskin="1" onerror="1" debug="1"/>
       <icon enable="1">OEM-data\Crypt\video-encrypt.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="458"/>
-      <buildcount enable="1" value="437"/>
+      <compilecount enable="1" value="459"/>
+      <buildcount enable="1" value="438"/>
       <execonstant enable="1"/>
       <constants>
         <constant value="#USE_OEM_VERSION = 1" enable="1"/>
@@ -447,8 +447,8 @@
       <icon enable="1">data\Save.ico</icon>
       <format exe="console" cpu="0"/>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="493"/>
-      <buildcount enable="1" value="444"/>
+      <compilecount enable="1" value="494"/>
+      <buildcount enable="1" value="445"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="1,1,3,0"/>
@@ -476,8 +476,8 @@
       <icon enable="1">OEM-data\Crypt\video-encrypt.ico</icon>
       <format exe="console" cpu="0"/>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="443"/>
-      <buildcount enable="1" value="440"/>
+      <compilecount enable="1" value="444"/>
+      <buildcount enable="1" value="441"/>
       <execonstant enable="1"/>
       <constants>
         <constant value="#USE_OEM_VERSION = 1" enable="1"/>
@@ -491,8 +491,8 @@
       <icon enable="0">data\Save.ico</icon>
       <format exe="dll" cpu="0"/>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="459"/>
-      <buildcount enable="1" value="446"/>
+      <compilecount enable="1" value="460"/>
+      <buildcount enable="1" value="447"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="1,1,3,0"/>
@@ -520,8 +520,8 @@
       <icon enable="0">data\Save.ico</icon>
       <format exe="dll" cpu="0"/>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="448"/>
-      <buildcount enable="1" value="444"/>
+      <compilecount enable="1" value="449"/>
+      <buildcount enable="1" value="445"/>
       <execonstant enable="1"/>
       <constants>
         <constant value="#USE_OEM_VERSION = 1" enable="1"/>

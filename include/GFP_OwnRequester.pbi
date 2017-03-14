@@ -566,7 +566,7 @@ Procedure.s URLRequester(title.s, bigText.s, smallText.s, sampleText.s, sample.s
   
   
   
-  requester=OpenWindow(#PB_Any, 0, 0, 500, 140, title, #PB_Window_SystemMenu | #PB_Window_ScreenCentered | #PB_Window_SizeGadget)
+  requester=OpenWindow(#PB_Any, 0, 0, 500, 140, title, #PB_Window_SystemMenu | #PB_Window_ScreenCentered );| #PB_Window_SizeGadget)
   If requester
     WindowBounds(requester, 500, 140, #PB_Ignore, 140) 
     
@@ -843,9 +843,9 @@ Procedure MissingCodecRequester(Codecname.s, Codeclink.s)
 EndProcedure
 
 
-; IDE Options = PureBasic 5.21 LTS (Windows - x86)
-; CursorPosition = 729
-; FirstLine = 539
+; IDE Options = PureBasic 5.60 (Windows - x86)
+; CursorPosition = 568
+; FirstLine = 383
 ; Folding = hyw0-
 ; EnableXP
 ; EnableCompileCount = 0
