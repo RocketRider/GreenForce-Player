@@ -160,11 +160,16 @@ Procedure __Thread_Download_LAVFilters(*Parameters)
 EndProcedure
 
 
-Procedure LAVFilters_Download(title.s, text.s)
+Procedure LAVFilters_Download(title.s, text.s, invisible)
   Protected event, res, downloadGadget,img;, font, textGadget
   UsePNGImageDecoder()
   If Not LAVFilters_IsInstalled()
-    OpenWindow(#LAVFILTERS_DOWNLOAD_WINDOW,0,0,300,100, title.s, #PB_Window_ScreenCentered|#PB_Window_SystemMenu)
+    
+    If invisible
+      OpenWindow(#LAVFILTERS_DOWNLOAD_WINDOW,0,0,300,100, title.s, #PB_Window_ScreenCentered|#PB_Window_SystemMenu|#PB_Window_Invisible)
+    Else
+      OpenWindow(#LAVFILTERS_DOWNLOAD_WINDOW,0,0,300,100, title.s, #PB_Window_ScreenCentered|#PB_Window_SystemMenu)      
+    EndIf
     StickyWindow(#LAVFILTERS_DOWNLOAD_WINDOW, #True)
     SetWindowColor(#LAVFILTERS_DOWNLOAD_WINDOW,#White)
     ;font = LoadFont(#PB_Any, "Verdana", 50)
@@ -336,7 +341,7 @@ EndDataSection
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 81
-; FirstLine = 68
+; CursorPosition = 168
+; FirstLine = 149
 ; Folding = ---
 ; EnableXP

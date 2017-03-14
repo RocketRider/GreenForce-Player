@@ -715,6 +715,7 @@ CompilerEndIf
     iVolume.i
     iDisableLAVFilters.i 
     iJustDownloadCodecs.i
+    iHiddenCodecsDownload.i
     sPassword.s
     bHidden.i
     sFile.s
@@ -8126,6 +8127,9 @@ EndProcedure
         StartParams\iJustDownloadCodecs = #True
         StartParams\bHidden = #True
         
+      Case  "/invisiblecodecdownload"      
+        StartParams\iHiddenCodecsDownload = #True
+        
       Case "/protectprocess"
         ProtectProcess()
         
@@ -8620,7 +8624,7 @@ WriteLog("PLAYER-STARTS", #LOGLEVEL_DEBUG)
 
 CompilerIf #USE_ENABLE_LAVFILTERS_DOWNLOAD
   If Not StartParams\iDisableLAVFilters
-    If LAVFilters_Download(#PLAYER_NAME, "Downloading codecs...")
+    If LAVFilters_Download(#PLAYER_NAME, "Downloading codecs...", StartParams\iHiddenCodecsDownload)
       LAVFilters_Register()  
       If LAVFilters_IsFreshInstallation()
         If Not StartParams\iJustDownloadCodecs
@@ -9265,9 +9269,9 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 8635
-; FirstLine = 7003
-; Folding = X8h9PBQgQ+AQg+BSyHiiDADGMs5----------------
+; CursorPosition = 8129
+; FirstLine = 6538
+; Folding = X8h9PBwgQ+AQg+BSyHiiDADGMs5----------------
 ; EnableThread
 ; EnableXP
 ; EnableUser
