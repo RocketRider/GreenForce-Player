@@ -3,7 +3,7 @@ GF-Player V2.0:
 - Automatic Codec download (LAVFilters)
 - GIF image support
 - Persian language added
-- new commandline parameters /disablelavfilters, /codecdownload, /invisiblecodecdownload, /showmsgcheck, /showmsgbox, /delaystart
+- new commandline parameters /disablelavfilters, /codecdownload, /invisiblecodecdownload, /delaystart
 
 GF-Player V1.22:
 - Improved: Updated to PureBasic 5.42
@@ -147,7 +147,7 @@ GF-Player V1.10:
 - Corrected: Video executable used wrong path for database
 
 GF-Player V1.09:
-- Added: Language Spanish(Thx to Mauricio Cantún Caamal)
+- Added: Language Spanish(Thx to Mauricio CantÃºn Caamal)
 - Added: Icons
 - Added: Show video title in player title
 - Added: Thumbnail buttons
@@ -450,7 +450,7 @@ GF-Player V0.60:
 - Added: GFPCrypt command line tool to encrypt/decrypt without the player
 - Added: Automatic database update function
 - Improved: volume control (now can be used with pressed mouse button) 
-- Improved: Fullscreen mode, optimized for multiple desktops (thx to STARGÅTE and ts-soft)
+- Improved: Fullscreen mode, optimized for multiple desktops (thx to STARGÃ…TE and ts-soft)
 - Corrected: French language updated (thx to Mr. Warkering)
 - Corrected: now log file will be saved in Appdata folder
 - Corrected: major bug in Playlists (thx to Mr. walker)
