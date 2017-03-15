@@ -8,12 +8,12 @@
   <section name="data">
     <explorer view="include\" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2017-03-14 23:35" user="admin" host="DESKTOP-1NUDIVF"/>
+    <lastopen date="2017-03-15 07:54" user="admin" host="DESKTOP-1NUDIVF"/>
   </section>
   <section name="files">
     <file name="GFP_Main.pb">
       <config load="1" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
-      <fingerprint md5="ebdd549db0527271024a48db052c0594"/>
+      <fingerprint md5="fe8f24456d8eeba7fdecd159853dfafd"/>
     </file>
     <file name="GFP_OEM.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
@@ -140,12 +140,12 @@
       <fingerprint md5="c1147f0fd69f102d3a378ea4fa0525c5"/>
     </file>
     <file name="include\GFP_Language.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
       <fingerprint md5="c5d7d805107a621a40285d40cdb5f2c5"/>
     </file>
     <file name="include\GFP_LAVFilters.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
-      <fingerprint md5="bc12e4c3e878c005f35604e74c2c88ba"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <fingerprint md5="ef0a77f2433edc2e206f8db545de50fb"/>
     </file>
     <file name="include\GFP_LEAK_DEBUG.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
@@ -305,7 +305,7 @@
     </file>
     <file name="include\GFP_VideoDVD.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
-      <fingerprint md5="10c89279926ff04a29a003f878454ec1"/>
+      <fingerprint md5="2f0dd4e2fce465c7ba5e5fa94943e2c5"/>
     </file>
     <file name="include\GFP_VirtualFile_80_Unicode_OwnString_WIN8.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
@@ -364,8 +364,8 @@
       <options unicode="1" thread="1" xpskin="1" user="1" onerror="1" debug="1"/>
       <icon enable="1">data\GFP.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="10624"/>
-      <buildcount enable="1" value="2427"/>
+      <compilecount enable="1" value="10631"/>
+      <buildcount enable="1" value="2429"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="2,0,0,0"/>
