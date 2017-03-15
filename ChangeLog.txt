@@ -22,13 +22,13 @@ GF-Player V1.21:
 - Added: multible Machine IDs in one file (just put them behind each other KEY1KEY2KEY3...)
 - Improved: Windows 8 support
 - Improved: Menu color
-- Improved: Cleaned Source code
+- Improved: Cleaned source code
 - Improved: Compatible with PureBasic 5.21
 - Improved: Video Protection
 - Corrected: Crash with old ffdirctshow and Win Vista
 - Corrected: Subtitles
-- Corrected: Fullscreen comand
-- Corrected: Database comand
+- Corrected: Fullscreen command
+- Corrected: Database command
 
 
 GF-Player V1.20:
