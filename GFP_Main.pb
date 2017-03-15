@@ -8129,6 +8129,10 @@ EndProcedure
         StartParams\iJustDownloadCodecs = #True
         StartParams\bHidden = #True
         
+      Case "/deletelavfilters"
+        StartParams\iDisableLAVFilters = #True
+        LAVFilters_Delete()
+        
       Case  "/invisiblecodecdownload"      
         StartParams\iHiddenCodecsDownload = #True
         
@@ -9271,8 +9275,8 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 8420
-; FirstLine = 6807
+; CursorPosition = 8133
+; FirstLine = 6545
 ; Folding = X8h9PBwgQ+AQg+BSyHiiDADGMs5----------------
 ; EnableThread
 ; EnableXP

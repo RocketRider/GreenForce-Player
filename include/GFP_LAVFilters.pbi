@@ -53,12 +53,15 @@ Macro __LAVFilterError(sText)
   WriteLog(sText, #LOGLEVEL_ERROR)
 EndMacro
 
+
 Procedure LAVFilters_IsInstalled()
-  If FileSize(__LAVFilters_GetSpecialFolder(#CSIDL_APPDATA) +#LAVFILTERS_PATH+"\INSTALLED") = 0
+  If FileSize(__LAVFilters_GetSpecialFolder(#CSIDL_APPDATA) + #LAVFILTERS_PATH+"\INSTALLED") = 0
     ProcedureReturn #True  
-  Else
-    ProcedureReturn #False
+  EndIf
+  If FileSize(__LAVFilters_GetSpecialFolder(#CSIDL_COMMON_APPDATA) + #LAVFILTERS_PATH+"\INSTALLED") = 0
+    ProcedureReturn #True  
   EndIf  
+  ProcedureReturn #False
 EndProcedure
 
 Procedure LAVFilters_IsFreshInstallation()
@@ -69,12 +72,34 @@ Procedure LAVFilters_IsRegistered()
   ProcedureReturn _LAVFilters_isRegistered
 EndProcedure
 
+Procedure LAVFilters_Delete()
+  Protected codec_dst.s
+  If IsUserAnAdmin_()
+    codec_dst.s = __LAVFilters_GetSpecialFolder(#CSIDL_COMMON_APPDATA) + #LAVFILTERS_PATH + "\"
+  Else
+    codec_dst.s = __LAVFilters_GetSpecialFolder(#CSIDL_APPDATA) + #LAVFILTERS_PATH + "\"  
+  EndIf
+  If FileSize(codec_dst.s) = -2
+    ProcedureReturn DeleteDirectory(codec_dst.s, "*.*", #PB_FileSystem_Recursive)
+  EndIf  
+  ProcedureReturn #False
+EndProcedure
+
+
 Procedure __Thread_Download_LAVFilters(*Parameters)
   Protected failed = #False
   Protected file, isDownload = #True
   Protected tmpFile.s = GetTemporaryDirectory() + "tmp_" + Hex(GetTickCount_())+".zip"
   
-  Protected codec_dst.s = __LAVFilters_GetSpecialFolder(#CSIDL_APPDATA) + #LAVFILTERS_PATH + "\"
+  Protected codec_dst.s
+  
+  If IsUserAnAdmin_()
+    codec_dst.s = __LAVFilters_GetSpecialFolder(#CSIDL_COMMON_APPDATA) + #LAVFILTERS_PATH + "\"
+  Else
+    codec_dst.s = __LAVFilters_GetSpecialFolder(#CSIDL_APPDATA) + #LAVFILTERS_PATH + "\"  
+  EndIf
+  
+  Debug codec_dst.s
   
   If FileSize(GetPathPart(ProgramFilename()) + "LAVFilters-x86.zip") > 0
     tmpFile.s = GetPathPart(ProgramFilename()) + "LAVFilters-x86.zip"
@@ -208,7 +233,16 @@ EndProcedure
 
 
 Procedure __LAVFilters_OpenLibrary(sNameDLL.s, *lib.integer)
-  Protected sPath.s = __LAVFilters_GetSpecialFolder(#CSIDL_APPDATA) + #LAVFILTERS_PATH  
+  Protected sPath.s = __LAVFilters_GetSpecialFolder(#CSIDL_APPDATA) + #LAVFILTERS_PATH
+  
+  If FileSize(sPath.s) <> -2
+    sPath.s = __LAVFilters_GetSpecialFolder(#CSIDL_COMMON_APPDATA) + #LAVFILTERS_PATH
+  EndIf
+  
+   If FileSize(sPath.s) <> -2
+    ProcedureReturn #False
+  EndIf 
+  
   *lib\i = OpenLibrary(#PB_Any, sPath.s + "\" + sNameDLL.s)
   If *lib\i
     ProcedureReturn #True
@@ -225,6 +259,10 @@ Procedure __LAVFilters_Register(sNameManifest.s, *cookie.integer)
   ZeroMemory_(@actCtx, SizeOf(ACTCTX))
   actCtx\cbSize = SizeOf(ACTCTX)
   Protected sPath.s = __LAVFilters_GetSpecialFolder(#CSIDL_APPDATA) + #LAVFILTERS_PATH
+  If FileSize(sPath.s) <> -2
+    sPath.s = __LAVFilters_GetSpecialFolder(#CSIDL_COMMON_APPDATA) + #LAVFILTERS_PATH
+  EndIf  
+  
   Protected sManifest.s = sPath.s + "\" + sNameManifest.s
   actCtx\lpSource = @sManifest.s
   actCtx\lpAssemblyDirectory = @sPath.s
@@ -341,7 +379,7 @@ EndDataSection
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 168
-; FirstLine = 149
+; CursorPosition = 101
+; FirstLine = 205
 ; Folding = ---
 ; EnableXP
