@@ -17,7 +17,7 @@ AppUpdatesURL=http://gfp.rrsoftware.de
 DefaultDirName={pf}\GreenForce-Player
 DefaultGroupName=GreenForce-Player
 AllowNoIcons=yes
-InfoAfterFile=Files\ReadmeEN.txt
+InfoAfterFile=..\ReadmeEN.txt
 ;OutputDir=C:\Users\Admin\Desktop\Projects\PureBasic\GFP-Install
 OutputBaseFilename=GFP-Setup-V2.00
 SetupIconFile=Icon.ico
@@ -29,7 +29,7 @@ SolidCompression=yes
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
-Name: "nl"; MessagesFile: "compiler:Languages\Dutch.isl"
+Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
 
 
 [Tasks]
@@ -37,8 +37,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags:checkedonce
 
 [Files]
-Source: "Files\GreenForce-Player.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Files\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\GreenForce-Player.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\GFP-SDK\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Help\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -52,5 +53,8 @@ Name: "{commondesktop}\GreenForce-Player"; Filename: "{app}\GreenForce-Player.ex
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\GreenForce-Player"; Filename: "{app}\GreenForce-Player.exe"; Tasks: quicklaunchicon
 
 [Run]
+Filename: "{app}\GreenForce-Player.exe"; Parameters: "/codecdownload"; Flags: runascurrentuser waituntilterminated
 Filename: "{app}\GreenForce-Player.exe"; Description: "{cm:LaunchProgram,GreenForce-Player}"; Flags: nowait postinstall skipifsilent
 
+[UninstallRun]
+Filename: "{app}\GreenForce-Player.exe"; Parameters: "/deletelavfilters"; Flags: runascurrentuser waituntilterminated
