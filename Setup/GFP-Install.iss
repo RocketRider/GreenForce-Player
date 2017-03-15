@@ -32,6 +32,14 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
+Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
+Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
+Name: "Pportuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
+Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "serbianLatin"; MessagesFile: "compiler:Languages\SerbianLatin.isl"
+Name: "slovenian"; MessagesFile: "compiler:Languages\Slovenian.isl"
+Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
+Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
 
 
 [Tasks]
