@@ -5,27 +5,25 @@ It is specifically designed for reducing the hard drive access by using a cache 
 
 Currently supported features: 
 -----------------------------
-- Playing video files (depending on the installed DirectShow codecs) 
-- E.g. Windows 7: wmv, avi, mpg, mpeg, vob, asf, ... 
-- Audio playback (depending on the installed DirectShow codecs) 
-- E.g. Windows 7: ogg, flac, wma, mp3, wav, ... 
+- Playing video files (depending on the installed DirectShow codecs; E.g. Windows 7: wmv, avi, mpg, mpeg, vob, asf, ...) 
 - Integrated Ogg and Flac Decoder!
 - automatic download of LAV Filter codecs (divx, mpeg 4 avc, mpeg 4 asp support)
+- Audio playback (depending on the installed DirectShow codecs; E.g. Windows 7: ogg, flac, wma, mp3, wav, ...) 
 - Custom container format (*. gfp) for password protected media (provides configuration options to prevent screenshots and to restore the original file). 
 - For more codecs you can install a codec pack like K-Lite codecs (http://www.codecguide.com)
 - Audio CD playback 
 - DVD video playback 
 - Video and audio streaming from internet
-- Visualisation
+- audio Visualisation
 - Automatic update function
 - Import different playlist formats
 
-- Supported languages are English, German, Turkish, Nederlands, Spanish and French for now (suggestions for improvements and new language translations are welcome) 
+- Supported languages are English, German, Turkish, Nederlands, Spanish, French, Greek, Portuguese, Swedish, Italian, Serbian, Bulgarian, Russian and Persian for now (suggestions for improvements and new language translations are welcome) 
 - Playlists (with support for import, export, tags) 
 - Aspect ratio (1:1, 4:3, 5:4, 16:9, 16:10, 21:9) 
 - Play small files from memory (cache function) to reduce the hard drive usage. 
 - Snapshot function (save as JPG, JPEG2000, PNG) 
-- Various playback options: Repeat, Random Play 
+- Various playback options: "Repeat", "Random Play" 
 - many different audio and video renderers 
 - Full screen mode
 - Minimal screen mode
