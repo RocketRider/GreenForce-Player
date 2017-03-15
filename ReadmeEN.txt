@@ -17,7 +17,7 @@ Bug reports and suggestions are very welcome.
 
 Currently supported features: 
 -----------------------------
-- automatic Download of Codecs (LAVFilters)
+- automatic Download of Codecs (LAV Filters)
 - Playing video files (depending on the installed DirectShow codecs) 
 - E.g. Windows 7: wmv, avi, mpg, mpeg, vob, asf, ... 
 - Audio playback (depending on the installed DirectShow codecs) 
