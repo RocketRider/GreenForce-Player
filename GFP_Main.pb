@@ -1395,7 +1395,7 @@ Procedure GetWindowKeyState(iEvent.i, iWindow.i=#WINDOW_MAIN)
 EndProcedure
 
 Procedure RestartPlayer()
-  Protected Password.s,program, programID
+  Protected Password.s
   ;iQuit = #True
   If hMutexAppRunning
     CloseHandle_(hMutexAppRunning)
@@ -8409,6 +8409,23 @@ EndProcedure
     SetCurrentDirectory(GetPathPart(ProgramFilename()))
   CompilerEndIf
 
+  CompilerIf #USE_ENABLE_LAVFILTERS_DOWNLOAD
+    If Not StartParams\iDisableLAVFilters
+      If LAVFilters_Download(#PLAYER_NAME, "Downloading codecs...", StartParams\iHiddenCodecsDownload)
+        LAVFilters_Register()  
+;         If LAVFilters_IsFreshInstallation()
+;           If Not StartParams\iJustDownloadCodecs
+;             ;RestartPlayer()
+;           EndIf  
+;         EndIf  
+      EndIf
+    EndIf
+  CompilerEndIf
+  
+  If StartParams\iJustDownloadCodecs
+    EndPlayer()
+  EndIf    
+  
   
   If FileSize(sDataBaseFile)<1
     CreateDirectory(GetPathPart(sDataBaseFile))
@@ -8624,23 +8641,6 @@ CompilerEndIf
 
 WriteLog("PLAYER-STARTS", #LOGLEVEL_DEBUG)
 
-CompilerIf #USE_ENABLE_LAVFILTERS_DOWNLOAD
-  If Not StartParams\iDisableLAVFilters
-    If LAVFilters_Download(#PLAYER_NAME, "Downloading codecs...", StartParams\iHiddenCodecsDownload)
-      LAVFilters_Register()  
-      If LAVFilters_IsFreshInstallation()
-        If Not StartParams\iJustDownloadCodecs
-          RestartPlayer()
-        EndIf  
-      EndIf  
-    EndIf
-  EndIf
-CompilerEndIf
-
-If StartParams\iJustDownloadCodecs
-  EndPlayer()
-EndIf  
-  
 
 Repeat
 
@@ -9271,8 +9271,8 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 998
-; FirstLine = 932
+; CursorPosition = 8420
+; FirstLine = 6807
 ; Folding = X8h9PBwgQ+AQg+BSyHiiDADGMs5----------------
 ; EnableThread
 ; EnableXP
