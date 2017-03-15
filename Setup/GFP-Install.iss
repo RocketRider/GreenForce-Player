@@ -22,7 +22,7 @@ InfoAfterFile=..\ReadmeEN.txt
 OutputBaseFilename=GFP-Setup-V2.00
 SetupIconFile=Icon.ico
 WizardImageFile=Logo.bmp
-Compression=lzma/max
+Compression=lzma2/ultra64
 SolidCompression=yes
 
 [Languages]
