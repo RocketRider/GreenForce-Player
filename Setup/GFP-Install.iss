@@ -17,13 +17,14 @@ AppUpdatesURL=http://gfp.rrsoftware.de
 DefaultDirName={pf}\GreenForce-Player
 DefaultGroupName=GreenForce-Player
 AllowNoIcons=yes
-InfoAfterFile=..\ReadmeEN.txt
+InfoBeforeFile=..\ReadmeEN.txt
 ;OutputDir=C:\Users\Admin\Desktop\Projects\PureBasic\GFP-Install
 OutputBaseFilename=GFP-Setup-V2.00
 SetupIconFile=Icon.ico
 WizardImageFile=Logo.bmp
 Compression=lzma2/ultra64
 SolidCompression=yes
+DisableWelcomePage=no
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
