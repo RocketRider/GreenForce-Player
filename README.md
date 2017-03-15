@@ -2,7 +2,6 @@
 
 GreenForce-Player is an alternative player to play video and audio media. A special feature is that it allows to password protect video and audio files. 
 It is specifically designed for reducing the hard drive access by using a cache system to extend the battery life of laptops. 
-In addition, the player supports the ability to encrypt media files to protect them with a password from unauthorized access.
 
 Currently supported features: 
 -----------------------------
