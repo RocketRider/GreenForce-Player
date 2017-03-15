@@ -61,35 +61,39 @@ Procedure VDVD_CreatePopUpMenu(Systray.i=#False)
   CompilerElse  
     If CreatePopupImageMenu(#MENU_VDVD_MENU, #PB_Menu_ModernLook)
   CompilerEndIf  
+  
+  
+    If Not GetGadgetData(#GADGET_CONTAINER) ;Problem mit Anzeige von dialogen in fullscreen modus (fenster immer im Forderground)
+      MenuItem(#MENU_LOAD, Language(#L_LOAD), ImageID(#SPRITE_MENU_LOAD))
       
-    MenuItem(#MENU_LOAD, Language(#L_LOAD), ImageID(#SPRITE_MENU_LOAD))
-    
-    CompilerIf #USE_SUBTITLES
-      If iMediaObject And iIsMediaObjectVideoDVD=0
-        If MediaWidth(iMediaObject)>0
-          MenuItem(#MENU_LOAD_SUBTITLES, Language(#L_LOAD_SUBTITLES), ImageID(#SPRITE_MENU_LANGUAGE))
-          If iSubtitlesLoaded
-            MenuItem(#MENU_DISABLE_SUBTITLES, Language(#L_DISABLE_SUBTITLES), ImageID(#SPRITE_MENU_LANGUAGE))
-            
-            OpenSubMenu(Language(#L_SUBTITLE_SIZE))
-              MenuItem(#MENU_SUBTITLE_SIZE_20, "20")
-              MenuItem(#MENU_SUBTITLE_SIZE_30, "30")
-              MenuItem(#MENU_SUBTITLE_SIZE_40, "40")
-              MenuItem(#MENU_SUBTITLE_SIZE_50, "50")
-              MenuItem(#MENU_SUBTITLE_SIZE_60, "60")
-            CloseSubMenu()
-            If UsedSubtitleSize=20:SetMenuItemState(#MENU_VDVD_MENU, #MENU_SUBTITLE_SIZE_20, 1):EndIf  
-            If UsedSubtitleSize=30:SetMenuItemState(#MENU_VDVD_MENU, #MENU_SUBTITLE_SIZE_30, 1):EndIf  
-            If UsedSubtitleSize=40:SetMenuItemState(#MENU_VDVD_MENU, #MENU_SUBTITLE_SIZE_40, 1):EndIf  
-            If UsedSubtitleSize=50:SetMenuItemState(#MENU_VDVD_MENU, #MENU_SUBTITLE_SIZE_50, 1):EndIf  
-            If UsedSubtitleSize=60:SetMenuItemState(#MENU_VDVD_MENU, #MENU_SUBTITLE_SIZE_60, 1):EndIf  
+      CompilerIf #USE_SUBTITLES
+        If iMediaObject And iIsMediaObjectVideoDVD=0
+          If MediaWidth(iMediaObject)>0
+            MenuItem(#MENU_LOAD_SUBTITLES, Language(#L_LOAD_SUBTITLES), ImageID(#SPRITE_MENU_LANGUAGE))
+            If iSubtitlesLoaded
+              MenuItem(#MENU_DISABLE_SUBTITLES, Language(#L_DISABLE_SUBTITLES), ImageID(#SPRITE_MENU_LANGUAGE))
+              
+              OpenSubMenu(Language(#L_SUBTITLE_SIZE))
+                MenuItem(#MENU_SUBTITLE_SIZE_20, "20")
+                MenuItem(#MENU_SUBTITLE_SIZE_30, "30")
+                MenuItem(#MENU_SUBTITLE_SIZE_40, "40")
+                MenuItem(#MENU_SUBTITLE_SIZE_50, "50")
+                MenuItem(#MENU_SUBTITLE_SIZE_60, "60")
+              CloseSubMenu()
+              If UsedSubtitleSize=20:SetMenuItemState(#MENU_VDVD_MENU, #MENU_SUBTITLE_SIZE_20, 1):EndIf  
+              If UsedSubtitleSize=30:SetMenuItemState(#MENU_VDVD_MENU, #MENU_SUBTITLE_SIZE_30, 1):EndIf  
+              If UsedSubtitleSize=40:SetMenuItemState(#MENU_VDVD_MENU, #MENU_SUBTITLE_SIZE_40, 1):EndIf  
+              If UsedSubtitleSize=50:SetMenuItemState(#MENU_VDVD_MENU, #MENU_SUBTITLE_SIZE_50, 1):EndIf  
+              If UsedSubtitleSize=60:SetMenuItemState(#MENU_VDVD_MENU, #MENU_SUBTITLE_SIZE_60, 1):EndIf  
+            EndIf
           EndIf
         EndIf
-      EndIf
-    CompilerEndIf
+      CompilerEndIf
+      MenuBar()
+    EndIf
     
     
-    MenuBar()
+    
     MenuItem(#MENU_PLAY, Language(#L_PLAY)+"/"+Language(#L_BREAK), ImageID(#SPRITE_MENU_PLAY))
     MenuItem(#MENU_STOP, Language(#L_STOP), ImageID(#SPRITE_MENU_STOP))
     MenuItem(#MENU_FORWARD, Language(#L_NEXT), ImageID(#SPRITE_MENU_FORWARD))
@@ -526,10 +530,10 @@ EndProcedure
 
 
 
-; IDE Options = PureBasic 5.21 LTS (Windows - x86)
-; CursorPosition = 16
-; FirstLine = 2
-; Folding = X+
+; IDE Options = PureBasic 5.60 (Windows - x86)
+; CursorPosition = 65
+; FirstLine = 49
+; Folding = 4+
 ; EnableXP
 ; EnableUser
 ; UseMainFile = Player.pb
