@@ -18,13 +18,13 @@ It is specifically designed for reducing the hard drive access by using a cache 
 - Supported languages are English, German, Turkish, Nederlands, Spanish, French, Greek, Portuguese, Swedish, Italian, Serbian, Bulgarian, Russian and Persian for now (suggestions for improvements and new language translations are welcome) 
 - Playlists (with support for import, export, tags) 
 - Aspect ratio (1:1, 4:3, 5:4, 16:9, 16:10, 21:9) 
-- Play small files from memory (cache function) to reduce the hard drive usage. 
+- Play small files from memory (cache function) to reduce the hard drive usage 
 - Snapshot function (save as JPG, JPEG2000, PNG) 
 - Various playback options: "Repeat", "Random Play" 
 - many different audio and video renderers 
 - Full screen mode
 - Minimal screen mode
-- Intelligent file extension links 
+- Intelligent file extension links
 - Command line switch (/aspect, /fullscreen, /?, /volume, /password, /hidden, /Invisible,...) 
 - Standalone EXE with only ~4 MB (there are no other files required) 
 - Fully developed in PureBasic 
