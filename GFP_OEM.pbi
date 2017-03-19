@@ -1,4 +1,4 @@
-﻿#PLAYER_COPYRIGHT = ""
+#PLAYER_COPYRIGHT = "Noname"
 #PLAYER_NAME = "Video-Player-OEM"
 #PLAYER_GLOBAL_MUTEX = "Video-Player-OEM"
 #GFP_PATTERN_PROTECTED_MEDIA = "VideoPlayer (*.oemvideo)|*.oemvideo;|All Files (*.*)|*.*"
@@ -6,7 +6,7 @@
 #GFP_CODEC_EXTENSION = "oemvideo-codec"
 #OEM_MP_MUTEX = "OEMKSZUWD4782F2H"
 #GFP_STREAMING_AGENT = ""
-#GFP_PATTERN_MEDIA = "Media|*.oemvideo;*.oemvideo-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v;|All Files (*.*)|*.*"
+#GFP_PATTERN_MEDIA = "Multimedia|*.oemvideo;*.oemvideo-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v;*.webm|All Files (*.*)|*.*"
 #USE_DISABLEMENU = #True
 #USE_DISABLECONTEXTMENU = #False
 
@@ -39,7 +39,3 @@ Procedure OEM_MenuLimitation();Hide Menu options
   MenuLimitations(10)=#True
   MenuLimitations(36)=#True
 EndProcedure  
-; IDE Options = PureBasic 5.42 LTS (Windows - x86)
-; CursorPosition = 1
-; Folding = -
-; EnableXP
