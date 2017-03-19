@@ -1,4 +1,4 @@
-#PLAYER_COPYRIGHT = "Noname"
+﻿#PLAYER_COPYRIGHT = "Noname"
 #PLAYER_NAME = "Video-Player-OEM"
 #PLAYER_GLOBAL_MUTEX = "Video-Player-OEM"
 #GFP_PATTERN_PROTECTED_MEDIA = "VideoPlayer (*.oemvideo)|*.oemvideo;|All Files (*.*)|*.*"
@@ -39,3 +39,7 @@ Procedure OEM_MenuLimitation();Hide Menu options
   MenuLimitations(10)=#True
   MenuLimitations(36)=#True
 EndProcedure  
+; IDE Options = PureBasic 5.60 (Windows - x86)
+; FirstLine = 12
+; Folding = -
+; EnableXP

@@ -149,14 +149,14 @@ CompilerEndIf
   
   
   CompilerIf #USE_OEM_VERSION = #False
-    #PLAYER_COPYRIGHT = "© 2009 - 2017 RocketRider"
+    #PLAYER_COPYRIGHT = "� 2009 - 2017 RocketRider"
     
     #PLAYER_GLOBAL_MUTEX = "GreenForce-Player"
-    #GFP_PATTERN_PROTECTED_MEDIA = "GF-Player (*.gfp)|*.gfp;|All Files (*.*)|*.*"
+    #GFP_PATTERN_PROTECTED_MEDIA = "GreenForce-Player (*.gfp)|*.gfp;|All Files (*.*)|*.*"
     #GFP_PROTECTED_FILE_EXTENTION = ".gfp"
     #GFP_CODEC_EXTENSION = "gfp-codec"
     #GFP_STREAMING_AGENT = ""
-    #GFP_PATTERN_MEDIA = "Multimedia(*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v)|*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v|All Files (*.*)|*.*"
+    #GFP_PATTERN_MEDIA = "Multimedia(*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v)|*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v;*.webm|All Files (*.*)|*.*"
     
     #GFP_GUID = "{46AF8ADF-E3F8-4E47-A31E-98B7CD1D5BF0}"
     
@@ -179,7 +179,7 @@ CompilerEndIf
   #GFP_PATTERN_SUBTILTES = "Subtitles(*.sub;*.srt;*.txt;*.idx;*.aqt;*.jss;*.ttxt;*.pjs;*.psb;*.rt;*.smi;*.ssf;*.gsub;*.ssa;*.ass;*.usf)|*.sub;*.srt;*.txt;*.idx;*.aqt;*.jss;*.ttxt;*.pjs;*.psb;*.rt;*.smi;*.ssf;*.gsub;*.ssa;*.ass;*.usf|All Files (*.*)|*.*"
   #GFP_PATTERN_PROTECTED_MEDIA_EXE = "Executable (*.exe)|*.exe;|All Files (*.*)|*.*"
   
-  #GFP_FORMAT_MEDIA = ";vis-dll;gfp;mpvideo;ogg;flac;3g2;2gp;asf;avi;aud;acx;voc;flv;mka;mov;mp4;m4a;mpg;rm;swf;vob;wmv;aac;aif;aiff;iff;midi;mid;mp3;mpa;ra;wav;wma;mpeg;mp1;mp2;qt;divx;ts;tsp;ram;rmvb;ogm;ogv;m2ts;mkv;m2v;m4v"
+  #GFP_FORMAT_MEDIA = ";vis-dll;gfp;mpvideo;ogg;flac;3g2;2gp;asf;avi;aud;acx;voc;flv;mka;mov;mp4;m4a;mpg;rm;swf;vob;wmv;aac;aif;aiff;iff;midi;mid;mp3;mpa;ra;wav;wma;mpeg;mp1;mp2;qt;divx;ts;tsp;ram;rmvb;ogm;ogv;m2ts;mkv;m2v;m4v;webm"
   #GFP_FORMAT_PLAYLIST = ";asx;m3u;pls;xspf;txt;"
   
   #GFP_LANGUAGE_PLAYER = #True
@@ -5017,6 +5017,8 @@ Procedure UpdateDatabase(sDBFile.s)
       If DB_Query(*DB, "SELECT * FROM SETTINGS WHERE Key='player build'")
         DB_SelectRow(*DB, 0)
         iOldPlayerVersion=Val(Trim(DB_GetAsString(*DB, 2)))
+        
+        Debug iOldPlayerVersion
       EndIf
       DB_EndQuery(*DB)
       
@@ -5114,11 +5116,13 @@ Procedure UpdateDatabase(sDBFile.s)
       EndIf  
       InstallDesigns(*DB, *TempDB)
       
-      
       If iOldPlayerVersion<2184
         DB_Update(*DB, "UPDATE SETTINGS SET Value = '0' WHERE id = '17' ");DISABLE STATUSBAR
       EndIf  
       
+      If iOldPlayerVersion<2500
+        DB_Update(*DB, "INSERT INTO FILEEXT (Key, Value, type) VALUES ('.webm','','2')")         
+      EndIf 
       
     EndIf
     DB_Close(*DB)
@@ -8406,9 +8410,6 @@ EndProcedure
   
   InitNetwork();Wird benötigt das die exe beim beenden nicht hengt, wenn etwas aus dem Internet geladen wurde.
   InitErrorHandler()
-  CompilerIf #PB_Editor_CreateExecutable And #USE_APPDATA_FOLDER
-    CheckDatabase(sDataBaseFile)
-  CompilerEndIf
   
   CompilerIf #PB_Editor_CreateExecutable
     SetCurrentDirectory(GetPathPart(ProgramFilename()))
@@ -8425,13 +8426,15 @@ EndProcedure
 ;         EndIf  
       EndIf
     EndIf
-  CompilerEndIf
-  
   If StartParams\iJustDownloadCodecs
     EndPlayer()
-  EndIf    
+  EndIf        
+  CompilerEndIf
   
-  
+  CompilerIf #PB_Editor_CreateExecutable And #USE_APPDATA_FOLDER
+    CheckDatabase(sDataBaseFile)
+  CompilerEndIf  
+
   If FileSize(sDataBaseFile)<1
     CreateDirectory(GetPathPart(sDataBaseFile))
     iDBFile = CreateFile(#PB_Any, sDataBaseFile)
@@ -9276,9 +9279,9 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 8134
-; FirstLine = 6539
-; Folding = X8h9PBwgQ+AQg+BSyHiiDADGMs5----------------
+; CursorPosition = 5162
+; FirstLine = 3753
+; Folding = X8h9PBwgQ+AQk+BSyHiyDAzHMs5----------------
 ; EnableThread
 ; EnableXP
 ; EnableUser
