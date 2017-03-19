@@ -48,8 +48,8 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: "..\GreenForce-Player.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\GFP-SDK\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\Help\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\GFP-SDK\*"; DestDir: "{app}GFP-SDK\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Help\*"; DestDir: "{app}\Help\"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
