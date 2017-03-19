@@ -32,6 +32,7 @@ EnableExplicit
 #USE_NEED_SECURE_ENVIRONMENT = #False
 #USE_SC_HONEYPOT = #False
 #USE_ENABLE_LAVFILTERS_DOWNLOAD = #True
+#USE_HIDE_UNPROTECT_CHECKBOX = #True
 
 CompilerIf #PB_editor_createexecutable
   #USE_LEAK_DEBUG = #False
@@ -6431,7 +6432,7 @@ EndProcedure
       ButtonGadget(#GADGET_PV_SAVE, 210, 371, 90, 25, Language(#L_SAVE))
       
       PanelGadget(#GADGET_PV_PANEL, 2, 2, 396, 366)
-      AddGadgetItem(#GADGET_PV_PANEL, -1, Language(#L_GENERAL), ImageID(#SPRITE_MENU_LOAD))
+      AddGadgetItem(#GADGET_PV_PANEL, -1, Language(#L_GENERAL), ImageID(#SPRITE_MENU_PLAYMEDIA))
         ImageGadget(#PB_Any, 2, GadgetY, 32, 32, ImageID(#SPRITE_PROJEKTOR))
         ButtonGadget(#GADGET_PV_LOAD_BUTTON, 358, GadgetY, 30, 20, "...")
         StringGadget(#GADGET_PV_LOAD_STRING, 115, GadgetY, 240, 20, "", #PB_String_ReadOnly)
@@ -6469,9 +6470,14 @@ EndProcedure
         CompilerEndIf
         GadgetY+30
         
+
         CheckBoxGadget(#GADGET_PV_ALLOWUNPROTECT, 5, GadgetY, 340, 20, Language(#L_ALLOWUNPROTECT))
-        HideGadget(#GADGET_PV_ALLOWUNPROTECT, #True)
-        GadgetY+25
+        CompilerIf #USE_HIDE_UNPROTECT_CHECKBOX        
+          HideGadget(#GADGET_PV_ALLOWUNPROTECT, #True)
+        CompilerElse
+          GadgetY+25
+        CompilerEndIf
+        
         
         ButtonGadget(#GADGET_PV_ICON_BUTTON, 358, GadgetY, 30, 20, "...")
         StringGadget(#GADGET_PV_ICON_STRING, 115, GadgetY, 240, 20, "")
@@ -6484,6 +6490,8 @@ EndProcedure
         TextGadget(#GADGET_PV_COMMAND_TEXT, 5, GadgetY+3, 100, 20, Language(#L_PARAMENTER)+":")
         DisableGadget(#GADGET_PV_COMMAND_BUTTON, #True)
         DisableGadget(#GADGET_PV_COMMAND_STRING, #True)
+        
+        
         
         
         TextGadget(#GADGET_PV_WARNING, 5, 305, 370, 32, "", #PB_Text_Center)
@@ -6512,7 +6520,7 @@ EndProcedure
         EditorGadget(#GADGET_PV_TAG_COMMENT, 5, GadgetY, 380, 90)
         
         
-      AddGadgetItem(#GADGET_PV_PANEL, -1, Language(#L_OTHER), ImageID(#SPRITE_MENU_PLAYLIST))  
+      AddGadgetItem(#GADGET_PV_PANEL, -1, Language(#L_OTHER), ImageID(#SPRITE_MENU_COVERFLOW))  
         GadgetY=5
         TextGadget(#GADGET_PV_COVER_TEXT, 5, GadgetY, 60, 20, Language(#L_COVER)+":")
         GadgetY+25
@@ -9279,8 +9287,8 @@ Until iQuit=#True
 
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 5162
-; FirstLine = 3753
+; CursorPosition = 6477
+; FirstLine = 5060
 ; Folding = X8h9PBwgQ+AQk+BSyHiyDAzHMs5----------------
 ; EnableThread
 ; EnableXP
