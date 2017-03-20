@@ -5659,8 +5659,6 @@ Procedure ShowText(title.s,text.s, column1.s, column2.s)
     StickyWindow(wnd,#True)
     If GetModuleHandle_("UxTheme.dll")
       If GetProcAddress_(GetModuleHandle_("uxtheme.dll"), "SetWindowTheme")
-        
-        Debug GetProcAddress_(GetModuleHandle_("uxtheme.dll"), "SetWindowTheme")
         CallFunctionFast(GetProcAddress_(GetModuleHandle_("UxTheme.dll"), "SetWindowTheme"),WindowID(wnd), @" ", @" ")
       EndIf
     EndIf
@@ -5669,7 +5667,7 @@ Procedure ShowText(title.s,text.s, column1.s, column2.s)
     SetGadgetColor(editor,   #PB_Gadget_BackColor , RGB(210,210,210))
     SetGadgetColor(editor,  #PB_Gadget_FrontColor, RGB(0,0,128))
     
-    AddGadgetColumn(editor, 1, column2, 390)
+    AddGadgetColumn(editor, 1, column2, 1024)
     SetGadgetFont(editor, GetStockObject_(#SYSTEM_FIXED_FONT))
     
     text = ReplaceString(text, #LF$, #CR$)
@@ -9382,10 +9380,10 @@ Procedure CreateMainWindow()
   
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 5682
-; FirstLine = 5666
+; CursorPosition = 5660
+; FirstLine = 5652
 ; Folding = --------------------------------------------
-; Markers = 5792
+; Markers = 5790
 ; EnableThread
 ; EnableXP
 ; EnableUser
