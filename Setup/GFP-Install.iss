@@ -30,7 +30,7 @@ DisableWelcomePage=no
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"
-Name: "german"; MessagesFile: "compiler:Languages\German.isl"
+Name: "german"; MessagesFile: "compiler:Languages\German.isl"; InfoBeforeFile: "..\ReadmeDE.txt"
 Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
 Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
