@@ -28,7 +28,7 @@ It is specifically designed for reducing the hard drive access by using a cache 
 - Intelligent file extension links
 - Command line switch (/aspect, /fullscreen, /?, /volume, /password, /hidden, /Invisible,...) 
 - Standalone EXE with only ~4 MB (there are no other files required) 
-- no installation equired
+- no installation required
 - no administrator rights required
 - Fully developed in PureBasic 
 
