@@ -24,7 +24,7 @@ EnableExplicit
 #USE_DIRTY_MP4_FIX = #True;#False; ;Second try loading with orginal file! (now used for codec installation)
 #USE_OEM_FLVPLAYER = #True
 #USE_ONLY_ABOUT_MENU = #False;#True;
-#USE_OVERWRITE_SKIN = -1;3
+#USE_OVERWRITE_SKIN = -1     ;3
 #USE_ONLY_SYSTEM_FOR_EXPIRE_DATE = #False ;(false=internet ; true = no internet)
 #USE_ANTI_DEBUGGER = #True
 #USE_THROTTLE = #False
@@ -43,43 +43,43 @@ CompilerEndIf
 UseCRC32Fingerprint()
 
 Import "Kernel32.lib";Hotfix
-   GetProcAddress_(hMod.i, Name.p-ascii) As "_GetProcAddress@8"
+  GetProcAddress_(hMod.i, Name.p-ascii) As "_GetProcAddress@8"
 EndImport
- 
+
 
 
 ;{ SetDllDirectory
 ;FIX Für problematisschen DLL-Loadverhalten (wenn die bei LoadLibrary angegebene DLL nicht vorhanden ist)
-  CompilerIf #PB_Compiler_Unicode
-    Prototype.i SetDllDirectory(Path.p-Unicode);(Path.p-ascii)
-    Define hModuleHandle, SetDllDirectory.SetDllDirectory
-    hModuleHandle=GetModuleHandle_("Kernel32.dll")
-    If hModuleHandle
-      SetDllDirectory.SetDllDirectory = GetProcAddress_(hModuleHandle, "SetDllDirectoryW")
-      If SetDllDirectory
-        SetDllDirectory("")
-      EndIf  
-    EndIf
-  CompilerElse
-    Prototype.i SetDllDirectory(Path.p-ascii)
-    Define hModuleHandle, SetDllDirectory.SetDllDirectory
-    hModuleHandle=GetModuleHandle_("Kernel32.dll")
-    If hModuleHandle
-      SetDllDirectory.SetDllDirectory = GetProcAddress_(hModuleHandle, "SetDllDirectoryA")
-      If SetDllDirectory
-        SetDllDirectory("")
-      EndIf  
-    EndIf
-  CompilerEndIf  
+CompilerIf #PB_Compiler_Unicode
+  Prototype.i SetDllDirectory(Path.p-Unicode);(Path.p-ascii)
+  Define hModuleHandle, SetDllDirectory.SetDllDirectory
+  hModuleHandle=GetModuleHandle_("Kernel32.dll")
+  If hModuleHandle
+    SetDllDirectory.SetDllDirectory = GetProcAddress_(hModuleHandle, "SetDllDirectoryW")
+    If SetDllDirectory
+      SetDllDirectory("")
+    EndIf  
+  EndIf
+CompilerElse
+  Prototype.i SetDllDirectory(Path.p-ascii)
+  Define hModuleHandle, SetDllDirectory.SetDllDirectory
+  hModuleHandle=GetModuleHandle_("Kernel32.dll")
+  If hModuleHandle
+    SetDllDirectory.SetDllDirectory = GetProcAddress_(hModuleHandle, "SetDllDirectoryA")
+    If SetDllDirectory
+      SetDllDirectory("")
+    EndIf  
+  EndIf
+CompilerEndIf  
 ;}
 ;{ DPIAware
-  Define hUser
-  hUser = GetModuleHandle_("User32.dll")
-  If hUser
-    If GetProcAddress_(hUser, "SetProcessDPIAware")
-      CallFunctionFast(GetProcAddress_(hUser, "SetProcessDPIAware"))
-    EndIf
+Define hUser
+hUser = GetModuleHandle_("User32.dll")
+If hUser
+  If GetProcAddress_(hUser, "SetProcessDPIAware")
+    CallFunctionFast(GetProcAddress_(hUser, "SetProcessDPIAware"))
   EndIf
+EndIf
 ;}
 
 ;{ Check Settings
@@ -93,913 +93,914 @@ CompilerEndIf
 
 ;}
 ;{ Konstanten
-  #ICON_SMALL = 0
-  #ICON_BIG = 1
+#ICON_SMALL = 0
+#ICON_BIG = 1
 
-  Enumeration
-    #WINDOW_MAIN 
-    #WINDOW_ABOUT
-    #WINDOW_LIST
-    #WINDOW_OPTIONS
-    #WINDOW_UPDATE
-    #WINDOW_VIDEOPROTECT
-    #WINDOW_WAIT_PROTECTVIDEO
-    #WINDOW_RUNONEWINDOW
-  EndEnumeration
-  
-  Enumeration
-    #TOOLBAR_PLAYLIST
-  EndEnumeration
-  
-  Enumeration
-    #TOOLBAR_BUTTON_ADDLIST
-    #TOOLBAR_BUTTON_DELETELIST
-    #TOOLBAR_BUTTON_ADDTRACK
-    #TOOLBAR_BUTTON_DELETETRACK
-    #TOOLBAR_BUTTON_ADDFOLDERTRACKS
-    #TOOLBAR_BUTTON_ADDURL
-    #TOOLBAR_BUTTON_EXPORTPLAYLIST
-    #TOOLBAR_BUTTON_IMPORTPLAYLIST
-    #TOOLBAR_BUTTON_PLAYPLAYLIST
-  EndEnumeration
-  
-  Enumeration
-    #MENU_MAIN
-    ;#MENU_SYSTRAY
-    #MENU_VDVD_DRIVES
-    #MENU_VDVD_MENU
-    #MENU_LIST_PLAYLISTS
-  EndEnumeration
-  
-  Enumeration
-    #STATUSBAR_MAIN
-  EndEnumeration
-  
-  Enumeration
-    #SYSTRAY_MAIN
-  EndEnumeration
-  
-  CompilerIf #USE_OEM_VERSION
-    #TRACKBAR_SIZE = 190
-  CompilerElse
-    #TRACKBAR_SIZE = 70    
-  CompilerEndIf 
-  #PANEL_HEIGHT_FLV_PLAYER = 82
-    
-  #PLAYER_VERSION = "2.0"
-  
-  
-  CompilerIf #USE_OEM_VERSION = #False
-    #PLAYER_COPYRIGHT = "� 2009 - 2017 RocketRider"
-    
-    #PLAYER_GLOBAL_MUTEX = "GreenForce-Player"
-    #GFP_PATTERN_PROTECTED_MEDIA = "GreenForce-Player (*.gfp)|*.gfp;|All Files (*.*)|*.*"
-    #GFP_PROTECTED_FILE_EXTENTION = ".gfp"
-    #GFP_CODEC_EXTENSION = "gfp-codec"
-    #GFP_STREAMING_AGENT = ""
-    #GFP_PATTERN_MEDIA = "Multimedia(*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v)|*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v;*.webm|All Files (*.*)|*.*"
-    
-    #GFP_GUID = "{46AF8ADF-E3F8-4E47-A31E-98B7CD1D5BF0}"
-    
-    #PLAYER_NAME = "GreenForce-Player"
-    #UPDATE_VERSION_URL = "http://GFP.RRSoftware.de/update/update.txt"
-    #UPDATE_FILE_URL = "http://GFP.RRSoftware.de/update/update.data"
-   
-    #UPDATE_AGENT = "GF-PLAYER_UPDATE "+#PLAYER_VERSION
-    
-    #USE_DISABLEMENU = #False;#True;
-    #USE_DISABLECONTEXTMENU = #False;#True;
-  CompilerEndIf
-  
+Enumeration
+  #WINDOW_MAIN 
+  #WINDOW_ABOUT
+  #WINDOW_LIST
+  #WINDOW_OPTIONS
+  #WINDOW_UPDATE
+  #WINDOW_VIDEOPROTECT
+  #WINDOW_WAIT_PROTECTVIDEO
+  #WINDOW_RUNONEWINDOW
+EndEnumeration
 
-  
-  
-  #GFP_PATTERN_PLAYLIST_EXPORT = "M3U (*.m3u)|*.m3u;|All Files (*.*)|*.*"
-  #GFP_PATTERN_PLAYLIST_IMPORT = "Playlist(*.m3u;*.asx;*.pls;*.xspf)|*.m3u;*.asx;*.pls;*.xspf|All Files (*.*)|*.*"
-  #GFP_PATTERN_IMAGE = "Image files(*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;*.gif)|*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;*.gif|All Files (*.*)|*.*"
-  #GFP_PATTERN_SUBTILTES = "Subtitles(*.sub;*.srt;*.txt;*.idx;*.aqt;*.jss;*.ttxt;*.pjs;*.psb;*.rt;*.smi;*.ssf;*.gsub;*.ssa;*.ass;*.usf)|*.sub;*.srt;*.txt;*.idx;*.aqt;*.jss;*.ttxt;*.pjs;*.psb;*.rt;*.smi;*.ssf;*.gsub;*.ssa;*.ass;*.usf|All Files (*.*)|*.*"
-  #GFP_PATTERN_PROTECTED_MEDIA_EXE = "Executable (*.exe)|*.exe;|All Files (*.*)|*.*"
-  
-  #GFP_FORMAT_MEDIA = ";vis-dll;gfp;mpvideo;ogg;flac;3g2;2gp;asf;avi;aud;acx;voc;flv;mka;mov;mp4;m4a;mpg;rm;swf;vob;wmv;aac;aif;aiff;iff;midi;mid;mp3;mpa;ra;wav;wma;mpeg;mp1;mp2;qt;divx;ts;tsp;ram;rmvb;ogm;ogv;m2ts;mkv;m2v;m4v;webm"
-  #GFP_FORMAT_PLAYLIST = ";asx;m3u;pls;xspf;txt;"
-  
-  #GFP_LANGUAGE_PLAYER = #True
-  
-  
-  #VIRTUALFILE_BLACKLIST = "[guard32.dll][OAwatch.dll][uxtheme.dll]"
-  
-  #GFP_DRM_SCREENCAPTURE_UNKNOWN = -1
-  #GFP_DRM_SCREENCAPTURE_DISALLOW = 0
-  #GFP_DRM_SCREENCAPTURE_ALLOW = 1
-  #GFP_DRM_SCREENCAPTURE_PROTECTION_FORCE = 2
-  
-  
-  ;Bei änderung auch hier CheckForScreenCapture() aktualisieren!!!
-  #PROTECTWINDOW_BLACKLIST = "|FRAPS general|FRAPS fps|FRAPS movies|FRAPS screenshots|Audiorecorder|Audacity|WinVNC Tray Icon|WinVNC|RealVNC.vncserver-ui (service).TrayIcon|vnc::ClipboardWindow|RealVNC.vncserver.SuspendNotifier|RealVNC.vncserver.WMMonitor|smartision ScreenCopy|FRAPS|Start Fraps minimized|Fraps window always on top|Run Fraps when Windows starts|WeGame|Back to WeGame|PlayClaw|This is unregistered trial version of PlayClaw|E.M. Free Game Capture|Starte Bandicam beim Computerstart|Starte Bandicam minimiert|Bandicam (Nicht Registriert)|Bandicam|Bandicam64|Taksi - |Taksi Config|Hot Keys are pressed to activate Taksi from inside other applications|Game Cam|If you have any questions or if you have any good ideas on FastCapPro, please feel free to contact us.|FastCapProp window always on top|FastcapPro|"
-  #PROTECTHOOCK_BLACKLIST = "|FRAPS32.DLL|bdcap32.dll|playclawhook.dll|TaksiCommon.dll|TaksiDll.dll|bdcap32.dll|bdcam.dll|d3d8cap.dll|d3d9cap.dll|oglcap.dll|ddrawcap.dll|echelon_45.dll|echelon_46.dll|echelon_47.dll|echelon_48.dll|echelon_49.dll|echelon_50.dll|VideoStreamCapture.dll|"
-  
-  
-  Enumeration
-    #MENU_LOAD
-    #MENU_LOADCLIPBOARD
-    #MENU_LOADURL
-    #MENU_COPYTOCLIPBOARD
-    #MENU_QUIT
-    #MENU_ABOUT
-    #MENU_PLAYLIST
-    #MENU_HOMEPAGE
-    #MENU_OPTIONS
-    #MENU_CHECKUPDATES
-    #MENU_DOWNLOADCODECS
-    #MENU_PLAY
-    #MENU_STOP
-    #MENU_FORWARD
-    #MENU_BACKWARD
-    #MENU_ASPECTATION_AUTO
-    #MENU_ASPECTATION_1_1
-    #MENU_ASPECTATION_4_3
-    #MENU_ASPECTATION_5_4
-    #MENU_ASPECTATION_16_9
-    #MENU_ASPECTATION_16_10
-    #MENU_ASPECTATION_21_9
-    #MENU_ASPECTATION_1_2
-    #MENU_ASPECTATION_2_1
-    #MENU_FULLSCREEN
-    #MENU_SHOW
-    #MENU_PROTECTVIDEO
-    #MENU_UNPROTECTVIDEO
-    #MENU_ERASEPASSWORDS
-    #MENU_AUDIOCD
-    #MENU_VIDEODVD
-    #MENU_PLAYMEDIA
-    #MENU_MINIMALMODE
-    #MENU_STAYONTOP
-    #MENU_VIS_OFF
-    #MENU_VIS_SIMPLE
-    #MENU_VIS_DCT
-    #MENU_VIS_WHITELIGHT
-    #MENU_VIS_COVERFLOW
-    #MENU_VIS_1
-    #MENU_VIS_300 = #MENU_VIS_1+300
-    #MENU_VDVD_FROM_DICTIONARY
-    #MENU_VDVD_DRIVES_1
-    #MENU_VDVD_DRIVES_2
-    #MENU_VDVD_DRIVES_3
-    #MENU_VDVD_DRIVES_4
-    #MENU_VDVD_DRIVES_5
-    #MENU_VDVD_DRIVES_6
-    #MENU_VDVD_DRIVES_7
-    #MENU_VDVD_DRIVES_8
-    #MENU_VDVD_DRIVES_9
-    #MENU_VDVD_DRIVES_10
-    #MENU_VDVD_DRIVES_11
-    #MENU_VDVD_DRIVES_12
-    #MENU_VDVD_DRIVES_13
-    #MENU_VDVD_DRIVES_14
-    #MENU_VDVD_DRIVES_15
-    #MENU_VDVD_DRIVES_16
-    #MENU_VDVD_DRIVES_17
-    #MENU_VDVD_DRIVES_18
-    #MENU_VDVD_DRIVES_19
-    #MENU_VDVD_DRIVES_20
-    #MENU_VDVD_DRIVES_21
-    #MENU_VDVD_DRIVES_22
-    #MENU_VDVD_DRIVES_23
-    #MENU_VDVD_DRIVES_24
-    #MENU_VDVD_MENU_Title  
-    #MENU_VDVD_MENU_Root
-    #MENU_VDVD_MENU_Subpicture
-    #MENU_VDVD_MENU_Audio
-    #MENU_VDVD_MENU_Angle
-    #MENU_VDVD_MENU_Chapter
-    #MENU_VDVD_SPEED_N8P0
-    #MENU_VDVD_SPEED_N4P0
-    #MENU_VDVD_SPEED_N2P0
-    #MENU_VDVD_SPEED_N1P5
-    #MENU_VDVD_SPEED_N1P0
-    #MENU_VDVD_SPEED_N0P5
-    #MENU_VDVD_SPEED_0P5
-    #MENU_VDVD_SPEED_1P0
-    #MENU_VDVD_SPEED_1P5
-    #MENU_VDVD_SPEED_2P0
-    #MENU_VDVD_SPEED_4P0
-    #MENU_VDVD_SPEED_8P0
-    #MENU_VDVD_LANGUAGE_1
-    #MENU_VDVD_LANGUAGE_2
-    #MENU_VDVD_LANGUAGE_3
-    #MENU_VDVD_LANGUAGE_4
-    #MENU_VDVD_LANGUAGE_5
-    #MENU_VDVD_LANGUAGE_6
-    #MENU_VDVD_LANGUAGE_7
-    #MENU_VDVD_LANGUAGE_8
-    #MENU_VDVD_CHAPTER_1
-    #MENU_VDVD_CHAPTER_100 = #MENU_VDVD_CHAPTER_1+100
-    #MENU_VDVD_PLAYLIST_1
-    #MENU_VDVD_PLAYLIST_500 = #MENU_VDVD_PLAYLIST_1+500
-    #MENU_LIST_CACHELIST
-    #MENU_LIST_PLAY
-    #MENU_LIST_DELETE
-    #MENU_CHRONIC_CLEAR
-    #MENU_CHRONIC_1
-    #MENU_CHRONIC_2
-    #MENU_CHRONIC_3
-    #MENU_CHRONIC_4
-    #MENU_CHRONIC_5
-    #MENU_CHRONIC_6
-    #MENU_CHRONIC_7
-    #MENU_CHRONIC_8
-    #MENU_CHRONIC_9
-    #MENU_CHRONIC_10
-    #MENU_DONATE
-    #MENU_DOCUMENTATION
-    #MENU_LOAD_SUBTITLES
-    #MENU_DISABLE_SUBTITLES
-    #MENU_SAVE_MEDIAPOS
-    #MENU_SUBTITLE_SIZE_20
-    #MENU_SUBTITLE_SIZE_30
-    #MENU_SUBTITLE_SIZE_40
-    #MENU_SUBTITLE_SIZE_50
-    #MENU_SUBTITLE_SIZE_60
-    #MENU_LIST_RENAME
-    #MENU_SNAPSHOT
-    
-    #MENU_LAST_ITEM
-  EndEnumeration
+Enumeration
+  #TOOLBAR_PLAYLIST
+EndEnumeration
 
-  Enumeration
-    #GADGET_DUMY
-    #GADGET_CONTAINER
-    #GADGET_AUDIOCD_CONTAINER
-    #GADGET_VIDEODVD_CONTAINER
-    #GADGET_VIDEO_CONTAINER
-    #GADGET_VIS_CONTAINER
-    
-    #GADGET_TRACKBAR;6
-    #GADGET_BUTTON_BACKWARD
-    #GADGET_BUTTON_FORWARD
-    #GADGET_BUTTON_PREVIOUS
-    #GADGET_BUTTON_NEXT
-    #GADGET_BUTTON_STOP;11
-    #GADGET_BUTTON_PLAY
-    #GADGET_BUTTON_SNAPSHOT
-    #GADGET_BUTTON_REPEAT
-    #GADGET_BUTTON_RANDOM
-    #GADGET_BUTTON_MUTE
-    #GADGET_BUTTON_FULLSCREEN
-    #GADGET_VOLUME ;NOT USED, ONLY TO SAVE THE POSTION OF THE CONTROL
-    
-    #GADGET_ACD_BUTTON_PREVIOUS;19
-    #GADGET_ACD_BUTTON_NEXT
-    #GADGET_ACD_BUTTON_STOP
-    #GADGET_ACD_BUTTON_PLAY
-    #GADGET_ACD_BUTTON_EJECT
-    #GADGET_ACD_COMBOBOX_DEVICE
-    #GADGET_ACD_COMBOBOX_TRACKS
-    
-    #GADGET_VDVD_BUTTON_EJECT;26
-    #GADGET_VDVD_BUTTON_PLAY
-    #GADGET_VDVD_BUTTON_STOP
-    #GADGET_VDVD_BUTTON_NEXT
-    #GADGET_VDVD_BUTTON_PREVIOUS
-    #GADGET_VDVD_BUTTON_BACKWARD
-    #GADGET_VDVD_BUTTON_FORWARD
-    #GADGET_VDVD_BUTTON_SNAPSHOT;33
-    #GADGET_VDVD_BUTTON_LAUFWERK
-    #GADGET_VDVD_TRACKBAR;35
-    #GADGET_VDVD_BUTTON_MUTE
-    #GADGET_VDVD_VOLUME ;NOT USED, ONLY TO SAVE THE POSTION OF THE CONTROL
-    
-    #GADGET_ABOUT_IMAGE
-    #GADGET_ABOUT_TEXT
-    
-    #GADGET_LIST_PLAYLIST
-    #GADGET_LIST_TRACKLIST
-    #GADGET_LIST_SPLITTER
-    #GADGET_LIST_CONTAINER
-    #GADGET_LIST_IMAGE
-    
-    #GADGET_OPTIONS_PANEL
-    #GADGET_OPTIONS_ITEM_LANGUAGE
-    #GADGET_OPTIONS_ITEM_VIDEORENDERER
-    #GADGET_OPTIONS_ITEM_AUDIORENDERER
-    #GADGET_OPTIONS_ITEM_AUTOUPDATES
-    #GADGET_OPTIONS_ITEM_SYSTRAY
-    #GADGET_OPTIONS_ITEM_RAMUSAGE
-    #GADGET_OPTIONS_ITEM_MAXRAMFILESIZE
-    #GADGET_OPTIONS_ITEM_PICTURE_PATH
-    #GADGET_OPTIONS_ITEM_PICTURE_FORMAT
-    #GADGET_OPTIONS_ITEM_LOGLEVEL
-    #GADGET_OPTIONS_ITEM_BKCOLOR
-    #GADGET_OPTIONS_ITEM_FILE_EXTENSIONS
-    #GADGET_OPTIONS_ITEM_FILE_EXTENSIONS_SELECT_ALL
-    #GADGET_OPTIONS_ITEM_FILE_EXTENSIONS_DESELECT_ALL
-    #GADGET_OPTIONS_ITEM_SINGLE_INSTANCE
-    #GADGET_OPTIONS_ITEM_ICONSET
-    #GADGET_OPTIONS_EXPORT_DB
-    #GADGET_OPTIONS_IMPORT_DB
-    #GADGET_OPTIONS_DEFAULT_DB
-    #GADGET_OPTIONS_CANCEL
-    #GADGET_OPTIONS_SAVE
-    
-    #GADGET_PV_PANEL
-    #GADGET_PV_CANCEL
-    #GADGET_PV_SAVE
-    #GADGET_PV_LOAD_BUTTON
-    #GADGET_PV_LOAD_STRING
-    #GADGET_PV_LOAD_TEXT
-    #GADGET_PV_SAVE_BUTTON
-    #GADGET_PV_SAVE_STRING
-    #GADGET_PV_SAVE_TEXT
-    #GADGET_PV_PW_TEXT
-    #GADGET_PV_PW_STRING
-    #GADGET_PV_PW2_STRING
-    #GADGET_PV_PW2_TEXT
-    #GADGET_PV_PW_TIP_TEXT
-    #GADGET_PV_PW_TIP_STRING
-    #GADGET_PV_SNAPSHOT_TEXT
-    #GADGET_PV_SNAPSHOT_COMBOBOX
-    #GADGET_PV_ALLOWUNPROTECT
-    #GADGET_PV_TAG_TITLE
-    #GADGET_PV_TAG_ALBUM
-    #GADGET_PV_TAG_INTERPRET
-    #GADGET_PV_TAG_COMMENT
-    #GADGET_PV_COVER_TEXT
-    #GADGET_PV_COVER_TEXT2
-    #GADGET_PV_COVER_IMG
-    #GADGET_PV_COVER_BUTTON
-    #GADGET_PV_COVER_STRING
-    #GADGET_PV_PROCCESS_PROGRESSBAR
-    #GADGET_PV_PROCCESS_CANCEL
-    #GADGET_PV_WARNING
-    #GADGET_PV_ADDPLAYER
-    #GADGET_PV_EXPIRE_DATE
-    #GADGET_PV_EXPIRE_DATE_TEXT
-    #GADGET_TB_PREVIOUS
-    #GADGET_TB_PLAY
-    #GADGET_TB_NEXT
-    #GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION
-    #GADGET_PV_CODECNAME_STRING
-    #GADGET_PV_CODECNAME_TEXT
-    #GADGET_PV_CODECLINK_STRING
-    #GADGET_PV_CODECLINK_TEXT
-    #GADGET_PV_COPY_PROTECTION
-    #GADGET_PV_MACHINEID_STRING
-    #GADGET_PV_MACHINEID_TEXT
-    #GADGET_PV_MACHINEID_GENERATE
-    #GADGET_PV_ICON_BUTTON
-    #GADGET_PV_ICON_STRING
-    #GADGET_PV_ICON_TEXT
-    #GADGET_PV_COMMAND_BUTTON
-    #GADGET_PV_COMMAND_STRING
-    #GADGET_PV_COMMAND_TEXT
-    
-    #GADGET_ABOUT_BIGTEXT
-    #GADGET_LAST
-  EndEnumeration
-  
-  Enumeration
-    #SPRITE_NOP
-    #SPRITE_SNAPSHOT_BLUE
-    
-    #SPRITE_PLAY_TOOLBAR
-    #SPRITE_ERROR
-    #SPRITE_INFO
-    
-    #SPRITE_PLAY
-    #SPRITE_BREAK
-    #SPRITE_FORWARD
-    #SPRITE_BACKWARD
-    #SPRITE_PREVIOUS
-    #SPRITE_NEXT
-    #SPRITE_STOP
-    #SPRITE_SNAPSHOT
-    #SPRITE_SNAPSHOT_DISABLED
-    #SPRITE_REPEAT
-    #SPRITE_RANDOM
-    #SPRITE_EJECT
-    #SPRITE_CDDRIVE_BLUE
-    #SPRITE_FULLSCREEN
-    
-    #SPRITE_PLAY_HOVER
-    #SPRITE_BREAK_HOVER
-    #SPRITE_FORWARD_HOVER
-    #SPRITE_BACKWARD_HOVER
-    #SPRITE_PREVIOUS_HOVER
-    #SPRITE_NEXT_HOVER
-    #SPRITE_STOP_HOVER
-    #SPRITE_SNAPSHOT_HOVER
-    #SPRITE_REPEAT_HOVER
-    #SPRITE_RANDOM_HOVER
-    #SPRITE_EJECT_HOVER
-    #SPRITE_CDDRIVE_BLUE_HOVER
-    #SPRITE_FULLSCREEN_HOVER
-    
-    #SPRITE_PLAY_CLICK
-    #SPRITE_BREAK_CLICK
-    #SPRITE_FORWARD_CLICK
-    #SPRITE_BACKWARD_CLICK
-    #SPRITE_PREVIOUS_CLICK
-    #SPRITE_NEXT_CLICK
-    #SPRITE_STOP_CLICK
-    #SPRITE_SNAPSHOT_CLICK
-    #SPRITE_REPEAT_CLICK
-    #SPRITE_RANDOM_CLICK
-    #SPRITE_EJECT_CLICK
-    #SPRITE_CDDRIVE_BLUE_CLICK
-    #SPRITE_FULLSCREEN_CLICK
-    
-    #SPRITE_REPEAT_CLICK_HOVER
-    #SPRITE_RANDOM_CLICK_HOVER
-    
-    #SPRITE_TRACKBAR_LEFT
-    #SPRITE_TRACKBAR_MIDDLE
-    #SPRITE_TRACKBAR_RIGHT
-    #SPRITE_TRACKBAR_THUMB
-    #SPRITE_TRACKBAR_THUMB_DISABLED
-    #SPRITE_TRACKBAR_THUMB_SELECTED
-    
-    
-    #SPRITE_ABOUT
-    #SPRITE_ADDLIST
-    #SPRITE_DELETELIST
-    #SPRITE_ADDTRACK
-    #SPRITE_DELETETRACK
-    #SPRITE_ADDFOLDERTRACKS
-    #SPRITE_NOIMAGE
-    #SPRITE_PLAYLIST
-    #SPRITE_PLAYTRACK
-    #SPRITE_SYSTRAY
-    #SPRITE_RENDERER
-    #SPRITE_AUDIORENDERER
-    #SPRITE_LANGUAGE
-    #SPRITE_PROJEKTOR
-    #SPRITE_UPDATE
-    #SPRITE_CDDRIVE
-    #SPRITE_BKCOLOR
-    #SPRITE_LIGHT
-    #SPRITE_KEY
-    #SPRITE_BIGKEY
-    #SPRITE_TRESOR
-    #SPRITE_NOPHOTO
-    #SPRITE_EXPORTPLAYLIST
-    #SPRITE_IMPORTPLAYLIST
-    #SPRITE_ADDURL
-    #SPRITE_MENU_PLAYLIST
-    #SPRITE_MENU_LOAD
-    #SPRITE_MENU_END
-    #SPRITE_MENU_HOMEPAGE
-    #SPRITE_MENU_ABOUT
-    #SPRITE_MENU_LANGUAGE
-    #SPRITE_MENU_OPTIONS
-    #SPRITE_MENU_UPDATE
-    #SPRITE_MENU_CLIPBOARD
-    #SPRITE_MENU_LANGUAGE_GERMANY
-    #SPRITE_MENU_LANGUAGE_ENGLISH
-    #SPRITE_MENU_LANGUAGE_FRENCH
-    #SPRITE_MENU_LANGUAGE_TURKISH
-    #SPRITE_MENU_PLAY
-    #SPRITE_MENU_STOP
-    #SPRITE_MENU_FORWARD
-    #SPRITE_MENU_BACKWARD
-    #SPRITE_MENU_ACTION
-    #SPRITE_MENU_TRESOR
-    #SPRITE_MENU_KEY
-    #SPRITE_MENU_EARTH
-    #SPRITE_MENU_BULLDOZER
-    #SPRITE_MENU_AUDIOCD
-    #SPRITE_MENU_PROJEKTOR
-    #SPRITE_MENU_MUTE
-    #SPRITE_MENU_SOUND
-    #SPRITE_MENU_MONITOR
-    #SPRITE_MENU_GIVEMONEY
-    #SPRITE_ABOUT_BK
-    #SPRITE_PV_COVER
-    #SPRITE_MENU_LANGUAGE_NETHERLANDS
-    #SPRITE_MENU_LANGUAGE_SPAIN
-    #SPRITE_BUG
-    #SPRITE_SYSTRAY_32x32
-    #SPRITE_ONE_INSTANCE
-    #SPRITE_PHOTO_32x32
-    #SPRITE_RAM
-    #SPRITE_RAM_FILE
-    #SPRITE_MENU_DOWNLOAD
-    #SPRITE_MENU_HELP
-    #SPRITE_PHOTO_FILE_32x32
-    #SPRITE_THEME
-    #SPRITE_MENU_SAVE
-    #SPRITE_MENU_MINIMALMODE
-    #SPRITE_MENU_COVERFLOW
-    #SPRITE_MENU_PLAYMEDIA
-    #SPRITE_MENU_PLAYAUDIOCD
-    #SPRITE_MENU_PLAYDVD
-    #SPRITE_MENU_BREAK
-    #SPRITE_NO_CONNECTION
-    #SPRITE_MENU_RAM
-    #SPRITE_MENU_RENAME
-    #SPRITE_PLAYPLAYLIST
-    #SPRITE_MENU_BRUSH
-    #SPRITE_ENCTRACK
-    #SPRITE_EARTHFILE
-    #SPRITE_MENU_SNAPSHOT
-    #SPRITE_VOLUME_BK
-    #SPRITE_VOLUME_FORCE
-    #SPRITE_MENU_LANGUAGE_GREEK
-    #SPRITE_MENU_LANGUAGE_PORTUGAL
-    #SPRITE_MENU_LANGUAGE_ITALIAN
-    #SPRITE_MENU_LANGUAGE_SWEDEN
-    #SPRITE_MENU_LANGUAGE_RUSSIA
-    #SPRITE_MENU_LANGUAGE_BULGARIA
-    #SPRITE_MENU_LANGUAGE_SERBIA
-    #SPRITE_MENU_LANGUAGE_PERSIAN
-    #SPRITE_MENU_PLAYFILE    
-  EndEnumeration
-  
-  
-  Enumeration
-    #OPTIONS_COMBOBOX; Use chr(10) for more Items
-    #OPTIONS_COMBOBOX_EDITABLE; Use chr(10) for more Items
-    #OPTIONS_CHECKBOX
-    #OPTIONS_STRING
-    #OPTIONS_COLOR
-    #OPTIONS_PATH
-  EndEnumeration
-  
-  
-  Enumeration
-    #COMMAND_PLAY
-    #COMMAND_PAUSE
-    #COMMAND_STOP
-    #COMMAND_ASPECT
-    #COMMAND_VOLUME
-    #COMMAND_NEXTTRACK
-    #COMMAND_PREVIOUSTRACK
-    #COMMAND_LOAD
-    #COMMAND_LOADFILE
-    #COMMAND_SNAPSHOT
-    #COMMAND_PLAYLIST
-    #COMMAND_OPTIONS
-    #COMMAND_FULLSCREEN
-    #COMMAND_PROTECTVIDEO
-    #COMMAND_UNPROTECTVIDEO
-    #COMMAND_CLAERPASSWORDS
-    #COMMAND_ACD_EJECT
-    #COMMAND_ACD_UPDATEDTRACKS
-    #COMMAND_DVD_EJECT
-    #COMMAND_FORWARD
-    #COMMAND_BACKWARD
-    #COMMAND_MUTE
-    #COMMAND_COPY
-    #COMMAND_PASTE
-    #COMMAND_HELP
-  EndEnumeration
-  
-  Enumeration
-    #FONT_ABOUT
-    #FONT_ABOUT_2
-    #FONT_SUBTITLE
-    #FONT_OPTIONS
-  EndEnumeration
-  
-  Enumeration
-    #VIS_OFF
-    #VIS_SIMPLE
-    #VIS_DCT
-    #VIS_WHITELIGHT
-    #VIS_COVERFLOW
-    #VIS_BUFFERING
-    #VIS_1
-    #VIS_300 = #VIS_1+300
-  EndEnumeration
-  
+Enumeration
+  #TOOLBAR_BUTTON_ADDLIST
+  #TOOLBAR_BUTTON_DELETELIST
+  #TOOLBAR_BUTTON_ADDTRACK
+  #TOOLBAR_BUTTON_DELETETRACK
+  #TOOLBAR_BUTTON_ADDFOLDERTRACKS
+  #TOOLBAR_BUTTON_ADDURL
+  #TOOLBAR_BUTTON_EXPORTPLAYLIST
+  #TOOLBAR_BUTTON_IMPORTPLAYLIST
+  #TOOLBAR_BUTTON_PLAYPLAYLIST
+EndEnumeration
 
+Enumeration
+  #MENU_MAIN
+  ;#MENU_SYSTRAY
+  #MENU_VDVD_DRIVES
+  #MENU_VDVD_MENU
+  #MENU_LIST_PLAYLISTS
+EndEnumeration
+
+Enumeration
+  #STATUSBAR_MAIN
+EndEnumeration
+
+Enumeration
+  #SYSTRAY_MAIN
+EndEnumeration
+
+CompilerIf #USE_OEM_VERSION
+  #TRACKBAR_SIZE = 190
+CompilerElse
+  #TRACKBAR_SIZE = 70    
+CompilerEndIf 
+#PANEL_HEIGHT_FLV_PLAYER = 82
+
+#PLAYER_VERSION = "2.0"
+
+
+CompilerIf #USE_OEM_VERSION = #False
+  #PLAYER_COPYRIGHT = "� 2009 - 2017 RocketRider"
   
+  #PLAYER_GLOBAL_MUTEX = "GreenForce-Player"
+  #GFP_PATTERN_PROTECTED_MEDIA = "GreenForce-Player (*.gfp)|*.gfp;|All Files (*.*)|*.*"
+  #GFP_PROTECTED_FILE_EXTENTION = ".gfp"
+  #GFP_CODEC_EXTENSION = "gfp-codec"
+  #GFP_STREAMING_AGENT = ""
+  #GFP_PATTERN_MEDIA = "Multimedia(*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v)|*.gfp;*.gfp-codec;*.ogg;*.flac;*.m4a;*.aud;*.svx;*.voc;*.mka;*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.mpeg;*.rm;*.qt;*.swf;*.divx;*.vob;*.ts;*.ogm;*.m2ts;*.ogv;*.rmvb;*.tsp;*.ram;*.wmv;*.aac;*.aif;*.aiff;*.iff;*.m3u;*.mid;*.midi;*.mp1;*.mp2;*.mp3;*.mpa;*.ra;*.wav;*.wma;*.pls;*.xspf;*.mkv;*.m2v;*.m4v;*.webm|All Files (*.*)|*.*"
+  
+  #GFP_GUID = "{46AF8ADF-E3F8-4E47-A31E-98B7CD1D5BF0}"
+  
+  #PLAYER_NAME = "GreenForce-Player"
+  #UPDATE_VERSION_URL = "http://GFP.RRSoftware.de/update/update.txt"
+  #UPDATE_FILE_URL = "http://GFP.RRSoftware.de/update/update.data"
+  
+  #UPDATE_AGENT = "GF-PLAYER_UPDATE "+#PLAYER_VERSION
+  
+  #USE_DISABLEMENU = #False;#True;
+  #USE_DISABLECONTEXTMENU = #False;#True;
+CompilerEndIf
+
+
+
+
+#GFP_PATTERN_PLAYLIST_EXPORT = "M3U (*.m3u)|*.m3u;|All Files (*.*)|*.*"
+#GFP_PATTERN_PLAYLIST_IMPORT = "Playlist(*.m3u;*.asx;*.pls;*.xspf)|*.m3u;*.asx;*.pls;*.xspf|All Files (*.*)|*.*"
+#GFP_PATTERN_IMAGE = "Image files(*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;*.gif)|*.jpg;*.jpeg;*.png;*.bmp;*.dib;*.tga;*.tiff;*.tif;*.jpf;*.jpx;*.jp2;*.j2c;*.j2k;*.jpc;*.gif|All Files (*.*)|*.*"
+#GFP_PATTERN_SUBTILTES = "Subtitles(*.sub;*.srt;*.txt;*.idx;*.aqt;*.jss;*.ttxt;*.pjs;*.psb;*.rt;*.smi;*.ssf;*.gsub;*.ssa;*.ass;*.usf)|*.sub;*.srt;*.txt;*.idx;*.aqt;*.jss;*.ttxt;*.pjs;*.psb;*.rt;*.smi;*.ssf;*.gsub;*.ssa;*.ass;*.usf|All Files (*.*)|*.*"
+#GFP_PATTERN_PROTECTED_MEDIA_EXE = "Executable (*.exe)|*.exe;|All Files (*.*)|*.*"
+
+#GFP_FORMAT_MEDIA = ";vis-dll;gfp;mpvideo;ogg;flac;3g2;2gp;asf;avi;aud;acx;voc;flv;mka;mov;mp4;m4a;mpg;rm;swf;vob;wmv;aac;aif;aiff;iff;midi;mid;mp3;mpa;ra;wav;wma;mpeg;mp1;mp2;qt;divx;ts;tsp;ram;rmvb;ogm;ogv;m2ts;mkv;m2v;m4v;webm"
+#GFP_FORMAT_PLAYLIST = ";asx;m3u;pls;xspf;txt;"
+
+#GFP_LANGUAGE_PLAYER = #True
+
+
+#VIRTUALFILE_BLACKLIST = "[guard32.dll][OAwatch.dll][uxtheme.dll]"
+
+#GFP_DRM_SCREENCAPTURE_UNKNOWN = -1
+#GFP_DRM_SCREENCAPTURE_DISALLOW = 0
+#GFP_DRM_SCREENCAPTURE_ALLOW = 1
+#GFP_DRM_SCREENCAPTURE_PROTECTION_FORCE = 2
+
+
+;Bei änderung auch hier CheckForScreenCapture() aktualisieren!!!
+#PROTECTWINDOW_BLACKLIST = "|FRAPS general|FRAPS fps|FRAPS movies|FRAPS screenshots|Audiorecorder|Audacity|WinVNC Tray Icon|WinVNC|RealVNC.vncserver-ui (service).TrayIcon|vnc::ClipboardWindow|RealVNC.vncserver.SuspendNotifier|RealVNC.vncserver.WMMonitor|smartision ScreenCopy|FRAPS|Start Fraps minimized|Fraps window always on top|Run Fraps when Windows starts|WeGame|Back to WeGame|PlayClaw|This is unregistered trial version of PlayClaw|E.M. Free Game Capture|Starte Bandicam beim Computerstart|Starte Bandicam minimiert|Bandicam (Nicht Registriert)|Bandicam|Bandicam64|Taksi - |Taksi Config|Hot Keys are pressed to activate Taksi from inside other applications|Game Cam|If you have any questions or if you have any good ideas on FastCapPro, please feel free to contact us.|FastCapProp window always on top|FastcapPro|"
+#PROTECTHOOCK_BLACKLIST = "|FRAPS32.DLL|bdcap32.dll|playclawhook.dll|TaksiCommon.dll|TaksiDll.dll|bdcap32.dll|bdcam.dll|d3d8cap.dll|d3d9cap.dll|oglcap.dll|ddrawcap.dll|echelon_45.dll|echelon_46.dll|echelon_47.dll|echelon_48.dll|echelon_49.dll|echelon_50.dll|VideoStreamCapture.dll|"
+
+
+Enumeration
+  #MENU_LOAD
+  #MENU_LOADCLIPBOARD
+  #MENU_LOADURL
+  #MENU_COPYTOCLIPBOARD
+  #MENU_QUIT
+  #MENU_ABOUT
+  #MENU_PLAYLIST
+  #MENU_HOMEPAGE
+  #MENU_OPTIONS
+  #MENU_CHECKUPDATES
+  #MENU_DOWNLOADCODECS
+  #MENU_PLAY
+  #MENU_STOP
+  #MENU_FORWARD
+  #MENU_BACKWARD
+  #MENU_ASPECTATION_AUTO
+  #MENU_ASPECTATION_1_1
+  #MENU_ASPECTATION_4_3
+  #MENU_ASPECTATION_5_4
+  #MENU_ASPECTATION_16_9
+  #MENU_ASPECTATION_16_10
+  #MENU_ASPECTATION_21_9
+  #MENU_ASPECTATION_1_2
+  #MENU_ASPECTATION_2_1
+  #MENU_FULLSCREEN
+  #MENU_SHOW
+  #MENU_PROTECTVIDEO
+  #MENU_UNPROTECTVIDEO
+  #MENU_ERASEPASSWORDS
+  #MENU_AUDIOCD
+  #MENU_VIDEODVD
+  #MENU_PLAYMEDIA
+  #MENU_MINIMALMODE
+  #MENU_STAYONTOP
+  #MENU_VIS_OFF
+  #MENU_VIS_SIMPLE
+  #MENU_VIS_DCT
+  #MENU_VIS_WHITELIGHT
+  #MENU_VIS_COVERFLOW
+  #MENU_VIS_1
+  #MENU_VIS_300 = #MENU_VIS_1+300
+  #MENU_VDVD_FROM_DICTIONARY
+  #MENU_VDVD_DRIVES_1
+  #MENU_VDVD_DRIVES_2
+  #MENU_VDVD_DRIVES_3
+  #MENU_VDVD_DRIVES_4
+  #MENU_VDVD_DRIVES_5
+  #MENU_VDVD_DRIVES_6
+  #MENU_VDVD_DRIVES_7
+  #MENU_VDVD_DRIVES_8
+  #MENU_VDVD_DRIVES_9
+  #MENU_VDVD_DRIVES_10
+  #MENU_VDVD_DRIVES_11
+  #MENU_VDVD_DRIVES_12
+  #MENU_VDVD_DRIVES_13
+  #MENU_VDVD_DRIVES_14
+  #MENU_VDVD_DRIVES_15
+  #MENU_VDVD_DRIVES_16
+  #MENU_VDVD_DRIVES_17
+  #MENU_VDVD_DRIVES_18
+  #MENU_VDVD_DRIVES_19
+  #MENU_VDVD_DRIVES_20
+  #MENU_VDVD_DRIVES_21
+  #MENU_VDVD_DRIVES_22
+  #MENU_VDVD_DRIVES_23
+  #MENU_VDVD_DRIVES_24
+  #MENU_VDVD_MENU_Title  
+  #MENU_VDVD_MENU_Root
+  #MENU_VDVD_MENU_Subpicture
+  #MENU_VDVD_MENU_Audio
+  #MENU_VDVD_MENU_Angle
+  #MENU_VDVD_MENU_Chapter
+  #MENU_VDVD_SPEED_N8P0
+  #MENU_VDVD_SPEED_N4P0
+  #MENU_VDVD_SPEED_N2P0
+  #MENU_VDVD_SPEED_N1P5
+  #MENU_VDVD_SPEED_N1P0
+  #MENU_VDVD_SPEED_N0P5
+  #MENU_VDVD_SPEED_0P5
+  #MENU_VDVD_SPEED_1P0
+  #MENU_VDVD_SPEED_1P5
+  #MENU_VDVD_SPEED_2P0
+  #MENU_VDVD_SPEED_4P0
+  #MENU_VDVD_SPEED_8P0
+  #MENU_VDVD_LANGUAGE_1
+  #MENU_VDVD_LANGUAGE_2
+  #MENU_VDVD_LANGUAGE_3
+  #MENU_VDVD_LANGUAGE_4
+  #MENU_VDVD_LANGUAGE_5
+  #MENU_VDVD_LANGUAGE_6
+  #MENU_VDVD_LANGUAGE_7
+  #MENU_VDVD_LANGUAGE_8
+  #MENU_VDVD_CHAPTER_1
+  #MENU_VDVD_CHAPTER_100 = #MENU_VDVD_CHAPTER_1+100
+  #MENU_VDVD_PLAYLIST_1
+  #MENU_VDVD_PLAYLIST_500 = #MENU_VDVD_PLAYLIST_1+500
+  #MENU_LIST_CACHELIST
+  #MENU_LIST_PLAY
+  #MENU_LIST_DELETE
+  #MENU_CHRONIC_CLEAR
+  #MENU_CHRONIC_1
+  #MENU_CHRONIC_2
+  #MENU_CHRONIC_3
+  #MENU_CHRONIC_4
+  #MENU_CHRONIC_5
+  #MENU_CHRONIC_6
+  #MENU_CHRONIC_7
+  #MENU_CHRONIC_8
+  #MENU_CHRONIC_9
+  #MENU_CHRONIC_10
+  #MENU_DONATE
+  #MENU_DOCUMENTATION
+  #MENU_LOAD_SUBTITLES
+  #MENU_DISABLE_SUBTITLES
+  #MENU_SAVE_MEDIAPOS
+  #MENU_SUBTITLE_SIZE_20
+  #MENU_SUBTITLE_SIZE_30
+  #MENU_SUBTITLE_SIZE_40
+  #MENU_SUBTITLE_SIZE_50
+  #MENU_SUBTITLE_SIZE_60
+  #MENU_LIST_RENAME
+  #MENU_SNAPSHOT
+  
+  #MENU_LAST_ITEM
+EndEnumeration
+
+Enumeration
+  #GADGET_DUMY
+  #GADGET_CONTAINER
+  #GADGET_AUDIOCD_CONTAINER
+  #GADGET_VIDEODVD_CONTAINER
+  #GADGET_VIDEO_CONTAINER
+  #GADGET_VIS_CONTAINER
+  
+  #GADGET_TRACKBAR;6
+  #GADGET_BUTTON_BACKWARD
+  #GADGET_BUTTON_FORWARD
+  #GADGET_BUTTON_PREVIOUS
+  #GADGET_BUTTON_NEXT
+  #GADGET_BUTTON_STOP;11
+  #GADGET_BUTTON_PLAY
+  #GADGET_BUTTON_SNAPSHOT
+  #GADGET_BUTTON_REPEAT
+  #GADGET_BUTTON_RANDOM
+  #GADGET_BUTTON_MUTE
+  #GADGET_BUTTON_FULLSCREEN
+  #GADGET_VOLUME ;NOT USED, ONLY TO SAVE THE POSTION OF THE CONTROL
+  
+  #GADGET_ACD_BUTTON_PREVIOUS;19
+  #GADGET_ACD_BUTTON_NEXT
+  #GADGET_ACD_BUTTON_STOP
+  #GADGET_ACD_BUTTON_PLAY
+  #GADGET_ACD_BUTTON_EJECT
+  #GADGET_ACD_COMBOBOX_DEVICE
+  #GADGET_ACD_COMBOBOX_TRACKS
+  
+  #GADGET_VDVD_BUTTON_EJECT;26
+  #GADGET_VDVD_BUTTON_PLAY
+  #GADGET_VDVD_BUTTON_STOP
+  #GADGET_VDVD_BUTTON_NEXT
+  #GADGET_VDVD_BUTTON_PREVIOUS
+  #GADGET_VDVD_BUTTON_BACKWARD
+  #GADGET_VDVD_BUTTON_FORWARD
+  #GADGET_VDVD_BUTTON_SNAPSHOT;33
+  #GADGET_VDVD_BUTTON_LAUFWERK
+  #GADGET_VDVD_TRACKBAR;35
+  #GADGET_VDVD_BUTTON_MUTE
+  #GADGET_VDVD_VOLUME ;NOT USED, ONLY TO SAVE THE POSTION OF THE CONTROL
+  
+  #GADGET_ABOUT_IMAGE
+  #GADGET_ABOUT_TEXT
+  
+  #GADGET_LIST_PLAYLIST
+  #GADGET_LIST_TRACKLIST
+  #GADGET_LIST_SPLITTER
+  #GADGET_LIST_CONTAINER
+  #GADGET_LIST_IMAGE
+  
+  #GADGET_OPTIONS_PANEL
+  #GADGET_OPTIONS_ITEM_LANGUAGE
+  #GADGET_OPTIONS_ITEM_VIDEORENDERER
+  #GADGET_OPTIONS_ITEM_AUDIORENDERER
+  #GADGET_OPTIONS_ITEM_AUTOUPDATES
+  #GADGET_OPTIONS_ITEM_SYSTRAY
+  #GADGET_OPTIONS_ITEM_RAMUSAGE
+  #GADGET_OPTIONS_ITEM_MAXRAMFILESIZE
+  #GADGET_OPTIONS_ITEM_PICTURE_PATH
+  #GADGET_OPTIONS_ITEM_PICTURE_FORMAT
+  #GADGET_OPTIONS_ITEM_LOGLEVEL
+  #GADGET_OPTIONS_ITEM_BKCOLOR
+  #GADGET_OPTIONS_ITEM_FILE_EXTENSIONS
+  #GADGET_OPTIONS_ITEM_FILE_EXTENSIONS_SELECT_ALL
+  #GADGET_OPTIONS_ITEM_FILE_EXTENSIONS_DESELECT_ALL
+  #GADGET_OPTIONS_ITEM_SINGLE_INSTANCE
+  #GADGET_OPTIONS_ITEM_ICONSET
+  #GADGET_OPTIONS_EXPORT_DB
+  #GADGET_OPTIONS_IMPORT_DB
+  #GADGET_OPTIONS_DEFAULT_DB
+  #GADGET_OPTIONS_CANCEL
+  #GADGET_OPTIONS_SAVE
+  
+  #GADGET_PV_PANEL
+  #GADGET_PV_CANCEL
+  #GADGET_PV_SAVE
+  #GADGET_PV_LOAD_BUTTON
+  #GADGET_PV_LOAD_STRING
+  #GADGET_PV_LOAD_TEXT
+  #GADGET_PV_SAVE_BUTTON
+  #GADGET_PV_SAVE_STRING
+  #GADGET_PV_SAVE_TEXT
+  #GADGET_PV_PW_TEXT
+  #GADGET_PV_PW_STRING
+  #GADGET_PV_PW2_STRING
+  #GADGET_PV_PW2_TEXT
+  #GADGET_PV_PW_TIP_TEXT
+  #GADGET_PV_PW_TIP_STRING
+  #GADGET_PV_SNAPSHOT_TEXT
+  #GADGET_PV_SNAPSHOT_COMBOBOX
+  #GADGET_PV_ALLOWUNPROTECT
+  #GADGET_PV_TAG_TITLE
+  #GADGET_PV_TAG_ALBUM
+  #GADGET_PV_TAG_INTERPRET
+  #GADGET_PV_TAG_COMMENT
+  #GADGET_PV_COVER_TEXT
+  #GADGET_PV_COVER_TEXT2
+  #GADGET_PV_COVER_IMG
+  #GADGET_PV_COVER_BUTTON
+  #GADGET_PV_COVER_STRING
+  #GADGET_PV_PROCCESS_PROGRESSBAR
+  #GADGET_PV_PROCCESS_CANCEL
+  #GADGET_PV_WARNING
+  #GADGET_PV_ADDPLAYER
+  #GADGET_PV_EXPIRE_DATE
+  #GADGET_PV_EXPIRE_DATE_TEXT
+  #GADGET_TB_PREVIOUS
+  #GADGET_TB_PLAY
+  #GADGET_TB_NEXT
+  #GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION
+  #GADGET_PV_CODECNAME_STRING
+  #GADGET_PV_CODECNAME_TEXT
+  #GADGET_PV_CODECLINK_STRING
+  #GADGET_PV_CODECLINK_TEXT
+  #GADGET_PV_COPY_PROTECTION
+  #GADGET_PV_MACHINEID_STRING
+  #GADGET_PV_MACHINEID_TEXT
+  #GADGET_PV_MACHINEID_GENERATE
+  #GADGET_PV_ICON_BUTTON
+  #GADGET_PV_ICON_STRING
+  #GADGET_PV_ICON_TEXT
+  #GADGET_PV_COMMAND_BUTTON
+  #GADGET_PV_COMMAND_STRING
+  #GADGET_PV_COMMAND_TEXT
+  
+  #GADGET_ABOUT_BIGTEXT
+  #GADGET_LAST
+EndEnumeration
+
+Enumeration
+  #SPRITE_NOP
+  #SPRITE_SNAPSHOT_BLUE
+  
+  #SPRITE_PLAY_TOOLBAR
+  #SPRITE_ERROR
+  #SPRITE_INFO
+  
+  #SPRITE_PLAY
+  #SPRITE_BREAK
+  #SPRITE_FORWARD
+  #SPRITE_BACKWARD
+  #SPRITE_PREVIOUS
+  #SPRITE_NEXT
+  #SPRITE_STOP
+  #SPRITE_SNAPSHOT
+  #SPRITE_SNAPSHOT_DISABLED
+  #SPRITE_REPEAT
+  #SPRITE_RANDOM
+  #SPRITE_EJECT
+  #SPRITE_CDDRIVE_BLUE
+  #SPRITE_FULLSCREEN
+  
+  #SPRITE_PLAY_HOVER
+  #SPRITE_BREAK_HOVER
+  #SPRITE_FORWARD_HOVER
+  #SPRITE_BACKWARD_HOVER
+  #SPRITE_PREVIOUS_HOVER
+  #SPRITE_NEXT_HOVER
+  #SPRITE_STOP_HOVER
+  #SPRITE_SNAPSHOT_HOVER
+  #SPRITE_REPEAT_HOVER
+  #SPRITE_RANDOM_HOVER
+  #SPRITE_EJECT_HOVER
+  #SPRITE_CDDRIVE_BLUE_HOVER
+  #SPRITE_FULLSCREEN_HOVER
+  
+  #SPRITE_PLAY_CLICK
+  #SPRITE_BREAK_CLICK
+  #SPRITE_FORWARD_CLICK
+  #SPRITE_BACKWARD_CLICK
+  #SPRITE_PREVIOUS_CLICK
+  #SPRITE_NEXT_CLICK
+  #SPRITE_STOP_CLICK
+  #SPRITE_SNAPSHOT_CLICK
+  #SPRITE_REPEAT_CLICK
+  #SPRITE_RANDOM_CLICK
+  #SPRITE_EJECT_CLICK
+  #SPRITE_CDDRIVE_BLUE_CLICK
+  #SPRITE_FULLSCREEN_CLICK
+  
+  #SPRITE_REPEAT_CLICK_HOVER
+  #SPRITE_RANDOM_CLICK_HOVER
+  
+  #SPRITE_TRACKBAR_LEFT
+  #SPRITE_TRACKBAR_MIDDLE
+  #SPRITE_TRACKBAR_RIGHT
+  #SPRITE_TRACKBAR_THUMB
+  #SPRITE_TRACKBAR_THUMB_DISABLED
+  #SPRITE_TRACKBAR_THUMB_SELECTED
+  
+  
+  #SPRITE_ABOUT
+  #SPRITE_ADDLIST
+  #SPRITE_DELETELIST
+  #SPRITE_ADDTRACK
+  #SPRITE_DELETETRACK
+  #SPRITE_ADDFOLDERTRACKS
+  #SPRITE_NOIMAGE
+  #SPRITE_PLAYLIST
+  #SPRITE_PLAYTRACK
+  #SPRITE_SYSTRAY
+  #SPRITE_RENDERER
+  #SPRITE_AUDIORENDERER
+  #SPRITE_LANGUAGE
+  #SPRITE_PROJEKTOR
+  #SPRITE_UPDATE
+  #SPRITE_CDDRIVE
+  #SPRITE_BKCOLOR
+  #SPRITE_LIGHT
+  #SPRITE_KEY
+  #SPRITE_BIGKEY
+  #SPRITE_TRESOR
+  #SPRITE_NOPHOTO
+  #SPRITE_EXPORTPLAYLIST
+  #SPRITE_IMPORTPLAYLIST
+  #SPRITE_ADDURL
+  #SPRITE_MENU_PLAYLIST
+  #SPRITE_MENU_LOAD
+  #SPRITE_MENU_END
+  #SPRITE_MENU_HOMEPAGE
+  #SPRITE_MENU_ABOUT
+  #SPRITE_MENU_LANGUAGE
+  #SPRITE_MENU_OPTIONS
+  #SPRITE_MENU_UPDATE
+  #SPRITE_MENU_CLIPBOARD
+  #SPRITE_MENU_LANGUAGE_GERMANY
+  #SPRITE_MENU_LANGUAGE_ENGLISH
+  #SPRITE_MENU_LANGUAGE_FRENCH
+  #SPRITE_MENU_LANGUAGE_TURKISH
+  #SPRITE_MENU_PLAY
+  #SPRITE_MENU_STOP
+  #SPRITE_MENU_FORWARD
+  #SPRITE_MENU_BACKWARD
+  #SPRITE_MENU_ACTION
+  #SPRITE_MENU_TRESOR
+  #SPRITE_MENU_KEY
+  #SPRITE_MENU_EARTH
+  #SPRITE_MENU_BULLDOZER
+  #SPRITE_MENU_AUDIOCD
+  #SPRITE_MENU_PROJEKTOR
+  #SPRITE_MENU_MUTE
+  #SPRITE_MENU_SOUND
+  #SPRITE_MENU_MONITOR
+  #SPRITE_MENU_GIVEMONEY
+  #SPRITE_ABOUT_BK
+  #SPRITE_PV_COVER
+  #SPRITE_MENU_LANGUAGE_NETHERLANDS
+  #SPRITE_MENU_LANGUAGE_SPAIN
+  #SPRITE_BUG
+  #SPRITE_SYSTRAY_32x32
+  #SPRITE_ONE_INSTANCE
+  #SPRITE_PHOTO_32x32
+  #SPRITE_RAM
+  #SPRITE_RAM_FILE
+  #SPRITE_MENU_DOWNLOAD
+  #SPRITE_MENU_HELP
+  #SPRITE_PHOTO_FILE_32x32
+  #SPRITE_THEME
+  #SPRITE_MENU_SAVE
+  #SPRITE_MENU_MINIMALMODE
+  #SPRITE_MENU_COVERFLOW
+  #SPRITE_MENU_PLAYMEDIA
+  #SPRITE_MENU_PLAYAUDIOCD
+  #SPRITE_MENU_PLAYDVD
+  #SPRITE_MENU_BREAK
+  #SPRITE_NO_CONNECTION
+  #SPRITE_MENU_RAM
+  #SPRITE_MENU_RENAME
+  #SPRITE_PLAYPLAYLIST
+  #SPRITE_MENU_BRUSH
+  #SPRITE_ENCTRACK
+  #SPRITE_EARTHFILE
+  #SPRITE_MENU_SNAPSHOT
+  #SPRITE_VOLUME_BK
+  #SPRITE_VOLUME_FORCE
+  #SPRITE_MENU_LANGUAGE_GREEK
+  #SPRITE_MENU_LANGUAGE_PORTUGAL
+  #SPRITE_MENU_LANGUAGE_ITALIAN
+  #SPRITE_MENU_LANGUAGE_SWEDEN
+  #SPRITE_MENU_LANGUAGE_RUSSIA
+  #SPRITE_MENU_LANGUAGE_BULGARIA
+  #SPRITE_MENU_LANGUAGE_SERBIA
+  #SPRITE_MENU_LANGUAGE_PERSIAN
+  #SPRITE_MENU_PLAYFILE    
+EndEnumeration
+
+
+Enumeration
+  #OPTIONS_COMBOBOX; Use chr(10) for more Items
+  #OPTIONS_COMBOBOX_EDITABLE; Use chr(10) for more Items
+  #OPTIONS_CHECKBOX
+  #OPTIONS_STRING
+  #OPTIONS_COLOR
+  #OPTIONS_PATH
+EndEnumeration
+
+
+Enumeration
+  #COMMAND_PLAY
+  #COMMAND_PAUSE
+  #COMMAND_STOP
+  #COMMAND_ASPECT
+  #COMMAND_VOLUME
+  #COMMAND_NEXTTRACK
+  #COMMAND_PREVIOUSTRACK
+  #COMMAND_LOAD
+  #COMMAND_LOADFILE
+  #COMMAND_SNAPSHOT
+  #COMMAND_PLAYLIST
+  #COMMAND_OPTIONS
+  #COMMAND_FULLSCREEN
+  #COMMAND_PROTECTVIDEO
+  #COMMAND_UNPROTECTVIDEO
+  #COMMAND_CLAERPASSWORDS
+  #COMMAND_ACD_EJECT
+  #COMMAND_ACD_UPDATEDTRACKS
+  #COMMAND_DVD_EJECT
+  #COMMAND_FORWARD
+  #COMMAND_BACKWARD
+  #COMMAND_MUTE
+  #COMMAND_COPY
+  #COMMAND_PASTE
+  #COMMAND_HELP
+EndEnumeration
+
+Enumeration
+  #FONT_ABOUT
+  #FONT_ABOUT_2
+  #FONT_SUBTITLE
+  #FONT_OPTIONS
+EndEnumeration
+
+Enumeration
+  #VIS_OFF
+  #VIS_SIMPLE
+  #VIS_DCT
+  #VIS_WHITELIGHT
+  #VIS_COVERFLOW
+  #VIS_BUFFERING
+  #VIS_1
+  #VIS_300 = #VIS_1+300
+EndEnumeration
+
+
+
 ;}
 ;{ Declaration
 
-    
-  Structure VolumeGadget
-    imageid.l 
-    imagecolor.l 
-    font.l 
-    state.l 
-    trackbar.l
-  EndStructure
-  Structure MediaFile
-    sFile.s
-    Memory.i
-    sRealFile.s
-    iPlaying.i
-    qOffset.q
-    *StreamingFile
-  EndStructure
-  Structure Playlist
-    iID.i
-    iTempID.i
-    iCurrentMedia.i
-    iItemCount.i
-  EndStructure
-  Structure OptionsGadgetsStructure
-    iButton.i
-    iShowGadget.i
-    iType.i
-  EndStructure
-  Structure PlayListItem
-    sFile.s
-    sTitle.s
-    qOffset.q
-  EndStructure
-  
-  Structure StartParams
-    iAspect.i
-    bFullscreen.i
-    bHelp.i
-    iVolume.i
-    iDisableLAVFilters.i 
-    iJustDownloadCodecs.i
-    iHiddenCodecsDownload.i
-    sPassword.s
-    bHidden.i
-    sFile.s
-    sImportPlaylist.s
-    iloglevel.i
-    iUsedVideoRenderer.i
-    iUsedAudioRenderer.i
-    iRestoreDatabase.i
-    iAlternativeHooking.i
-    iDisableMenu.i
-    iSaveStreamingCache.i
-    sProxyIP.s
-    sProxyPort.s
-    iUseIESettings.i
-    iProxyBypassLocal.i
-    iNoRedirect.i
-    sPasswordFile.s
-    sInstallDesign.s
-    iUseSkin.i
-    qStartPosition.q
-    iHideDRM.i
-    
-  EndStructure
-  
-  Structure THUMBBUTTON
-    dwMask.l
-    iId.l
-    iBitmap.l
-    hIcon.i
-    szTip.u[260]
-    dwFlags.l
-  EndStructure
 
-  Interface ITaskbarList3 Extends ITaskbarList2
-    SetProgressValue(hWnd, Completed.q, Total.q)
-    SetProgressState(hWnd, Flags.l)
-    RegisterTab(hWndTab, hWndMDI)
-    UnregisterTab(hWndTab)
-    SetTabOrder(hWndTab, hwndInsertBefore)
-    SetTabActive(hWndTab, hWndMDI, dwReserved.l)
-    ThumbBarAddButtons(hWnd, cButtons, *pButtons)
-    ThumbBarUpdateButtons(hWnd, cButtons, *pButtons)
-    ThumbBarSetImageList(hWnd, himl)
-    SetOverlayIcon(hWnd, hIcon, pszDescription.s)
-    SetThumbnailTooltip(hWnd, pszTip.s)
-    SetThumbnailClip(hWnd, *prcClip.RECT)
-  EndInterface
+Structure VolumeGadget
+  imageid.l 
+  imagecolor.l 
+  font.l 
+  state.l 
+  trackbar.l
+EndStructure
+Structure MediaFile
+  sFile.s
+  Memory.i
+  sRealFile.s
+  iPlaying.i
+  qOffset.q
+  *StreamingFile
+EndStructure
+Structure Playlist
+  iID.i
+  iTempID.i
+  iCurrentMedia.i
+  iItemCount.i
+EndStructure
+Structure OptionsGadgetsStructure
+  iButton.i
+  iShowGadget.i
+  iType.i
+EndStructure
+Structure PlayListItem
+  sFile.s
+  sTitle.s
+  qOffset.q
+EndStructure
+
+Structure StartParams
+  iAspect.i
+  bFullscreen.i
+  bHelp.i
+  bHelp2.i
+  iVolume.i
+  iDisableLAVFilters.i 
+  iJustDownloadCodecs.i
+  iHiddenCodecsDownload.i
+  sPassword.s
+  bHidden.i
+  sFile.s
+  sImportPlaylist.s
+  iloglevel.i
+  iUsedVideoRenderer.i
+  iUsedAudioRenderer.i
+  iRestoreDatabase.i
+  iAlternativeHooking.i
+  iDisableMenu.i
+  iSaveStreamingCache.i
+  sProxyIP.s
+  sProxyPort.s
+  iUseIESettings.i
+  iProxyBypassLocal.i
+  iNoRedirect.i
+  sPasswordFile.s
+  sInstallDesign.s
+  iUseSkin.i
+  qStartPosition.q
+  iHideDRM.i
   
-  
-  ;Global *GFP_DRM_HEADER
-  Global *GFP_DRM_HEADER_V2
-  Global Dim OptionsGadgets.OptionsGadgetsStructure(100)
-  Global iOptionsGadgetItems.i
-  Global Playlist.Playlist
-  Global Dim PlayListItems.PlayListItem(1)
-  Global iQuit.i
-  Global iMediaObject.i, MediaFile.MediaFile, iVolumeGadget.i, iWMouseX.i, iWMouseY.i, iWMouseOldX.i, iWMouseOldY.i, iMouseInActive.i
-  Global fMediaAspectRation.f, iMediaMainObject.i
-  Global iVideoRenderer.i, iAudioRenderer.i, sDataBaseFile.s, iOwnVideoRenderer.i=#False
-  Global iOldFullScreenWidth.i, iOldFullScreenHeight.i, iOldFullScreenX.i, iOldFullScreenY.i, iOldFullScreenSkin.i
-  Global iLanguageMenuItems.i = 1
-  Global Dim LanguageMenu(iLanguageMenuItems)
-  Global *PLAYLISTDB
-  Global iOptionsOptionCount.i
-  Global iShowMainWindowCursor.i = #True
-  Global iDownloadThread.i
-  Global iDoubleClickTime.q
-  Global iScreenSaverActive.i
-  Global PressedLeftMouseButton.i
-  Global sMediaTimeStringBefore.s
-  Global sGlobalPassword.s
-  Global IsSnapshotAllowed = #GFP_DRM_SCREENCAPTURE_ALLOW
-  Global iVDVD_VolumeGadget.i
-  Global iStayMainWndOnTop.i = #False
-  Global iIsSoundMuted.i
-  Global iIsMinimalMode.i
-  Global iPLS_CoverTrackID.i, iPLS_CoverImage.i, iPLS_CoverID.i
-  Global iVolumeGadgetFocused.i
-  Global hMutexAppRunning, hPipeAppRunning
-  Global isMainWindowActive.i
-  Global IsFullscreenControlUsed.i
-  Global sGetFolderFiles.s
-  Global iUseDRMMenu.i=#True
-  Global FoundCaptureWindowTime.q
-  Global CheckForScreenCaptureTimer.q
-  Global StartParams.StartParams
-  Global iAlternativeHookingActive.i
-  Global iLastPasswordRequester.i
-  Global iSubtitlesLoaded.i
-  Global UseNoPlayerControl.i
-  Global UsedSubtitleSize.i
-  Global IsVirtualFileUsed.i=#True
-  Global UsedDPI.i
-  Global IsSnapshotAllowedSetting = #GFP_DRM_SCREENCAPTURE_ALLOW
-  Global ExeHasAttachedFiles.i
-  Global OldForegroundWindow.i
-  Global BufferingMedia.s, BufferingMediaTitle.s, BufferingMediaEncryption.i, BufferingMediaOffset.q
-  Global DisallowURLFiles.i=#False
-  Global sGlobalMachineIDMasterKey.s
-  Global sGlobalMachineIDXOrKey.s
-  Global bCloseAfterPlayback.i = #False
-  Global isAlreadyLoading=#False
-  Global TryedHoneyPot=#False
-  Global TestedIsParentTrusted=#False
-  
-  Global g_TrackBarBkColorBrush.i
-  Global TreeWindowID, TreeGadgetProcedure, TreehDC, TreemDC, Treem2DC, Treewidth, Treeheight, TreePainting, TreemOldObject, TreehmBitmap, Treem2OldObject
-  
-  Global LoadMediaMutex = CreateMutex()
-  
-  Global *thumbButtons.ITaskbarList3
-  Global Dim ThumbButtons.THUMBBUTTON(3)
-  
-  Global Dim MenuLimitations.i(#MENU_LAST_ITEM+1)
-  Global sLimitationsFile.s
-  Global sTmpRegisteredDLL.s = ""
-  
-  Define iEvent.i, iWidth.i, iHeight.i, sFile.s, iCount.i, i.i
-  Define iImage.i, sLoadFile.s, iDBFile.i, iFile.i
-  Define sParam.s, sMediaTimeString.s
-  Define handle.i, sName.s, recv, cb
-  Define EventCounter.i
-  Define sPath.s
-  Global MediaState.i, MediaPosition.i, MediaLength.i
-  Define sParamOrg.s
-  Define *DBDesign
-  Define *DB
-  Define ElapsedMillisecondsFails=0
-  Define sMsgTitle.s, sMsgText.s
-  Define sImUser.s, sImPwd.s, hToken   
-          
-  
-  Declare CreateListWindow()
-  Declare CreateOptionsWindow()
-  Declare SetFullScreen(iWithoutSizing.i=#False, iReset.i=#False)
-  Declare CreateProtectVideoWindow()
-  Declare ProtectVideo_UpdateWindow(iImage.i=#SPRITE_BIGKEY, sTitle.s="", iCancel.i=#True)
-  Declare ProtectVideo_CB(p.q,s.q)
-  Declare _EndPlayer()
-  Declare RunCommand(iCommand.i, fParam.f=0, sParam.s="")
-  Declare SetMediaSizeTo0()
-  Declare SetMediaSizeToOrginal()
-  Declare FreeMediaFile()
-  Declare SetMediaAspectRation()
-  Declare VDVD_LoadDVD(sVolume.s)
-  Declare VolumeGadget(x, y, font, state)
-  Declare GetWindowKeyState(iEvent.i, iWindow.i=#WINDOW_MAIN)
-  Declare SetMediaSizeToDVD()
-  Declare GetVolumeGadgetState(iGadget)
-  Declare SetVolumeGadgetState(iGadget, state, iRedraw=#False)
-  Declare isFileEncrypted(sFile.s)
-  Declare.s ConvertStringDBCompartible(sText.s, iConvert.i)
-  Declare.s Time2String(time.q)
-  Declare ProcessAllEvents()
-  Declare Event_AppCommand(command.i, device.i, state.i)
-  Declare SetMediaSizeToVIS()
-  Declare LoadMediaFile(sFile.s, iAddPrevious.i = #True, sMediaTitle.s = "", qOffset.q=0)
-  Declare RestartPlayer()
-  Declare SetLoopGadgetImages()
-  Declare.s OpenFileRequesterEx(Titel.s, StandardDatei.s, Pattern.s, PatternPosition.i, Flags.i=0)
-  Declare.s SaveFileRequesterEx(Titel.s, StandardDatei.s, Pattern.s, PatternPosition.i)
-  Declare LoadFiles(sFile.s, iRequester.i=#False)
-  Declare RestoreDatabase(Restart = #True, ask=#True)
-  Declare Requester_Error(sText.s)
-  Declare GetDPI()
-  Declare Requester_Cant_Update()
-  Declare _LoadMediaFile_LoadPlay(sFile.s, sMediaTitle.s, IsEncrypted.i, qOffset.q, *Stream)
-  Declare LoadAttachedMedia(sFile.s, sMediaTitle.s="", qOffset.q=0)
-  Declare ResizeWindow_(Window, x, y, Width, Height)
-  Declare ResizeMainWindow()
-  Declare HoverGadgetImages()
-  Declare __AnsiString(str.s)
-  Declare.s GetMediaPath(sPlaylist.s, sPlaytrack.s)
-  Declare DisableWindows(state.i) 
-  Declare TestDecryptPW(sFile.s="", qOffset.q=0, *Stream=#Null)
-  Declare MessageBoxCheck(title.s, text.s, iconStyle.i, uniqueKey.s)
-  Declare ConnectionFailedRequester(InetCheck=#True)
-  Declare.q GetAllServerTime()
-  Declare IsMutexAlreadyUsed(sMutex.s)
-  Declare _StatusBarHeight(ID.i)
-  Declare.s GetSpecialFolder(i) 
-  
-  Macro EndPlayer()
-    WriteLog("BEGIN PLAYER-END", #LOGLEVEL_DEBUG)
-    _EndPlayer()
-  EndMacro
-  
-  
+EndStructure
+
+Structure THUMBBUTTON
+  dwMask.l
+  iId.l
+  iBitmap.l
+  hIcon.i
+  szTip.u[260]
+  dwFlags.l
+EndStructure
+
+Interface ITaskbarList3 Extends ITaskbarList2
+  SetProgressValue(hWnd, Completed.q, Total.q)
+  SetProgressState(hWnd, Flags.l)
+  RegisterTab(hWndTab, hWndMDI)
+  UnregisterTab(hWndTab)
+  SetTabOrder(hWndTab, hwndInsertBefore)
+  SetTabActive(hWndTab, hWndMDI, dwReserved.l)
+  ThumbBarAddButtons(hWnd, cButtons, *pButtons)
+  ThumbBarUpdateButtons(hWnd, cButtons, *pButtons)
+  ThumbBarSetImageList(hWnd, himl)
+  SetOverlayIcon(hWnd, hIcon, pszDescription.s)
+  SetThumbnailTooltip(hWnd, pszTip.s)
+  SetThumbnailClip(hWnd, *prcClip.RECT)
+EndInterface
+
+
+;Global *GFP_DRM_HEADER
+Global *GFP_DRM_HEADER_V2
+Global Dim OptionsGadgets.OptionsGadgetsStructure(100)
+Global iOptionsGadgetItems.i
+Global Playlist.Playlist
+Global Dim PlayListItems.PlayListItem(1)
+Global iQuit.i
+Global iMediaObject.i, MediaFile.MediaFile, iVolumeGadget.i, iWMouseX.i, iWMouseY.i, iWMouseOldX.i, iWMouseOldY.i, iMouseInActive.i
+Global fMediaAspectRation.f, iMediaMainObject.i
+Global iVideoRenderer.i, iAudioRenderer.i, sDataBaseFile.s, iOwnVideoRenderer.i=#False
+Global iOldFullScreenWidth.i, iOldFullScreenHeight.i, iOldFullScreenX.i, iOldFullScreenY.i, iOldFullScreenSkin.i
+Global iLanguageMenuItems.i = 1
+Global Dim LanguageMenu(iLanguageMenuItems)
+Global *PLAYLISTDB
+Global iOptionsOptionCount.i
+Global iShowMainWindowCursor.i = #True
+Global iDownloadThread.i
+Global iDoubleClickTime.q
+Global iScreenSaverActive.i
+Global PressedLeftMouseButton.i
+Global sMediaTimeStringBefore.s
+Global sGlobalPassword.s
+Global IsSnapshotAllowed = #GFP_DRM_SCREENCAPTURE_ALLOW
+Global iVDVD_VolumeGadget.i
+Global iStayMainWndOnTop.i = #False
+Global iIsSoundMuted.i
+Global iIsMinimalMode.i
+Global iPLS_CoverTrackID.i, iPLS_CoverImage.i, iPLS_CoverID.i
+Global iVolumeGadgetFocused.i
+Global hMutexAppRunning, hPipeAppRunning
+Global isMainWindowActive.i
+Global IsFullscreenControlUsed.i
+Global sGetFolderFiles.s
+Global iUseDRMMenu.i=#True
+Global FoundCaptureWindowTime.q
+Global CheckForScreenCaptureTimer.q
+Global StartParams.StartParams
+Global iAlternativeHookingActive.i
+Global iLastPasswordRequester.i
+Global iSubtitlesLoaded.i
+Global UseNoPlayerControl.i
+Global UsedSubtitleSize.i
+Global IsVirtualFileUsed.i=#True
+Global UsedDPI.i
+Global IsSnapshotAllowedSetting = #GFP_DRM_SCREENCAPTURE_ALLOW
+Global ExeHasAttachedFiles.i
+Global OldForegroundWindow.i
+Global BufferingMedia.s, BufferingMediaTitle.s, BufferingMediaEncryption.i, BufferingMediaOffset.q
+Global DisallowURLFiles.i=#False
+Global sGlobalMachineIDMasterKey.s
+Global sGlobalMachineIDXOrKey.s
+Global bCloseAfterPlayback.i = #False
+Global isAlreadyLoading=#False
+Global TryedHoneyPot=#False
+Global TestedIsParentTrusted=#False
+
+Global g_TrackBarBkColorBrush.i
+Global TreeWindowID, TreeGadgetProcedure, TreehDC, TreemDC, Treem2DC, Treewidth, Treeheight, TreePainting, TreemOldObject, TreehmBitmap, Treem2OldObject
+
+Global LoadMediaMutex = CreateMutex()
+
+Global *thumbButtons.ITaskbarList3
+Global Dim ThumbButtons.THUMBBUTTON(3)
+
+Global Dim MenuLimitations.i(#MENU_LAST_ITEM+1)
+Global sLimitationsFile.s
+Global sTmpRegisteredDLL.s = ""
+
+Define iEvent.i, iWidth.i, iHeight.i, sFile.s, iCount.i, i.i
+Define iImage.i, sLoadFile.s, iDBFile.i, iFile.i
+Define sParam.s, sMediaTimeString.s
+Define handle.i, sName.s, recv, cb
+Define EventCounter.i
+Define sPath.s
+Global MediaState.i, MediaPosition.i, MediaLength.i
+Define sParamOrg.s
+Define *DBDesign
+Define *DB
+Define ElapsedMillisecondsFails=0
+Define sMsgTitle.s, sMsgText.s
+Define sImUser.s, sImPwd.s, hToken   
+
+
+Declare CreateListWindow()
+Declare CreateOptionsWindow()
+Declare SetFullScreen(iWithoutSizing.i=#False, iReset.i=#False)
+Declare CreateProtectVideoWindow()
+Declare ProtectVideo_UpdateWindow(iImage.i=#SPRITE_BIGKEY, sTitle.s="", iCancel.i=#True)
+Declare ProtectVideo_CB(p.q,s.q)
+Declare _EndPlayer()
+Declare RunCommand(iCommand.i, fParam.f=0, sParam.s="")
+Declare SetMediaSizeTo0()
+Declare SetMediaSizeToOrginal()
+Declare FreeMediaFile()
+Declare SetMediaAspectRation()
+Declare VDVD_LoadDVD(sVolume.s)
+Declare VolumeGadget(x, y, font, state)
+Declare GetWindowKeyState(iEvent.i, iWindow.i=#WINDOW_MAIN)
+Declare SetMediaSizeToDVD()
+Declare GetVolumeGadgetState(iGadget)
+Declare SetVolumeGadgetState(iGadget, state, iRedraw=#False)
+Declare isFileEncrypted(sFile.s)
+Declare.s ConvertStringDBCompartible(sText.s, iConvert.i)
+Declare.s Time2String(time.q)
+Declare ProcessAllEvents()
+Declare Event_AppCommand(command.i, device.i, state.i)
+Declare SetMediaSizeToVIS()
+Declare LoadMediaFile(sFile.s, iAddPrevious.i = #True, sMediaTitle.s = "", qOffset.q=0)
+Declare RestartPlayer()
+Declare SetLoopGadgetImages()
+Declare.s OpenFileRequesterEx(Titel.s, StandardDatei.s, Pattern.s, PatternPosition.i, Flags.i=0)
+Declare.s SaveFileRequesterEx(Titel.s, StandardDatei.s, Pattern.s, PatternPosition.i)
+Declare LoadFiles(sFile.s, iRequester.i=#False)
+Declare RestoreDatabase(Restart = #True, ask=#True)
+Declare Requester_Error(sText.s)
+Declare GetDPI()
+Declare Requester_Cant_Update()
+Declare _LoadMediaFile_LoadPlay(sFile.s, sMediaTitle.s, IsEncrypted.i, qOffset.q, *Stream)
+Declare LoadAttachedMedia(sFile.s, sMediaTitle.s="", qOffset.q=0)
+Declare ResizeWindow_(Window, x, y, Width, Height)
+Declare ResizeMainWindow()
+Declare HoverGadgetImages()
+Declare __AnsiString(str.s)
+Declare.s GetMediaPath(sPlaylist.s, sPlaytrack.s)
+Declare DisableWindows(state.i) 
+Declare TestDecryptPW(sFile.s="", qOffset.q=0, *Stream=#Null)
+Declare MessageBoxCheck(title.s, text.s, iconStyle.i, uniqueKey.s)
+Declare ConnectionFailedRequester(InetCheck=#True)
+Declare.q GetAllServerTime()
+Declare IsMutexAlreadyUsed(sMutex.s)
+Declare _StatusBarHeight(ID.i)
+Declare.s GetSpecialFolder(i) 
+
+Macro EndPlayer()
+  WriteLog("BEGIN PLAYER-END", #LOGLEVEL_DEBUG)
+  _EndPlayer()
+EndMacro
+
+
 ;}
 ;{ Include
-  
-  XIncludeFile "include\GFP_PBCompatibility.pbi"
-  
-  CompilerIf #USE_LEAK_DEBUG
-    XIncludeFile "include\GFP_LEAK_DEBUG.pbi"
-  CompilerEndIf  
-  
-  CompilerIf #USE_THROTTLE And #PB_editor_createexecutable = #False
-    XIncludeFile "include\GFP_CPU-Throttle.pbi"
-  CompilerEndIf  
-  
-  CompilerIf #USE_OEM_VERSION
-    XIncludeFile "GFP_OEM.pbi"
-  CompilerEndIf
-  
-  XIncludeFile "include\GFP_MachineID.pbi"
-  XIncludeFile "include\GFP_UxTheme.pbi"
-  XIncludeFile "include\GFP_TIMER_FUNCS.pbi"
-  XIncludeFile "include\GFP_API_File2.pbi"
-  XIncludeFile "include\GFP_Settings.pbi"
-  XIncludeFile "include\GFP_LogFile.pbi"
-  XIncludeFile "include\GFP_SkinGadget.pbi"  
-  XIncludeFile "include\GFP_LAVFilters.pbi"    
-  XIncludeFile "include\GFP_Database.pbi"
-  XIncludeFile "include\GFP_Design.pbi"
-  XIncludeFile "include\GFP_VolumeGadget.pbi"
-  XIncludeFile "include\GFP_StringCommands_3.pbi"
-  XIncludeFile "include\GFP_Cryption4_Unicode.pbi"
-  XIncludeFile "include\GFP_DRMHeaderV2_52_Unicode.pbi"
-  XIncludeFile "include\GFP_Simple_URL.pbi"
-  XIncludeFile "include\GFP_VMDetect.pbi"
-  XIncludeFile "include\GFP_StreamingManager.pbi"
-  CompilerIf #USE_VIRTUAL_FILE
-    XIncludeFile "include\GFP_VirtualFile_80_Unicode_OwnString_WIN8.pbi"
-  CompilerEndIf
-  XIncludeFile "include\GFP_DShow_140.pbi"
-  CompilerIf #USE_IMAGEPLUGIN_LIB
-    XIncludeFile "include\GFP_ImagePlugin.pbi"
-  CompilerEndIf
-  XIncludeFile "include\GFP_ProcessRequester.pbi"
-  XIncludeFile "include\GFP_WINHTTP55.pbi"
-  ;XIncludeFile "include\GFP_ResMod37.pbi"
-  XIncludeFile "include\GFP_exe-attachment4.pbi"
-  XIncludeFile "include\GFP_Limitations.pbi"
-  XIncludeFile "include\GFP_Covers.pbi"
-  XIncludeFile "include\GFP_MediaTags.pbi"
-  XIncludeFile "include\GFP_SoundEx.pbi"
-  XIncludeFile "include\GFP_Mediadet.pbi"
-  XIncludeFile "include\GFP_Flash12.pbi"
-  XIncludeFile "include\GFP_SWF.pbi"
-  CompilerIf #USE_OEM_VERSION
-    XIncludeFile "include\GFP_FLVPlayer.pbi"
-  CompilerEndIf  
-  XIncludeFile "include\GFP_MediaLib.pbi"
-  XIncludeFile "include\GFP_Language.pbi"
-  XIncludeFile "include\GFP_CacheSystem.pbi"
-  XIncludeFile "include\GFP_TrackBar_2.pbi"
-  XIncludeFile "include\GFP_SpecialFolder.pbi"
-  XIncludeFile "include\GFP_WndProtection3.pbi"
-  XIncludeFile "include\GFP_PasswordLib.pbi"
-  XIncludeFile "include\GFP_D3D.pbi"
-  XIncludeFile "include\GFP_VisualCanvas_8.pbi"
-  XIncludeFile "include\GFP_Visualization.pbi"
-  XIncludeFile "include\GFP_AudioCD.pbi"
-  XIncludeFile "include\GFP_VideoDVD.pbi"
-  XIncludeFile "include\GFP_filetype.pbi"
-  XIncludeFile "include\GFP_Playlist.pbi"
-  XIncludeFile "include\GFP_Appcommand.pbi"
-  XIncludeFile "include\GFP_Sprite2D.pbi"
-  XIncludeFile "include\GFP_Sprite2D_Framework.pbi"
-  XIncludeFile "include\GFP_VIS_Simple.pbi"
-  XIncludeFile "include\GFP_VIS_DCT.pbi"
-  XIncludeFile "include\GFP_VIS_WhiteLight.pbi"
-  XIncludeFile "include\GFP_VIS_Coverflow.pbi"
-  XIncludeFile "include\GFP_VIS_Buffering.pbi"
-  XIncludeFile "include\GFP_CheckRunning.pbi"
-  XIncludeFile "include\GFP_URLAutoComplete.pbi"
-  XIncludeFile "include\GFP_OwnRequester.pbi"
-  XIncludeFile "include\GFP_DLLRegister.pbi"
-  XIncludeFile "include\GFP_INIReader.pbi"
-  XIncludeFile "include\GFP_CodecInstaller.pbi"
-  XIncludeFile "include\GFP_ThumbButton.pbi"
-  XIncludeFile "include\GFP_RSA_Crypt.pbi"
-  XIncludeFile "include\GFP_ANTI_HOOK_3.pbi"
-  CompilerIf #USE_SUBTITLES
-    XIncludeFile "include\GFP_Subtitles.pbi"
-  CompilerEndIf  
-  XIncludeFile "include\GFP_AntiDebug.pbi"
-  XIncludeFile "include\GFP_ResMod37.pbi"
-  XIncludeFile "include\GFP_ParentTrusted.pbi"
-  XIncludeFile "include\GFP_Standby.pbi"
-  
-  EnableExplicit
+
+XIncludeFile "include\GFP_PBCompatibility.pbi"
+
+CompilerIf #USE_LEAK_DEBUG
+  XIncludeFile "include\GFP_LEAK_DEBUG.pbi"
+CompilerEndIf  
+
+CompilerIf #USE_THROTTLE And #PB_editor_createexecutable = #False
+  XIncludeFile "include\GFP_CPU-Throttle.pbi"
+CompilerEndIf  
+
+CompilerIf #USE_OEM_VERSION
+  XIncludeFile "GFP_OEM.pbi"
+CompilerEndIf
+
+XIncludeFile "include\GFP_MachineID.pbi"
+XIncludeFile "include\GFP_UxTheme.pbi"
+XIncludeFile "include\GFP_TIMER_FUNCS.pbi"
+XIncludeFile "include\GFP_API_File2.pbi"
+XIncludeFile "include\GFP_Settings.pbi"
+XIncludeFile "include\GFP_LogFile.pbi"
+XIncludeFile "include\GFP_SkinGadget.pbi"  
+XIncludeFile "include\GFP_LAVFilters.pbi"    
+XIncludeFile "include\GFP_Database.pbi"
+XIncludeFile "include\GFP_Design.pbi"
+XIncludeFile "include\GFP_VolumeGadget.pbi"
+XIncludeFile "include\GFP_StringCommands_3.pbi"
+XIncludeFile "include\GFP_Cryption4_Unicode.pbi"
+XIncludeFile "include\GFP_DRMHeaderV2_52_Unicode.pbi"
+XIncludeFile "include\GFP_Simple_URL.pbi"
+XIncludeFile "include\GFP_VMDetect.pbi"
+XIncludeFile "include\GFP_StreamingManager.pbi"
+CompilerIf #USE_VIRTUAL_FILE
+  XIncludeFile "include\GFP_VirtualFile_80_Unicode_OwnString_WIN8.pbi"
+CompilerEndIf
+XIncludeFile "include\GFP_DShow_140.pbi"
+CompilerIf #USE_IMAGEPLUGIN_LIB
+  XIncludeFile "include\GFP_ImagePlugin.pbi"
+CompilerEndIf
+XIncludeFile "include\GFP_ProcessRequester.pbi"
+XIncludeFile "include\GFP_WINHTTP55.pbi"
+;XIncludeFile "include\GFP_ResMod37.pbi"
+XIncludeFile "include\GFP_exe-attachment4.pbi"
+XIncludeFile "include\GFP_Limitations.pbi"
+XIncludeFile "include\GFP_Covers.pbi"
+XIncludeFile "include\GFP_MediaTags.pbi"
+XIncludeFile "include\GFP_SoundEx.pbi"
+XIncludeFile "include\GFP_Mediadet.pbi"
+XIncludeFile "include\GFP_Flash12.pbi"
+XIncludeFile "include\GFP_SWF.pbi"
+CompilerIf #USE_OEM_VERSION
+  XIncludeFile "include\GFP_FLVPlayer.pbi"
+CompilerEndIf  
+XIncludeFile "include\GFP_MediaLib.pbi"
+XIncludeFile "include\GFP_Language.pbi"
+XIncludeFile "include\GFP_CacheSystem.pbi"
+XIncludeFile "include\GFP_TrackBar_2.pbi"
+XIncludeFile "include\GFP_SpecialFolder.pbi"
+XIncludeFile "include\GFP_WndProtection3.pbi"
+XIncludeFile "include\GFP_PasswordLib.pbi"
+XIncludeFile "include\GFP_D3D.pbi"
+XIncludeFile "include\GFP_VisualCanvas_8.pbi"
+XIncludeFile "include\GFP_Visualization.pbi"
+XIncludeFile "include\GFP_AudioCD.pbi"
+XIncludeFile "include\GFP_VideoDVD.pbi"
+XIncludeFile "include\GFP_filetype.pbi"
+XIncludeFile "include\GFP_Playlist.pbi"
+XIncludeFile "include\GFP_Appcommand.pbi"
+XIncludeFile "include\GFP_Sprite2D.pbi"
+XIncludeFile "include\GFP_Sprite2D_Framework.pbi"
+XIncludeFile "include\GFP_VIS_Simple.pbi"
+XIncludeFile "include\GFP_VIS_DCT.pbi"
+XIncludeFile "include\GFP_VIS_WhiteLight.pbi"
+XIncludeFile "include\GFP_VIS_Coverflow.pbi"
+XIncludeFile "include\GFP_VIS_Buffering.pbi"
+XIncludeFile "include\GFP_CheckRunning.pbi"
+XIncludeFile "include\GFP_URLAutoComplete.pbi"
+XIncludeFile "include\GFP_OwnRequester.pbi"
+XIncludeFile "include\GFP_DLLRegister.pbi"
+XIncludeFile "include\GFP_INIReader.pbi"
+XIncludeFile "include\GFP_CodecInstaller.pbi"
+XIncludeFile "include\GFP_ThumbButton.pbi"
+XIncludeFile "include\GFP_RSA_Crypt.pbi"
+XIncludeFile "include\GFP_ANTI_HOOK_3.pbi"
+CompilerIf #USE_SUBTITLES
+  XIncludeFile "include\GFP_Subtitles.pbi"
+CompilerEndIf  
+XIncludeFile "include\GFP_AntiDebug.pbi"
+XIncludeFile "include\GFP_ResMod37.pbi"
+XIncludeFile "include\GFP_ParentTrusted.pbi"
+XIncludeFile "include\GFP_Standby.pbi"
+
+EnableExplicit
 ;}
 
 
@@ -1011,8 +1012,8 @@ CompilerEndIf
 
 
 
-  ;{ Functions
-  
+;{ Functions
+
 Procedure Mod_ResizeGadget(gadget,x,y,w,h)
   Protected min_y = 0
   ;fix for horizontal bar in fullscreen mode
@@ -1027,18 +1028,18 @@ Procedure Mod_ResizeGadget(gadget,x,y,w,h)
   ProcedureReturn ResizeGadget(gadget,x,y,w,h)
 EndProcedure
 
- Procedure Mod_WindowBounds(wnd,min_w,min_h,max_w,max_h)
-   If min_h <> #PB_Ignore And max_h <> #PB_Ignore
-     If GetMenu_(WindowID(wnd))
-       min_h + MenuHeight()
-     EndIf   
-     If min_h > max_h
-       max_h = min_h
-     EndIf  
-   EndIf
-   
-   ProcedureReturn WindowBounds(wnd,min_w,min_h,max_w,max_h)
- EndProcedure
+Procedure Mod_WindowBounds(wnd,min_w,min_h,max_w,max_h)
+  If min_h <> #PB_Ignore And max_h <> #PB_Ignore
+    If GetMenu_(WindowID(wnd))
+      min_h + MenuHeight()
+    EndIf   
+    If min_h > max_h
+      max_h = min_h
+    EndIf  
+  EndIf
+  
+  ProcedureReturn WindowBounds(wnd,min_w,min_h,max_w,max_h)
+EndProcedure
 
 
 Macro ResizeGadget
@@ -1054,7 +1055,7 @@ EndMacro
 #DACL_SECURITY_INFORMATION     =   $00000004
 #SACL_SECURITY_INFORMATION     =   $00000008
 #LABEL_SECURITY_INFORMATION    =   $00000010
- 
+
 #PROTECTED_DACL_SECURITY_INFORMATION   =  $80000000
 #PROTECTED_SACL_SECURITY_INFORMATION   =  $40000000
 #UNPROTECTED_DACL_SECURITY_INFORMATION =  $20000000
@@ -1064,14 +1065,14 @@ EndMacro
 Procedure ProtectProcess()
   Protected *pACL.ACL
   Protected cbACL = 1024;
-   
+  
   ; Initialize a security descriptor.
   Protected *pSD.SECURITY_DESCRIPTOR = AllocateMemory(#SECURITY_DESCRIPTOR_MIN_LENGTH)
   InitializeSecurityDescriptor_(*pSD, #SECURITY_DESCRIPTOR_REVISION)
   *pACL = AllocateMemory(cbACL);
   InitializeAcl_(*pACL, cbACL, #ACL_REVISION2)
   SetSecurityDescriptorDacl_(*pSD, #True, *pACL, #False)
-   
+  
   ;SetFileSecurity_("C:\TEST.TXT",#DACL_SECURITY_INFORMATION, *pSD) ; <-- remove all rights from a certain file
   SetKernelObjectSecurity_(GetCurrentProcess_(), #DACL_SECURITY_INFORMATION, *pSD) ; <-- now you cannot close the process with the task manager
 EndProcedure
@@ -1113,13 +1114,13 @@ Procedure __DRMV2_ReadHeaderFromStreamingFile(*StreamingFile, password.s, qOffse
     __DRMError(Chr(34) + Str(*StreamingFile) + Chr(34) + " cannot be read!")
     iResult = #DRM_ERROR_FAIL      
   EndIf
-    
-
+  
+  
   
   If *result
     *result\i = iResult
   EndIf  
-ProcedureReturn *header
+  ProcedureReturn *header
 EndProcedure
 
 Procedure DRMV2Read_ReadFromStreamingFile(*StreamingFile, sPassword.s, qOffset.q = 0)
@@ -1158,7 +1159,7 @@ Procedure DRMV2Read_ReadFromStreamingFile(*StreamingFile, sPassword.s, qOffset.q
     EndIf  
     __DRMError("DRMV2Read_ReadFromFile failed")    
   EndIf  
-
+  
   ProcedureReturn *headerObj
 EndProcedure  
 
@@ -1291,33 +1292,33 @@ EndProcedure
 
 Procedure DisableWindows(state.i) 
   
-;   If state=#True
-;     OldForegroundWindow=GetForegroundWindow_()
-;   EndIf    
-;   If IsWindow(#WINDOW_ABOUT):DisableWindow(#WINDOW_ABOUT, state):EndIf
-;   If IsWindow(#WINDOW_LIST):DisableWindow(#WINDOW_LIST, state):EndIf
-;   If IsWindow(#WINDOW_OPTIONS):DisableWindow(#WINDOW_OPTIONS, state):EndIf
-;   If IsWindow(#WINDOW_VIDEOPROTECT):DisableWindow(#WINDOW_VIDEOPROTECT, state):EndIf
-;   If IsWindow(#WINDOW_MAIN):DisableWindow(#WINDOW_MAIN, state):EndIf
-; ; If state=#True
-; ;   EnableWindow_(WindowID(#WINDOW_MAIN), #False)
-; ; Else
-; ;   EnableWindow_(WindowID(#WINDOW_MAIN), #True)
-; ; EndIf  
-; ; 
-; ;   Repeat
-; ;   Until WindowEvent()=0
-; ;   
-;   If state=#False
-;     SetForegroundWindow_(OldForegroundWindow)
-;     ;BringWindowToTop_(OldForegroundWindow)
-;     ;SetActiveWindow_(OldForegroundWindow)
-;     ;SetFocus_(OldForegroundWindow)
-;     ShowWindow_(OldForegroundWindow, #SW_MINIMIZE)
-;     ShowWindow_(OldForegroundWindow, #SW_SHOWDEFAULT)
-;     ;OpenLibrary(1,"user32.dll")
-;     ;CallFunction(1,"SwitchToThisWindow", OldForegroundWindow, #True)
-;   EndIf 
+  ;   If state=#True
+  ;     OldForegroundWindow=GetForegroundWindow_()
+  ;   EndIf    
+  ;   If IsWindow(#WINDOW_ABOUT):DisableWindow(#WINDOW_ABOUT, state):EndIf
+  ;   If IsWindow(#WINDOW_LIST):DisableWindow(#WINDOW_LIST, state):EndIf
+  ;   If IsWindow(#WINDOW_OPTIONS):DisableWindow(#WINDOW_OPTIONS, state):EndIf
+  ;   If IsWindow(#WINDOW_VIDEOPROTECT):DisableWindow(#WINDOW_VIDEOPROTECT, state):EndIf
+  ;   If IsWindow(#WINDOW_MAIN):DisableWindow(#WINDOW_MAIN, state):EndIf
+  ; ; If state=#True
+  ; ;   EnableWindow_(WindowID(#WINDOW_MAIN), #False)
+  ; ; Else
+  ; ;   EnableWindow_(WindowID(#WINDOW_MAIN), #True)
+  ; ; EndIf  
+  ; ; 
+  ; ;   Repeat
+  ; ;   Until WindowEvent()=0
+  ; ;   
+  ;   If state=#False
+  ;     SetForegroundWindow_(OldForegroundWindow)
+  ;     ;BringWindowToTop_(OldForegroundWindow)
+  ;     ;SetActiveWindow_(OldForegroundWindow)
+  ;     ;SetFocus_(OldForegroundWindow)
+  ;     ShowWindow_(OldForegroundWindow, #SW_MINIMIZE)
+  ;     ShowWindow_(OldForegroundWindow, #SW_SHOWDEFAULT)
+  ;     ;OpenLibrary(1,"user32.dll")
+  ;     ;CallFunction(1,"SwitchToThisWindow", OldForegroundWindow, #True)
+  ;   EndIf 
 EndProcedure  
 
 Procedure ProcessRequesterEvents()
@@ -1325,16 +1326,16 @@ Procedure ProcessRequesterEvents()
   event = WaitWindowEvent(16)
   If (event = #WM_LBUTTONDOWN Or event = #PB_Event_Gadget Or event = #PB_Event_Menu) 
     Select EventWindow() 
-    Case #WINDOW_MAIN
-      FlashWindow_(WindowID(#WINDOW_MAIN), #True)
-    Case #WINDOW_VIDEOPROTECT
-      FlashWindow_(WindowID(#WINDOW_VIDEOPROTECT), #True)
-    Case #WINDOW_OPTIONS
-      FlashWindow_(WindowID(#WINDOW_OPTIONS), #True)
-    Case #WINDOW_LIST
-      FlashWindow_(WindowID(#WINDOW_LIST), #True)
-    Case #WINDOW_ABOUT
-      FlashWindow_(WindowID(#WINDOW_ABOUT), #True)
+      Case #WINDOW_MAIN
+        FlashWindow_(WindowID(#WINDOW_MAIN), #True)
+      Case #WINDOW_VIDEOPROTECT
+        FlashWindow_(WindowID(#WINDOW_VIDEOPROTECT), #True)
+      Case #WINDOW_OPTIONS
+        FlashWindow_(WindowID(#WINDOW_OPTIONS), #True)
+      Case #WINDOW_LIST
+        FlashWindow_(WindowID(#WINDOW_LIST), #True)
+      Case #WINDOW_ABOUT
+        FlashWindow_(WindowID(#WINDOW_ABOUT), #True)
     EndSelect  
     MessageBeep_(#MB_ICONHAND)
   EndIf
@@ -1403,9 +1404,9 @@ Procedure RestartPlayer()
     hMutexAppRunning=#Null
   EndIf
   FreeLogFile()
-;   If sGlobalPassword<>""
-;     Password=" /password "+Chr(34)+sGlobalPassword+Chr(34)
-;   EndIf  
+  ;   If sGlobalPassword<>""
+  ;     Password=" /password "+Chr(34)+sGlobalPassword+Chr(34)
+  ;   EndIf  
   ;StickyWindow(#WINDOW_MAIN, #False)
   ;HideWindow(#WINDOW_MAIN, #True)
   RunProgram(ProgramFilename(), Chr(34)+MediaFile\sRealFile+Chr(34)+Password, GetCurrentDirectory())
@@ -1579,7 +1580,7 @@ Procedure SetMediaSizeToVIS()
         EndIf  
       EndIf
     Else
-       WindowBounds(#WINDOW_MAIN, 460, Design_Container_Size+3+_StatusBarHeight(0), #PB_Ignore, Design_Container_Size+3+_StatusBarHeight(0))
+      WindowBounds(#WINDOW_MAIN, 460, Design_Container_Size+3+_StatusBarHeight(0), #PB_Ignore, Design_Container_Size+3+_StatusBarHeight(0))
       ResizeWindow_(#WINDOW_MAIN, #PB_Ignore, #PB_Ignore, #PB_Ignore, Design_Container_Size+3+_StatusBarHeight(0))
     EndIf
   EndIf
@@ -1749,7 +1750,7 @@ Procedure SetMediaAspectRation()
         fheight2.f = fwidth3 / faspect
         fx = (fwidth-fwidth3)/2
         fy = (fheight-fheight2)/2 
-           
+        
         If DShow_IsWindowlessRenderer(iMediaObject); Or iIsMediaObjectVideoDVD=#False
           MediaSetDestWidth(iMediaObject, fwidth3)
           MediaSetDestHeight(iMediaObject, fheight2)      
@@ -1764,14 +1765,14 @@ Procedure SetMediaAspectRation()
           MediaSetDestY(iMediaObject, 0)   
           MediaSetWindowX(iMediaObject, fx)
           MediaSetWindowY(iMediaObject, fy) 
-    ;       MediaSetDestWidth(iMediaObject, fwidth3)
-    ;       MediaSetDestHeight(iMediaObject, fheight2)
-    ;       MediaSetWindowWidth(iMediaObject, fwidth)
-    ;       MediaSetWindowHeight(iMediaObject, fheight)    
-    ;       MediaSetDestX(iMediaObject, fx)
-    ;       MediaSetDestY(iMediaObject, fy)   
-    ;       MediaSetWindowX(iMediaObject, 0)
-    ;       MediaSetWindowY(iMediaObject, 0) 
+          ;       MediaSetDestWidth(iMediaObject, fwidth3)
+          ;       MediaSetDestHeight(iMediaObject, fheight2)
+          ;       MediaSetWindowWidth(iMediaObject, fwidth)
+          ;       MediaSetWindowHeight(iMediaObject, fheight)    
+          ;       MediaSetDestX(iMediaObject, fx)
+          ;       MediaSetDestY(iMediaObject, fy)   
+          ;       MediaSetWindowX(iMediaObject, 0)
+          ;       MediaSetWindowY(iMediaObject, 0) 
         EndIf 
         If IsGadget(#GADGET_VIDEO_CONTAINER)
           InvalidateRect_(GadgetID(#GADGET_VIDEO_CONTAINER), #Null, #True)
@@ -1788,7 +1789,7 @@ Procedure FreeMediaFile()
     FreeMedia(iMediaObject)
     iMediaObject = #Null
   EndIf
- 
+  
   If MediaFile\Memory
     ;FreeMemory(MediaFile\Memory)
     MediaFile\Memory = #Null
@@ -1839,20 +1840,20 @@ Procedure.s GetMediaFileTitle(sFile.s, IsEncrypted=#False, *Stream=#Null, qOffse
   Protected sTitle.s, *Header, sInterpret.s, res.i
   sTitle = GetFilePart(sFile)
   If IsEncrypted
-;     If ReadDRMHeader(sFile, *GFP_DRM_HEADER, sGlobalPassword)=#DRM_OK
-;       If GetDRMHeaderTitle(*GFP_DRM_HEADER)
-;         sTitle = GetDRMHeaderTitle(*GFP_DRM_HEADER)
-;       EndIf
-;       If GetDRMHeaderInterpreter(*GFP_DRM_HEADER)
-;         sTitle = GetDRMHeaderInterpreter(*GFP_DRM_HEADER) + " - " + sTitle
-;       EndIf
-;     EndIf
+    ;     If ReadDRMHeader(sFile, *GFP_DRM_HEADER, sGlobalPassword)=#DRM_OK
+    ;       If GetDRMHeaderTitle(*GFP_DRM_HEADER)
+    ;         sTitle = GetDRMHeaderTitle(*GFP_DRM_HEADER)
+    ;       EndIf
+    ;       If GetDRMHeaderInterpreter(*GFP_DRM_HEADER)
+    ;         sTitle = GetDRMHeaderInterpreter(*GFP_DRM_HEADER) + " - " + sTitle
+    ;       EndIf
+    ;     EndIf
     If *Stream=#Null
       *Header = DRMV2Read_ReadFromFile_Cached(sFile, sGlobalPassword, qOffset)
     Else
       *Header = DRMV2Read_ReadFromStreamingFile(*Stream, sGlobalPassword, qOffset)
     EndIf
-
+    
     If *Header
       sTitle = DRMV2Read_GetBlockString(*Header, #DRMV2_HEADER_MEDIA_TITLE)
       sInterpret = DRMV2Read_GetBlockString(*Header, #DRMV2_HEADER_MEDIA_INTERPRETER)
@@ -1863,7 +1864,7 @@ Procedure.s GetMediaFileTitle(sFile.s, IsEncrypted=#False, *Stream=#Null, qOffse
       DRMV2Read_Free(*Header)
       *Header=#Null
     EndIf  
-
+    
   Else
     If LoadMetaFile(sFile)
       If MediaInfoData\sTile
@@ -1874,7 +1875,7 @@ Procedure.s GetMediaFileTitle(sFile.s, IsEncrypted=#False, *Stream=#Null, qOffse
       EndIf
     EndIf
   EndIf
-
+  
   ProcedureReturn sTitle.s
 EndProcedure
 
@@ -1929,7 +1930,7 @@ Procedure TestDecryptPW(sFile.s="", qOffset.q=0, *Stream=#Null)
     Else
       *GFP_DRM_HEADER_V2 = DRMV2Read_ReadFromFile_Cached(sFile, sGlobalPassword, qOffset)
     EndIf  
-
+    
     
     If *GFP_DRM_HEADER_V2
       res=DRMV2Read_GetLastReadResult(*GFP_DRM_HEADER_V2)   
@@ -1939,7 +1940,7 @@ Procedure TestDecryptPW(sFile.s="", qOffset.q=0, *Stream=#Null)
   
   
   If res <> #DRM_OK
-  
+    
     If *GFP_DRM_HEADER_V2
       sPWTip = DRMV2Read_GetBlockString(*GFP_DRM_HEADER_V2, #DRMV2_HEADER_MEDIA_PASSWORDTIP)
       If sPWTip<>""
@@ -2041,16 +2042,16 @@ Procedure TestDecryptPW(sFile.s="", qOffset.q=0, *Stream=#Null)
     
     
   Else
-     ProcRes=#True
-   EndIf
-   
-   
+    ProcRes=#True
+  EndIf
+  
+  
   If *GFP_DRM_HEADER_V2;Header wurde nicht mit korrektem Password geladen!
     DRMV2Read_Free(*GFP_DRM_HEADER_V2)
     *GFP_DRM_HEADER_V2=#Null
   EndIf  
-   
-   
+  
+  
   ProcedureReturn ProcRes
 EndProcedure
 
@@ -2122,9 +2123,9 @@ Procedure.q GetAllServerTime()
   If qServerTime=0:qServerTime=GetServerTime("http://www.msn.com"):EndIf
   ProcedureReturn qServerTime
 EndProcedure      
-  
+
 Procedure CheckDate(Date.q)
-Protected result.i=#False, qServerTime.q
+  Protected result.i=#False, qServerTime.q
   WriteLog("Allowed date is: "+Str(Date), #LOGLEVEL_DEBUG)
   If Date()<Date
     If CheckDateSave=0
@@ -2183,7 +2184,7 @@ Procedure IsAllowedToPlay(sFile.s)
     EndIf 
     
     
-
+    
   EndIf  
   ProcedureReturn iResult
 EndProcedure  
@@ -2217,17 +2218,17 @@ Procedure SetSnapshotAllowed(TakeOff.i=#False)
     
     UnProtectWindow(WindowID(#WINDOW_MAIN))
     
-
-      If IsSnapshotAllowed = #GFP_DRM_SCREENCAPTURE_DISALLOW
-        If OSVersion()<#PB_OS_Windows_Vista;XP, 2000
-          WriteLog("Use DISABLEPRINTHOTKEYS", #LOGLEVEL_DEBUG)
-          ProtectWindow(WindowID(#WINDOW_MAIN), #PROTECT_DISABLEPRINTHOTKEYS, #Null)
-        Else;Vista, Win7
-          WriteLog("Use DISABLEPRINTHOTKEYS FORCELAYEREDWINDOW ENABLECONTENTPROTECTION", #LOGLEVEL_DEBUG)
-          ProtectWindow(WindowID(#WINDOW_MAIN), #PROTECT_DISABLEPRINTHOTKEYS|#PROTECT_FORCELAYEREDWINDOW|#PROTECT_ENABLECONTENTPROTECTION, #Null)
-        EndIf
+    
+    If IsSnapshotAllowed = #GFP_DRM_SCREENCAPTURE_DISALLOW
+      If OSVersion()<#PB_OS_Windows_Vista;XP, 2000
+        WriteLog("Use DISABLEPRINTHOTKEYS", #LOGLEVEL_DEBUG)
+        ProtectWindow(WindowID(#WINDOW_MAIN), #PROTECT_DISABLEPRINTHOTKEYS, #Null)
+      Else;Vista, Win7
+        WriteLog("Use DISABLEPRINTHOTKEYS FORCELAYEREDWINDOW ENABLECONTENTPROTECTION", #LOGLEVEL_DEBUG)
+        ProtectWindow(WindowID(#WINDOW_MAIN), #PROTECT_DISABLEPRINTHOTKEYS|#PROTECT_FORCELAYEREDWINDOW|#PROTECT_ENABLECONTENTPROTECTION, #Null)
       EndIf
-
+    EndIf
+    
     If IsSnapshotAllowed = #GFP_DRM_SCREENCAPTURE_PROTECTION_FORCE
       ;Kein Layered Window für Windows XP, da dies mit Overlay flackert!
       If OSVersion()<#PB_OS_Windows_Vista;XP, 2000
@@ -2237,7 +2238,7 @@ Procedure SetSnapshotAllowed(TakeOff.i=#False)
         WriteLog("Use DISABLEPRINTHOTKEYS FORCELAYEREDWINDOW ENABLECONTENTPROTECTION DETECTMIRRORDRIVERS", #LOGLEVEL_DEBUG)
         ProtectWindow(WindowID(#WINDOW_MAIN), #PROTECT_DISABLEPRINTHOTKEYS|#PROTECT_FORCELAYEREDWINDOW|#PROTECT_ENABLECONTENTPROTECTION|#PROTECT_DETECTMIRRORDRIVERS, @ProtectWindow_Ende())
       EndIf
-
+      
       
     EndIf
     IsSnapshotAllowedSetting = IsSnapshotAllowed
@@ -2339,16 +2340,16 @@ Procedure CheckForScreenCapture()
     UseSHA3Fingerprint()
     Define tmp.s = #PROTECTWINDOW_BLACKLIST
     If Fingerprint(@tmp, MemoryStringLength(@tmp), #PB_Cipher_SHA3) <> "c4e80b5149a2d48e686d71894c0b63f735651c203ef8946d71f72b81815a6263"
-        WriteLog("Found: Blacklist manipulation!", #LOGLEVEL_DEBUG)
-        ProtectWindow_Ende()
-        End
+      WriteLog("Found: Blacklist manipulation!", #LOGLEVEL_DEBUG)
+      ProtectWindow_Ende()
+      End
     EndIf
     
     tmp.s = #PROTECTHOOCK_BLACKLIST
     If Fingerprint(@tmp, MemoryStringLength(@tmp), #PB_Cipher_SHA3) <> "9d5a8c72abe917b922e42bbd169ecd6c9d2a020c359d8fa7e285e07a7cf9b181"
-        WriteLog("Found: Blacklist Hook manipulation!", #LOGLEVEL_DEBUG)
-        ProtectWindow_Ende()
-        End    
+      WriteLog("Found: Blacklist Hook manipulation!", #LOGLEVEL_DEBUG)
+      ProtectWindow_Ende()
+      End    
     EndIf  
     
     
@@ -2368,27 +2369,27 @@ Procedure CheckForScreenCapture()
     Next  
     
     CompilerIf #USE_NEED_SECURE_ENVIRONMENT
-     CompilerIf #PB_Editor_CreateExecutable 
-       If Not TestedIsParentTrusted
-         TestedIsParentTrusted=#True
-         If isParentProcessTrusted()=#False
-           WriteLog("Not trusted", #LOGLEVEL_DEBUG)
-           ProtectWindow_Ende()
-           End
-         EndIf  
-       EndIf  
-     CompilerEndIf
+      CompilerIf #PB_Editor_CreateExecutable 
+        If Not TestedIsParentTrusted
+          TestedIsParentTrusted=#True
+          If isParentProcessTrusted()=#False
+            WriteLog("Not trusted", #LOGLEVEL_DEBUG)
+            ProtectWindow_Ende()
+            End
+          EndIf  
+        EndIf  
+      CompilerEndIf
     CompilerEndIf
-
     
-
-     
-
-;     If FindBadDLL()
-;       WriteLog("Found: Bad dll", #LOGLEVEL_DEBUG)
-;       ProtectWindow_Ende()
-;       End
-;     EndIf  
+    
+    
+    
+    
+    ;     If FindBadDLL()
+    ;       WriteLog("Found: Bad dll", #LOGLEVEL_DEBUG)
+    ;       ProtectWindow_Ende()
+    ;       End
+    ;     EndIf  
     
     If IsFRAPSLoadedToProcess()
       WriteLog("Found: FRAPS", #LOGLEVEL_DEBUG)
@@ -2412,12 +2413,12 @@ Procedure CheckForScreenCapture()
     For i=1 To CountString(#PROTECTHOOCK_BLACKLIST, "|")
       sdll.s=StringField(#PROTECTHOOCK_BLACKLIST, i, "|")
       If sdll<>""
-          hModule = GetModuleHandle_(sdll)
-          If hModule
-            WriteLog("Found: "+sdll, #LOGLEVEL_DEBUG)
-            ProtectWindow_Ende()
-            End
-          EndIf
+        hModule = GetModuleHandle_(sdll)
+        If hModule
+          WriteLog("Found: "+sdll, #LOGLEVEL_DEBUG)
+          ProtectWindow_Ende()
+          End
+        EndIf
       EndIf
     Next  
     
@@ -2425,15 +2426,15 @@ Procedure CheckForScreenCapture()
   
   
   CompilerIf #USE_SC_HONEYPOT
-  If Not TryedHoneyPot
-    TryedHoneyPot=#True
-    If HoneyPot()
-       WriteLog("Honeypot", #LOGLEVEL_DEBUG)
-       ProtectWindow_Ende()
-       End
-     EndIf
-   EndIf
-   CompilerEndIf
+    If Not TryedHoneyPot
+      TryedHoneyPot=#True
+      If HoneyPot()
+        WriteLog("Honeypot", #LOGLEVEL_DEBUG)
+        ProtectWindow_Ende()
+        End
+      EndIf
+    EndIf
+  CompilerEndIf
   
   If OSVersion()=#PB_OS_Windows_8 
     If DWM_IsEnabled()=#False
@@ -2483,15 +2484,15 @@ EndProcedure
 Procedure FindIndexOfOffset(qOffset.q)
   Protected iIndex.i, FileStruc.EXE_ATTACHMENT_FILEENTRY, Num.i, i.i
   Num.i=GetNumEXEAttachments()
-    If Num>0
-      For i=0 To Num
-        If ReadEXEAttachment(i, FileStruc)
-          If FileStruc\absoluteOffset = qOffset
-            ProcedureReturn i
-          EndIf  
+  If Num>0
+    For i=0 To Num
+      If ReadEXEAttachment(i, FileStruc)
+        If FileStruc\absoluteOffset = qOffset
+          ProcedureReturn i
         EndIf  
-      Next
-    EndIf    
+      EndIf  
+    Next
+  EndIf    
   ProcedureReturn 0
 EndProcedure  
 
@@ -2540,13 +2541,13 @@ Procedure LoadAttachedMedia(sFile.s, sMediaTitle.s="", qOffset.q=0);ADD DRM V2
         Else
           iIndex=0
         EndIf
-      
+        
         If ReadEXEAttachment(iIndex, FileStruc)
           qOffset = FileStruc\absoluteOffset
           
           iFile=ReadFile(#PB_Any, sFile, #PB_File_SharedRead )
           If iFile
-
+            
             ;If qOffset:FileStruc\absoluteOffset=qOffset:EndIf
             
             FileSeek(iFile, FileStruc\absoluteOffset)
@@ -2561,7 +2562,7 @@ Procedure LoadAttachedMedia(sFile.s, sMediaTitle.s="", qOffset.q=0);ADD DRM V2
               IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_UNKNOWN
               TestDecryptPW(sFile, FileStruc\absoluteOffset)
               If sGlobalPassword
-
+                
                 If *GFP_DRM_HEADER_V2
                   DRMV2Read_Free(*GFP_DRM_HEADER_V2)
                   *GFP_DRM_HEADER_V2=#Null
@@ -2663,7 +2664,7 @@ Procedure.s _LoadMediaFile_RAM(sFile.s, qSize.q, IsEncrypted.i, iFile.i)
   Protected sFileExt.s
   WriteLog("LoadMedia_RAM "+sFile+" File:"+Str(iFile)+" Size: "+Str(qSize)+" Enc:"+Str(IsEncrypted), #LOGLEVEL_DEBUG)
   ;Check the Media Cache:
-
+  
   MediaFile\Memory = CheckMediaCache(sFile)
   If MediaFile\Memory = #False
     FreeMediaCache(qSize, Val(Settings(#SETTINGS_RAM_SIZE)\sValue)*1024*1024)
@@ -2690,7 +2691,7 @@ Procedure.s _LoadMediaFile_RAM(sFile.s, qSize.q, IsEncrypted.i, iFile.i)
   If iFile:CloseFile(iFile):iFile=#Null:EndIf
   
   
-
+  
   
   
   If IsEncrypted
@@ -2699,7 +2700,7 @@ Procedure.s _LoadMediaFile_RAM(sFile.s, qSize.q, IsEncrypted.i, iFile.i)
       *GFP_DRM_HEADER_V2=#Null
     EndIf  
     *GFP_DRM_HEADER_V2 = DRMV2Read_ReadFromFile_Cached(sFile, sGlobalPassword, 0)       
-          
+    
     sFileExt=GetExtensionPart(DRMV2Read_GetBlockString(*GFP_DRM_HEADER_V2, #DRMV2_HEADER_MEDIA_ORGINALNAME))
   Else  
     sFileExt=GetExtensionPart(sFile)
@@ -2744,10 +2745,10 @@ Procedure.s _LoadMediaFile_Harddisk(sFile.s, iFile, qSize.q, IsEncrypted.i, iHea
             sFile.s = Hex(Random($FFFFFF))+"."+GetExtensionPart(DRMV2Read_GetBlockString(*GFP_DRM_HEADER_V2, #DRMV2_HEADER_MEDIA_ORGINALNAME));GetExtensionPart(sFile)
           CompilerEndIf
           
-
+          
           
           VirtualFile_AddEncryptedFile(sFile, sExistingFile, DRMV2Read_CreateCryptionBufferCopy(*GFP_DRM_HEADER_V2), iHeaderSize, qSize)
-
+          
           MediaFile\Memory = 1
         EndIf
       CompilerEndIf
@@ -2768,14 +2769,14 @@ Procedure   _LoadMediaFile_URL(sFile.s, iAddPrevious.i)
     Else
       If iAddPrevious:AddPreviousFile(sFile.s, -1):EndIf
     EndIf  
-      
+    
     UseWindowless=#True
     iVideoRendererReal=iVideoRenderer
     If iVideoRendererReal=6:iVideoRendererReal=#RENDERER_VMR9:UseWindowless=#False:EndIf
     If iVideoRendererReal=7:iVideoRendererReal=#RENDERER_VMR7:UseWindowless=#False:EndIf
     
     iMediaObject = DShow_LoadMediaURLEx(sFile, GadgetID(#GADGET_VIDEO_CONTAINER), iVideoRenderer, UseWindowless,  iAudioRenderer, #False, #True, iOwnVideoRenderer)
-
+    
     WriteLog("Load from Internet "+GetFilePart(MediaFile\sRealFile), #LOGLEVEL_DEBUG)
     StatusBarText(0, 0, GetFilePart(MediaFile\sRealFile))
     SetWindowTitle(#WINDOW_MAIN, #PLAYER_NAME+" - "+GetFilePart(MediaFile\sRealFile))
@@ -2821,7 +2822,7 @@ Procedure _LoadMediaFile_LoadPlay(sFile.s, sMediaTitle.s, IsEncrypted.i, qOffset
           WriteLog(Language(#L_CANT_PLAY_UNDER_2000), #LOGLEVEL_DEBUG)
         Else
           If OSVersion()<#PB_OS_Windows_Vista;XP, 2000
-            ;Muss Overlay sein! 
+                                             ;Muss Overlay sein! 
             iMediaObject = LoadMedia(sFile, GadgetID(#GADGET_VIDEO_CONTAINER), #RENDERER_VMR7,  iAudioRenderer, #False, #True, #False, #False, #True)
             If iMediaObject=#Null And DShow_VMR7OverlayChckFailed()
               iProtectionFailed=#True
@@ -2832,8 +2833,8 @@ Procedure _LoadMediaFile_LoadPlay(sFile.s, sMediaTitle.s, IsEncrypted.i, qOffset
               ;iMediaObject = LoadMedia(sFile, GadgetID(#GADGET_VIDEO_CONTAINER), #RENDERER_OVERLAYMIXER,  iAudioRenderer, #False, #False, #False, #False, #False)
               ;DShow_Ugly_EnableRendererTest(#False)
               ;If iMediaObject = #Null
-                MessageRequester(Language(#L_VIDEO_PROTECTION), Language(#L_THIS_MEDIA_NEEDS_OVERLAY)+#CRLF$+Language(#L_CLOSE_ALL_OTHER_PLAYER), #MB_ICONINFORMATION)
-                WriteLog(Language(#L_THIS_MEDIA_NEEDS_OVERLAY), #LOGLEVEL_DEBUG)  
+              MessageRequester(Language(#L_VIDEO_PROTECTION), Language(#L_THIS_MEDIA_NEEDS_OVERLAY)+#CRLF$+Language(#L_CLOSE_ALL_OTHER_PLAYER), #MB_ICONINFORMATION)
+              WriteLog(Language(#L_THIS_MEDIA_NEEDS_OVERLAY), #LOGLEVEL_DEBUG)  
               ;EndIf
               
             EndIf  
@@ -2841,11 +2842,11 @@ Procedure _LoadMediaFile_LoadPlay(sFile.s, sMediaTitle.s, IsEncrypted.i, qOffset
             iMediaObject = LoadMedia(sFile, GadgetID(#GADGET_VIDEO_CONTAINER), #RENDERER_VMR9,  iAudioRenderer, #False, #False, #True)
           EndIf
         EndIf
-
+        
       Else;Not enforce protection
         
         If OSVersion()<#PB_OS_Windows_Vista;XP, 2000
-          ;Overlay wenn vorhanden! 
+                                           ;Overlay wenn vorhanden! 
           iMediaObject = LoadMedia(sFile, GadgetID(#GADGET_VIDEO_CONTAINER), #RENDERER_VMR7,  iAudioRenderer, #False, #True, #False, #False, #False)
         Else
           iMediaObject = LoadMedia(sFile, GadgetID(#GADGET_VIDEO_CONTAINER), #RENDERER_VMR9,  iAudioRenderer, #False, #False, #True)
@@ -2867,7 +2868,7 @@ Procedure _LoadMediaFile_LoadPlay(sFile.s, sMediaTitle.s, IsEncrypted.i, qOffset
           InstallCodec_Requester(sCodecFile)
           installCodec=#True
         EndIf
-
+        
         If IsEncrypted
           If installCodec
             WriteLog("Loading faild, second try! (new codec)", #LOGLEVEL_DEBUG)
@@ -2895,7 +2896,7 @@ Procedure _LoadMediaFile_LoadPlay(sFile.s, sMediaTitle.s, IsEncrypted.i, qOffset
       If iVideoRendererReal=6:iVideoRendererReal=#RENDERER_VMR9:UseWindowless=#False:EndIf
       If iVideoRendererReal=7:iVideoRendererReal=#RENDERER_VMR7:UseWindowless=#False:EndIf
       If iOwnVideoRenderer=#True:UseWindowless=#False:EndIf
-
+      
       iMediaObject = LoadMedia(sFile, GadgetID(#GADGET_VIDEO_CONTAINER), iVideoRendererReal,  iAudioRenderer, #False, UseWindowless, iOwnVideoRenderer)
       
       
@@ -2953,7 +2954,7 @@ Procedure _LoadMediaFile_LoadPlay(sFile.s, sMediaTitle.s, IsEncrypted.i, qOffset
             MissingCodecRequester(CodecName, CodecLink)
           Else
             ;If FindString(#GFP_FORMAT_MEDIA,LCase(GetExtensionPart(sFile)))
-              MissingCodecRequester("", "http://www.codecguide.com") 
+            MissingCodecRequester("", "http://www.codecguide.com") 
             ;EndIf  
           EndIf  
         EndIf
@@ -2963,10 +2964,10 @@ Procedure _LoadMediaFile_LoadPlay(sFile.s, sMediaTitle.s, IsEncrypted.i, qOffset
         MediaPutVolume(iMediaObject, -100+GetVolumeGadgetState(iVolumeGadget))
         LoadMediaPos(iMediaObject, MediaFile\sRealFile, qOffset)
       EndIf
-
+      
       ;ProcedureReturn #True
     Else
-
+      
       SetMediaSizeTo0()
       
       StatusBarText(0, 0, Language(#L_ERROR_CANT_LOAD_MEDIA))
@@ -2977,7 +2978,7 @@ Procedure _LoadMediaFile_LoadPlay(sFile.s, sMediaTitle.s, IsEncrypted.i, qOffset
           MissingCodecRequester(CodecName, CodecLink)
         Else
           ;If FindString(#GFP_FORMAT_MEDIA,LCase(GetExtensionPart(sFile)))
-            MissingCodecRequester("", "http://www.codecguide.com") 
+          MissingCodecRequester("", "http://www.codecguide.com") 
           ;EndIf  
         EndIf  
       EndIf
@@ -3005,7 +3006,7 @@ Procedure _LoadMediaFile(sFile.s, iAddPrevious.i = #True, sMediaTitle.s = "", qO
       sProtokoll=""
     EndIf  
   EndIf  
-
+  
   
   qSize=FileSize(sFile)
   If qSize=-1 And FileSize(GetPathPart(ProgramFilename())+sFile)>0:sFile=GetPathPart(ProgramFilename())+sFile:qSize=FileSize(sFile):EndIf
@@ -3024,8 +3025,8 @@ Procedure _LoadMediaFile(sFile.s, iAddPrevious.i = #True, sMediaTitle.s = "", qO
       DRMV2Read_Free(*GFP_DRM_HEADER_V2)
       *GFP_DRM_HEADER_V2=#Null
     EndIf  
-
-      
+    
+    
     WriteLog("Prepare to load media "+sFile+" Prev:"+Str(iAddPrevious)+" Title: "+sMediaTitle, #LOGLEVEL_DEBUG)
     
     iFileFormat=PLS_IsPlayList(sFile.s)
@@ -3070,7 +3071,7 @@ Procedure _LoadMediaFile(sFile.s, iAddPrevious.i = #True, sMediaTitle.s = "", qO
         ProcedureReturn #True
       EndIf
       
-
+      
       
       If iFile
         CompilerIf #USE_DRM
@@ -3122,91 +3123,91 @@ Procedure _LoadMediaFile(sFile.s, iAddPrevious.i = #True, sMediaTitle.s = "", qO
       EndIf
       
       CompilerIf #USE_VIRTUAL_FILE
-      If sProtokoll="http" Or sProtokoll="https"
-
-        
-        If DisallowURLFiles
-          WriteLog("NOT ALLOWED LoadMedia_URL "+sFile+" Prev:"+Str(iAddPrevious))
-          CompilerIf #USE_OEM_VERSION
-            MessageRequester(#OEM_DISALLOW_URL_STREAMING_ERROR,#OEM_DISALLOW_URL_STREAMING_ERROR)
-          CompilerEndIf  
-          SetMediaSizeTo0()
-          StatusBarText(0, 0, "") 
-          If iFile:CloseFile(iFile):EndIf
-          ProcedureReturn #False
-        EndIf
-        
-        sURL=sFile
-        Ext.s=GetExtensionPartEx(sURL)
-        If Ext:Ext="."+Ext:EndIf
-        sFile=GetTemporaryDirectory()+URL_GetUniqueID(sURL)+Ext
-
-        *SteamingFile = CreateStreamingFile(sFile.s, sURL.s, #GFP_STREAMING_AGENT)
-        If *SteamingFile
-          isULR=#True
+        If sProtokoll="http" Or sProtokoll="https"
           
-          qSize=GetStramingFileSize(*SteamingFile)
-          If qSize
-            ReadBytes(*SteamingFile, @DRM.i, 0, SizeOf(long), #Null); -1 ???
-            If DRM = 1145392472; 'DEMX'
-              IsEncrypted = #True
-              WriteLog("Media is Encrypted", #LOGLEVEL_DEBUG)
-              TestDecryptPW("", 0, *SteamingFile)
-              
-              If *GFP_DRM_HEADER_V2
-                DRMV2Read_Free(*GFP_DRM_HEADER_V2)
-                *GFP_DRM_HEADER_V2=#Null
-              EndIf  
-              
-              *GFP_DRM_HEADER_V2 = DRMV2Read_ReadFromStreamingFile(*SteamingFile, sGlobalPassword, 0)     
-              If *GFP_DRM_HEADER_V2
-                iHeaderSize.i=DRMV2Read_GetOrginalHeaderSize(*GFP_DRM_HEADER_V2)
-                qSize-iHeaderSize                
-
-                If DRMV2Read_GetBlockData(*GFP_DRM_HEADER_V2, #DRMV2_HEADER_MEDIA_SECURITYDATA, @SecData)
-                  IsSnapshotAllowed = SecData\lSnapshotProtection
+          
+          If DisallowURLFiles
+            WriteLog("NOT ALLOWED LoadMedia_URL "+sFile+" Prev:"+Str(iAddPrevious))
+            CompilerIf #USE_OEM_VERSION
+              MessageRequester(#OEM_DISALLOW_URL_STREAMING_ERROR,#OEM_DISALLOW_URL_STREAMING_ERROR)
+            CompilerEndIf  
+            SetMediaSizeTo0()
+            StatusBarText(0, 0, "") 
+            If iFile:CloseFile(iFile):EndIf
+            ProcedureReturn #False
+          EndIf
+          
+          sURL=sFile
+          Ext.s=GetExtensionPartEx(sURL)
+          If Ext:Ext="."+Ext:EndIf
+          sFile=GetTemporaryDirectory()+URL_GetUniqueID(sURL)+Ext
+          
+          *SteamingFile = CreateStreamingFile(sFile.s, sURL.s, #GFP_STREAMING_AGENT)
+          If *SteamingFile
+            isULR=#True
+            
+            qSize=GetStramingFileSize(*SteamingFile)
+            If qSize
+              ReadBytes(*SteamingFile, @DRM.i, 0, SizeOf(long), #Null); -1 ???
+              If DRM = 1145392472                                     ; 'DEMX'
+                IsEncrypted = #True
+                WriteLog("Media is Encrypted", #LOGLEVEL_DEBUG)
+                TestDecryptPW("", 0, *SteamingFile)
+                
+                If *GFP_DRM_HEADER_V2
+                  DRMV2Read_Free(*GFP_DRM_HEADER_V2)
+                  *GFP_DRM_HEADER_V2=#Null
+                EndIf  
+                
+                *GFP_DRM_HEADER_V2 = DRMV2Read_ReadFromStreamingFile(*SteamingFile, sGlobalPassword, 0)     
+                If *GFP_DRM_HEADER_V2
+                  iHeaderSize.i=DRMV2Read_GetOrginalHeaderSize(*GFP_DRM_HEADER_V2)
+                  qSize-iHeaderSize                
+                  
+                  If DRMV2Read_GetBlockData(*GFP_DRM_HEADER_V2, #DRMV2_HEADER_MEDIA_SECURITYDATA, @SecData)
+                    IsSnapshotAllowed = SecData\lSnapshotProtection
+                  Else
+                    StatusBarText(0, 0, Language(#L_ERROR_CANT_LOAD_MEDIA)) 
+                    If iFile:CloseFile(iFile):EndIf
+                    ProcedureReturn #False
+                  EndIf   
+                  
                 Else
+                  SetMediaSizeTo0()
                   StatusBarText(0, 0, Language(#L_ERROR_CANT_LOAD_MEDIA)) 
+                  WriteLog("Invalid header!")
                   If iFile:CloseFile(iFile):EndIf
                   ProcedureReturn #False
-                EndIf   
+                EndIf
                 
+                WriteLog("Snapshot allowed: "+Str(IsSnapshotAllowed) , #LOGLEVEL_DEBUG)
               Else
-                SetMediaSizeTo0()
-                StatusBarText(0, 0, Language(#L_ERROR_CANT_LOAD_MEDIA)) 
-                WriteLog("Invalid header!")
-                If iFile:CloseFile(iFile):EndIf
-                ProcedureReturn #False
+                IsSnapshotAllowed = #GFP_DRM_SCREENCAPTURE_ALLOW   
               EndIf
               
-              WriteLog("Snapshot allowed: "+Str(IsSnapshotAllowed) , #LOGLEVEL_DEBUG)
-            Else
-              IsSnapshotAllowed = #GFP_DRM_SCREENCAPTURE_ALLOW   
-            EndIf
-            
-            If IsEncrypted
+              If IsEncrypted
+                
+                If Not VirtualFile_AddEncryptedFile(sFile, "", DRMV2Read_CreateCryptionBufferCopy(*GFP_DRM_HEADER_V2), iHeaderSize, qSize, #True, #True, *SteamingFile)=#S_OK
+                  WriteLog("Can't create virtual file" , #LOGLEVEL_ERROR)
+                EndIf  
+              Else
+                If Not VirtualFile_AddEncryptedFile(sFile, "", #Null, 0, qSize, #True, #True, *SteamingFile)=#S_OK
+                  WriteLog("Can't create virtual file" , #LOGLEVEL_ERROR)
+                EndIf  
+              EndIf
               
-              If Not VirtualFile_AddEncryptedFile(sFile, "", DRMV2Read_CreateCryptionBufferCopy(*GFP_DRM_HEADER_V2), iHeaderSize, qSize, #True, #True, *SteamingFile)=#S_OK
-                WriteLog("Can't create virtual file" , #LOGLEVEL_ERROR)
-              EndIf  
+              
+              SetNextDownloadBlock(*SteamingFile, *SteamingFile\blockCount-2)
+              MediaFile\StreamingFile=*SteamingFile
             Else
-              If Not VirtualFile_AddEncryptedFile(sFile, "", #Null, 0, qSize, #True, #True, *SteamingFile)=#S_OK
-                WriteLog("Can't create virtual file" , #LOGLEVEL_ERROR)
-              EndIf  
-            EndIf
-            
-            
-            SetNextDownloadBlock(*SteamingFile, *SteamingFile\blockCount-2)
-            MediaFile\StreamingFile=*SteamingFile
+              SetMediaSizeTo0()
+              StatusBarText(0, 0, Language(#L_ERROR_CANT_LOAD_MEDIA)) 
+              WriteLog("File size is 0!")
+            EndIf              
           Else
-            SetMediaSizeTo0()
-            StatusBarText(0, 0, Language(#L_ERROR_CANT_LOAD_MEDIA)) 
-            WriteLog("File size is 0!")
-          EndIf              
-        Else
-          _LoadMediaFile_URL(sURL.s, iAddPrevious.i)
-        EndIf 
-      EndIf  
+            _LoadMediaFile_URL(sURL.s, iAddPrevious.i)
+          EndIf 
+        EndIf  
       CompilerEndIf
       
       If qSize>0
@@ -3358,216 +3359,216 @@ Procedure RunCommand(iCommand.i, fParam.f=0, sParam.s="")
   EndIf
   
   Select iCommand
-  Case #COMMAND_PLAY
-    
-    If iMediaObject;MediaLength
-      MediaLength=MediaLength(iMediaObject)
-      If MediaState(iMediaObject)<>#STATE_RUNNING Or MediaPosition(IMediaObject)=MediaLength
-        If MediaLength = MediaPosition(iMediaObject)
-          MediaSeek(iMediaObject, 0)
-        EndIf
-        
-        If MediaState(iMediaObject)=#STATE_PAUSED
-          ResumeMedia(iMediaObject)
-        Else
-          PlayMedia(iMediaObject)
-        EndIf
-        
-        MediaFile\iPlaying = #True
-      Else
-        PauseMedia(iMediaObject)
-        MediaFile\iPlaying = #False
-      EndIf
-    Else
-      LoadFiles("", #True)
-    EndIf
-  
-  Case #COMMAND_PAUSE
-    PauseMedia(iMediaObject) 
-    MediaFile\iPlaying = #False 
-  
-  Case #COMMAND_STOP
-    MediaSeek(iMediaObject, 0)
-    PauseMedia(iMediaObject)
-    MediaFile\iPlaying = #False
-    ;FreeMediaFile()
-    ;StatusBarText(0, 0, "")
-    ;StatusBarText(0, 1, "")
-    ;WindowBounds(#WINDOW_MAIN, 350, #PANEL_HEIGHT+3+_StatusBarHeight(0), #PB_Ignore, #PANEL_HEIGHT+3+_StatusBarHeight(#STATUSBAR_MAIN))
-    ;ResizeWindow_(#WINDOW_MAIN, #PB_Ignore, #PB_Ignore, 0, _StatusBarHeight(0)+MenuHeight()+#PANEL_HEIGHT)
-  
-  Case #COMMAND_ASPECT
-    fMediaAspectRation = fParam
-    SetMediaAspectRation()
-  
-  Case #COMMAND_VOLUME
-    If fParam>100:fParam = 100:EndIf
-    If fParam<0:fParam = 0:EndIf
-    SetVolumeGadgetState(iVolumeGadget, fParam)
-    SetVolumeGadgetState(iVDVD_VolumeGadget, fParam)
-    MediaPutVolume(iMediaObject, -100+fParam)
-  
-  Case #COMMAND_NEXTTRACK
-    If Playlist\iID
-      ;Debug Playlist\iCurrentMedia
-      If GetGadgetData(#GADGET_BUTTON_RANDOM)
-        Playlist\iCurrentMedia=Random(Playlist\iItemCount)
-      Else
-        Playlist\iCurrentMedia+1
-        If Playlist\iCurrentMedia>Playlist\iItemCount:Playlist\iCurrentMedia=0:EndIf          
-      EndIf
-      LoadMediaFile(PlayListItems(Playlist\iCurrentMedia)\sFile, #True, PlayListItems(Playlist\iCurrentMedia)\sTitle)
-      If IMediaObject
-        PlayMedia(iMediaObject)
-        MediaFile\iPlaying = #True
-      Else
-        MediaFile\iPlaying = #False
-      EndIf
-    Else  
-      MediaSeek(iMediaObject, MediaLength(iMediaObject))
-    EndIf
-    
-  Case #COMMAND_PREVIOUSTRACK
-    sFile = GetLastMediaFile()
-    If sFile
-      LoadMediaFile(sFile, #False)
-      If GetLastMediaItem()>-1
-        Playlist\iCurrentMedia=GetLastMediaItem()
-      EndIf  
-    Else
-      MediaSeek(iMediaObject, 0) 
-    EndIf
-  
-  Case #COMMAND_LOAD
-    LoadFiles("", #True)
-    
-  Case #COMMAND_LOADFILE
-    LoadFiles(sParam)
-    
-  Case #COMMAND_SNAPSHOT
-    If IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_ALLOW
-      If MediaWidth(iMediaObject) And MediaHeight(iMediaObject)
-        iImage = CaptureCurrMediaImage(iMediaObject)
-        If iImage
-          sPath.s = Settings(#SETTINGS_PHOTO_PATH)\sValue
-          sPath = ReplaceString(sPath, "[PICTURES]", GetSpecialFolder(#CSIDL_MYPICTURES), #PB_String_NoCase)
-          sPath = ReplaceString(sPath, "[HOME]", GetHomeDirectory(), #PB_String_NoCase)
-          sPath = ReplaceString(sPath, "[TEMP]", GetTemporaryDirectory(), #PB_String_NoCase)
-          sPath = ReplaceString(sPath, "[PROGRAM]", GetCurrentDirectory(), #PB_String_NoCase)
-          sPath = ReplaceString(sPath, "%USERPROFILE%\Pictures", GetSpecialFolder(#CSIDL_MYPICTURES), #PB_String_NoCase)
-          sPath = ReplaceString(sPath, "%USERPROFILE%", GetHomeDirectory(), #PB_String_NoCase)
-          If FileSize(sPath)=-1
-            CreateDirectory(sPath)
+    Case #COMMAND_PLAY
+      
+      If iMediaObject;MediaLength
+        MediaLength=MediaLength(iMediaObject)
+        If MediaState(iMediaObject)<>#STATE_RUNNING Or MediaPosition(IMediaObject)=MediaLength
+          If MediaLength = MediaPosition(iMediaObject)
+            MediaSeek(iMediaObject, 0)
           EndIf
-          Settings(#SETTINGS_SNAPSHOT_NUM)\sValue=Str(Val(Settings(#SETTINGS_SNAPSHOT_NUM)\sValue)+1)
-          If Settings(#SETTINGS_PHOTO_FORMAT)\sValue = "0"
-            iErg = SaveImage(iImage, sPath+"\"+GetFilePart(MediaFile\sRealFile)+"-"+Settings(#SETTINGS_SNAPSHOT_NUM)\sValue+".jpg", #PB_ImagePlugin_JPEG)
-          EndIf
-          If Settings(#SETTINGS_PHOTO_FORMAT)\sValue = "1"
-            iErg = SaveImage(iImage, sPath+"\"+GetFilePart(MediaFile\sRealFile)+"-"+Settings(#SETTINGS_SNAPSHOT_NUM)\sValue+".png", #PB_ImagePlugin_PNG)
-          EndIf
-          If Settings(#SETTINGS_PHOTO_FORMAT)\sValue = "2"
-            iErg = SaveImage(iImage, sPath+"\"+GetFilePart(MediaFile\sRealFile)+"-"+Settings(#SETTINGS_SNAPSHOT_NUM)\sValue+".jp2", #PB_ImagePlugin_JPEG2000)
-          EndIf
-          If iErg = 0
-            WriteLog("Can't save snapshot:"+sPath+"\"+GetFilePart(MediaFile\sRealFile)+"-"+Settings(#SETTINGS_SNAPSHOT_NUM)\sValue, #LOGLEVEL_ERROR)
-            SaveImage(iImage, GetSpecialFolder(#CSIDL_MYPICTURES)+"\"+GetFilePart(MediaFile\sRealFile)+"-"+Settings(#SETTINGS_SNAPSHOT_NUM)\sValue+".jpg", #PB_ImagePlugin_JPEG)
-          EndIf  
           
-          FreeImage(iImage)
+          If MediaState(iMediaObject)=#STATE_PAUSED
+            ResumeMedia(iMediaObject)
+          Else
+            PlayMedia(iMediaObject)
+          EndIf
+          
+          MediaFile\iPlaying = #True
         Else
-          WriteLog("Can't create snapshot image from video", #LOGLEVEL_ERROR)
+          PauseMedia(iMediaObject)
+          MediaFile\iPlaying = #False
+        EndIf
+      Else
+        LoadFiles("", #True)
+      EndIf
+      
+    Case #COMMAND_PAUSE
+      PauseMedia(iMediaObject) 
+      MediaFile\iPlaying = #False 
+      
+    Case #COMMAND_STOP
+      MediaSeek(iMediaObject, 0)
+      PauseMedia(iMediaObject)
+      MediaFile\iPlaying = #False
+      ;FreeMediaFile()
+      ;StatusBarText(0, 0, "")
+      ;StatusBarText(0, 1, "")
+      ;WindowBounds(#WINDOW_MAIN, 350, #PANEL_HEIGHT+3+_StatusBarHeight(0), #PB_Ignore, #PANEL_HEIGHT+3+_StatusBarHeight(#STATUSBAR_MAIN))
+      ;ResizeWindow_(#WINDOW_MAIN, #PB_Ignore, #PB_Ignore, 0, _StatusBarHeight(0)+MenuHeight()+#PANEL_HEIGHT)
+      
+    Case #COMMAND_ASPECT
+      fMediaAspectRation = fParam
+      SetMediaAspectRation()
+      
+    Case #COMMAND_VOLUME
+      If fParam>100:fParam = 100:EndIf
+      If fParam<0:fParam = 0:EndIf
+      SetVolumeGadgetState(iVolumeGadget, fParam)
+      SetVolumeGadgetState(iVDVD_VolumeGadget, fParam)
+      MediaPutVolume(iMediaObject, -100+fParam)
+      
+    Case #COMMAND_NEXTTRACK
+      If Playlist\iID
+        ;Debug Playlist\iCurrentMedia
+        If GetGadgetData(#GADGET_BUTTON_RANDOM)
+          Playlist\iCurrentMedia=Random(Playlist\iItemCount)
+        Else
+          Playlist\iCurrentMedia+1
+          If Playlist\iCurrentMedia>Playlist\iItemCount:Playlist\iCurrentMedia=0:EndIf          
+        EndIf
+        LoadMediaFile(PlayListItems(Playlist\iCurrentMedia)\sFile, #True, PlayListItems(Playlist\iCurrentMedia)\sTitle)
+        If IMediaObject
+          PlayMedia(iMediaObject)
+          MediaFile\iPlaying = #True
+        Else
+          MediaFile\iPlaying = #False
+        EndIf
+      Else  
+        MediaSeek(iMediaObject, MediaLength(iMediaObject))
+      EndIf
+      
+    Case #COMMAND_PREVIOUSTRACK
+      sFile = GetLastMediaFile()
+      If sFile
+        LoadMediaFile(sFile, #False)
+        If GetLastMediaItem()>-1
+          Playlist\iCurrentMedia=GetLastMediaItem()
+        EndIf  
+      Else
+        MediaSeek(iMediaObject, 0) 
+      EndIf
+      
+    Case #COMMAND_LOAD
+      LoadFiles("", #True)
+      
+    Case #COMMAND_LOADFILE
+      LoadFiles(sParam)
+      
+    Case #COMMAND_SNAPSHOT
+      If IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_ALLOW
+        If MediaWidth(iMediaObject) And MediaHeight(iMediaObject)
+          iImage = CaptureCurrMediaImage(iMediaObject)
+          If iImage
+            sPath.s = Settings(#SETTINGS_PHOTO_PATH)\sValue
+            sPath = ReplaceString(sPath, "[PICTURES]", GetSpecialFolder(#CSIDL_MYPICTURES), #PB_String_NoCase)
+            sPath = ReplaceString(sPath, "[HOME]", GetHomeDirectory(), #PB_String_NoCase)
+            sPath = ReplaceString(sPath, "[TEMP]", GetTemporaryDirectory(), #PB_String_NoCase)
+            sPath = ReplaceString(sPath, "[PROGRAM]", GetCurrentDirectory(), #PB_String_NoCase)
+            sPath = ReplaceString(sPath, "%USERPROFILE%\Pictures", GetSpecialFolder(#CSIDL_MYPICTURES), #PB_String_NoCase)
+            sPath = ReplaceString(sPath, "%USERPROFILE%", GetHomeDirectory(), #PB_String_NoCase)
+            If FileSize(sPath)=-1
+              CreateDirectory(sPath)
+            EndIf
+            Settings(#SETTINGS_SNAPSHOT_NUM)\sValue=Str(Val(Settings(#SETTINGS_SNAPSHOT_NUM)\sValue)+1)
+            If Settings(#SETTINGS_PHOTO_FORMAT)\sValue = "0"
+              iErg = SaveImage(iImage, sPath+"\"+GetFilePart(MediaFile\sRealFile)+"-"+Settings(#SETTINGS_SNAPSHOT_NUM)\sValue+".jpg", #PB_ImagePlugin_JPEG)
+            EndIf
+            If Settings(#SETTINGS_PHOTO_FORMAT)\sValue = "1"
+              iErg = SaveImage(iImage, sPath+"\"+GetFilePart(MediaFile\sRealFile)+"-"+Settings(#SETTINGS_SNAPSHOT_NUM)\sValue+".png", #PB_ImagePlugin_PNG)
+            EndIf
+            If Settings(#SETTINGS_PHOTO_FORMAT)\sValue = "2"
+              iErg = SaveImage(iImage, sPath+"\"+GetFilePart(MediaFile\sRealFile)+"-"+Settings(#SETTINGS_SNAPSHOT_NUM)\sValue+".jp2", #PB_ImagePlugin_JPEG2000)
+            EndIf
+            If iErg = 0
+              WriteLog("Can't save snapshot:"+sPath+"\"+GetFilePart(MediaFile\sRealFile)+"-"+Settings(#SETTINGS_SNAPSHOT_NUM)\sValue, #LOGLEVEL_ERROR)
+              SaveImage(iImage, GetSpecialFolder(#CSIDL_MYPICTURES)+"\"+GetFilePart(MediaFile\sRealFile)+"-"+Settings(#SETTINGS_SNAPSHOT_NUM)\sValue+".jpg", #PB_ImagePlugin_JPEG)
+            EndIf  
+            
+            FreeImage(iImage)
+          Else
+            WriteLog("Can't create snapshot image from video", #LOGLEVEL_ERROR)
+          EndIf
         EndIf
       EndIf
-    EndIf
-  
-  Case #COMMAND_PLAYLIST
-    CreateListWindow()
-    
-  Case #COMMAND_OPTIONS
-    CreateOptionsWindow()
-  
-  Case #COMMAND_PROTECTVIDEO
-    CreateProtectVideoWindow()
-  
-  Case #COMMAND_FULLSCREEN
-    ;If iMediaObject
+      
+    Case #COMMAND_PLAYLIST
+      CreateListWindow()
+      
+    Case #COMMAND_OPTIONS
+      CreateOptionsWindow()
+      
+    Case #COMMAND_PROTECTVIDEO
+      CreateProtectVideoWindow()
+      
+    Case #COMMAND_FULLSCREEN
+      ;If iMediaObject
       SetFullScreen()
-    ;EndIf
-  
-  Case #COMMAND_UNPROTECTVIDEO
-    
-    sFile=OpenFileRequesterEx(Language(#L_LOAD), MediaFile\sRealFile, #GFP_PATTERN_PROTECTED_MEDIA, 0)
-    If sFile
-      sGlobalPassword=""
-      If isFileEncrypted(sFile)
-        ;ReadDRMHeader(sFile.s, @header, "RR is testing")
-        TestDecryptPW(sFile)
-        If sGlobalPassword
-          *Header = DRMV2Read_ReadFromFile_Cached(sFile, sGlobalPassword, 0)
-          res=DRMV2Read_GetLastReadResult(*Header)
-          If *Header
-            If res=#DRM_OK
-              
-              If DRMV2Read_GetBlockData(*Header, #DRMV2_HEADER_MEDIA_SECURITYDATA, @SecData)
-                If SecData\bCanRemoveDRM
-                  sSaveFile=SaveFileRequesterEx(Language(#L_SAVE), DRMV2Read_GetBlockString(*Header, #DRMV2_HEADER_MEDIA_ORGINALNAME), #GFP_PATTERN_MEDIA, 0)
-                  If sSaveFile And sSaveFile<>sFile
-                    ProtectVideo_UpdateWindow()
-                    ;DecryptFile(sFile.s, sSaveFile, sGlobalPassword, @ProtectVideo_CB())
-                    DecryptFileV2(sFile.s, sSaveFile, sGlobalPassword, @ProtectVideo_CB())
-                    CloseWindow(#WINDOW_WAIT_PROTECTVIDEO)
+      ;EndIf
+      
+    Case #COMMAND_UNPROTECTVIDEO
+      
+      sFile=OpenFileRequesterEx(Language(#L_LOAD), MediaFile\sRealFile, #GFP_PATTERN_PROTECTED_MEDIA, 0)
+      If sFile
+        sGlobalPassword=""
+        If isFileEncrypted(sFile)
+          ;ReadDRMHeader(sFile.s, @header, "RR is testing")
+          TestDecryptPW(sFile)
+          If sGlobalPassword
+            *Header = DRMV2Read_ReadFromFile_Cached(sFile, sGlobalPassword, 0)
+            res=DRMV2Read_GetLastReadResult(*Header)
+            If *Header
+              If res=#DRM_OK
+                
+                If DRMV2Read_GetBlockData(*Header, #DRMV2_HEADER_MEDIA_SECURITYDATA, @SecData)
+                  If SecData\bCanRemoveDRM
+                    sSaveFile=SaveFileRequesterEx(Language(#L_SAVE), DRMV2Read_GetBlockString(*Header, #DRMV2_HEADER_MEDIA_ORGINALNAME), #GFP_PATTERN_MEDIA, 0)
+                    If sSaveFile And sSaveFile<>sFile
+                      ProtectVideo_UpdateWindow()
+                      ;DecryptFile(sFile.s, sSaveFile, sGlobalPassword, @ProtectVideo_CB())
+                      DecryptFileV2(sFile.s, sSaveFile, sGlobalPassword, @ProtectVideo_CB())
+                      CloseWindow(#WINDOW_WAIT_PROTECTVIDEO)
+                    EndIf
+                  Else
+                    MessageRequester(Language(#L_ERROR), Language(#L_IT_IS_NOT_ALLOWED_TO_REMOVE_DRM), #MB_ICONERROR)  
                   EndIf
-                Else
-                  MessageRequester(Language(#L_ERROR), Language(#L_IT_IS_NOT_ALLOWED_TO_REMOVE_DRM), #MB_ICONERROR)  
                 EndIf
               EndIf
+              DRMV2Read_Free(*Header)
+              *Header=#Null
             EndIf
-            DRMV2Read_Free(*Header)
-            *Header=#Null
           EndIf
+        Else
+          MessageRequester(Language(#L_ERROR), Language(#L_THIS_FILE_ISNT_PROTECTED), #MB_ICONERROR)  
         EndIf
-      Else
-        MessageRequester(Language(#L_ERROR), Language(#L_THIS_FILE_ISNT_PROTECTED), #MB_ICONERROR)  
       EndIf
-    EndIf
-    
-    
-  Case #COMMAND_CLAERPASSWORDS
-    ClearPasswords(sDataBaseFile)
-  
-  Case #COMMAND_MUTE
-    iIsSoundMuted.i = iIsSoundMuted!1
-    MediaPutVolume(IMediaObject, MediaGetVolume(IMediaObject))
-    SetVolumeGadgetState(iVolumeGadget, GetVolumeGadgetState(iVolumeGadget), #True) 
-    SetVolumeGadgetState(iVDVD_VolumeGadget, GetVolumeGadgetState(iVDVD_VolumeGadget), #True) 
-    If iIsSoundMuted
-      SetGadgetState(#GADGET_BUTTON_MUTE, ImageID(#SPRITE_MENU_MUTE))
-      SetGadgetState(#GADGET_VDVD_BUTTON_MUTE, ImageID(#SPRITE_MENU_MUTE))
-      DisableGadget(iVolumeGadget,#True)
-      DisableGadget(iVDVD_VolumeGadget,#True)
-    Else
-      SetGadgetState(#GADGET_BUTTON_MUTE, ImageID(#SPRITE_MENU_SOUND))
-      SetGadgetState(#GADGET_VDVD_BUTTON_MUTE, ImageID(#SPRITE_MENU_SOUND))    
-      DisableGadget(iVolumeGadget,#False)
-      DisableGadget(iVDVD_VolumeGadget,#False)
-    EndIf
-    
-  
-  Case #COMMAND_COPY
-    If MediaFile\sRealFile
-      SetClipboardText(MediaFile\sRealFile)
-    EndIf
-  
-  Case #COMMAND_PASTE
-    sFile.s = GetClipboardText()
-    If sFile
-      RunCommand(#COMMAND_LOADFILE, 0, sFile)
-    EndIf  
-  
-  Case #COMMAND_HELP
-    RunProgram("http://GFP.RRSoftware.de")
-  
+      
+      
+    Case #COMMAND_CLAERPASSWORDS
+      ClearPasswords(sDataBaseFile)
+      
+    Case #COMMAND_MUTE
+      iIsSoundMuted.i = iIsSoundMuted!1
+      MediaPutVolume(IMediaObject, MediaGetVolume(IMediaObject))
+      SetVolumeGadgetState(iVolumeGadget, GetVolumeGadgetState(iVolumeGadget), #True) 
+      SetVolumeGadgetState(iVDVD_VolumeGadget, GetVolumeGadgetState(iVDVD_VolumeGadget), #True) 
+      If iIsSoundMuted
+        SetGadgetState(#GADGET_BUTTON_MUTE, ImageID(#SPRITE_MENU_MUTE))
+        SetGadgetState(#GADGET_VDVD_BUTTON_MUTE, ImageID(#SPRITE_MENU_MUTE))
+        DisableGadget(iVolumeGadget,#True)
+        DisableGadget(iVDVD_VolumeGadget,#True)
+      Else
+        SetGadgetState(#GADGET_BUTTON_MUTE, ImageID(#SPRITE_MENU_SOUND))
+        SetGadgetState(#GADGET_VDVD_BUTTON_MUTE, ImageID(#SPRITE_MENU_SOUND))    
+        DisableGadget(iVolumeGadget,#False)
+        DisableGadget(iVDVD_VolumeGadget,#False)
+      EndIf
+      
+      
+    Case #COMMAND_COPY
+      If MediaFile\sRealFile
+        SetClipboardText(MediaFile\sRealFile)
+      EndIf
+      
+    Case #COMMAND_PASTE
+      sFile.s = GetClipboardText()
+      If sFile
+        RunCommand(#COMMAND_LOADFILE, 0, sFile)
+      EndIf  
+      
+    Case #COMMAND_HELP
+      RunProgram("http://GFP.RRSoftware.de")
+      
   EndSelect
 EndProcedure
 
@@ -3603,7 +3604,7 @@ Procedure.s ReadRegKey(OpenKey.l,SubKey.s,ValueName.s)
   hKey.l=0
   keyvalue.s=Space(512)
   datasize.l=512
-
+  
   If RegOpenKeyEx_(OpenKey,SubKey,0,#KEY_READ,@hKey)
     keyvalue="NONE"
   Else
@@ -3614,7 +3615,7 @@ Procedure.s ReadRegKey(OpenKey.l,SubKey.s,ValueName.s)
     EndIf
     RegCloseKey_(hKey)
   EndIf
-
+  
   ProcedureReturn keyvalue
 EndProcedure
 
@@ -3657,20 +3658,20 @@ Procedure SetFileType(sProgFile.s, sProgName.s, sType.s)
     If LCase(sType)=String
       ProcedureReturn #False
     EndIf  
-
     
-;     If RegCreateKeyEx_(#HKEY_CLASSES_ROOT, "Applications\"+FileName+"\shell\open\command", 0, 0, #REG_OPTION_NON_VOLATILE, #KEY_ALL_ACCESS, 0, @NewKey, @KeyInfo) = #ERROR_SUCCESS
-;       StringBuffer$ = Chr(34)+File+Chr(34)+" "+Chr(34)+"%1"+Chr(34)
-;       RegSetValueEx_(NewKey, "", 0, #REG_SZ,  StringBuffer$, Len(StringBuffer$)+1)
-;       RegCloseKey_(NewKey)
-;     EndIf
-;     
-;     If RegCreateKeyEx_(#HKEY_CURRENT_USER, "Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\"+Type, 0, 0, #REG_OPTION_NON_VOLATILE, #KEY_ALL_ACCESS, 0, @NewKey, @KeyInfo) = #ERROR_SUCCESS
-;       RegSetValueEx_(NewKey, "Application", 0, #REG_SZ,  FileName, Len(FileName)+1)
-;       RegCloseKey_(NewKey)
-;     EndIf
-
-
+    
+    ;     If RegCreateKeyEx_(#HKEY_CLASSES_ROOT, "Applications\"+FileName+"\shell\open\command", 0, 0, #REG_OPTION_NON_VOLATILE, #KEY_ALL_ACCESS, 0, @NewKey, @KeyInfo) = #ERROR_SUCCESS
+    ;       StringBuffer$ = Chr(34)+File+Chr(34)+" "+Chr(34)+"%1"+Chr(34)
+    ;       RegSetValueEx_(NewKey, "", 0, #REG_SZ,  StringBuffer$, Len(StringBuffer$)+1)
+    ;       RegCloseKey_(NewKey)
+    ;     EndIf
+    ;     
+    ;     If RegCreateKeyEx_(#HKEY_CURRENT_USER, "Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\"+Type, 0, 0, #REG_OPTION_NON_VOLATILE, #KEY_ALL_ACCESS, 0, @NewKey, @KeyInfo) = #ERROR_SUCCESS
+    ;       RegSetValueEx_(NewKey, "Application", 0, #REG_SZ,  FileName, Len(FileName)+1)
+    ;       RegCloseKey_(NewKey)
+    ;     EndIf
+    
+    
     If RegCreateKeyEx_(#HKEY_CURRENT_USER, "Software\Classes\"+sType, 0, 0, #REG_OPTION_NON_VOLATILE, #KEY_ALL_ACCESS, 0, @NewKey, @KeyInfo) = #ERROR_SUCCESS
       RegSetValueEx_(NewKey, "", 0, #REG_SZ,  sProgName, StringByteLength(sProgName)+1)
       RegCloseKey_(NewKey)
@@ -3718,7 +3719,7 @@ Procedure AddFileExtensionToOptions()
     DB_EndQuery(*DB)
     DB_Close(*DB)
   EndIf
-
+  
   ButtonGadget(#GADGET_OPTIONS_ITEM_FILE_EXTENSIONS_SELECT_ALL, 170, 275-(UsedDPI-96)/5, 205, 25, Language(#L_SELECT_ALL))
   ButtonGadget(#GADGET_OPTIONS_ITEM_FILE_EXTENSIONS_DESELECT_ALL, 170, 305-(UsedDPI-96)/5, 205, 25, Language(#L_DESELECT_ALL))
 EndProcedure
@@ -3744,7 +3745,7 @@ Procedure SetAllFileExtensions(*DB=0)
             CompilerElse  
               SetFileType(ProgramFilename(), "GF-Player", Trim(DB_GetAsString(*DB, 1)))
             CompilerEndIf
-              
+            
           EndIf
           iRow + 1
         Wend
@@ -3759,7 +3760,7 @@ Procedure SetAllFileExtensions(*DB=0)
       CompilerIf #USE_OEM_VERSION = #False
         InstallProtocoll()
       CompilerEndIf
-       
+      
     EndIf
     
   CompilerEndIf
@@ -3771,9 +3772,9 @@ Procedure SaveFileExtensionsSettings(*DB)
       iState=GetGadgetItemState(#GADGET_OPTIONS_ITEM_FILE_EXTENSIONS, i)
       
       DB_Query(*DB, "SELECT * FROM FILEEXT WHERE id='"+Str(i+1)+"'")
-        DB_SelectRow(*DB, 0)
-        sValue=DB_GetAsString(*DB, 2)
-        sKey=DB_GetAsString(*DB, 2)
+      DB_SelectRow(*DB, 0)
+      sValue=DB_GetAsString(*DB, 2)
+      sKey=DB_GetAsString(*DB, 2)
       DB_EndQuery(*DB)
       
       If (iState & #PB_ListIcon_Checked And sValue = "") 
@@ -3955,7 +3956,7 @@ Procedure RedrawWindow(hWin)
 EndProcedure
 Procedure LoadPlayerData()
   
-
+  
   
   CatchImage(#SPRITE_PLAY_TOOLBAR, ?DS_Play)
   
@@ -4127,12 +4128,12 @@ Procedure SaveOptionsSettings()
       SetSettingFast(*DB, #SETTINGS_AUTOMATIC_UPDATE, Str(GetGadgetState(#GADGET_OPTIONS_ITEM_AUTOUPDATES)))
       Settings(#SETTINGS_AUTOMATIC_UPDATE)\sValue = Str(GetGadgetState(#GADGET_OPTIONS_ITEM_AUTOUPDATES))
     EndIf
-
+    
     If Settings(#SETTINGS_SYSTRAY)\sValue <> Str(GetGadgetState(#GADGET_OPTIONS_ITEM_SYSTRAY))
       SetSettingFast(*DB, #SETTINGS_SYSTRAY, Str(GetGadgetState(#GADGET_OPTIONS_ITEM_SYSTRAY)))
       Settings(#SETTINGS_SYSTRAY)\sValue = Str(GetGadgetState(#GADGET_OPTIONS_ITEM_SYSTRAY))
     EndIf
-
+    
     If Settings(#SETTINGS_VIDEORENDERER)\sValue <> Str(GetGadgetState(#GADGET_OPTIONS_ITEM_VIDEORENDERER))
       SetSettingFast(*DB, #SETTINGS_VIDEORENDERER, Str(GetGadgetState(#GADGET_OPTIONS_ITEM_VIDEORENDERER)))
       Settings(#SETTINGS_VIDEORENDERER)\sValue = Str(GetGadgetState(#GADGET_OPTIONS_ITEM_VIDEORENDERER))
@@ -4170,17 +4171,17 @@ Procedure SaveOptionsSettings()
       Settings(#SETTINGS_RAM_SIZE_PER_FILE)\sValue = Str(iRAMUsage)
     EndIf 
     
-      
+    
     If Settings(#SETTINGS_PHOTO_PATH)\sValue <> GetGadgetText(#GADGET_OPTIONS_ITEM_PICTURE_PATH)
       SetSettingFast(*DB, #SETTINGS_PHOTO_PATH, GetGadgetText(#GADGET_OPTIONS_ITEM_PICTURE_PATH))
       Settings(#SETTINGS_PHOTO_PATH)\sValue = GetGadgetText(#GADGET_OPTIONS_ITEM_PICTURE_PATH)
     EndIf
-
+    
     If Settings(#SETTINGS_LOGLEVEL)\sValue <> Str(GetGadgetState(#GADGET_OPTIONS_ITEM_LOGLEVEL))
       SetSettingFast(*DB, #SETTINGS_LOGLEVEL, Str(GetGadgetState(#GADGET_OPTIONS_ITEM_LOGLEVEL)))
       Settings(#SETTINGS_LOGLEVEL)\sValue = Str(GetGadgetState(#GADGET_OPTIONS_ITEM_LOGLEVEL))
     EndIf
-
+    
     If Settings(#SETTINGS_BKCOLOR)\sValue <> Str(GetGadgetColor(#GADGET_OPTIONS_ITEM_BKCOLOR, #PB_Gadget_BackColor))
       SetSettingFast(*DB, #SETTINGS_BKCOLOR, Str(GetGadgetColor(#GADGET_OPTIONS_ITEM_BKCOLOR, #PB_Gadget_BackColor)))
       Settings(#SETTINGS_BKCOLOR)\sValue = Str(GetGadgetColor(#GADGET_OPTIONS_ITEM_BKCOLOR, #PB_Gadget_BackColor))
@@ -4191,7 +4192,7 @@ Procedure SaveOptionsSettings()
       SetSettingFast(*DB, #SETTINGS_PHOTO_FORMAT, Str(GetGadgetState(#GADGET_OPTIONS_ITEM_PICTURE_FORMAT)))
       Settings(#SETTINGS_PHOTO_FORMAT)\sValue = Str(GetGadgetState(#GADGET_OPTIONS_ITEM_PICTURE_FORMAT))
     EndIf
-
+    
     If Settings(#SETTINGS_SINGLE_INSTANCE)\sValue <> Str(GetGadgetState(#GADGET_OPTIONS_ITEM_SINGLE_INSTANCE))
       SetSettingFast(*DB, #SETTINGS_SINGLE_INSTANCE, Str(GetGadgetState(#GADGET_OPTIONS_ITEM_SINGLE_INSTANCE)))
       Settings(#SETTINGS_SINGLE_INSTANCE)\sValue = Str(GetGadgetState(#GADGET_OPTIONS_ITEM_SINGLE_INSTANCE))
@@ -4234,83 +4235,83 @@ Procedure UpdateWindow()
   TextGadget(#PB_Any, 50, 60, 200, 20, Language(#L_PLEASEWAIT),#PB_Text_Center) 
 EndProcedure
 CompilerIf #USE_OEM_VERSION=#False
-Procedure DownloadUpdate(i.i)
-  Protected *DowmloadMem, iFile.i, iSize.i
-  ReceiveHTTPFile(#UPDATE_FILE_URL, GetTemporaryDirectory()+"GFP-update.data")
-  
-;   *DowmloadMem = AllocateMemory(1024*1024*20)
-;   iSize = DownloadToMem(#UPDATE_AGENT, #UPDATE_FILE_URL, *DowmloadMem, 1024*1024*20)
-;   If iSize
-;     iFile.i = CreateFile(#PB_Any, "update.data")
-;     If iFile.i
-;       WriteData(iFile, *DowmloadMem, iSize)
-;       CloseFile(iFile)
-;     EndIf
-;   EndIf
-;   FreeMemory(*DowmloadMem)
-EndProcedure
-Procedure UpdatePlayer(iMessageRequester.i=#True)
-  Protected *DowmloadMem, sUpdateVersion.s, iFile.i
-  
-  If ExeHasAttachedFiles = #True
-    WriteLog("Standalone no update possible!")
-    ProcedureReturn #False
-  EndIf  
-  
-  
-  If IsWindow(#WINDOW_UPDATE)=#False
-    *DowmloadMem = AllocateMemory(1024*1024)
-    If *DowmloadMem
-      DownloadToMem(#UPDATE_AGENT, #UPDATE_VERSION_URL, *DowmloadMem, 1024*1024)
-      sUpdateVersion = Trim(PeekS(*DowmloadMem, -1, #PB_Ascii))
-      FreeMemory(*DowmloadMem)
-      *DowmloadMem=#Null
-    EndIf
-    If sUpdateVersion <> ""
-      If Val(sUpdateVersion)>#PB_Editor_BuildCount
-        If MessageRequester(Language(#L_NEWVERSIONAVAILABLE), Language(#L_NEWVERSIONAVAILABLE)+#CRLF$+Language(#L_DOYOUWANTTOUPDATE), #PB_MessageRequester_YesNo|#MB_ICONQUESTION) = #PB_MessageRequester_Yes
-;           iFile = CreateFile(#PB_Any, "update.txt")
-;           If iFile
-;             WriteString(iFile, ProgramFilename())
-;             CloseFile(iFile)
-;           EndIf
-          UpdateWindow()
-          iDownloadThread = CreateThread(@DownloadUpdate(), #False)
+  Procedure DownloadUpdate(i.i)
+    Protected *DowmloadMem, iFile.i, iSize.i
+    ReceiveHTTPFile(#UPDATE_FILE_URL, GetTemporaryDirectory()+"GFP-update.data")
+    
+    ;   *DowmloadMem = AllocateMemory(1024*1024*20)
+    ;   iSize = DownloadToMem(#UPDATE_AGENT, #UPDATE_FILE_URL, *DowmloadMem, 1024*1024*20)
+    ;   If iSize
+    ;     iFile.i = CreateFile(#PB_Any, "update.data")
+    ;     If iFile.i
+    ;       WriteData(iFile, *DowmloadMem, iSize)
+    ;       CloseFile(iFile)
+    ;     EndIf
+    ;   EndIf
+    ;   FreeMemory(*DowmloadMem)
+  EndProcedure
+  Procedure UpdatePlayer(iMessageRequester.i=#True)
+    Protected *DowmloadMem, sUpdateVersion.s, iFile.i
+    
+    If ExeHasAttachedFiles = #True
+      WriteLog("Standalone no update possible!")
+      ProcedureReturn #False
+    EndIf  
+    
+    
+    If IsWindow(#WINDOW_UPDATE)=#False
+      *DowmloadMem = AllocateMemory(1024*1024)
+      If *DowmloadMem
+        DownloadToMem(#UPDATE_AGENT, #UPDATE_VERSION_URL, *DowmloadMem, 1024*1024)
+        sUpdateVersion = Trim(PeekS(*DowmloadMem, -1, #PB_Ascii))
+        FreeMemory(*DowmloadMem)
+        *DowmloadMem=#Null
+      EndIf
+      If sUpdateVersion <> ""
+        If Val(sUpdateVersion)>#PB_Editor_BuildCount
+          If MessageRequester(Language(#L_NEWVERSIONAVAILABLE), Language(#L_NEWVERSIONAVAILABLE)+#CRLF$+Language(#L_DOYOUWANTTOUPDATE), #PB_MessageRequester_YesNo|#MB_ICONQUESTION) = #PB_MessageRequester_Yes
+            ;           iFile = CreateFile(#PB_Any, "update.txt")
+            ;           If iFile
+            ;             WriteString(iFile, ProgramFilename())
+            ;             CloseFile(iFile)
+            ;           EndIf
+            UpdateWindow()
+            iDownloadThread = CreateThread(@DownloadUpdate(), #False)
+          EndIf
+        Else
+          If iMessageRequester
+            MessageRequester(Language(#L_CHECKFORUPDATE), Language(#L_NOUPDATEAVAIBLE), #MB_ICONINFORMATION)
+          EndIf  
         EndIf
       Else
         If iMessageRequester
           MessageRequester(Language(#L_CHECKFORUPDATE), Language(#L_NOUPDATEAVAIBLE), #MB_ICONINFORMATION)
-        EndIf  
-      EndIf
-    Else
-      If iMessageRequester
-        MessageRequester(Language(#L_CHECKFORUPDATE), Language(#L_NOUPDATEAVAIBLE), #MB_ICONINFORMATION)
+        EndIf
       EndIf
     EndIf
-  EndIf
-EndProcedure
-Procedure ExtractReadme()
-  CompilerIf #USE_OEM_VERSION = #False
-    Protected iFile.i
-    iFile = CreateFile(#PB_Any, GetPathPart(ProgramFilename())+"ReadmeDE.txt")
-    If iFile
-      WriteData(iFile, ?DS_ReadmeDE, ?DS_EndReadmeDE-?DS_ReadmeDE)
-      CloseFile(iFile)
-    EndIf
-    
-    iFile = CreateFile(#PB_Any, GetPathPart(ProgramFilename())+"ReadmeEN.txt")
-    If iFile
-      WriteData(iFile, ?DS_ReadmeEN, ?DS_EndReadmeEN-?DS_ReadmeEN)
-      CloseFile(iFile)
-    EndIf
-    
-    iFile = CreateFile(#PB_Any, GetPathPart(ProgramFilename())+"ChangeLog.txt")
-    If iFile
-      WriteData(iFile, ?DS_ChangeLog, ?DS_EndChangeLog-?DS_ChangeLog)
-      CloseFile(iFile)
-    EndIf
-  CompilerEndIf
-EndProcedure
+  EndProcedure
+  Procedure ExtractReadme()
+    CompilerIf #USE_OEM_VERSION = #False
+      Protected iFile.i
+      iFile = CreateFile(#PB_Any, GetPathPart(ProgramFilename())+"ReadmeDE.txt")
+      If iFile
+        WriteData(iFile, ?DS_ReadmeDE, ?DS_EndReadmeDE-?DS_ReadmeDE)
+        CloseFile(iFile)
+      EndIf
+      
+      iFile = CreateFile(#PB_Any, GetPathPart(ProgramFilename())+"ReadmeEN.txt")
+      If iFile
+        WriteData(iFile, ?DS_ReadmeEN, ?DS_EndReadmeEN-?DS_ReadmeEN)
+        CloseFile(iFile)
+      EndIf
+      
+      iFile = CreateFile(#PB_Any, GetPathPart(ProgramFilename())+"ChangeLog.txt")
+      If iFile
+        WriteData(iFile, ?DS_ChangeLog, ?DS_EndChangeLog-?DS_ChangeLog)
+        CloseFile(iFile)
+      EndIf
+    CompilerEndIf
+  EndProcedure
 CompilerEndIf
 
 
@@ -4329,11 +4330,11 @@ Procedure _EndPlayer()
       EndIf
     EndIf
   CompilerEndIf
- 
+  
   
   ;LAVFilters_DeRegister() ;causes crash
   If sTmpRegisteredDLL.s <> ""
-  SafeRegister(sTmpRegisteredDLL.s,#False, #True)
+    SafeRegister(sTmpRegisteredDLL.s,#False, #True)
   EndIf
   
   SavePlayerSettings()
@@ -4349,7 +4350,7 @@ Procedure _EndPlayer()
   EndIf
   
   If *DRMV2_Cached_headerObj<>#Null:DRMV2Read_Free(*DRMV2_Cached_headerObj):*DRMV2_Cached_headerObj=#Null:EndIf
-
+  
   TB_Free(*thumbButtons)
   VIS_Free()
   UxTheme_Free()
@@ -4400,7 +4401,7 @@ Procedure _EndPlayer()
     hMutexAppRunning=#Null
   EndIf
   
-
+  
   ;Dirty bugfix for madflac codec, hangs after the end of the program. (with .sami and .flac files)
   If #USE_VIRTUAL_FILE And IsVirtualFileUsed And iAlternativeHookingActive=#False
     If GetModuleHandle_("madFlac.ax")
@@ -4495,7 +4496,7 @@ Procedure SetFullScreen(iWithoutSizing.i=#False, iReset.i=#False)
       EndIf
       
       HideMenu(0, #False)
-
+      
       SetWindowLong_(WindowID(#WINDOW_MAIN),#GWL_STYLE, iOldFullScreenSkin)
       If Settings(#SETTINGS_USE_STATUSBAR)\sValue="1"
         If UseNoPlayerControl=#False:ShowWindow_(StatusBarID(#STATUSBAR_MAIN), #SW_SHOWDEFAULT):EndIf
@@ -4533,7 +4534,7 @@ Procedure SetFullScreen(iWithoutSizing.i=#False, iReset.i=#False)
   Else
     If MediaWidth(iMediaObject)>0 Or iIsVISUsed
       WriteLog("Set Fullscreen", #LOGLEVEL_DEBUG)
-
+      
       IsFullscreenControlUsed = #False
       ;ShowCursor_(0)
       iOldFullScreenSkin = GetWindowLong_(WindowID(#WINDOW_MAIN),#GWL_STYLE)
@@ -4626,62 +4627,62 @@ Procedure AddOptionsOption(iID.i, sText.s, sContent.s, iType.i, iSelected.i = 0,
   
   
   Select iType
-  Case #OPTIONS_COMBOBOX
-    ComboBoxGadget(iID, 175, 7 + iOptionsOptionCount, 200, 22)
-    For i=1 To CountString(sContent, Chr(10))
-      sItem.s = StringField(sContent, i, Chr(10))
-      AddGadgetItem(iID, -1, sItem.s)
-    Next
-    SetGadgetState(iID, iSelected)
-    iAddTextGadget = #True
-  
-  Case #OPTIONS_COMBOBOX_EDITABLE
-    ComboBoxGadget(iID, 175, 7 + iOptionsOptionCount, 200, 22, #PB_ComboBox_Editable)
-    For i=1 To CountString(sContent, Chr(10))
-      sItem.s = StringField(sContent, i, Chr(10))
-      AddGadgetItem(iID, -1, sItem.s)
-    Next
-    SetGadgetText(iID, Str(iSelected))
-    iAddTextGadget = #True
-  
-  Case #OPTIONS_CHECKBOX
-    CheckBoxGadget(iID, 40, 7 + iOptionsOptionCount, 330, UsedTextHeight, sText)
-    SetGadgetState(iID, iSelected)
-    If IsFont(#FONT_OPTIONS)
-      If iID And IsGadget(iID)
-        SetGadgetFont(iID, FontID(#FONT_OPTIONS))
-      EndIf
-    EndIf  
-    
-  
-  Case #OPTIONS_STRING
-    StringGadget(iID, 175, 7 + iOptionsOptionCount, 200, 22, sContent)
-    iAddTextGadget = #True
-    
-  Case #OPTIONS_PATH
-    StringGadget(iID, 175, 7 + iOptionsOptionCount, 170, 22, sContent)
-    iSecondGadget = ButtonGadget(#PB_Any, 345, 7 + iOptionsOptionCount, 30, 22, "...")
-    iAddTextGadget = #True
-    OptionsGadgets(iOptionsGadgetItems)\iButton = iSecondGadget
-    OptionsGadgets(iOptionsGadgetItems)\iShowGadget = iID
-    OptionsGadgets(iOptionsGadgetItems)\iType = #OPTIONS_PATH
-    iOptionsGadgetItems+1
- 
-  Case #OPTIONS_COLOR
-    TextGadget(iID, 175, 7 + iOptionsOptionCount, 20, 20, "")
-    SetGadgetColor(iID, #PB_Gadget_BackColor, iSelected)
-    iSecondGadget = ButtonGadget(#PB_Any, 200, 6 + iOptionsOptionCount, 40, 22, "...")
-    iAddTextGadget = #True
-    OptionsGadgets(iOptionsGadgetItems)\iButton = iSecondGadget
-    OptionsGadgets(iOptionsGadgetItems)\iShowGadget = iID
-    OptionsGadgets(iOptionsGadgetItems)\iType = #OPTIONS_COLOR
-    iOptionsGadgetItems+1
-  
-  Default
-    ProcedureReturn #False
+    Case #OPTIONS_COMBOBOX
+      ComboBoxGadget(iID, 175, 7 + iOptionsOptionCount, 200, 22)
+      For i=1 To CountString(sContent, Chr(10))
+        sItem.s = StringField(sContent, i, Chr(10))
+        AddGadgetItem(iID, -1, sItem.s)
+      Next
+      SetGadgetState(iID, iSelected)
+      iAddTextGadget = #True
+      
+    Case #OPTIONS_COMBOBOX_EDITABLE
+      ComboBoxGadget(iID, 175, 7 + iOptionsOptionCount, 200, 22, #PB_ComboBox_Editable)
+      For i=1 To CountString(sContent, Chr(10))
+        sItem.s = StringField(sContent, i, Chr(10))
+        AddGadgetItem(iID, -1, sItem.s)
+      Next
+      SetGadgetText(iID, Str(iSelected))
+      iAddTextGadget = #True
+      
+    Case #OPTIONS_CHECKBOX
+      CheckBoxGadget(iID, 40, 7 + iOptionsOptionCount, 330, UsedTextHeight, sText)
+      SetGadgetState(iID, iSelected)
+      If IsFont(#FONT_OPTIONS)
+        If iID And IsGadget(iID)
+          SetGadgetFont(iID, FontID(#FONT_OPTIONS))
+        EndIf
+      EndIf  
+      
+      
+    Case #OPTIONS_STRING
+      StringGadget(iID, 175, 7 + iOptionsOptionCount, 200, 22, sContent)
+      iAddTextGadget = #True
+      
+    Case #OPTIONS_PATH
+      StringGadget(iID, 175, 7 + iOptionsOptionCount, 170, 22, sContent)
+      iSecondGadget = ButtonGadget(#PB_Any, 345, 7 + iOptionsOptionCount, 30, 22, "...")
+      iAddTextGadget = #True
+      OptionsGadgets(iOptionsGadgetItems)\iButton = iSecondGadget
+      OptionsGadgets(iOptionsGadgetItems)\iShowGadget = iID
+      OptionsGadgets(iOptionsGadgetItems)\iType = #OPTIONS_PATH
+      iOptionsGadgetItems+1
+      
+    Case #OPTIONS_COLOR
+      TextGadget(iID, 175, 7 + iOptionsOptionCount, 20, 20, "")
+      SetGadgetColor(iID, #PB_Gadget_BackColor, iSelected)
+      iSecondGadget = ButtonGadget(#PB_Any, 200, 6 + iOptionsOptionCount, 40, 22, "...")
+      iAddTextGadget = #True
+      OptionsGadgets(iOptionsGadgetItems)\iButton = iSecondGadget
+      OptionsGadgets(iOptionsGadgetItems)\iShowGadget = iID
+      OptionsGadgets(iOptionsGadgetItems)\iType = #OPTIONS_COLOR
+      iOptionsGadgetItems+1
+      
+    Default
+      ProcedureReturn #False
   EndSelect
   
-
+  
   
   
   If iAddTextGadget
@@ -4704,7 +4705,7 @@ Procedure AddOptionsOption(iID.i, sText.s, sContent.s, iType.i, iSelected.i = 0,
   Else
     iOptionsOptionCount + UsedTextHeight
   EndIf  
-    
+  
   ProcedureReturn #True
 EndProcedure
 
@@ -4734,25 +4735,25 @@ Procedure ProtectVideo_UpdateWindow(iImage.i=#SPRITE_BIGKEY, sTitle.s="", iCance
 EndProcedure
 Procedure ProtectVideo_CB(p.q,s.q)
   Protected iEvent.i, iResult.i
-   ;Debug StrD(p*100/s)
-   Delay(1)
-   iResult.i=0
-   Repeat
-     iEvent = WindowEvent()
-     If iEvent=#PB_Event_Gadget
-       If EventGadget()=#GADGET_PV_PROCCESS_CANCEL
-         iResult.i=1
-       EndIf
-     EndIf
-   Until iEvent = #False
-   SetGadgetState(#GADGET_PV_PROCCESS_PROGRESSBAR, p*100/s)
-   ProcedureReturn iResult.i
+  ;Debug StrD(p*100/s)
+  Delay(1)
+  iResult.i=0
+  Repeat
+    iEvent = WindowEvent()
+    If iEvent=#PB_Event_Gadget
+      If EventGadget()=#GADGET_PV_PROCCESS_CANCEL
+        iResult.i=1
+      EndIf
+    EndIf
+  Until iEvent = #False
+  SetGadgetState(#GADGET_PV_PROCCESS_PROGRESSBAR, p*100/s)
+  ProcedureReturn iResult.i
 EndProcedure  
 Procedure ProtectVideo(sSourceVideo.s, sOutputVideo.s, sPassword.s, sPasswordTip.s="", sTitle.s="", sAlbum.s="", sInterpret.s="", qLength.q=0, sComment.s="", fAspect.f=0, lCreationDate.l=0, bCanRemoveDRM.i=0, lSnapshotProtection.l=0, sCoverImage.s="", bAddPlayer.i=#False, qExpireDate.q=0, Codecname.s="", Codeclink.s="", CopyProtection.i=#False, sMachineIDXorKey.s="", sIcoFile.s="", Commands.s="")
   Protected image.i, sTempFile.s, EncryptFileFaild.i, Result.i, *Header, stdData.DRM_STANDARD_DATA, secData.DRM_SECURITY_DATA
   If FileSize(sSourceVideo)>0
     ProtectVideo_UpdateWindow()
-     
+    
     
     If CopyProtection
       If sPassword=""
@@ -4766,27 +4767,27 @@ Procedure ProtectVideo(sSourceVideo.s, sOutputVideo.s, sPassword.s, sPasswordTip
     EndIf  
     
     
-;     InitDRMHeader(*GFP_DRM_HEADER, sSourceVideo)
-;     SetDRMHeaderTitle(*GFP_DRM_HEADER, sTitle)
-;     SetDRMHeaderAlbum(*GFP_DRM_HEADER, sAlbum)
-;     SetDRMHeaderInterpreter(*GFP_DRM_HEADER, sInterpret)
-;     SetDRMHeaderMediaLength(*GFP_DRM_HEADER, qLength)
-;     SetDRMHeaderComment(*GFP_DRM_HEADER, sComment)
-;     SetDRMHeaderPasswordTip(*GFP_DRM_HEADER, sPasswordTip)
-;     If sCoverImage
-;       image = LoadImage(#PB_Any, sCoverImage)
-;       If IsImage(image)
-;         SetDRMHeaderCover(*GFP_DRM_HEADER, image)
-;         FreeImage(image)
-;       EndIf
-;     EndIf
-;     
-;     SetDRMHeaderAspect(*GFP_DRM_HEADER, fAspect)
-;     SetDRMHeaderCreationDate(*GFP_DRM_HEADER, lCreationDate)
-;     SetDRMHeaderCanRemoveDRM(*GFP_DRM_HEADER, bCanRemoveDRM)
-;     SetDRMHeaderSnapshotProtection(*GFP_DRM_HEADER, lSnapshotProtection)
-;     FinalizeDRMHeader(*GFP_DRM_HEADER, sPassword)
-
+    ;     InitDRMHeader(*GFP_DRM_HEADER, sSourceVideo)
+    ;     SetDRMHeaderTitle(*GFP_DRM_HEADER, sTitle)
+    ;     SetDRMHeaderAlbum(*GFP_DRM_HEADER, sAlbum)
+    ;     SetDRMHeaderInterpreter(*GFP_DRM_HEADER, sInterpret)
+    ;     SetDRMHeaderMediaLength(*GFP_DRM_HEADER, qLength)
+    ;     SetDRMHeaderComment(*GFP_DRM_HEADER, sComment)
+    ;     SetDRMHeaderPasswordTip(*GFP_DRM_HEADER, sPasswordTip)
+    ;     If sCoverImage
+    ;       image = LoadImage(#PB_Any, sCoverImage)
+    ;       If IsImage(image)
+    ;         SetDRMHeaderCover(*GFP_DRM_HEADER, image)
+    ;         FreeImage(image)
+    ;       EndIf
+    ;     EndIf
+    ;     
+    ;     SetDRMHeaderAspect(*GFP_DRM_HEADER, fAspect)
+    ;     SetDRMHeaderCreationDate(*GFP_DRM_HEADER, lCreationDate)
+    ;     SetDRMHeaderCanRemoveDRM(*GFP_DRM_HEADER, bCanRemoveDRM)
+    ;     SetDRMHeaderSnapshotProtection(*GFP_DRM_HEADER, lSnapshotProtection)
+    ;     FinalizeDRMHeader(*GFP_DRM_HEADER, sPassword)
+    
     ;MessageRequester(sMachineIDXorKey,sPassword)
     *Header = DRMV2Write_Create(sPassword)
     If *Header
@@ -4855,11 +4856,11 @@ Procedure ProtectVideo(sSourceVideo.s, sOutputVideo.s, sPassword.s, sPasswordTip
           MessageRequester(Language(#L_ERROR), Language(#L_ERROR_CANT_ENCRYPT_FILE), #MB_ICONERROR)        
         EndIf
         ;If Result = #E_ABORT
-          If FileSize(sTempFile)>0
-            If Not DeleteFile(sTempFile)
-              WriteLog("Can't delete temp file", #LOGLEVEL_DEBUG)
-            EndIf  
-          EndIf
+        If FileSize(sTempFile)>0
+          If Not DeleteFile(sTempFile)
+            WriteLog("Can't delete temp file", #LOGLEVEL_DEBUG)
+          EndIf  
+        EndIf
         ;EndIf  
         CloseWindow(#WINDOW_WAIT_PROTECTVIDEO)
         
@@ -4878,7 +4879,7 @@ Procedure ProtectVideo(sSourceVideo.s, sOutputVideo.s, sPassword.s, sPasswordTip
       EndIf
       DRMV2Write_Free(*Header)
     EndIf
-  
+    
     ProcedureReturn #True
   Else
     WriteLog("ERROR: File size of '" + sSourceVideo + "' is "+Str(FileSize(sSourceVideo)))
@@ -4913,7 +4914,7 @@ Procedure ReplaceLanguageTable(*DB, *TempDB)
   While DB_SelectRow(*TempDB, iMaxRow)
     iMaxRow + 1
   Wend
-    
+  
   iRow = 0
   While DB_SelectRow(*TempDB, iRow)
     ProtectVideo_CB(iRow, iMaxRow)
@@ -5039,7 +5040,7 @@ Procedure UpdateDatabase(sDBFile.s)
       If iOldPlayerVersion<690
         DB_Update(*DB, "UPDATE SETTINGS SET Key = '.mpc', Value = '' WHERE id = '41' ")
       EndIf
-
+      
       If iOldPlayerVersion<764
         DB_Update(*DB, "UPDATE SETTINGS SET Key = '.vis-dll', Value = 'NONE' WHERE id = '44' ")
       EndIf
@@ -5272,7 +5273,7 @@ Procedure HoverGadgetImage(Gadget, Image, HoveredImage, ClickImage, MouseX, Mous
     If Sqr(Pow(GadgetX(Gadget)+16-MouseX,2)+Pow(GadgetY(Gadget)+16-MouseY,2))<15
       UseImage=HoveredImage
       If MousePressed
-          UseImage=ClickImage
+        UseImage=ClickImage
       EndIf
     EndIf    
     
@@ -5303,73 +5304,73 @@ Procedure HoverGadgetImages()
   Protected MouseX.i, MouseY.i, MousePressed.i
   If Design_Buttons=0
     ;If GetActiveWindow() = #WINDOW_MAIN
-
-      MousePressed = GetAsyncKeyState_(#VK_LBUTTON)
+    
+    MousePressed = GetAsyncKeyState_(#VK_LBUTTON)
+    
+    If SelectedOutputContainer = #GADGET_CONTAINER
+      MouseX=WindowMouseX(#WINDOW_MAIN)-GadgetX(#GADGET_CONTAINER)
+      MouseY=WindowMouseY(#WINDOW_MAIN)-GadgetY(#GADGET_CONTAINER)
       
-      If SelectedOutputContainer = #GADGET_CONTAINER
-        MouseX=WindowMouseX(#WINDOW_MAIN)-GadgetX(#GADGET_CONTAINER)
-        MouseY=WindowMouseY(#WINDOW_MAIN)-GadgetY(#GADGET_CONTAINER)
-              
-        CompilerIf #USE_OEM_VERSION
-          HoverGadgetImage(#GADGET_BUTTON_FULLSCREEN, #SPRITE_FULLSCREEN, #SPRITE_FULLSCREEN_HOVER, #SPRITE_FULLSCREEN_CLICK, MouseX, MouseY, MousePressed)
-        CompilerEndIf  
-        
-        HoverGadgetImage(#GADGET_BUTTON_BACKWARD, #SPRITE_BACKWARD, #SPRITE_BACKWARD_HOVER, #SPRITE_BACKWARD_CLICK, MouseX, MouseY, MousePressed)
-        HoverGadgetImage(#GADGET_BUTTON_FORWARD, #SPRITE_FORWARD, #SPRITE_FORWARD_HOVER, #SPRITE_FORWARD_CLICK, MouseX, MouseY, MousePressed)
-        If MediaState=2 And MediaPosition<>MediaLength
-          HoverGadgetImage(#GADGET_BUTTON_PLAY, #SPRITE_BREAK, #SPRITE_BREAK_HOVER, #SPRITE_BREAK_CLICK, MouseX, MouseY, MousePressed)
-        Else
-          HoverGadgetImage(#GADGET_BUTTON_PLAY, #SPRITE_PLAY, #SPRITE_PLAY_HOVER, #SPRITE_PLAY_CLICK, MouseX, MouseY, MousePressed)
-        EndIf  
-        HoverGadgetImage(#GADGET_BUTTON_PREVIOUS, #SPRITE_PREVIOUS, #SPRITE_PREVIOUS_HOVER, #SPRITE_PREVIOUS_CLICK, MouseX, MouseY, MousePressed)
-        HoverGadgetImage(#GADGET_BUTTON_STOP, #SPRITE_STOP, #SPRITE_STOP_HOVER, #SPRITE_STOP_CLICK, MouseX, MouseY, MousePressed)
-        HoverGadgetImage(#GADGET_BUTTON_NEXT, #SPRITE_NEXT, #SPRITE_NEXT_HOVER, #SPRITE_NEXT_CLICK, MouseX, MouseY, MousePressed)
-        
-        If IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_ALLOW 
-          HoverGadgetImage(#GADGET_BUTTON_SNAPSHOT, #SPRITE_SNAPSHOT, #SPRITE_SNAPSHOT_HOVER, #SPRITE_SNAPSHOT_CLICK, MouseX, MouseY, MousePressed)
-        Else
-          HoverGadgetImage(#GADGET_BUTTON_SNAPSHOT, #SPRITE_SNAPSHOT_DISABLED, #SPRITE_SNAPSHOT_DISABLED, #SPRITE_SNAPSHOT_DISABLED, MouseX, MouseY, MousePressed)
-        EndIf
-        
-        If Design_Buttonstates=3
-          HoverGadgetImage(#GADGET_BUTTON_REPEAT, #SPRITE_REPEAT, #SPRITE_REPEAT_HOVER, #SPRITE_REPEAT_CLICK, MouseX, MouseY, MousePressed, #SPRITE_REPEAT_CLICK_HOVER)
-          HoverGadgetImage(#GADGET_BUTTON_RANDOM, #SPRITE_RANDOM, #SPRITE_RANDOM_HOVER, #SPRITE_RANDOM_CLICK, MouseX, MouseY, MousePressed, #SPRITE_RANDOM_CLICK_HOVER)
-        Else  
-          HoverGadgetImage(#GADGET_BUTTON_REPEAT, #SPRITE_REPEAT, #SPRITE_REPEAT_HOVER, #SPRITE_REPEAT_CLICK, MouseX, MouseY, MousePressed)
-          HoverGadgetImage(#GADGET_BUTTON_RANDOM, #SPRITE_RANDOM, #SPRITE_RANDOM_HOVER, #SPRITE_RANDOM_CLICK, MouseX, MouseY, MousePressed)
-        EndIf
-        
+      CompilerIf #USE_OEM_VERSION
+        HoverGadgetImage(#GADGET_BUTTON_FULLSCREEN, #SPRITE_FULLSCREEN, #SPRITE_FULLSCREEN_HOVER, #SPRITE_FULLSCREEN_CLICK, MouseX, MouseY, MousePressed)
+      CompilerEndIf  
+      
+      HoverGadgetImage(#GADGET_BUTTON_BACKWARD, #SPRITE_BACKWARD, #SPRITE_BACKWARD_HOVER, #SPRITE_BACKWARD_CLICK, MouseX, MouseY, MousePressed)
+      HoverGadgetImage(#GADGET_BUTTON_FORWARD, #SPRITE_FORWARD, #SPRITE_FORWARD_HOVER, #SPRITE_FORWARD_CLICK, MouseX, MouseY, MousePressed)
+      If MediaState=2 And MediaPosition<>MediaLength
+        HoverGadgetImage(#GADGET_BUTTON_PLAY, #SPRITE_BREAK, #SPRITE_BREAK_HOVER, #SPRITE_BREAK_CLICK, MouseX, MouseY, MousePressed)
+      Else
+        HoverGadgetImage(#GADGET_BUTTON_PLAY, #SPRITE_PLAY, #SPRITE_PLAY_HOVER, #SPRITE_PLAY_CLICK, MouseX, MouseY, MousePressed)
+      EndIf  
+      HoverGadgetImage(#GADGET_BUTTON_PREVIOUS, #SPRITE_PREVIOUS, #SPRITE_PREVIOUS_HOVER, #SPRITE_PREVIOUS_CLICK, MouseX, MouseY, MousePressed)
+      HoverGadgetImage(#GADGET_BUTTON_STOP, #SPRITE_STOP, #SPRITE_STOP_HOVER, #SPRITE_STOP_CLICK, MouseX, MouseY, MousePressed)
+      HoverGadgetImage(#GADGET_BUTTON_NEXT, #SPRITE_NEXT, #SPRITE_NEXT_HOVER, #SPRITE_NEXT_CLICK, MouseX, MouseY, MousePressed)
+      
+      If IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_ALLOW 
+        HoverGadgetImage(#GADGET_BUTTON_SNAPSHOT, #SPRITE_SNAPSHOT, #SPRITE_SNAPSHOT_HOVER, #SPRITE_SNAPSHOT_CLICK, MouseX, MouseY, MousePressed)
+      Else
+        HoverGadgetImage(#GADGET_BUTTON_SNAPSHOT, #SPRITE_SNAPSHOT_DISABLED, #SPRITE_SNAPSHOT_DISABLED, #SPRITE_SNAPSHOT_DISABLED, MouseX, MouseY, MousePressed)
       EndIf
       
-      If SelectedOutputContainer = #GADGET_VIDEODVD_CONTAINER
-        MouseX=WindowMouseX(#WINDOW_MAIN)-GadgetX(#GADGET_VIDEODVD_CONTAINER)
-        MouseY=WindowMouseY(#WINDOW_MAIN)-GadgetY(#GADGET_VIDEODVD_CONTAINER)
-        If MediaState(iMediaObject)=2 
-          HoverGadgetImage(#GADGET_VDVD_BUTTON_PLAY, #SPRITE_BREAK, #SPRITE_BREAK_HOVER, #SPRITE_BREAK_CLICK, MouseX, MouseY, MousePressed)
-        Else
-          HoverGadgetImage(#GADGET_VDVD_BUTTON_PLAY, #SPRITE_PLAY, #SPRITE_PLAY_HOVER, #SPRITE_PLAY_CLICK, MouseX, MouseY, MousePressed)
-        EndIf  
-          
-        HoverGadgetImage(#GADGET_VDVD_BUTTON_PREVIOUS, #SPRITE_PREVIOUS, #SPRITE_PREVIOUS_HOVER, #SPRITE_PREVIOUS_CLICK, MouseX, MouseY, MousePressed)
-        HoverGadgetImage(#GADGET_VDVD_BUTTON_STOP, #SPRITE_STOP, #SPRITE_STOP_HOVER, #SPRITE_STOP_CLICK, MouseX, MouseY, MousePressed)
-        HoverGadgetImage(#GADGET_VDVD_BUTTON_NEXT, #SPRITE_NEXT, #SPRITE_NEXT_HOVER, #SPRITE_NEXT_CLICK, MouseX, MouseY, MousePressed)
-        HoverGadgetImage(#GADGET_VDVD_BUTTON_EJECT, #SPRITE_EJECT, #SPRITE_EJECT_HOVER, #SPRITE_EJECT_CLICK, MouseX, MouseY, MousePressed)
-        HoverGadgetImage(#GADGET_VDVD_BUTTON_LAUFWERK, #SPRITE_CDDRIVE_BLUE, #SPRITE_CDDRIVE_BLUE_HOVER, #SPRITE_CDDRIVE_BLUE_CLICK, MouseX, MouseY, MousePressed)
-        HoverGadgetImage(#GADGET_VDVD_BUTTON_SNAPSHOT, #SPRITE_SNAPSHOT, #SPRITE_SNAPSHOT_HOVER, #SPRITE_SNAPSHOT_CLICK, MouseX, MouseY, MousePressed)
-        HoverGadgetImage(#GADGET_VDVD_BUTTON_BACKWARD, #SPRITE_BACKWARD, #SPRITE_BACKWARD_HOVER, #SPRITE_BACKWARD_CLICK, MouseX, MouseY, MousePressed)
-        HoverGadgetImage(#GADGET_VDVD_BUTTON_FORWARD, #SPRITE_FORWARD, #SPRITE_FORWARD_HOVER, #SPRITE_FORWARD_CLICK, MouseX, MouseY, MousePressed)   
+      If Design_Buttonstates=3
+        HoverGadgetImage(#GADGET_BUTTON_REPEAT, #SPRITE_REPEAT, #SPRITE_REPEAT_HOVER, #SPRITE_REPEAT_CLICK, MouseX, MouseY, MousePressed, #SPRITE_REPEAT_CLICK_HOVER)
+        HoverGadgetImage(#GADGET_BUTTON_RANDOM, #SPRITE_RANDOM, #SPRITE_RANDOM_HOVER, #SPRITE_RANDOM_CLICK, MouseX, MouseY, MousePressed, #SPRITE_RANDOM_CLICK_HOVER)
+      Else  
+        HoverGadgetImage(#GADGET_BUTTON_REPEAT, #SPRITE_REPEAT, #SPRITE_REPEAT_HOVER, #SPRITE_REPEAT_CLICK, MouseX, MouseY, MousePressed)
+        HoverGadgetImage(#GADGET_BUTTON_RANDOM, #SPRITE_RANDOM, #SPRITE_RANDOM_HOVER, #SPRITE_RANDOM_CLICK, MouseX, MouseY, MousePressed)
       EndIf
       
-      If SelectedOutputContainer = #GADGET_AUDIOCD_CONTAINER
-        MouseX=WindowMouseX(#WINDOW_MAIN)-GadgetX(#GADGET_AUDIOCD_CONTAINER)
-        MouseY=WindowMouseY(#WINDOW_MAIN)-GadgetY(#GADGET_AUDIOCD_CONTAINER)
-        
-        HoverGadgetImage(#GADGET_ACD_BUTTON_PLAY, #SPRITE_PLAY, #SPRITE_PLAY_HOVER, #SPRITE_PLAY_CLICK, MouseX, MouseY, MousePressed)   
-        HoverGadgetImage(#GADGET_ACD_BUTTON_PREVIOUS, #SPRITE_PREVIOUS, #SPRITE_PREVIOUS_HOVER, #SPRITE_PREVIOUS_CLICK, MouseX, MouseY, MousePressed)   
-        HoverGadgetImage(#GADGET_ACD_BUTTON_STOP, #SPRITE_STOP, #SPRITE_STOP_HOVER, #SPRITE_STOP_CLICK, MouseX, MouseY, MousePressed)   
-        HoverGadgetImage(#GADGET_ACD_BUTTON_NEXT, #SPRITE_NEXT, #SPRITE_NEXT_HOVER, #SPRITE_NEXT_CLICK, MouseX, MouseY, MousePressed)   
-        HoverGadgetImage(#GADGET_ACD_BUTTON_EJECT, #SPRITE_EJECT, #SPRITE_EJECT_HOVER, #SPRITE_EJECT_CLICK, MouseX, MouseY, MousePressed)   
-      EndIf
+    EndIf
+    
+    If SelectedOutputContainer = #GADGET_VIDEODVD_CONTAINER
+      MouseX=WindowMouseX(#WINDOW_MAIN)-GadgetX(#GADGET_VIDEODVD_CONTAINER)
+      MouseY=WindowMouseY(#WINDOW_MAIN)-GadgetY(#GADGET_VIDEODVD_CONTAINER)
+      If MediaState(iMediaObject)=2 
+        HoverGadgetImage(#GADGET_VDVD_BUTTON_PLAY, #SPRITE_BREAK, #SPRITE_BREAK_HOVER, #SPRITE_BREAK_CLICK, MouseX, MouseY, MousePressed)
+      Else
+        HoverGadgetImage(#GADGET_VDVD_BUTTON_PLAY, #SPRITE_PLAY, #SPRITE_PLAY_HOVER, #SPRITE_PLAY_CLICK, MouseX, MouseY, MousePressed)
+      EndIf  
+      
+      HoverGadgetImage(#GADGET_VDVD_BUTTON_PREVIOUS, #SPRITE_PREVIOUS, #SPRITE_PREVIOUS_HOVER, #SPRITE_PREVIOUS_CLICK, MouseX, MouseY, MousePressed)
+      HoverGadgetImage(#GADGET_VDVD_BUTTON_STOP, #SPRITE_STOP, #SPRITE_STOP_HOVER, #SPRITE_STOP_CLICK, MouseX, MouseY, MousePressed)
+      HoverGadgetImage(#GADGET_VDVD_BUTTON_NEXT, #SPRITE_NEXT, #SPRITE_NEXT_HOVER, #SPRITE_NEXT_CLICK, MouseX, MouseY, MousePressed)
+      HoverGadgetImage(#GADGET_VDVD_BUTTON_EJECT, #SPRITE_EJECT, #SPRITE_EJECT_HOVER, #SPRITE_EJECT_CLICK, MouseX, MouseY, MousePressed)
+      HoverGadgetImage(#GADGET_VDVD_BUTTON_LAUFWERK, #SPRITE_CDDRIVE_BLUE, #SPRITE_CDDRIVE_BLUE_HOVER, #SPRITE_CDDRIVE_BLUE_CLICK, MouseX, MouseY, MousePressed)
+      HoverGadgetImage(#GADGET_VDVD_BUTTON_SNAPSHOT, #SPRITE_SNAPSHOT, #SPRITE_SNAPSHOT_HOVER, #SPRITE_SNAPSHOT_CLICK, MouseX, MouseY, MousePressed)
+      HoverGadgetImage(#GADGET_VDVD_BUTTON_BACKWARD, #SPRITE_BACKWARD, #SPRITE_BACKWARD_HOVER, #SPRITE_BACKWARD_CLICK, MouseX, MouseY, MousePressed)
+      HoverGadgetImage(#GADGET_VDVD_BUTTON_FORWARD, #SPRITE_FORWARD, #SPRITE_FORWARD_HOVER, #SPRITE_FORWARD_CLICK, MouseX, MouseY, MousePressed)   
+    EndIf
+    
+    If SelectedOutputContainer = #GADGET_AUDIOCD_CONTAINER
+      MouseX=WindowMouseX(#WINDOW_MAIN)-GadgetX(#GADGET_AUDIOCD_CONTAINER)
+      MouseY=WindowMouseY(#WINDOW_MAIN)-GadgetY(#GADGET_AUDIOCD_CONTAINER)
+      
+      HoverGadgetImage(#GADGET_ACD_BUTTON_PLAY, #SPRITE_PLAY, #SPRITE_PLAY_HOVER, #SPRITE_PLAY_CLICK, MouseX, MouseY, MousePressed)   
+      HoverGadgetImage(#GADGET_ACD_BUTTON_PREVIOUS, #SPRITE_PREVIOUS, #SPRITE_PREVIOUS_HOVER, #SPRITE_PREVIOUS_CLICK, MouseX, MouseY, MousePressed)   
+      HoverGadgetImage(#GADGET_ACD_BUTTON_STOP, #SPRITE_STOP, #SPRITE_STOP_HOVER, #SPRITE_STOP_CLICK, MouseX, MouseY, MousePressed)   
+      HoverGadgetImage(#GADGET_ACD_BUTTON_NEXT, #SPRITE_NEXT, #SPRITE_NEXT_HOVER, #SPRITE_NEXT_CLICK, MouseX, MouseY, MousePressed)   
+      HoverGadgetImage(#GADGET_ACD_BUTTON_EJECT, #SPRITE_EJECT, #SPRITE_EJECT_HOVER, #SPRITE_EJECT_CLICK, MouseX, MouseY, MousePressed)   
+    EndIf
     ;EndIf
   EndIf
 EndProcedure
@@ -5507,92 +5508,92 @@ Procedure CBMainWindow(WindowID, Message, wParam, lParam)
   EndIf   
   
   If Message = #WM_NOTIFY
-      *pnmhdr.NMHDR = lParam      
-      If *pnmhdr
-        If *pnmhdr\code = #NM_CUSTOMDRAW And *pnmhdr\hwndFrom And GetProp_(*pnmhdr\hwndFrom, "tbskinned")
-  
-          *tbcd.NMCUSTOMDRAW = lParam
-  
-          result = #CDRF_DODEFAULT
-          Select *tbcd\dwDrawStage
-            Case #CDDS_PREPAINT
-              result = #CDRF_NOTIFYITEMDRAW
-            Case #CDDS_ITEMPREPAINT
-              If IsImage(#SPRITE_TRACKBAR_LEFT) And IsImage(#SPRITE_TRACKBAR_RIGHT) And IsImage(#SPRITE_TRACKBAR_MIDDLE) And IsImage(#SPRITE_TRACKBAR_THUMB_DISABLED) And IsImage(#SPRITE_TRACKBAR_THUMB_SELECTED) And IsImage(#SPRITE_TRACKBAR_THUMB)
-                If *tbcd\dwItemSpec = #TBCD_CHANNEL
-                  ;DrawEdge_(*tbcd\hDC, *tbcd\rc, #EDGE_SUNKEN, #BF_RECT)
-                  chRc.RECT
-                  chRc\Left = *tbcd\rc\Left
-                  chRc\top = *tbcd\rc\top - 3;+ 3
-                  chRc\Right = *tbcd\rc\Right
-                  chRc\bottom = *tbcd\rc\bottom + 3 ; - 3
-                  
-                  offset = chRc\bottom - chRc\top
-                  
-                  DrawIconEx_(*tbcd\hDC, chRc\Left,chRc\Top , ImageID(#SPRITE_TRACKBAR_LEFT), offset, chRc\bottom-chRc\top, #False,#Null, #DI_NORMAL)
-                  DrawIconEx_(*tbcd\hDC, chRc\Right - offset,chRc\Top , ImageID(#SPRITE_TRACKBAR_RIGHT), offset, chRc\bottom-chRc\top, #False,#Null, #DI_NORMAL)                             
-                  DrawIconEx_(*tbcd\hDC, chRc\Left + offset,chRc\Top, ImageID(#SPRITE_TRACKBAR_MIDDLE), chRc\right-chRc\Left- offset* 2, chRc\bottom-chRc\top,#False,#Null, #DI_NORMAL)
-      
-                  result = #CDRF_SKIPDEFAULT
-                EndIf
+    *pnmhdr.NMHDR = lParam      
+    If *pnmhdr
+      If *pnmhdr\code = #NM_CUSTOMDRAW And *pnmhdr\hwndFrom And GetProp_(*pnmhdr\hwndFrom, "tbskinned")
+        
+        *tbcd.NMCUSTOMDRAW = lParam
+        
+        result = #CDRF_DODEFAULT
+        Select *tbcd\dwDrawStage
+          Case #CDDS_PREPAINT
+            result = #CDRF_NOTIFYITEMDRAW
+          Case #CDDS_ITEMPREPAINT
+            If IsImage(#SPRITE_TRACKBAR_LEFT) And IsImage(#SPRITE_TRACKBAR_RIGHT) And IsImage(#SPRITE_TRACKBAR_MIDDLE) And IsImage(#SPRITE_TRACKBAR_THUMB_DISABLED) And IsImage(#SPRITE_TRACKBAR_THUMB_SELECTED) And IsImage(#SPRITE_TRACKBAR_THUMB)
+              If *tbcd\dwItemSpec = #TBCD_CHANNEL
+                ;DrawEdge_(*tbcd\hDC, *tbcd\rc, #EDGE_SUNKEN, #BF_RECT)
+                chRc.RECT
+                chRc\Left = *tbcd\rc\Left
+                chRc\top = *tbcd\rc\top - 3;+ 3
+                chRc\Right = *tbcd\rc\Right
+                chRc\bottom = *tbcd\rc\bottom + 3 ; - 3
                 
-                If *tbcd\dwItemSpec = #TBCD_THUMB
-                          
-                  width = *tbcd\rc\bottom - *tbcd\rc\Top
-                  height = *tbcd\rc\right - *tbcd\rc\left
-  
-                  If height < width
-                    width = height
-                  EndIf
-                  
-                  midX = (*tbcd\rc\right + *tbcd\rc\left)/2
-                  midY = (*tbcd\rc\bottom + *tbcd\rc\top)/2                                 
-                  
-                  
-                  If *pnmhdr\hwndFrom And IsWindowEnabled_(*pnmhdr\hwndFrom) = #False ;*tbcd\uItemState & #CDIS_DEFAULT does not work
-                    DrawIconEx_(*tbcd\hDC, midX - width/2 ,midY - width/2, ImageID(#SPRITE_TRACKBAR_THUMB_DISABLED), width, width,#False,#Null, #DI_NORMAL)                 
-                  Else                 
-                    If *tbcd\uItemState & #CDIS_SELECTED
-                      DrawIconEx_(*tbcd\hDC, midX - width/2 ,midY - width/2, ImageID(#SPRITE_TRACKBAR_THUMB_SELECTED), width, width,#False,#Null, #DI_NORMAL)
-                    Else
-                      DrawIconEx_(*tbcd\hDC, midX - width/2 ,midY - width/2, ImageID(#SPRITE_TRACKBAR_THUMB), width, width,#False,#Null, #DI_NORMAL) 
-                    EndIf              
-                  EndIf
-                  
-                  result = #CDRF_SKIPDEFAULT
-                EndIf
+                offset = chRc\bottom - chRc\top
+                
+                DrawIconEx_(*tbcd\hDC, chRc\Left,chRc\Top , ImageID(#SPRITE_TRACKBAR_LEFT), offset, chRc\bottom-chRc\top, #False,#Null, #DI_NORMAL)
+                DrawIconEx_(*tbcd\hDC, chRc\Right - offset,chRc\Top , ImageID(#SPRITE_TRACKBAR_RIGHT), offset, chRc\bottom-chRc\top, #False,#Null, #DI_NORMAL)                             
+                DrawIconEx_(*tbcd\hDC, chRc\Left + offset,chRc\Top, ImageID(#SPRITE_TRACKBAR_MIDDLE), chRc\right-chRc\Left- offset* 2, chRc\bottom-chRc\top,#False,#Null, #DI_NORMAL)
+                
+                result = #CDRF_SKIPDEFAULT
               EndIf
               
-              If *tbcd\dwItemSpec = #TBCD_TICS
-                result = #CDRF_DODEFAULT
+              If *tbcd\dwItemSpec = #TBCD_THUMB
+                
+                width = *tbcd\rc\bottom - *tbcd\rc\Top
+                height = *tbcd\rc\right - *tbcd\rc\left
+                
+                If height < width
+                  width = height
+                EndIf
+                
+                midX = (*tbcd\rc\right + *tbcd\rc\left)/2
+                midY = (*tbcd\rc\bottom + *tbcd\rc\top)/2                                 
+                
+                
+                If *pnmhdr\hwndFrom And IsWindowEnabled_(*pnmhdr\hwndFrom) = #False ;*tbcd\uItemState & #CDIS_DEFAULT does not work
+                  DrawIconEx_(*tbcd\hDC, midX - width/2 ,midY - width/2, ImageID(#SPRITE_TRACKBAR_THUMB_DISABLED), width, width,#False,#Null, #DI_NORMAL)                 
+                Else                 
+                  If *tbcd\uItemState & #CDIS_SELECTED
+                    DrawIconEx_(*tbcd\hDC, midX - width/2 ,midY - width/2, ImageID(#SPRITE_TRACKBAR_THUMB_SELECTED), width, width,#False,#Null, #DI_NORMAL)
+                  Else
+                    DrawIconEx_(*tbcd\hDC, midX - width/2 ,midY - width/2, ImageID(#SPRITE_TRACKBAR_THUMB), width, width,#False,#Null, #DI_NORMAL) 
+                  EndIf              
+                EndIf
+                
+                result = #CDRF_SKIPDEFAULT
               EndIf
-          EndSelect
-        EndIf 
-      EndIf
-    EndIf  
-    
-    ;Close Main window in callback because of a PB bug in EventWindow()!
-    If Message = #WM_CLOSE
-      If IsWindow(#WINDOW_MAIN)
-        If WindowID=WindowID(#WINDOW_MAIN)
-          WriteLog("exit application though #WM_CLOSE in Callback", #LOGLEVEL_DEBUG)
-          iQuit=#True
-        EndIf
+            EndIf
+            
+            If *tbcd\dwItemSpec = #TBCD_TICS
+              result = #CDRF_DODEFAULT
+            EndIf
+        EndSelect
+      EndIf 
+    EndIf
+  EndIf  
+  
+  ;Close Main window in callback because of a PB bug in EventWindow()!
+  If Message = #WM_CLOSE
+    If IsWindow(#WINDOW_MAIN)
+      If WindowID=WindowID(#WINDOW_MAIN)
+        WriteLog("exit application though #WM_CLOSE in Callback", #LOGLEVEL_DEBUG)
+        iQuit=#True
       EndIf
     EndIf
-    
-    ;ThumbButtons können nicht mit PB Events abgefragt werden.
-    If Message = #WM_COMMAND
-      Select wParam&$FFFF
+  EndIf
+  
+  ;ThumbButtons können nicht mit PB Events abgefragt werden.
+  If Message = #WM_COMMAND
+    Select wParam&$FFFF
       Case #GADGET_TB_PREVIOUS
-          RunCommand(#COMMAND_PREVIOUSTRACK)
+        RunCommand(#COMMAND_PREVIOUSTRACK)
       Case #GADGET_TB_NEXT
-          RunCommand(#COMMAND_NEXTTRACK)
+        RunCommand(#COMMAND_NEXTTRACK)
       Case #GADGET_TB_PLAY
-          RunCommand(#COMMAND_PLAY)
-      EndSelect 
-    EndIf  
-    
+        RunCommand(#COMMAND_PLAY)
+    EndSelect 
+  EndIf  
+  
   ProcedureReturn result
 EndProcedure
 
@@ -5633,7 +5634,7 @@ Procedure RestoreDatabase(Restart = #True, ask=#True)
   EndIf
   
 EndProcedure
-        
+
 Procedure IsMutexAlreadyUsed(sMutex.s)
   Protected hMutex
   hMutex = CreateMutex_(#Null, #Null, sMutex) 
@@ -5650,60 +5651,146 @@ Procedure IsMutexAlreadyUsed(sMutex.s)
   EndIf
 EndProcedure    
 
-Procedure ShowCommandHelp()
-    Protected sText.s
-    sText.s = #PLAYER_NAME + Chr(9) + "- Version: " + #PLAYER_VERSION + " Build:" + Str(#PB_Editor_Buildcount)+ #LF$
+
+Procedure ShowText(title.s,text.s, column1.s, column2.s)
+  Protected wnd, ev, editor, count, i, oldlen
+  wnd=OpenWindow(#PB_Any, 0, 0, 620, 400, title, #PB_Window_SystemMenu | #PB_Window_MaximizeGadget| #PB_Window_ScreenCentered| #PB_Window_SizeGadget)
+  If wnd
+    StickyWindow(wnd,#True)
+    If GetModuleHandle_("UxTheme.dll")
+      If GetProcAddress_(GetModuleHandle_("uxtheme.dll"), "SetWindowTheme")
+        
+        Debug GetProcAddress_(GetModuleHandle_("uxtheme.dll"), "SetWindowTheme")
+        CallFunctionFast(GetProcAddress_(GetModuleHandle_("UxTheme.dll"), "SetWindowTheme"),WindowID(wnd), @" ", @" ")
+      EndIf
+    EndIf
+    SetWindowColor(wnd, RGB(0,0,196))
+    editor=ListIconGadget(#PB_Any, 4, 4, 680-8, 880-8,column1,200, #PB_ListIcon_FullRowSelect|#PB_ListIcon_AlwaysShowSelection);EditorGadget(#PB_Any, 4, 4, 680-8, 880-8,#PB_Editor_ReadOnly)
+    SetGadgetColor(editor,   #PB_Gadget_BackColor , RGB(210,210,210))
+    SetGadgetColor(editor,  #PB_Gadget_FrontColor, RGB(0,0,128))
     
-    CompilerIf #USE_OEM_VERSION = #False
-      sText.s + Chr(9) + #PLAYER_COPYRIGHT + #LF$
-    CompilerEndIf
+    AddGadgetColumn(editor, 1, column2, 390)
+    SetGadgetFont(editor, GetStockObject_(#SYSTEM_FIXED_FONT))
     
-    sText + ReplaceString(Space(32)," ", "=") + #LF$ 
-    sText + "Possible parameters:" + #LF$
-    sText + #LF$
-    sText + "/? /help /h "   + Chr(9) + "shows this help" + #LF$
-    sText + "/aspect     "   + Chr(9) + Chr(9) + "predefines aspect ratio (16:9, 21:9, ...)" + #LF$ 
-    sText + "/fullscreen "   + Chr(9) + "starts in fullscreen" + #LF$     
-    sText + "/volume     "   + Chr(9) + "predefines volume (0 - 100)" + #LF$ 
-    sText + "/password   "   + Chr(9) + "predefines password" + #LF$ 
-    sText +        Chr(9)    + Chr(9) +  "use " + Chr(34) + " if it contains spaces" + #LF$ 
-    sText + "/hidden     "   + Chr(9) + "starts player invisible (or /invisible)" + #LF$     
-    sText + "/database   "   + Chr(9) + "use alternative database file" + #LF$    
-    sText +        Chr(9)    + Chr(9) +  " use [APPDATA],[DESKTOP]," + #LF$   
-    sText +        Chr(9)    + Chr(9) +  "[DOCUMENTS],[HOME],[TEMP]," + #LF$  
-    sText +        Chr(9)    + Chr(9) +  "and [PROGRAM] for predefined paths" + #LF$    
-    sText + "/importlist "   + Chr(9) +  "imports a playlist permanently" + #LF$       
-    sText + "/loglevel   "   + Chr(9) + Chr(9) +  "predefine loglevel" + #LF$     
-    sText +        Chr(9)    + Chr(9) +  "use 0(None), 1(Error) and 2(Debug)" + #LF$        
-    sText + "/restoredatabase"   + Chr(9) +  "restore default database" + #LF$ 
+    text = ReplaceString(text, #LF$, #CR$)
+    Repeat
+      oldlen = Len(text)
+      text = ReplaceString(text, Chr(9)+Chr(9), Chr(9))
+    Until oldlen = Len(text)
+    text = ReplaceString(text, Chr(9), Chr(10))    
     
-    sText + "/videorenderer"   + Chr(9) +  "predefines video renderer" + #LF$
-    sText +        Chr(9)    + Chr(9) +  "0(Def.), 1(VMR9), 2(VMR7), 3(Old-Rend.)," + #LF$  
-    sText +        Chr(9)    + Chr(9) +  "4(Overlay),5(DShow Def.), 6(VMR9-Wnd)," + #LF$  
-    sText +        Chr(9)    + Chr(9) +  "7(VMR7-Wnd), 8(Own Rend.)" + #LF$  
+    count = CountString(text, #CR$)
+    For i=1 To count+1
+      AddGadgetItem(editor, -1, StringField(text, i, #CR$))
+    Next
     
-    sText + "/audiorenderer"   + Chr(9) + "predefines audio renderer" + #LF$
-    sText +        Chr(9)    + Chr(9) +  "0(Def.), 1(Waveout), 2(DSound)" + #LF$      
-    
-    sText + "/closeafterplayback"   + Chr(9) +  "close player after playback of the first media file" + #LF$    
-    sText + "/usedesign"   + Chr(9) +  "sets the used design" + #LF$    
-    sText + "/installdesign"   + Chr(9) +  "installs a new design" + #LF$  
-    sText + "/ahook"   + Chr(9) + Chr(9) +  "uses alternative hooking" + #LF$  
-    sText + "/disablehook"   + Chr(9) +  "disables hooking" + #LF$  
-    sText + "/disablemenu"   + Chr(9) +  "hides the menu" + #LF$  
-    sText + "/deletestreamingcache"   + Chr(9) +  "delets the streaming cache" + #LF$  
-    sText + "/proxyip"   + Chr(9) + Chr(9) +  "sets the proxy ip" + #LF$  
-    sText + "/proxyport"   + Chr(9) +  "sets the proxy port" + #LF$  
-    sText + "/useiesettings"   + Chr(9) +  "uses the ie settings for proxy" + #LF$  
-    sText + "/proxybypasslocal"   + Chr(9) +  "proxy bypass local" + #LF$  
-    sText + "/noredirect"   + Chr(9) +  "no redirect" + #LF$  
-    sText + "/passwordfile"   + Chr(9) +  "reads the password out of an file" + #LF$  
-    sText + "/disablestreaming"   + Chr(9) +  "disables the streaming" + #LF$  
-    sText + "/passwordpipe"   + Chr(9) +  "reads the password out of an rsa encrypted pipe" + #LF$  
-    sText + "/position"   + Chr(9) +  "set the start position of the video" + #LF$  
-    
-    MessageRequester(#PLAYER_NAME, sText, #MB_ICONINFORMATION)
+    Repeat   
+      ev = WaitWindowEvent(16)
+      ;         If ev = #PB_Event_SizeWindow ;Does not work perfectly!!!
+      ;           If EventWindow() = wnd
+      ;             ResizeGadget(editor,5,5,WindowWidth(wnd)-10, WindowHeight(wnd)-10)
+      ;           EndIf  
+      ;         EndIf 
+      
+      
+      If ev =  #PB_Event_Gadget
+        If EventType() = #PB_EventType_LeftDoubleClick
+          If EventGadget() = editor
+            If Trim(GetGadgetItemText(editor, GetGadgetState(editor))) <> ""
+              SetClipboardText(Trim(GetGadgetItemText(editor, GetGadgetState(editor))))
+              MessageRequester(#PLAYER_NAME,"The following was copied to the clipboard: " + Chr(#LF)+ Chr(34) + Trim(GetGadgetItemText(editor, GetGadgetState(editor))) + Chr(34), #MB_ICONINFORMATION)
+            EndIf  
+          EndIf  
+        EndIf
+      EndIf  
+      If (GadgetWidth(editor) <> WindowWidth(wnd)-8) Or (GadgetHeight(editor) <> WindowHeight(wnd)-8)
+        ResizeGadget(editor,4,4,WindowWidth(wnd)-8, WindowHeight(wnd)-8)
+      EndIf  
+    Until ev = #PB_Event_CloseWindow
+  EndIf
+EndProcedure
+
+Procedure.s GetCommandHelp()
+  Protected sText.s
+  sText.s = #PLAYER_NAME + Chr(9) + "- Version: " + #PLAYER_VERSION + " Build:" + Str(#PB_Editor_Buildcount)+ #LF$
+  
+  CompilerIf #USE_OEM_VERSION = #False
+    sText.s + Chr(9) + #PLAYER_COPYRIGHT + #LF$
+  CompilerEndIf
+  
+  sText + ReplaceString(Space(32)," ", "=") + #LF$ 
+  sText + "Possible parameters:" + #LF$
+  sText + #LF$
+  sText + "/? /help /h "   + Chr(9) + Chr(9) + "shows this help" + #LF$
+  sText + "/aspect     "   + Chr(9) + Chr(9) + Chr(9) + "predefines aspect ratio (16:9, 21:9, ...)" + #LF$ 
+  sText + "/fullscreen "   + Chr(9) + Chr(9) + "starts in fullscreen" + #LF$     
+  sText + "/volume     "   + Chr(9) + Chr(9) + "predefines volume (0 - 100)" + #LF$ 
+  sText + "/password   "   + Chr(9) + Chr(9) + "predefines password" + #LF$ 
+  sText +        Chr(9)    + Chr(9) + Chr(9) +  "use " + Chr(34) + " if it contains spaces" + #LF$ 
+  sText + "/hidden     "   + Chr(9) + Chr(9) + "starts player invisible (or /invisible)" + #LF$     
+  sText + "/database   "   + Chr(9) + Chr(9) + "use alternative database file" + #LF$    
+  sText +        Chr(9)    + Chr(9) + Chr(9) +  " use [APPDATA],[DESKTOP]," + #LF$   
+  sText +        Chr(9)    + Chr(9) + Chr(9) +  "[DOCUMENTS],[HOME],[TEMP]," + #LF$  
+  sText +        Chr(9)    + Chr(9) + Chr(9) +  "and [PROGRAM] for predefined paths" + #LF$    
+  sText + "/importlist "   + Chr(9) + Chr(9) +  "imports a playlist permanently" + #LF$       
+  sText + "/loglevel   "   + Chr(9) + Chr(9) + Chr(9) +  "predefine loglevel" + #LF$     
+  sText +        Chr(9)    + Chr(9) + Chr(9) +  "use 0(None), 1(Error) and 2(Debug)" + #LF$        
+  sText + "/restoredatabase"   + Chr(9) + Chr(9) +  "restore default database" + #LF$ 
+  
+  sText + "/videorenderer"   + Chr(9) + Chr(9) +  "predefines video renderer" + #LF$
+  sText +        Chr(9)    + Chr(9) + Chr(9) +  "0(Def.), 1(VMR9), 2(VMR7), 3(Old-Rend.)," + #LF$  
+  sText +        Chr(9)    + Chr(9) + Chr(9) +  "4(Overlay),5(DShow Def.), 6(VMR9-Wnd)," + #LF$  
+  sText +        Chr(9)    + Chr(9) + Chr(9) +  "7(VMR7-Wnd), 8(Own Rend.)" + #LF$  
+  
+  sText + "/audiorenderer" + Chr(9) + Chr(9) + "predefines audio renderer" + #LF$
+  sText +  Chr(9) + Chr(9)    + Chr(9) +  "0(Def.), 1(Waveout), 2(DSound)" + #LF$      
+  
+  sText + "/closeafterplayback"  + Chr(9)  + Chr(9) +  "close player after playback of the first media file" + #LF$    
+  sText + "/usedesign"   + Chr(9) + Chr(9) +  "sets the used design" + #LF$    
+  sText + "/installdesign"   + Chr(9) + Chr(9) +  "installs a new design" + #LF$  
+  sText + "/ahook"  + Chr(9)  + Chr(9) + Chr(9) +  "uses alternative hooking" + #LF$  
+  sText + "/disablehook"   + Chr(9) + Chr(9) +  "disables hooking" + #LF$  
+  sText + "/disablemenu"    + Chr(9)+ Chr(9) +  "hides the menu" + #LF$  
+  sText + "/deletestreamingcache"   + Chr(9) +  "delets the streaming cache" + #LF$  
+  sText + "/proxyip"   + Chr(9) + Chr(9) + Chr(9) +  "sets the proxy ip" + #LF$  
+  sText + "/proxyport"   + Chr(9) + Chr(9) +  "sets the proxy port" + #LF$  
+  sText + "/useiesettings"   + Chr(9) + Chr(9) +  "uses the ie settings for proxy" + #LF$  
+  sText + "/proxybypasslocal"   + Chr(9) + Chr(9) +  "proxy bypass local" + #LF$  
+  sText + "/noredirect"   + Chr(9) + Chr(9) +  "no redirect" + #LF$  
+  sText + "/passwordfile"    + Chr(9)+ Chr(9) +  "reads the password out of an file" + #LF$  
+  sText + "/disablestreaming"  + Chr(9)  + Chr(9) +  "disables the streaming" + #LF$  
+  sText + "/passwordpipe"    + Chr(9)+ Chr(9) +  "reads the password out of an rsa encrypted pipe" + #LF$  
+  sText + "/position"  + Chr(9) + Chr(9)  + Chr(9) +  "set the start position of the video" + #LF$  
+  sText + "/morehelp"  + Chr(9) + Chr(9)  +  "shows more command line option" + #LF$      
+  ProcedureReturn sText
 EndProcedure  
+
+Procedure ShowCommandHelp()      
+  MessageRequester(#PLAYER_NAME, GetCommandHelp(), #MB_ICONINFORMATION)
+EndProcedure  
+
+Procedure ShowCommandHelp2()      
+  Protected text.s = GetCommandHelp()
+  text = ReplaceString(text, "shows this help", "shows a simple help dialog")
+  text = text +  "/encryption" +Chr(9) + "same as /password"+#LF$
+  text = text +  "/invisible" +Chr(9) + "same as /hidden"+#LF$
+  text = text +  "/showmsgcheck" +Chr(9) + "shows a message dialog at startup with the possibility check 'do not show this again'. /showmsgcheck title text"+#LF$
+  text = text +  "/showmsgbox" +Chr(9) + "shows a message dialog at startup. /showmsgbox title text"+#LF$
+  text = text +  "/terminatenow" +Chr(9) + "terminates the player as soon as this parameter is read"+#LF$  
+  text = text +  "/disablelavfilters" +Chr(9) + "disables download and usage of lav filters (codecs)"+#LF$   
+  text = text +  "/codecdownload" +Chr(9) + "just download and install codecs."+#LF$
+  text = text +  "/invisiblecodecdownload" +Chr(9) + "do not show a window when downloading codecs"+#LF$
+  text = text +  "/deletelavfilters" +Chr(9) + "removes installed lav filters (codecs)"+#LF$
+  text = text +  "/protectprocess" +Chr(9) + "protects the process from other processes"+#LF$
+  text = text +  "/dlltmpregister" +Chr(9) + "registers a dll at startup (for current user only) and unregisters it when closing the application. Note: only one dll is supported"+#LF$
+  text = text +  "/dllregister" +Chr(9) + "registers a dll at startup (for current user only)"+#LF$
+  text = text +  "/dllunregister" +Chr(9) + "unregisters a dll at startup (for current user only)"+#LF$
+  text = text +  "/delaystart" +Chr(9) + "wait the declared amount of milli seconds before the player starts"+#LF$
+  text = text +  "/hidedrm" +Chr(9) + "hides the DRM menu entry"            
+  
+  ShowText(#PLAYER_NAME, text, "Parameter", "Description")
+EndProcedure  
+
 
 Global exeAttachCommands.s=""
 Procedure.s _ProgramParameter()
@@ -5776,78 +5863,78 @@ EndProcedure
 
 ;}
 ;{ Windows
-  Procedure CreateMainWindow()
-    Protected ifont1.i, sLanguages.s, i.i
-    Protected WinX.i, WinY.i, WinW.i, WinH.i
+Procedure CreateMainWindow()
+  Protected ifont1.i, sLanguages.s, i.i
+  Protected WinX.i, WinY.i, WinW.i, WinH.i
+  
+  WinX = Val(Settings(#SETTINGS_WINDOW_X)\sValue)
+  WinY = Val(Settings(#SETTINGS_WINDOW_Y)\sValue)
+  WinW = 360;Val(Settings(#SETTINGS_WINDOW_WIDTH)\sValue)
+  WinH = 105;Val(Settings(#SETTINGS_WINDOW_HEIGHT)\sValue)
+  
+  ;EDIT:
+  If StartParams\iDisableMenu=#False
+    WinH + MenuHeight()
+  EndIf
+  
+  If GetUsedDesktopXYWH(WinX, WinY, WinW, WinH)=-1
+    WinX = 0
+    WinY = 0
+  EndIf
+  
+  
+  
+  OpenWindow(#WINDOW_MAIN, WinX, WinY, WinW, WinH, #PLAYER_NAME, #PB_Window_SystemMenu|#PB_Window_SizeGadget|#PB_Window_MaximizeGadget|#PB_Window_MinimizeGadget)   
+  ;SetWindowColor(#WINDOW_MAIN, Val(Settings(#SETTINGS_WINDOW_BK_COLOR)\sValue))
+  SmartWindowRefresh(#WINDOW_MAIN, #True) 
+  EnableWindowDrop(#WINDOW_MAIN, #PB_Drop_Files, #PB_Drag_Copy)
+  ;SetForegroundWindow_(WindowID(#WINDOW_MAIN))
+  
+  AddSysTrayIcon(#SYSTRAY_MAIN, WindowID(#WINDOW_MAIN), ImageID(#SPRITE_SYSTRAY))
+  SysTrayIconToolTip(#SYSTRAY_MAIN, #PLAYER_NAME)
+  ;     If CreatePopupImageMenu(#MENU_SYSTRAY, #PB_Menu_ModernLook)
+  ;       __MenuItem(#MENU_PLAY, Language(#L_PLAY)+"/"+Language(#L_BREAK), ImageID(#SPRITE_MENU_PLAY))
+  ;       __MenuItem(#MENU_STOP, Language(#L_STOP), ImageID(#SPRITE_MENU_STOP))
+  ;       __MenuItem(#MENU_FORWARD, Language(#L_NEXT), ImageID(#SPRITE_MENU_FORWARD))
+  ;       __MenuItem(#MENU_BACKWARD, Language(#L_PREVIOUS), ImageID(#SPRITE_MENU_BACKWARD))
+  ;       MenuBar()
+  ;       __MenuItem(#MENU_SHOW, Language(#L_SHOW)+"/"+Language(#L_HIDE), ImageID(#SPRITE_MENU_ABOUT))
+  ;       __MenuItem(#MENU_QUIT, Language(#L_QUIT), ImageID(#SPRITE_MENU_END))
+  ;     EndIf
+  
+  
+  
+  *thumbButtons=TB_Create()
+  If *thumbButtons
+    TB_SetProgressState(*thumbButtons, WindowID(#WINDOW_MAIN), #tbpf_noprogress)
     
-    WinX = Val(Settings(#SETTINGS_WINDOW_X)\sValue)
-    WinY = Val(Settings(#SETTINGS_WINDOW_Y)\sValue)
-    WinW = 360;Val(Settings(#SETTINGS_WINDOW_WIDTH)\sValue)
-    WinH = 105;Val(Settings(#SETTINGS_WINDOW_HEIGHT)\sValue)
     
-    ;EDIT:
-    If StartParams\iDisableMenu=#False
-      WinH + MenuHeight()
-    EndIf
+    ThumbButtons(0)\iId=#GADGET_TB_PREVIOUS
+    ThumbButtons(0)\dwMask = #THB_ICON
+    ThumbButtons(0)\hIcon = ImageID(#SPRITE_MENU_BACKWARD);LoadIcon_(0,101)
     
-    If GetUsedDesktopXYWH(WinX, WinY, WinW, WinH)=-1
-      WinX = 0
-      WinY = 0
-    EndIf
+    ThumbButtons(1)\iId=#GADGET_TB_PLAY
+    ThumbButtons(1)\dwMask = #THB_ICON
+    ThumbButtons(1)\hIcon = ImageID(#SPRITE_MENU_PLAY)
     
-
+    ThumbButtons(2)\iId=#GADGET_TB_NEXT
+    ThumbButtons(2)\dwMask = #THB_ICON
+    ThumbButtons(2)\hIcon = ImageID(#SPRITE_MENU_FORWARD)
     
-    OpenWindow(#WINDOW_MAIN, WinX, WinY, WinW, WinH, #PLAYER_NAME, #PB_Window_SystemMenu|#PB_Window_SizeGadget|#PB_Window_MaximizeGadget|#PB_Window_MinimizeGadget)   
-    ;SetWindowColor(#WINDOW_MAIN, Val(Settings(#SETTINGS_WINDOW_BK_COLOR)\sValue))
-    SmartWindowRefresh(#WINDOW_MAIN, #True) 
-    EnableWindowDrop(#WINDOW_MAIN, #PB_Drop_Files, #PB_Drag_Copy)
-    ;SetForegroundWindow_(WindowID(#WINDOW_MAIN))
-    
-    AddSysTrayIcon(#SYSTRAY_MAIN, WindowID(#WINDOW_MAIN), ImageID(#SPRITE_SYSTRAY))
-    SysTrayIconToolTip(#SYSTRAY_MAIN, #PLAYER_NAME)
-;     If CreatePopupImageMenu(#MENU_SYSTRAY, #PB_Menu_ModernLook)
-;       __MenuItem(#MENU_PLAY, Language(#L_PLAY)+"/"+Language(#L_BREAK), ImageID(#SPRITE_MENU_PLAY))
-;       __MenuItem(#MENU_STOP, Language(#L_STOP), ImageID(#SPRITE_MENU_STOP))
-;       __MenuItem(#MENU_FORWARD, Language(#L_NEXT), ImageID(#SPRITE_MENU_FORWARD))
-;       __MenuItem(#MENU_BACKWARD, Language(#L_PREVIOUS), ImageID(#SPRITE_MENU_BACKWARD))
-;       MenuBar()
-;       __MenuItem(#MENU_SHOW, Language(#L_SHOW)+"/"+Language(#L_HIDE), ImageID(#SPRITE_MENU_ABOUT))
-;       __MenuItem(#MENU_QUIT, Language(#L_QUIT), ImageID(#SPRITE_MENU_END))
-;     EndIf
-
-
-
-    *thumbButtons=TB_Create()
-    If *thumbButtons
-      TB_SetProgressState(*thumbButtons, WindowID(#WINDOW_MAIN), #tbpf_noprogress)
-      
-      
-      ThumbButtons(0)\iId=#GADGET_TB_PREVIOUS
-      ThumbButtons(0)\dwMask = #THB_ICON
-      ThumbButtons(0)\hIcon = ImageID(#SPRITE_MENU_BACKWARD);LoadIcon_(0,101)
-      
-      ThumbButtons(1)\iId=#GADGET_TB_PLAY
-      ThumbButtons(1)\dwMask = #THB_ICON
-      ThumbButtons(1)\hIcon = ImageID(#SPRITE_MENU_PLAY)
-      
-      ThumbButtons(2)\iId=#GADGET_TB_NEXT
-      ThumbButtons(2)\dwMask = #THB_ICON
-      ThumbButtons(2)\hIcon = ImageID(#SPRITE_MENU_FORWARD)
-      
-      TB_AddButtons(*thumbButtons, WindowID(#WINDOW_MAIN), 3, @ThumbButtons())
-    EndIf
-
-
-
-    If StartParams\iDisableMenu=#False
-      CompilerIf #USE_OEM_VERSION;2010-04-16
-        If CreateMenu(#MENU_MAIN, WindowID(#WINDOW_MAIN))
+    TB_AddButtons(*thumbButtons, WindowID(#WINDOW_MAIN), 3, @ThumbButtons())
+  EndIf
+  
+  
+  
+  If StartParams\iDisableMenu=#False
+    CompilerIf #USE_OEM_VERSION;2010-04-16
+      If CreateMenu(#MENU_MAIN, WindowID(#WINDOW_MAIN))
         ;If CreateImageMenu(#MENU_MAIN, WindowID(#WINDOW_MAIN))
       CompilerElse
         If CreateImageMenu(#MENU_MAIN, WindowID(#WINDOW_MAIN), #PB_Menu_ModernLook)
-      CompilerEndIf
-      CompilerIf #USE_ONLY_ABOUT_MENU=#False  
-        MenuTitle(Language(#L_FILE))
+        CompilerEndIf
+        CompilerIf #USE_ONLY_ABOUT_MENU=#False  
+          MenuTitle(Language(#L_FILE))
           __MenuItem(#MENU_LOAD, Language(#L_LOAD)+Chr(9)+"Ctrl+O", ImageID(#SPRITE_MENU_LOAD))
           __MenuItem(#MENU_LOADCLIPBOARD, Language(#L_OPENFILEFROMCLIPBOARD)+Chr(9)+"Ctrl+V", ImageID(#SPRITE_MENU_CLIPBOARD))
           
@@ -5855,11 +5942,11 @@ EndProcedure
           __MenuItem(#MENU_PLAYLIST, Language(#L_PLAYLIST)+Chr(9)+"Ctrl+P", ImageID(#SPRITE_MENU_PLAYLIST))
           
           OpenSubMenu(Language(#L_MOST_RECENT_LIST))
-            __MenuItem(#MENU_CHRONIC_CLEAR, Language(#L_CLEAR_CHRONIC), ImageID(#SPRITE_MENU_BRUSH))
-            MenuBar()
-            For i=0 To 9
-              __MenuItem(#MENU_CHRONIC_1+i, "-", ImageID(#SPRITE_MENU_PLAYFILE ))
-            Next
+          __MenuItem(#MENU_CHRONIC_CLEAR, Language(#L_CLEAR_CHRONIC), ImageID(#SPRITE_MENU_BRUSH))
+          MenuBar()
+          For i=0 To 9
+            __MenuItem(#MENU_CHRONIC_1+i, "-", ImageID(#SPRITE_MENU_PLAYFILE ))
+          Next
           CloseSubMenu()
           CompilerIf #USE_OEM_VERSION=#False   
             MenuBar()
@@ -5876,24 +5963,24 @@ EndProcedure
           MenuBar()
           __MenuItem(#MENU_QUIT, Language(#L_QUIT)+Chr(9)+"Ctrl+Q", ImageID(#SPRITE_MENU_END))
           
-        MenuTitle(Language(#L_MEDIA))
+          MenuTitle(Language(#L_MEDIA))
           ;__MenuItem(#MENU_LOAD, Language(#L_LOAD)+Chr(9)+"Ctrl+O", ImageID(#SPRITE_MENU_LOAD))
           __MenuItem(#MENU_PLAYLIST, Language(#L_PLAYLIST)+Chr(9)+"Ctrl+P", ImageID(#SPRITE_MENU_PLAYLIST))
           __MenuItem(#MENU_VIS_COVERFLOW, Language(#L_COVERFLOW), ImageID(#SPRITE_MENU_COVERFLOW))
           MenuBar()
           OpenSubMenu(Language(#L_ASPECTRATION))
           __MenuItem(#MENU_ASPECTATION_AUTO, Language(#L_AUTOMATIC));, ImageID(#SPRITE_MENU_ACTION))
-            __MenuItem(#MENU_ASPECTATION_1_2, "1:2");, ImageID(#SPRITE_MENU_ACTION))
-            __MenuItem(#MENU_ASPECTATION_1_1, "1:1");, ImageID(#SPRITE_MENU_ACTION))
-            __MenuItem(#MENU_ASPECTATION_5_4, "5:4");, ImageID(#SPRITE_MENU_ACTION))
-            __MenuItem(#MENU_ASPECTATION_4_3, "4:3");, ImageID(#SPRITE_MENU_ACTION))
-            __MenuItem(#MENU_ASPECTATION_16_10, "16:10");, ImageID(#SPRITE_MENU_ACTION))
-            __MenuItem(#MENU_ASPECTATION_16_9, "16:9");, ImageID(#SPRITE_MENU_ACTION))
-            __MenuItem(#MENU_ASPECTATION_2_1, "2:1");, ImageID(#SPRITE_MENU_ACTION))
-            __MenuItem(#MENU_ASPECTATION_21_9, "21:9");, ImageID(#SPRITE_MENU_ACTION))
-            
-            
-            SetMenuItemState(#MENU_MAIN, #MENU_ASPECTATION_AUTO, GetMenuItemState(#MENU_MAIN, #MENU_ASPECTATION_AUTO)!1)   
+          __MenuItem(#MENU_ASPECTATION_1_2, "1:2")                  ;, ImageID(#SPRITE_MENU_ACTION))
+          __MenuItem(#MENU_ASPECTATION_1_1, "1:1")                  ;, ImageID(#SPRITE_MENU_ACTION))
+          __MenuItem(#MENU_ASPECTATION_5_4, "5:4")                  ;, ImageID(#SPRITE_MENU_ACTION))
+          __MenuItem(#MENU_ASPECTATION_4_3, "4:3")                  ;, ImageID(#SPRITE_MENU_ACTION))
+          __MenuItem(#MENU_ASPECTATION_16_10, "16:10")              ;, ImageID(#SPRITE_MENU_ACTION))
+          __MenuItem(#MENU_ASPECTATION_16_9, "16:9")                ;, ImageID(#SPRITE_MENU_ACTION))
+          __MenuItem(#MENU_ASPECTATION_2_1, "2:1")                  ;, ImageID(#SPRITE_MENU_ACTION))
+          __MenuItem(#MENU_ASPECTATION_21_9, "21:9")                ;, ImageID(#SPRITE_MENU_ACTION))
+          
+          
+          SetMenuItemState(#MENU_MAIN, #MENU_ASPECTATION_AUTO, GetMenuItemState(#MENU_MAIN, #MENU_ASPECTATION_AUTO)!1)   
           CloseSubMenu()
           MenuBar()
           __MenuItem(#MENU_PLAY, Language(#L_PLAY)+"/"+Language(#L_BREAK)+Chr(9)+"Alt+P", ImageID(#SPRITE_MENU_PLAY))
@@ -5904,16 +5991,16 @@ EndProcedure
           __MenuItem(#MENU_SAVE_MEDIAPOS, Language(#L_SAVE_MEDIAPOS), ImageID(#SPRITE_MENU_SAVE))
           __MenuItem(#MENU_SNAPSHOT, Language(#L_SNAPSHOT)+Chr(9)+"Ctrl+S", ImageID(#SPRITE_MENU_SNAPSHOT))
           
-        
-        MenuTitle(Language(#L_DRAWING))
+          
+          MenuTitle(Language(#L_DRAWING))
           ;__MenuItem(#MENU_VIS, Language(#L_VISUALIZATION))
           OpenSubMenu(Language(#L_VISUALIZATION))
-            __MenuItem(#MENU_VIS_OFF, Language(#L_OFF))
-            __MenuItem(#MENU_VIS_SIMPLE, "Waveform")
-            __MenuItem(#MENU_VIS_DCT, "frequency")
-            __MenuItem(#MENU_VIS_WHITELIGHT, "Whitelight")
-            SetMenuItemState(#MENU_MAIN, #MENU_VIS_OFF, #True) 
-            VIS_FindExternVIS()
+          __MenuItem(#MENU_VIS_OFF, Language(#L_OFF))
+          __MenuItem(#MENU_VIS_SIMPLE, "Waveform")
+          __MenuItem(#MENU_VIS_DCT, "frequency")
+          __MenuItem(#MENU_VIS_WHITELIGHT, "Whitelight")
+          SetMenuItemState(#MENU_MAIN, #MENU_VIS_OFF, #True) 
+          VIS_FindExternVIS()
           CloseSubMenu()
           MenuBar()
           __MenuItem(#MENU_MINIMALMODE, Language(#L_MINIMALMODE)+Chr(9)+"H", ImageID(#SPRITE_MENU_MINIMALMODE))
@@ -5923,101 +6010,101 @@ EndProcedure
           
           CompilerIf #USE_DRM 
             If iUseDRMMenu  
-            CompilerIf #USE_OEM_VERSION=#False  
-              MenuTitle(Language(#L_DRM))
+              CompilerIf #USE_OEM_VERSION=#False  
+                MenuTitle(Language(#L_DRM))
                 __MenuItem(#MENU_PROTECTVIDEO, Language(#L_PROTECTVIDEO), ImageID(#SPRITE_MENU_TRESOR))
-;                __MenuItem(#MENU_UNPROTECTVIDEO, Language(#L_UNPROTECTVIDEO), ImageID(#SPRITE_MENU_KEY))
+                ;                __MenuItem(#MENU_UNPROTECTVIDEO, Language(#L_UNPROTECTVIDEO), ImageID(#SPRITE_MENU_KEY))
                 MenuBar()
                 __MenuItem(#MENU_ERASEPASSWORDS, Language(#L_ERASEPASSWORDS), ImageID(#SPRITE_MENU_BRUSH))
-            CompilerEndIf
+              CompilerEndIf
             EndIf
           CompilerEndIf
         CompilerEndIf
         
         MenuTitle("?")
-          CompilerIf #USE_OEM_VERSION=#False   
-            __MenuItem(#MENU_DOCUMENTATION, Language(#L_DOCUMENTATION)+Chr(9)+"F1", ImageID(#SPRITE_MENU_HELP))
-            MenuBar()
-          CompilerEndIf  
-          
-          ;MenuTitle(Language(#L_LANGUAGE))
-          OpenSubMenu(Language(#L_LANGUAGE)) 
-            sLanguages.s = GetAllLanguages(sDataBaseFile)
-            iLanguageMenuItems.i = CountString(sLanguages, Chr(10))
-            Global Dim LanguageMenu(iLanguageMenuItems)
-            
-            For i=1 To iLanguageMenuItems
-              Select Mid(StringField(sLanguages, i, Chr(10)),1,2)
-              Case "DE"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_GERMANY))
-    
-              Case "EN"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_ENGLISH))
-                
-              Case "FR"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_FRENCH))
-                
-              Case "TR"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_TURKISH))
-                
-              Case "NL"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_NETHERLANDS))
-                
-              Case "ES"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_SPAIN)) 
-                
-              Case "EL"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_GREEK))  
-                
-              Case "PT"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_PORTUGAL))  
-                
-              Case "IT"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_ITALIAN)) 
-                
-              Case "SV"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_SWEDEN))  
-                
-              Case "RU"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_RUSSIA))  
-                
-              Case "SR"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_SERBIA))  
-                
-              Case "BG"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_BULGARIA))  
-                
-              Case "FA"
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_PERSIAN))                  
-              Default
-                __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE))
-                
-              EndSelect
-              LanguageMenu(i) = 2000+i
-            Next
-          CloseSubMenu()
-          CompilerIf #USE_OEM_VERSION=#False   
-            MenuBar()
-          CompilerEndIf 
-          
-          CompilerIf #USE_OEM_VERSION=#False
-            CompilerIf #USE_ONLY_ABOUT_MENU=#False  
-              __MenuItem(#MENU_CHECKUPDATES, Language(#L_CHECKFORUPDATE), ImageID(#SPRITE_MENU_UPDATE))
-              If ExeHasAttachedFiles 
-                DisableMenuItem(#MENU_MAIN,#MENU_CHECKUPDATES,#True)
-              EndIf  
-            CompilerEndIf
-            __MenuItem(#MENU_DOWNLOADCODECS, Language(#L_DOWNLOADCODECS), ImageID(#SPRITE_MENU_DOWNLOAD))
-            __MenuItem(#MENU_HOMEPAGE, Language(#L_HOMEPAGE), ImageID(#SPRITE_MENU_HOMEPAGE))
-            __MenuItem(#MENU_DONATE, Language(#L_DONATE), ImageID(#SPRITE_MENU_GIVEMONEY))
-            MenuBar()
-            
-            
-            
-            __MenuItem(#MENU_ABOUT, Language(#L_ABOUT)+Chr(9)+"Shift+F1", ImageID(#SPRITE_MENU_ABOUT))
+        CompilerIf #USE_OEM_VERSION=#False   
+          __MenuItem(#MENU_DOCUMENTATION, Language(#L_DOCUMENTATION)+Chr(9)+"F1", ImageID(#SPRITE_MENU_HELP))
+          MenuBar()
+        CompilerEndIf  
+        
+        ;MenuTitle(Language(#L_LANGUAGE))
+        OpenSubMenu(Language(#L_LANGUAGE)) 
+        sLanguages.s = GetAllLanguages(sDataBaseFile)
+        iLanguageMenuItems.i = CountString(sLanguages, Chr(10))
+        Global Dim LanguageMenu(iLanguageMenuItems)
+        
+        For i=1 To iLanguageMenuItems
+          Select Mid(StringField(sLanguages, i, Chr(10)),1,2)
+            Case "DE"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_GERMANY))
+              
+            Case "EN"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_ENGLISH))
+              
+            Case "FR"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_FRENCH))
+              
+            Case "TR"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_TURKISH))
+              
+            Case "NL"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_NETHERLANDS))
+              
+            Case "ES"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_SPAIN)) 
+              
+            Case "EL"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_GREEK))  
+              
+            Case "PT"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_PORTUGAL))  
+              
+            Case "IT"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_ITALIAN)) 
+              
+            Case "SV"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_SWEDEN))  
+              
+            Case "RU"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_RUSSIA))  
+              
+            Case "SR"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_SERBIA))  
+              
+            Case "BG"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_BULGARIA))  
+              
+            Case "FA"
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE_PERSIAN))                  
+            Default
+              __MenuItem(2000+i, StringField(sLanguages, i, Chr(10)), ImageID(#SPRITE_MENU_LANGUAGE))
+              
+          EndSelect
+          LanguageMenu(i) = 2000+i
+        Next
+        CloseSubMenu()
+        CompilerIf #USE_OEM_VERSION=#False   
+          MenuBar()
+        CompilerEndIf 
+        
+        CompilerIf #USE_OEM_VERSION=#False
+          CompilerIf #USE_ONLY_ABOUT_MENU=#False  
+            __MenuItem(#MENU_CHECKUPDATES, Language(#L_CHECKFORUPDATE), ImageID(#SPRITE_MENU_UPDATE))
+            If ExeHasAttachedFiles 
+              DisableMenuItem(#MENU_MAIN,#MENU_CHECKUPDATES,#True)
+            EndIf  
           CompilerEndIf
+          __MenuItem(#MENU_DOWNLOADCODECS, Language(#L_DOWNLOADCODECS), ImageID(#SPRITE_MENU_DOWNLOAD))
+          __MenuItem(#MENU_HOMEPAGE, Language(#L_HOMEPAGE), ImageID(#SPRITE_MENU_HOMEPAGE))
+          __MenuItem(#MENU_DONATE, Language(#L_DONATE), ImageID(#SPRITE_MENU_GIVEMONEY))
+          MenuBar()
           
           
+          
+          __MenuItem(#MENU_ABOUT, Language(#L_ABOUT)+Chr(9)+"Shift+F1", ImageID(#SPRITE_MENU_ABOUT))
+        CompilerEndIf
+        
+        
         CompilerIf #USE_OEM_VERSION=#False  
           __AddKeyboardShortcut(#WINDOW_MAIN, #PB_Shortcut_Shift|#PB_Shortcut_F1, #MENU_ABOUT) 
           __AddKeyboardShortcut(#WINDOW_MAIN, #PB_Shortcut_F1, #MENU_DOCUMENTATION)
@@ -6050,7 +6137,7 @@ EndProcedure
     If Settings(#SETTINGS_USE_STATUSBAR)\sValue="0"
       ShowWindow_(StatusBarID(#STATUSBAR_MAIN), #SW_HIDE)
     EndIf  
-  
+    
     
     
     
@@ -6065,80 +6152,80 @@ EndProcedure
       ContainerGadget(#GADGET_CONTAINER, 0, 0, 350, Design_Container_Size, #PB_Container_Single);#PB_Container_BorderLess
     EndIf  
     
-      If Design_BK_Color<>-1
-        SetGadgetColor(#GADGET_CONTAINER, #PB_Gadget_BackColor, Design_BK_Color)
-      EndIf  
+    If Design_BK_Color<>-1
+      SetGadgetColor(#GADGET_CONTAINER, #PB_Gadget_BackColor, Design_BK_Color)
+    EndIf  
     
-      If UsedDPI>0
-        ifont1 = LoadFont(#PB_Any, "Times New Roman", 32*96/UsedDPI) 
-      Else
-        ifont1 = LoadFont(#PB_Any, "Times New Roman", 32) 
-      EndIf
-      
-
-      
-      
-
-      PlayerTrackBarGadget(#GADGET_TRACKBAR , DControlX(#GADGET_TRACKBAR), DControlY(#GADGET_TRACKBAR), DControlW(#GADGET_TRACKBAR), DControlH(#GADGET_TRACKBAR), 0, 10000, Design_Trackbar)
-      iVolumeGadget = VolumeGadget(DControlX(#GADGET_VOLUME), DControlY(#GADGET_VOLUME), ifont1, 50)
-
-      If Design_Buttons=0
-        ImageGadget(#GADGET_BUTTON_BACKWARD   , DControlX(#GADGET_BUTTON_BACKWARD), DControlY(#GADGET_BUTTON_BACKWARD), DControlW(#GADGET_BUTTON_BACKWARD), DControlH(#GADGET_BUTTON_BACKWARD), ImageID(#SPRITE_BACKWARD))
-        ImageGadget(#GADGET_BUTTON_FORWARD    , DControlX(#GADGET_BUTTON_FORWARD), DControlY(#GADGET_BUTTON_FORWARD), DControlW(#GADGET_BUTTON_FORWARD), DControlH(#GADGET_BUTTON_FORWARD), ImageID(#SPRITE_FORWARD))
-        ImageGadget(#GADGET_BUTTON_PLAY       , DControlX(#GADGET_BUTTON_PLAY), DControlY(#GADGET_BUTTON_PLAY), DControlW(#GADGET_BUTTON_PLAY), DControlH(#GADGET_BUTTON_PLAY), ImageID(#SPRITE_PLAY))
-        ImageGadget(#GADGET_BUTTON_PREVIOUS   , DControlX(#GADGET_BUTTON_PREVIOUS), DControlY(#GADGET_BUTTON_PREVIOUS), DControlW(#GADGET_BUTTON_PREVIOUS), DControlH(#GADGET_BUTTON_PREVIOUS), ImageID(#SPRITE_PREVIOUS))
-        ImageGadget(#GADGET_BUTTON_STOP       , DControlX(#GADGET_BUTTON_STOP), DControlY(#GADGET_BUTTON_STOP), DControlW(#GADGET_BUTTON_STOP), DControlH(#GADGET_BUTTON_STOP), ImageID(#SPRITE_STOP))
-        ImageGadget(#GADGET_BUTTON_NEXT       , DControlX(#GADGET_BUTTON_NEXT), DControlY(#GADGET_BUTTON_NEXT), DControlW(#GADGET_BUTTON_NEXT), DControlH(#GADGET_BUTTON_NEXT), ImageID(#SPRITE_NEXT))
-        ImageGadget(#GADGET_BUTTON_SNAPSHOT   , DControlX(#GADGET_BUTTON_SNAPSHOT), DControlY(#GADGET_BUTTON_SNAPSHOT), DControlW(#GADGET_BUTTON_SNAPSHOT), DControlH(#GADGET_BUTTON_SNAPSHOT), ImageID(#SPRITE_SNAPSHOT))
-        ImageGadget(#GADGET_BUTTON_REPEAT     , DControlX(#GADGET_BUTTON_REPEAT), DControlY(#GADGET_BUTTON_REPEAT), DControlW(#GADGET_BUTTON_REPEAT), DControlH(#GADGET_BUTTON_REPEAT), ImageID(#SPRITE_REPEAT))
-        ImageGadget(#GADGET_BUTTON_RANDOM     , DControlX(#GADGET_BUTTON_RANDOM), DControlY(#GADGET_BUTTON_RANDOM), DControlW(#GADGET_BUTTON_RANDOM), DControlH(#GADGET_BUTTON_RANDOM), ImageID(#SPRITE_RANDOM))
-        ImageGadget(#GADGET_BUTTON_FULLSCREEN , DControlX(#GADGET_BUTTON_FULLSCREEN), DControlY(#GADGET_BUTTON_FULLSCREEN), DControlW(#GADGET_BUTTON_FULLSCREEN), DControlH(#GADGET_BUTTON_FULLSCREEN), ImageID(#SPRITE_FULLSCREEN))
-      EndIf
-      
-      If Design_Buttons=1;Blue iconset
-        ButtonImageGadget(#GADGET_BUTTON_BACKWARD   , DControlX(#GADGET_BUTTON_BACKWARD), DControlY(#GADGET_BUTTON_BACKWARD), DControlW(#GADGET_BUTTON_BACKWARD), DControlH(#GADGET_BUTTON_BACKWARD), ImageID(#SPRITE_BACKWARD))
-        ButtonImageGadget(#GADGET_BUTTON_FORWARD    , DControlX(#GADGET_BUTTON_FORWARD), DControlY(#GADGET_BUTTON_FORWARD), DControlW(#GADGET_BUTTON_FORWARD), DControlH(#GADGET_BUTTON_FORWARD), ImageID(#SPRITE_FORWARD))
-        ButtonImageGadget(#GADGET_BUTTON_PLAY       , DControlX(#GADGET_BUTTON_PLAY), DControlY(#GADGET_BUTTON_PLAY), DControlW(#GADGET_BUTTON_PLAY), DControlH(#GADGET_BUTTON_PLAY), ImageID(#SPRITE_PLAY))
-        ButtonImageGadget(#GADGET_BUTTON_PREVIOUS   , DControlX(#GADGET_BUTTON_PREVIOUS), DControlY(#GADGET_BUTTON_PREVIOUS), DControlW(#GADGET_BUTTON_PREVIOUS), DControlH(#GADGET_BUTTON_PREVIOUS), ImageID(#SPRITE_PREVIOUS))
-        ButtonImageGadget(#GADGET_BUTTON_STOP       , DControlX(#GADGET_BUTTON_STOP), DControlY(#GADGET_BUTTON_STOP), DControlW(#GADGET_BUTTON_STOP), DControlH(#GADGET_BUTTON_STOP), ImageID(#SPRITE_STOP))
-        ButtonImageGadget(#GADGET_BUTTON_NEXT       , DControlX(#GADGET_BUTTON_NEXT), DControlY(#GADGET_BUTTON_NEXT), DControlW(#GADGET_BUTTON_NEXT), DControlH(#GADGET_BUTTON_NEXT), ImageID(#SPRITE_NEXT))
-        ButtonImageGadget(#GADGET_BUTTON_SNAPSHOT   , DControlX(#GADGET_BUTTON_SNAPSHOT), DControlY(#GADGET_BUTTON_SNAPSHOT), DControlW(#GADGET_BUTTON_SNAPSHOT), DControlH(#GADGET_BUTTON_SNAPSHOT), ImageID(#SPRITE_SNAPSHOT))
-        ButtonImageGadget(#GADGET_BUTTON_REPEAT     , DControlX(#GADGET_BUTTON_REPEAT), DControlY(#GADGET_BUTTON_REPEAT), DControlW(#GADGET_BUTTON_REPEAT), DControlH(#GADGET_BUTTON_REPEAT), ImageID(#SPRITE_REPEAT), #PB_Button_Toggle)
-        ButtonImageGadget(#GADGET_BUTTON_RANDOM     , DControlX(#GADGET_BUTTON_RANDOM), DControlY(#GADGET_BUTTON_RANDOM), DControlW(#GADGET_BUTTON_RANDOM), DControlH(#GADGET_BUTTON_RANDOM), ImageID(#SPRITE_RANDOM), #PB_Button_Toggle)
-        ButtonImageGadget(#GADGET_BUTTON_FULLSCREEN , DControlX(#GADGET_BUTTON_FULLSCREEN), DControlY(#GADGET_BUTTON_FULLSCREEN), DControlW(#GADGET_BUTTON_FULLSCREEN), DControlH(#GADGET_BUTTON_FULLSCREEN), ImageID(#SPRITE_FULLSCREEN))
-      EndIf
-      ImageGadget(#GADGET_BUTTON_MUTE       , DControlX(#GADGET_BUTTON_MUTE), DControlY(#GADGET_BUTTON_MUTE), DControlW(#GADGET_BUTTON_MUTE), DControlH(#GADGET_BUTTON_MUTE), ImageID(#SPRITE_MENU_SOUND))
-      
-      If DControlHide(#GADGET_TRACKBAR):HideGadget(#GADGET_TRACKBAR, #True):EndIf
-      If DControlHide(#GADGET_BUTTON_BACKWARD):HideGadget(#GADGET_BUTTON_BACKWARD, #True):EndIf
-      If DControlHide(#GADGET_BUTTON_FORWARD):HideGadget(#GADGET_BUTTON_FORWARD, #True):EndIf
-      If DControlHide(#GADGET_BUTTON_PLAY):HideGadget(#GADGET_BUTTON_PLAY, #True):EndIf
-      If DControlHide(#GADGET_BUTTON_PREVIOUS):HideGadget(#GADGET_BUTTON_PREVIOUS, #True):EndIf
-      If DControlHide(#GADGET_BUTTON_STOP):HideGadget(#GADGET_BUTTON_STOP, #True):EndIf
-      If DControlHide(#GADGET_BUTTON_NEXT):HideGadget(#GADGET_BUTTON_NEXT, #True):EndIf
-      If DControlHide(#GADGET_BUTTON_SNAPSHOT):HideGadget(#GADGET_BUTTON_SNAPSHOT, #True):EndIf
-      If DControlHide(#GADGET_BUTTON_REPEAT):HideGadget(#GADGET_BUTTON_REPEAT, #True):EndIf
-      If DControlHide(#GADGET_BUTTON_RANDOM):HideGadget(#GADGET_BUTTON_RANDOM, #True):EndIf
-      If DControlHide(#GADGET_BUTTON_MUTE):HideGadget(#GADGET_BUTTON_MUTE, #True):EndIf
-      If DControlHide(#GADGET_BUTTON_FULLSCREEN):HideGadget(#GADGET_BUTTON_FULLSCREEN, #True):EndIf
-      If DControlHide(#GADGET_VOLUME):HideGadget(iVolumeGadget, #True):EndIf
-
-
-      If IsGadget(#GADGET_BUTTON_BACKWARD):GadgetToolTip(#GADGET_BUTTON_BACKWARD, Language(#L_BACKWARD)):EndIf
-      If IsGadget(#GADGET_BUTTON_FORWARD):GadgetToolTip(#GADGET_BUTTON_FORWARD, Language(#L_FORWARD)):EndIf
-      If IsGadget(#GADGET_BUTTON_PLAY):GadgetToolTip(#GADGET_BUTTON_PLAY, Language(#L_PLAY)):EndIf
-      If IsGadget(#GADGET_BUTTON_PREVIOUS):GadgetToolTip(#GADGET_BUTTON_PREVIOUS, Language(#L_PREVIOUS)):EndIf
-      If IsGadget(#GADGET_BUTTON_STOP):GadgetToolTip(#GADGET_BUTTON_STOP, Language(#L_STOP)):EndIf
-      If IsGadget(#GADGET_BUTTON_NEXT):GadgetToolTip(#GADGET_BUTTON_NEXT, Language(#L_NEXT)):EndIf
-      If IsGadget(#GADGET_BUTTON_SNAPSHOT):GadgetToolTip(#GADGET_BUTTON_SNAPSHOT, Language(#L_SNAPSHOT)):EndIf
-      If IsGadget(#GADGET_BUTTON_REPEAT):GadgetToolTip(#GADGET_BUTTON_REPEAT, Language(#L_REPEAT)):EndIf
-      If IsGadget(#GADGET_BUTTON_RANDOM):GadgetToolTip(#GADGET_BUTTON_RANDOM, Language(#L_RANDOM)):EndIf
-      If IsGadget(#GADGET_BUTTON_FULLSCREEN):GadgetToolTip(#GADGET_BUTTON_FULLSCREEN, Language(#L_FULLSCREEN)):EndIf
-      
-      
-      GadgetToolTip(iVolumeGadget, Language(#L_VOLUME))
-      
-
+    If UsedDPI>0
+      ifont1 = LoadFont(#PB_Any, "Times New Roman", 32*96/UsedDPI) 
+    Else
+      ifont1 = LoadFont(#PB_Any, "Times New Roman", 32) 
+    EndIf
+    
+    
+    
+    
+    
+    PlayerTrackBarGadget(#GADGET_TRACKBAR , DControlX(#GADGET_TRACKBAR), DControlY(#GADGET_TRACKBAR), DControlW(#GADGET_TRACKBAR), DControlH(#GADGET_TRACKBAR), 0, 10000, Design_Trackbar)
+    iVolumeGadget = VolumeGadget(DControlX(#GADGET_VOLUME), DControlY(#GADGET_VOLUME), ifont1, 50)
+    
+    If Design_Buttons=0
+      ImageGadget(#GADGET_BUTTON_BACKWARD   , DControlX(#GADGET_BUTTON_BACKWARD), DControlY(#GADGET_BUTTON_BACKWARD), DControlW(#GADGET_BUTTON_BACKWARD), DControlH(#GADGET_BUTTON_BACKWARD), ImageID(#SPRITE_BACKWARD))
+      ImageGadget(#GADGET_BUTTON_FORWARD    , DControlX(#GADGET_BUTTON_FORWARD), DControlY(#GADGET_BUTTON_FORWARD), DControlW(#GADGET_BUTTON_FORWARD), DControlH(#GADGET_BUTTON_FORWARD), ImageID(#SPRITE_FORWARD))
+      ImageGadget(#GADGET_BUTTON_PLAY       , DControlX(#GADGET_BUTTON_PLAY), DControlY(#GADGET_BUTTON_PLAY), DControlW(#GADGET_BUTTON_PLAY), DControlH(#GADGET_BUTTON_PLAY), ImageID(#SPRITE_PLAY))
+      ImageGadget(#GADGET_BUTTON_PREVIOUS   , DControlX(#GADGET_BUTTON_PREVIOUS), DControlY(#GADGET_BUTTON_PREVIOUS), DControlW(#GADGET_BUTTON_PREVIOUS), DControlH(#GADGET_BUTTON_PREVIOUS), ImageID(#SPRITE_PREVIOUS))
+      ImageGadget(#GADGET_BUTTON_STOP       , DControlX(#GADGET_BUTTON_STOP), DControlY(#GADGET_BUTTON_STOP), DControlW(#GADGET_BUTTON_STOP), DControlH(#GADGET_BUTTON_STOP), ImageID(#SPRITE_STOP))
+      ImageGadget(#GADGET_BUTTON_NEXT       , DControlX(#GADGET_BUTTON_NEXT), DControlY(#GADGET_BUTTON_NEXT), DControlW(#GADGET_BUTTON_NEXT), DControlH(#GADGET_BUTTON_NEXT), ImageID(#SPRITE_NEXT))
+      ImageGadget(#GADGET_BUTTON_SNAPSHOT   , DControlX(#GADGET_BUTTON_SNAPSHOT), DControlY(#GADGET_BUTTON_SNAPSHOT), DControlW(#GADGET_BUTTON_SNAPSHOT), DControlH(#GADGET_BUTTON_SNAPSHOT), ImageID(#SPRITE_SNAPSHOT))
+      ImageGadget(#GADGET_BUTTON_REPEAT     , DControlX(#GADGET_BUTTON_REPEAT), DControlY(#GADGET_BUTTON_REPEAT), DControlW(#GADGET_BUTTON_REPEAT), DControlH(#GADGET_BUTTON_REPEAT), ImageID(#SPRITE_REPEAT))
+      ImageGadget(#GADGET_BUTTON_RANDOM     , DControlX(#GADGET_BUTTON_RANDOM), DControlY(#GADGET_BUTTON_RANDOM), DControlW(#GADGET_BUTTON_RANDOM), DControlH(#GADGET_BUTTON_RANDOM), ImageID(#SPRITE_RANDOM))
+      ImageGadget(#GADGET_BUTTON_FULLSCREEN , DControlX(#GADGET_BUTTON_FULLSCREEN), DControlY(#GADGET_BUTTON_FULLSCREEN), DControlW(#GADGET_BUTTON_FULLSCREEN), DControlH(#GADGET_BUTTON_FULLSCREEN), ImageID(#SPRITE_FULLSCREEN))
+    EndIf
+    
+    If Design_Buttons=1;Blue iconset
+      ButtonImageGadget(#GADGET_BUTTON_BACKWARD   , DControlX(#GADGET_BUTTON_BACKWARD), DControlY(#GADGET_BUTTON_BACKWARD), DControlW(#GADGET_BUTTON_BACKWARD), DControlH(#GADGET_BUTTON_BACKWARD), ImageID(#SPRITE_BACKWARD))
+      ButtonImageGadget(#GADGET_BUTTON_FORWARD    , DControlX(#GADGET_BUTTON_FORWARD), DControlY(#GADGET_BUTTON_FORWARD), DControlW(#GADGET_BUTTON_FORWARD), DControlH(#GADGET_BUTTON_FORWARD), ImageID(#SPRITE_FORWARD))
+      ButtonImageGadget(#GADGET_BUTTON_PLAY       , DControlX(#GADGET_BUTTON_PLAY), DControlY(#GADGET_BUTTON_PLAY), DControlW(#GADGET_BUTTON_PLAY), DControlH(#GADGET_BUTTON_PLAY), ImageID(#SPRITE_PLAY))
+      ButtonImageGadget(#GADGET_BUTTON_PREVIOUS   , DControlX(#GADGET_BUTTON_PREVIOUS), DControlY(#GADGET_BUTTON_PREVIOUS), DControlW(#GADGET_BUTTON_PREVIOUS), DControlH(#GADGET_BUTTON_PREVIOUS), ImageID(#SPRITE_PREVIOUS))
+      ButtonImageGadget(#GADGET_BUTTON_STOP       , DControlX(#GADGET_BUTTON_STOP), DControlY(#GADGET_BUTTON_STOP), DControlW(#GADGET_BUTTON_STOP), DControlH(#GADGET_BUTTON_STOP), ImageID(#SPRITE_STOP))
+      ButtonImageGadget(#GADGET_BUTTON_NEXT       , DControlX(#GADGET_BUTTON_NEXT), DControlY(#GADGET_BUTTON_NEXT), DControlW(#GADGET_BUTTON_NEXT), DControlH(#GADGET_BUTTON_NEXT), ImageID(#SPRITE_NEXT))
+      ButtonImageGadget(#GADGET_BUTTON_SNAPSHOT   , DControlX(#GADGET_BUTTON_SNAPSHOT), DControlY(#GADGET_BUTTON_SNAPSHOT), DControlW(#GADGET_BUTTON_SNAPSHOT), DControlH(#GADGET_BUTTON_SNAPSHOT), ImageID(#SPRITE_SNAPSHOT))
+      ButtonImageGadget(#GADGET_BUTTON_REPEAT     , DControlX(#GADGET_BUTTON_REPEAT), DControlY(#GADGET_BUTTON_REPEAT), DControlW(#GADGET_BUTTON_REPEAT), DControlH(#GADGET_BUTTON_REPEAT), ImageID(#SPRITE_REPEAT), #PB_Button_Toggle)
+      ButtonImageGadget(#GADGET_BUTTON_RANDOM     , DControlX(#GADGET_BUTTON_RANDOM), DControlY(#GADGET_BUTTON_RANDOM), DControlW(#GADGET_BUTTON_RANDOM), DControlH(#GADGET_BUTTON_RANDOM), ImageID(#SPRITE_RANDOM), #PB_Button_Toggle)
+      ButtonImageGadget(#GADGET_BUTTON_FULLSCREEN , DControlX(#GADGET_BUTTON_FULLSCREEN), DControlY(#GADGET_BUTTON_FULLSCREEN), DControlW(#GADGET_BUTTON_FULLSCREEN), DControlH(#GADGET_BUTTON_FULLSCREEN), ImageID(#SPRITE_FULLSCREEN))
+    EndIf
+    ImageGadget(#GADGET_BUTTON_MUTE       , DControlX(#GADGET_BUTTON_MUTE), DControlY(#GADGET_BUTTON_MUTE), DControlW(#GADGET_BUTTON_MUTE), DControlH(#GADGET_BUTTON_MUTE), ImageID(#SPRITE_MENU_SOUND))
+    
+    If DControlHide(#GADGET_TRACKBAR):HideGadget(#GADGET_TRACKBAR, #True):EndIf
+    If DControlHide(#GADGET_BUTTON_BACKWARD):HideGadget(#GADGET_BUTTON_BACKWARD, #True):EndIf
+    If DControlHide(#GADGET_BUTTON_FORWARD):HideGadget(#GADGET_BUTTON_FORWARD, #True):EndIf
+    If DControlHide(#GADGET_BUTTON_PLAY):HideGadget(#GADGET_BUTTON_PLAY, #True):EndIf
+    If DControlHide(#GADGET_BUTTON_PREVIOUS):HideGadget(#GADGET_BUTTON_PREVIOUS, #True):EndIf
+    If DControlHide(#GADGET_BUTTON_STOP):HideGadget(#GADGET_BUTTON_STOP, #True):EndIf
+    If DControlHide(#GADGET_BUTTON_NEXT):HideGadget(#GADGET_BUTTON_NEXT, #True):EndIf
+    If DControlHide(#GADGET_BUTTON_SNAPSHOT):HideGadget(#GADGET_BUTTON_SNAPSHOT, #True):EndIf
+    If DControlHide(#GADGET_BUTTON_REPEAT):HideGadget(#GADGET_BUTTON_REPEAT, #True):EndIf
+    If DControlHide(#GADGET_BUTTON_RANDOM):HideGadget(#GADGET_BUTTON_RANDOM, #True):EndIf
+    If DControlHide(#GADGET_BUTTON_MUTE):HideGadget(#GADGET_BUTTON_MUTE, #True):EndIf
+    If DControlHide(#GADGET_BUTTON_FULLSCREEN):HideGadget(#GADGET_BUTTON_FULLSCREEN, #True):EndIf
+    If DControlHide(#GADGET_VOLUME):HideGadget(iVolumeGadget, #True):EndIf
+    
+    
+    If IsGadget(#GADGET_BUTTON_BACKWARD):GadgetToolTip(#GADGET_BUTTON_BACKWARD, Language(#L_BACKWARD)):EndIf
+    If IsGadget(#GADGET_BUTTON_FORWARD):GadgetToolTip(#GADGET_BUTTON_FORWARD, Language(#L_FORWARD)):EndIf
+    If IsGadget(#GADGET_BUTTON_PLAY):GadgetToolTip(#GADGET_BUTTON_PLAY, Language(#L_PLAY)):EndIf
+    If IsGadget(#GADGET_BUTTON_PREVIOUS):GadgetToolTip(#GADGET_BUTTON_PREVIOUS, Language(#L_PREVIOUS)):EndIf
+    If IsGadget(#GADGET_BUTTON_STOP):GadgetToolTip(#GADGET_BUTTON_STOP, Language(#L_STOP)):EndIf
+    If IsGadget(#GADGET_BUTTON_NEXT):GadgetToolTip(#GADGET_BUTTON_NEXT, Language(#L_NEXT)):EndIf
+    If IsGadget(#GADGET_BUTTON_SNAPSHOT):GadgetToolTip(#GADGET_BUTTON_SNAPSHOT, Language(#L_SNAPSHOT)):EndIf
+    If IsGadget(#GADGET_BUTTON_REPEAT):GadgetToolTip(#GADGET_BUTTON_REPEAT, Language(#L_REPEAT)):EndIf
+    If IsGadget(#GADGET_BUTTON_RANDOM):GadgetToolTip(#GADGET_BUTTON_RANDOM, Language(#L_RANDOM)):EndIf
+    If IsGadget(#GADGET_BUTTON_FULLSCREEN):GadgetToolTip(#GADGET_BUTTON_FULLSCREEN, Language(#L_FULLSCREEN)):EndIf
+    
+    
+    GadgetToolTip(iVolumeGadget, Language(#L_VOLUME))
+    
+    
     CloseGadgetList()
     
     ACD_CreateContainer()
@@ -6155,19 +6242,19 @@ EndProcedure
       ContainerGadget(#GADGET_VIDEO_CONTAINER, 0, 0, 350, 5, #PB_Container_Double)
     EndIf  
     
-      SetGadgetColor(#GADGET_VIDEO_CONTAINER, #PB_Gadget_BackColor, Val(Settings(#SETTINGS_BKCOLOR)\sValue))
-      ;HideGadget(#GADGET_VIDEO_CONTAINER, #True)
-      ;SetWindowColor(#WINDOW_MAIN, Val(Settings(#SETTINGS_BKCOLOR)\sValue))
+    SetGadgetColor(#GADGET_VIDEO_CONTAINER, #PB_Gadget_BackColor, Val(Settings(#SETTINGS_BKCOLOR)\sValue))
+    ;HideGadget(#GADGET_VIDEO_CONTAINER, #True)
+    ;SetWindowColor(#WINDOW_MAIN, Val(Settings(#SETTINGS_BKCOLOR)\sValue))
     CloseGadgetList()
     
-
+    
     
     ;2010-08-10 NEW CALLBACK POS
     SetWindowCallback(@CBMainWindow())
     
     ResizeWindow_(#WINDOW_MAIN, #PB_Ignore, #PB_Ignore, #PB_Ignore, #PB_Ignore)
     ProcessAllEvents()   
-
+    
     
   EndProcedure
   Procedure CreateAboutWindow()
@@ -6189,7 +6276,7 @@ EndProcedure
           If IsFont(#FONT_ABOUT_2)=#False:LoadFont(#FONT_ABOUT_2,"Tahoma",9,#PB_Font_Bold):EndIf
           If IsFont(#FONT_ABOUT_2)=#False:LoadFont(#FONT_ABOUT_2,"Comic Sans MS",9,#PB_Font_Bold):EndIf
           If IsFont(#FONT_ABOUT_2):SetGadgetFont(#GADGET_ABOUT_BIGTEXT,FontID(#FONT_ABOUT_2)):EndIf
-           
+          
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "GreenForce Player V"+#PLAYER_VERSION+" Build "+Str(#PB_Editor_BuildCount) + " "+FormatDate("%mm/%dd/%yyyy", #PB_Compiler_Date))
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Feel the green force!")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
@@ -6214,7 +6301,7 @@ EndProcedure
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "http://GFP.RRSoftware.de")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Support@GFP.RRSoftware.de")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")
-        
+          
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "Source code:")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "https://github.com/RocketRider/GreenForce-Player")     
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "")           
@@ -6232,7 +6319,7 @@ EndProcedure
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.")
           AddGadgetItem(#GADGET_ABOUT_BIGTEXT, -1, "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS `AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.")
-  
+          
         Else
           WriteLog("Can't open about window!")
         EndIf
@@ -6293,10 +6380,10 @@ EndProcedure
       ToolBarToolTip(#TOOLBAR_PLAYLIST, #TOOLBAR_BUTTON_DELETETRACK, Language(#L_REMOVE_TRACK))  
       
       ContainerGadget(#GADGET_LIST_CONTAINER, 0, 0, 0, 0)
-        ListIconGadget(#GADGET_LIST_PLAYLIST, 0, 0, 0, 0, Language(#L_PLAYLIST), 100, #PB_ListIcon_FullRowSelect|#PB_ListIcon_AlwaysShowSelection )
-        SetExplorerTheme(GadgetID(#GADGET_LIST_PLAYLIST))
-        ImageGadget(#GADGET_LIST_IMAGE, 0, 0, 100, 100, ImageID(#SPRITE_NOIMAGE))
-        EnableGadgetDrop(#GADGET_LIST_IMAGE, #PB_Drop_Files, #PB_Drag_Link)
+      ListIconGadget(#GADGET_LIST_PLAYLIST, 0, 0, 0, 0, Language(#L_PLAYLIST), 100, #PB_ListIcon_FullRowSelect|#PB_ListIcon_AlwaysShowSelection )
+      SetExplorerTheme(GadgetID(#GADGET_LIST_PLAYLIST))
+      ImageGadget(#GADGET_LIST_IMAGE, 0, 0, 100, 100, ImageID(#SPRITE_NOIMAGE))
+      EnableGadgetDrop(#GADGET_LIST_IMAGE, #PB_Drop_Files, #PB_Drag_Link)
       CloseGadgetList()
       
       
@@ -6368,49 +6455,49 @@ EndProcedure
       PanelGadget(#GADGET_OPTIONS_PANEL, 2, 2, 396, 366)
       
       AddGadgetItem(#GADGET_OPTIONS_PANEL, -1, Language(#L_GENERAL), ImageID(#SPRITE_MENU_OPTIONS)):iOptionsOptionCount = #Null
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_LANGUAGE, Language(#L_LANGUAGE), GetAllLanguages(sDataBaseFile), #OPTIONS_COMBOBOX, Val(Settings(#SETTINGS_LANGUAGE)\sValue)-1, #SPRITE_LANGUAGE)
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_LOGLEVEL, Language(#L_LOGLEVEL), Language(#L_NONE)+Chr(10)+Language(#L_ERROR)+Chr(10)+Language(#L_DEBUG)+Chr(10), #OPTIONS_COMBOBOX, Val(Settings(#SETTINGS_LOGLEVEL)\sValue), #SPRITE_BUG)
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_SYSTRAY, Language(#L_USESYSTRAY), "", #OPTIONS_CHECKBOX, Val(Settings(#SETTINGS_SYSTRAY)\sValue), #SPRITE_SYSTRAY_32x32)
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_AUTOUPDATES, Language(#L_AUTOUPDATE), "", #OPTIONS_CHECKBOX, Val(Settings(#SETTINGS_AUTOMATIC_UPDATE)\sValue), #SPRITE_UPDATE)
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_SINGLE_INSTANCE, Language(#L_SINGLE_INSTANCE), "", #OPTIONS_CHECKBOX, Val(Settings(#SETTINGS_SINGLE_INSTANCE)\sValue), #SPRITE_ONE_INSTANCE)
-        ;Hotkeys
-          
-        ButtonGadget(#GADGET_OPTIONS_EXPORT_DB, 3, 305-(UsedDPI-96)/10, 185, 25, Language(#L_EXPORTDATABASE)) 
-        ButtonGadget(#GADGET_OPTIONS_IMPORT_DB, 198, 305-(UsedDPI-96)/10, 185, 25, Language(#L_IMPORTDATABASE)) 
-        ButtonGadget(#GADGET_OPTIONS_DEFAULT_DB, 3, 275-(UsedDPI-96)/10, 380, 25, Language(#L_DEFAULTDATABASE))  
-        
-        
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_LANGUAGE, Language(#L_LANGUAGE), GetAllLanguages(sDataBaseFile), #OPTIONS_COMBOBOX, Val(Settings(#SETTINGS_LANGUAGE)\sValue)-1, #SPRITE_LANGUAGE)
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_LOGLEVEL, Language(#L_LOGLEVEL), Language(#L_NONE)+Chr(10)+Language(#L_ERROR)+Chr(10)+Language(#L_DEBUG)+Chr(10), #OPTIONS_COMBOBOX, Val(Settings(#SETTINGS_LOGLEVEL)\sValue), #SPRITE_BUG)
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_SYSTRAY, Language(#L_USESYSTRAY), "", #OPTIONS_CHECKBOX, Val(Settings(#SETTINGS_SYSTRAY)\sValue), #SPRITE_SYSTRAY_32x32)
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_AUTOUPDATES, Language(#L_AUTOUPDATE), "", #OPTIONS_CHECKBOX, Val(Settings(#SETTINGS_AUTOMATIC_UPDATE)\sValue), #SPRITE_UPDATE)
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_SINGLE_INSTANCE, Language(#L_SINGLE_INSTANCE), "", #OPTIONS_CHECKBOX, Val(Settings(#SETTINGS_SINGLE_INSTANCE)\sValue), #SPRITE_ONE_INSTANCE)
+      ;Hotkeys
+      
+      ButtonGadget(#GADGET_OPTIONS_EXPORT_DB, 3, 305-(UsedDPI-96)/10, 185, 25, Language(#L_EXPORTDATABASE)) 
+      ButtonGadget(#GADGET_OPTIONS_IMPORT_DB, 198, 305-(UsedDPI-96)/10, 185, 25, Language(#L_IMPORTDATABASE)) 
+      ButtonGadget(#GADGET_OPTIONS_DEFAULT_DB, 3, 275-(UsedDPI-96)/10, 380, 25, Language(#L_DEFAULTDATABASE))  
+      
+      
       AddGadgetItem(#GADGET_OPTIONS_PANEL, -1, Language(#L_MEDIA), ImageID(#SPRITE_MENU_PROJEKTOR)):iOptionsOptionCount = #Null
-        sVideoRender.s = Language(#L_DEFAULT)+Chr(10)+Language(#L_VMR9_Windowless)+Chr(10)+Language(#L_VMR7_Windowless)+Chr(10)+Language(#L_OldVideoRenderer)+Chr(10)+Language(#L_OverlayMixer)+Chr(10)+Language(#L_DSHOWDEFAULT)+Chr(10)+Language(#L_VMR9_Windowed)+Chr(10)+Language(#L_VMR7_Windowed)+Chr(10)+Language(#L_OWN_RENDERER)+Chr(10)
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_VIDEORENDERER, Language(#L_VIDEORENDERER), sVideoRender, #OPTIONS_COMBOBOX, Val(Settings(#SETTINGS_VIDEORENDERER)\sValue), #SPRITE_RENDERER)
-        
-        iAudioRenderer = Val(Settings(#SETTINGS_AUDIORENDERER)\sValue)
-        If iAudioRenderer>0:iAudioRenderer-5:EndIf
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_AUDIORENDERER, Language(#L_AUDIORENDERER), Language(#L_DEFAULT)+Chr(10)+Language(#L_WAVEOUTRENDERER)+Chr(10)+Language(#L_DIRECTSOUNDRENDERER)+Chr(10), #OPTIONS_COMBOBOX, iAudioRenderer, #SPRITE_AUDIORENDERER)
-        
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_RAMUSAGE, Language(#L_RAMUSAGE), "0"+Chr(10)+"25"+Chr(10)+"50"+Chr(10)+"100"+Chr(10)+"250"+Chr(10)+"500"+Chr(10), #OPTIONS_COMBOBOX_EDITABLE, Val(Settings(#SETTINGS_RAM_SIZE)\sValue), #SPRITE_RAM)
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_MAXRAMFILESIZE, Language(#L_RAMUSAGEPERFILE), "0"+Chr(10)+"5"+Chr(10)+"10"+Chr(10)+"20"+Chr(10)+"30"+Chr(10)+"50"+Chr(10), #OPTIONS_COMBOBOX_EDITABLE, Val(Settings(#SETTINGS_RAM_SIZE_PER_FILE)\sValue), #SPRITE_RAM_FILE)
-        
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_PICTURE_PATH, Language(#L_PICTUREPATH), Settings(#SETTINGS_PHOTO_PATH)\sValue, #OPTIONS_PATH, #False, #SPRITE_PHOTO_32x32)
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_PICTURE_FORMAT, Language(#L_PICTUREFORMAT), "JPG"+Chr(10)+"PNG"+Chr(10)+"JPEG 2000"+Chr(10), #OPTIONS_COMBOBOX, Val(Settings(#SETTINGS_PHOTO_FORMAT)\sValue), #SPRITE_PHOTO_FILE_32x32)
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_BKCOLOR, Language(#L_BKCOLOR), "", #OPTIONS_COLOR, Val(Settings(#SETTINGS_BKCOLOR)\sValue), #SPRITE_BKCOLOR)
-        AddOptionsOption(#GADGET_OPTIONS_ITEM_ICONSET, Language(#L_THEME), GetPlayerDesigns(sDataBaseFile), #OPTIONS_COMBOBOX, Val(Settings(#SETTINGS_ICONSET)\sValue)-1, #SPRITE_THEME)
-        
-        ;Rahmen Farbe einstellen (Schwarze Balken)
-        ;Verknüpfte datein. altes merken
-        DriveType.i = GetDriveType_(Left(ProgramFilename(),1)+":\")
-        If UCase(Left(ProgramFilename(),1))=UCase(Left(GetSystemDirectory(),1)):DriveType=#DRIVE_FIXED:EndIf
-        If DriveType = #DRIVE_FIXED Or DriveType = #DRIVE_REMOTE 
-          AddGadgetItem(#GADGET_OPTIONS_PANEL, -1, Language(#L_FILEEXTENSION), ImageID(#SPRITE_MENU_LOAD)):iOptionsOptionCount = #Null
-            AddFileExtensionToOptions()
-        EndIf        
+      sVideoRender.s = Language(#L_DEFAULT)+Chr(10)+Language(#L_VMR9_Windowless)+Chr(10)+Language(#L_VMR7_Windowless)+Chr(10)+Language(#L_OldVideoRenderer)+Chr(10)+Language(#L_OverlayMixer)+Chr(10)+Language(#L_DSHOWDEFAULT)+Chr(10)+Language(#L_VMR9_Windowed)+Chr(10)+Language(#L_VMR7_Windowed)+Chr(10)+Language(#L_OWN_RENDERER)+Chr(10)
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_VIDEORENDERER, Language(#L_VIDEORENDERER), sVideoRender, #OPTIONS_COMBOBOX, Val(Settings(#SETTINGS_VIDEORENDERER)\sValue), #SPRITE_RENDERER)
+      
+      iAudioRenderer = Val(Settings(#SETTINGS_AUDIORENDERER)\sValue)
+      If iAudioRenderer>0:iAudioRenderer-5:EndIf
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_AUDIORENDERER, Language(#L_AUDIORENDERER), Language(#L_DEFAULT)+Chr(10)+Language(#L_WAVEOUTRENDERER)+Chr(10)+Language(#L_DIRECTSOUNDRENDERER)+Chr(10), #OPTIONS_COMBOBOX, iAudioRenderer, #SPRITE_AUDIORENDERER)
+      
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_RAMUSAGE, Language(#L_RAMUSAGE), "0"+Chr(10)+"25"+Chr(10)+"50"+Chr(10)+"100"+Chr(10)+"250"+Chr(10)+"500"+Chr(10), #OPTIONS_COMBOBOX_EDITABLE, Val(Settings(#SETTINGS_RAM_SIZE)\sValue), #SPRITE_RAM)
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_MAXRAMFILESIZE, Language(#L_RAMUSAGEPERFILE), "0"+Chr(10)+"5"+Chr(10)+"10"+Chr(10)+"20"+Chr(10)+"30"+Chr(10)+"50"+Chr(10), #OPTIONS_COMBOBOX_EDITABLE, Val(Settings(#SETTINGS_RAM_SIZE_PER_FILE)\sValue), #SPRITE_RAM_FILE)
+      
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_PICTURE_PATH, Language(#L_PICTUREPATH), Settings(#SETTINGS_PHOTO_PATH)\sValue, #OPTIONS_PATH, #False, #SPRITE_PHOTO_32x32)
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_PICTURE_FORMAT, Language(#L_PICTUREFORMAT), "JPG"+Chr(10)+"PNG"+Chr(10)+"JPEG 2000"+Chr(10), #OPTIONS_COMBOBOX, Val(Settings(#SETTINGS_PHOTO_FORMAT)\sValue), #SPRITE_PHOTO_FILE_32x32)
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_BKCOLOR, Language(#L_BKCOLOR), "", #OPTIONS_COLOR, Val(Settings(#SETTINGS_BKCOLOR)\sValue), #SPRITE_BKCOLOR)
+      AddOptionsOption(#GADGET_OPTIONS_ITEM_ICONSET, Language(#L_THEME), GetPlayerDesigns(sDataBaseFile), #OPTIONS_COMBOBOX, Val(Settings(#SETTINGS_ICONSET)\sValue)-1, #SPRITE_THEME)
+      
+      ;Rahmen Farbe einstellen (Schwarze Balken)
+      ;Verknüpfte datein. altes merken
+      DriveType.i = GetDriveType_(Left(ProgramFilename(),1)+":\")
+      If UCase(Left(ProgramFilename(),1))=UCase(Left(GetSystemDirectory(),1)):DriveType=#DRIVE_FIXED:EndIf
+      If DriveType = #DRIVE_FIXED Or DriveType = #DRIVE_REMOTE 
+        AddGadgetItem(#GADGET_OPTIONS_PANEL, -1, Language(#L_FILEEXTENSION), ImageID(#SPRITE_MENU_LOAD)):iOptionsOptionCount = #Null
+        AddFileExtensionToOptions()
+      EndIf        
       
       CloseGadgetList()
       
       
-
-
-
+      
+      
+      
       
     Else
       ShowWindow_(WindowID(#WINDOW_OPTIONS), #SW_SHOWNORMAL)
@@ -6433,168 +6520,168 @@ EndProcedure
       
       PanelGadget(#GADGET_PV_PANEL, 2, 2, 396, 366)
       AddGadgetItem(#GADGET_PV_PANEL, -1, Language(#L_GENERAL), ImageID(#SPRITE_MENU_PLAYMEDIA))
-        ImageGadget(#PB_Any, 2, GadgetY, 32, 32, ImageID(#SPRITE_PROJEKTOR))
-        ButtonGadget(#GADGET_PV_LOAD_BUTTON, 358, GadgetY, 30, 20, "...")
-        StringGadget(#GADGET_PV_LOAD_STRING, 115, GadgetY, 240, 20, "", #PB_String_ReadOnly)
-        TextGadget(#GADGET_PV_LOAD_TEXT, 40, GadgetY+3, 70, 20, Language(#L_MEDIA)+":*")
-        
-        GadgetY+26
-        ;ImageGadget(#PB_Any, 2, GadgetY, 24, 24, ImageID(#SPRITE_MENU_LOAD))
-        ButtonGadget(#GADGET_PV_SAVE_BUTTON, 358, GadgetY, 30, 20, "...")
-        StringGadget(#GADGET_PV_SAVE_STRING, 115, GadgetY, 240, 20, "", #PB_String_ReadOnly)
-        TextGadget(#GADGET_PV_SAVE_TEXT, 40, GadgetY+3, 70, 20, Language(#L_SAVE)+":*")
-        
-        GadgetY+46
-        ImageGadget(#PB_Any, 2, GadgetY, 32, 32, ImageID(#SPRITE_KEY))
-        If Len(Language(#L_PASSWORD))>10
-          TextGadget(#GADGET_PV_PW_TEXT, 40, GadgetY-5, 70, 40, Language(#L_PASSWORD)+":")
-        Else
-          TextGadget(#GADGET_PV_PW_TEXT, 40, GadgetY+3, 70, 40, Language(#L_PASSWORD)+":")
-        EndIf  
-        StringGadget(#GADGET_PV_PW_STRING, 115, GadgetY, 270, 20, "", #PB_String_Password)
-        
-        GadgetY+26
-        StringGadget(#GADGET_PV_PW2_STRING, 115, GadgetY, 270, 20, "", #PB_String_Password)
-        TextGadget(#GADGET_PV_PW2_TEXT, 40, GadgetY-3, 70, 40, Language(#L_PASSWORD_VERIFY)+":")
-        
-        GadgetY+34
-        ImageGadget(#PB_Any, 2, GadgetY, 32, 32, ImageID(#SPRITE_LIGHT))
-        TextGadget(#GADGET_PV_PW_TIP_TEXT, 40, GadgetY+3, 70, 20, Language(#L_TIP)+":")
-        StringGadget(#GADGET_PV_PW_TIP_STRING, 115, GadgetY, 270, 20, "")
- 
-        GadgetY+45
-        
-        CheckBoxGadget(#GADGET_PV_ADDPLAYER, 5, GadgetY, 270, 20, Language(#L_ADDPLAYERTOVIDEO))
-        CompilerIf #USE_OEM_VERSION
-          HideGadget(#GADGET_PV_ADDPLAYER, #True)
-        CompilerEndIf
-        GadgetY+30
-        
-
-        CheckBoxGadget(#GADGET_PV_ALLOWUNPROTECT, 5, GadgetY, 340, 20, Language(#L_ALLOWUNPROTECT))
-        CompilerIf #USE_HIDE_UNPROTECT_CHECKBOX        
-          HideGadget(#GADGET_PV_ALLOWUNPROTECT, #True)
-        CompilerElse
-          GadgetY+25
-        CompilerEndIf
-        
-        
-        ButtonGadget(#GADGET_PV_ICON_BUTTON, 358, GadgetY, 30, 20, "...")
-        StringGadget(#GADGET_PV_ICON_STRING, 115, GadgetY, 240, 20, "")
-        TextGadget(#GADGET_PV_ICON_TEXT, 5, GadgetY+3, 100, 20, Language(#L_ICON)+":")
-        DisableGadget(#GADGET_PV_ICON_BUTTON, #True)
-        DisableGadget(#GADGET_PV_ICON_STRING, #True)
+      ImageGadget(#PB_Any, 2, GadgetY, 32, 32, ImageID(#SPRITE_PROJEKTOR))
+      ButtonGadget(#GADGET_PV_LOAD_BUTTON, 358, GadgetY, 30, 20, "...")
+      StringGadget(#GADGET_PV_LOAD_STRING, 115, GadgetY, 240, 20, "", #PB_String_ReadOnly)
+      TextGadget(#GADGET_PV_LOAD_TEXT, 40, GadgetY+3, 70, 20, Language(#L_MEDIA)+":*")
+      
+      GadgetY+26
+      ;ImageGadget(#PB_Any, 2, GadgetY, 24, 24, ImageID(#SPRITE_MENU_LOAD))
+      ButtonGadget(#GADGET_PV_SAVE_BUTTON, 358, GadgetY, 30, 20, "...")
+      StringGadget(#GADGET_PV_SAVE_STRING, 115, GadgetY, 240, 20, "", #PB_String_ReadOnly)
+      TextGadget(#GADGET_PV_SAVE_TEXT, 40, GadgetY+3, 70, 20, Language(#L_SAVE)+":*")
+      
+      GadgetY+46
+      ImageGadget(#PB_Any, 2, GadgetY, 32, 32, ImageID(#SPRITE_KEY))
+      If Len(Language(#L_PASSWORD))>10
+        TextGadget(#GADGET_PV_PW_TEXT, 40, GadgetY-5, 70, 40, Language(#L_PASSWORD)+":")
+      Else
+        TextGadget(#GADGET_PV_PW_TEXT, 40, GadgetY+3, 70, 40, Language(#L_PASSWORD)+":")
+      EndIf  
+      StringGadget(#GADGET_PV_PW_STRING, 115, GadgetY, 270, 20, "", #PB_String_Password)
+      
+      GadgetY+26
+      StringGadget(#GADGET_PV_PW2_STRING, 115, GadgetY, 270, 20, "", #PB_String_Password)
+      TextGadget(#GADGET_PV_PW2_TEXT, 40, GadgetY-3, 70, 40, Language(#L_PASSWORD_VERIFY)+":")
+      
+      GadgetY+34
+      ImageGadget(#PB_Any, 2, GadgetY, 32, 32, ImageID(#SPRITE_LIGHT))
+      TextGadget(#GADGET_PV_PW_TIP_TEXT, 40, GadgetY+3, 70, 20, Language(#L_TIP)+":")
+      StringGadget(#GADGET_PV_PW_TIP_STRING, 115, GadgetY, 270, 20, "")
+      
+      GadgetY+45
+      
+      CheckBoxGadget(#GADGET_PV_ADDPLAYER, 5, GadgetY, 270, 20, Language(#L_ADDPLAYERTOVIDEO))
+      CompilerIf #USE_OEM_VERSION
+        HideGadget(#GADGET_PV_ADDPLAYER, #True)
+      CompilerEndIf
+      GadgetY+30
+      
+      
+      CheckBoxGadget(#GADGET_PV_ALLOWUNPROTECT, 5, GadgetY, 340, 20, Language(#L_ALLOWUNPROTECT))
+      CompilerIf #USE_HIDE_UNPROTECT_CHECKBOX        
+        HideGadget(#GADGET_PV_ALLOWUNPROTECT, #True)
+      CompilerElse
         GadgetY+25
-        ButtonGadget(#GADGET_PV_COMMAND_BUTTON, 358, GadgetY, 30, 20, "?")
-        StringGadget(#GADGET_PV_COMMAND_STRING, 115, GadgetY, 240, 20, "")
-        TextGadget(#GADGET_PV_COMMAND_TEXT, 5, GadgetY+3, 100, 20, Language(#L_PARAMENTER)+":")
-        DisableGadget(#GADGET_PV_COMMAND_BUTTON, #True)
-        DisableGadget(#GADGET_PV_COMMAND_STRING, #True)
-        
-        
-        
-        
-        TextGadget(#GADGET_PV_WARNING, 5, 305, 370, 32, "", #PB_Text_Center)
-        SetGadgetColor(#GADGET_PV_WARNING, #PB_Gadget_FrontColor, RGB(255,0,0))
-        
-        
-        
-        
-        
+      CompilerEndIf
+      
+      
+      ButtonGadget(#GADGET_PV_ICON_BUTTON, 358, GadgetY, 30, 20, "...")
+      StringGadget(#GADGET_PV_ICON_STRING, 115, GadgetY, 240, 20, "")
+      TextGadget(#GADGET_PV_ICON_TEXT, 5, GadgetY+3, 100, 20, Language(#L_ICON)+":")
+      DisableGadget(#GADGET_PV_ICON_BUTTON, #True)
+      DisableGadget(#GADGET_PV_ICON_STRING, #True)
+      GadgetY+25
+      ButtonGadget(#GADGET_PV_COMMAND_BUTTON, 358, GadgetY, 30, 20, "?")
+      StringGadget(#GADGET_PV_COMMAND_STRING, 115, GadgetY, 240, 20, "")
+      TextGadget(#GADGET_PV_COMMAND_TEXT, 5, GadgetY+3, 100, 20, Language(#L_PARAMENTER)+":")
+      DisableGadget(#GADGET_PV_COMMAND_BUTTON, #True)
+      DisableGadget(#GADGET_PV_COMMAND_STRING, #True)
+      
+      
+      
+      
+      TextGadget(#GADGET_PV_WARNING, 5, 305, 370, 32, "", #PB_Text_Center)
+      SetGadgetColor(#GADGET_PV_WARNING, #PB_Gadget_FrontColor, RGB(255,0,0))
+      
+      
+      
+      
+      
       ;AddGadgetItem(#GADGET_PV_PANEL, -1, Language(#L_EXTENDED), ImageID(#SPRITE_MENU_OPTIONS))
-
+      
       
       AddGadgetItem(#GADGET_PV_PANEL, -1, Language(#L_TAGS), ImageID(#SPRITE_MENU_PLAYLIST))  
-        GadgetY=5
-        TextGadget(#PB_Any, 5, GadgetY+3, 110, 20, Language(#L_TITLE)+":")
-        StringGadget(#GADGET_PV_TAG_TITLE, 115, GadgetY, 270 , 20, "")
-        GadgetY+30
-        TextGadget(#PB_Any, 5, GadgetY+3, 110, 20, Language(#L_ALBUM)+":")
-        StringGadget(#GADGET_PV_TAG_ALBUM, 115, GadgetY, 270, 20, "")              
-        GadgetY+30
-        TextGadget(#PB_Any, 5, GadgetY+3, 110, 20, Language(#L_INTERPRET)+":")
-        StringGadget(#GADGET_PV_TAG_INTERPRET, 115, GadgetY, 270, 20, "")     
-        GadgetY=220-(UsedDPI-96)/5
-        TextGadget(#PB_Any, 5, GadgetY+3, 110, 20, Language(#L_COMMENT)+":") 
-        GadgetY+25
-        EditorGadget(#GADGET_PV_TAG_COMMENT, 5, GadgetY, 380, 90)
-        
-        
-      AddGadgetItem(#GADGET_PV_PANEL, -1, Language(#L_OTHER), ImageID(#SPRITE_MENU_COVERFLOW))  
-        GadgetY=5
-        TextGadget(#GADGET_PV_COVER_TEXT, 5, GadgetY, 60, 20, Language(#L_COVER)+":")
-        GadgetY+25
-        ImageGadget(#GADGET_PV_COVER_IMG, 5, GadgetY, 100, 100, ImageID(#SPRITE_NOIMAGE), #PB_Image_Border)
-        EnableGadgetDrop(#GADGET_PV_COVER_IMG, #PB_Drop_Files, #PB_Drag_Link)
-        TextGadget(#GADGET_PV_COVER_TEXT2, 120, GadgetY, 160, 20, Language(#L_COVER_FILE)+":")
-        GadgetY+25
-        ButtonGadget(#GADGET_PV_COVER_BUTTON, 340, GadgetY, 35, 20, "...")
-        StringGadget(#GADGET_PV_COVER_STRING, 120, GadgetY, 215, 20, "", #PB_String_ReadOnly)
-        GadgetY=150
-        
-        StringGadget(#GADGET_PV_CODECNAME_STRING, 115, GadgetY, 270, 20, "")
-        TextGadget(#GADGET_PV_CODECNAME_TEXT, 5, GadgetY+3, 105, 40, Language(#L_USED_CODEC)+":")
-        GadgetY+30
-        StringGadget(#GADGET_PV_CODECLINK_STRING, 115, GadgetY, 270, 20, "")
-        TextGadget(#GADGET_PV_CODECLINK_TEXT, 5, GadgetY-3, 105, 40, Language(#L_CODEC_DOWNLOAD_LINK)+":")        
-        
-        GadgetY+30
-        
-        
-
-        
-      AddGadgetItem(#GADGET_PV_PANEL, -1, Language(#L_PROTECTION), ImageID(#SPRITE_MENU_TRESOR))    
-        GadgetY=5
-        ImageGadget(#PB_Any, 2, GadgetY, 32, 32, ImageID(#SPRITE_NOPHOTO))
-        TextGadget(#GADGET_PV_SNAPSHOT_TEXT, 40, GadgetY, 200, 20, Language(#L_DISALLOWSNAPSHOT)+":")
-        
-        GadgetY+20
-        ComboBoxGadget(#GADGET_PV_SNAPSHOT_COMBOBOX, 40, GadgetY, 170, 20)
-        AddGadgetItem(#GADGET_PV_SNAPSHOT_COMBOBOX, -1, Language(#L_ACTIVE))
-        AddGadgetItem(#GADGET_PV_SNAPSHOT_COMBOBOX, -1, Language(#L_INACTIVE))
-        ;AddGadgetItem(#GADGET_PV_SNAPSHOT_COMBOBOX, -1, Language(#L_EXTENDED))
-        SetGadgetState(#GADGET_PV_SNAPSHOT_COMBOBOX, 0)
-        
-        GadgetY+30
-        CheckBoxGadget(#GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION, 40, GadgetY, 340, 20, Language(#L_NOT_FORCE_SCREENSHOT_PROTECTION));+" ("+Language(#L_NOT_RECOMMENDED)+")")
-        ;DisableGadget(#GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION, #True)
-        SetGadgetState(#GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION, #True)
-        GadgetY+30
+      GadgetY=5
+      TextGadget(#PB_Any, 5, GadgetY+3, 110, 20, Language(#L_TITLE)+":")
+      StringGadget(#GADGET_PV_TAG_TITLE, 115, GadgetY, 270 , 20, "")
+      GadgetY+30
+      TextGadget(#PB_Any, 5, GadgetY+3, 110, 20, Language(#L_ALBUM)+":")
+      StringGadget(#GADGET_PV_TAG_ALBUM, 115, GadgetY, 270, 20, "")              
+      GadgetY+30
+      TextGadget(#PB_Any, 5, GadgetY+3, 110, 20, Language(#L_INTERPRET)+":")
+      StringGadget(#GADGET_PV_TAG_INTERPRET, 115, GadgetY, 270, 20, "")     
+      GadgetY=220-(UsedDPI-96)/5
+      TextGadget(#PB_Any, 5, GadgetY+3, 110, 20, Language(#L_COMMENT)+":") 
+      GadgetY+25
+      EditorGadget(#GADGET_PV_TAG_COMMENT, 5, GadgetY, 380, 90)
       
-        
-
-        CheckBoxGadget(#GADGET_PV_EXPIRE_DATE_TEXT, 5, GadgetY, 260, 20, Language(#L_EXPIRE_DATE))
-        GadgetY+22
-        mask.s="%mm/%dd/%yyyy"
-        If iUsedLanguage.i=#LANGUAGE_DE
-          mask.s="%dd.%mm.%yyyy"
-        EndIf
-        DateGadget(#GADGET_PV_EXPIRE_DATE, 5, GadgetY, 180, 25, mask)
-        DisableGadget(#GADGET_PV_EXPIRE_DATE, #True)
-        ;HideGadget(#GADGET_PV_EXPIRE_DATE_TEXT, #True)
-        ;HideGadget(#GADGET_PV_EXPIRE_DATE, #True)
-        GadgetY+40
-        
-        
-        CheckBoxGadget(#GADGET_PV_COPY_PROTECTION, 5, GadgetY, 260, 20, Language(#L_USE_COPY_PROTECTION))
-        GadgetY+35
-        StringGadget(#GADGET_PV_MACHINEID_STRING, 115, GadgetY, 270, 20, "")
-        TextGadget(#GADGET_PV_MACHINEID_TEXT, 5, GadgetY+3, 105, 20, Language(#L_MACHINE_ID)+":")  
-        GadgetY+23
-        HyperLinkGadget(#GADGET_PV_MACHINEID_GENERATE, 5, GadgetY,200,20,Language(#L_GENERATE_MACHINE_ID),#Blue, #PB_HyperLink_Underline)
-        
-        CompilerIf #USE_OEM_VERSION
-          HideGadget(#GADGET_PV_COPY_PROTECTION, #True)
-          HideGadget(#GADGET_PV_EXPIRE_DATE, #True)
-          HideGadget(#GADGET_PV_EXPIRE_DATE_TEXT, #True)
-        CompilerEndIf
-        
-        CompilerIf #USE_EXTENDED_DRM=#False
-          HideGadget(#GADGET_PV_COPY_PROTECTION, #True)
-          HideGadget(#GADGET_PV_MACHINEID_STRING, #True)
-          HideGadget(#GADGET_PV_MACHINEID_TEXT, #True)
-        CompilerEndIf  
-          
+      
+      AddGadgetItem(#GADGET_PV_PANEL, -1, Language(#L_OTHER), ImageID(#SPRITE_MENU_COVERFLOW))  
+      GadgetY=5
+      TextGadget(#GADGET_PV_COVER_TEXT, 5, GadgetY, 60, 20, Language(#L_COVER)+":")
+      GadgetY+25
+      ImageGadget(#GADGET_PV_COVER_IMG, 5, GadgetY, 100, 100, ImageID(#SPRITE_NOIMAGE), #PB_Image_Border)
+      EnableGadgetDrop(#GADGET_PV_COVER_IMG, #PB_Drop_Files, #PB_Drag_Link)
+      TextGadget(#GADGET_PV_COVER_TEXT2, 120, GadgetY, 160, 20, Language(#L_COVER_FILE)+":")
+      GadgetY+25
+      ButtonGadget(#GADGET_PV_COVER_BUTTON, 340, GadgetY, 35, 20, "...")
+      StringGadget(#GADGET_PV_COVER_STRING, 120, GadgetY, 215, 20, "", #PB_String_ReadOnly)
+      GadgetY=150
+      
+      StringGadget(#GADGET_PV_CODECNAME_STRING, 115, GadgetY, 270, 20, "")
+      TextGadget(#GADGET_PV_CODECNAME_TEXT, 5, GadgetY+3, 105, 40, Language(#L_USED_CODEC)+":")
+      GadgetY+30
+      StringGadget(#GADGET_PV_CODECLINK_STRING, 115, GadgetY, 270, 20, "")
+      TextGadget(#GADGET_PV_CODECLINK_TEXT, 5, GadgetY-3, 105, 40, Language(#L_CODEC_DOWNLOAD_LINK)+":")        
+      
+      GadgetY+30
+      
+      
+      
+      
+      AddGadgetItem(#GADGET_PV_PANEL, -1, Language(#L_PROTECTION), ImageID(#SPRITE_MENU_TRESOR))    
+      GadgetY=5
+      ImageGadget(#PB_Any, 2, GadgetY, 32, 32, ImageID(#SPRITE_NOPHOTO))
+      TextGadget(#GADGET_PV_SNAPSHOT_TEXT, 40, GadgetY, 200, 20, Language(#L_DISALLOWSNAPSHOT)+":")
+      
+      GadgetY+20
+      ComboBoxGadget(#GADGET_PV_SNAPSHOT_COMBOBOX, 40, GadgetY, 170, 20)
+      AddGadgetItem(#GADGET_PV_SNAPSHOT_COMBOBOX, -1, Language(#L_ACTIVE))
+      AddGadgetItem(#GADGET_PV_SNAPSHOT_COMBOBOX, -1, Language(#L_INACTIVE))
+      ;AddGadgetItem(#GADGET_PV_SNAPSHOT_COMBOBOX, -1, Language(#L_EXTENDED))
+      SetGadgetState(#GADGET_PV_SNAPSHOT_COMBOBOX, 0)
+      
+      GadgetY+30
+      CheckBoxGadget(#GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION, 40, GadgetY, 340, 20, Language(#L_NOT_FORCE_SCREENSHOT_PROTECTION));+" ("+Language(#L_NOT_RECOMMENDED)+")")
+                                                                                                                                    ;DisableGadget(#GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION, #True)
+      SetGadgetState(#GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION, #True)
+      GadgetY+30
+      
+      
+      
+      CheckBoxGadget(#GADGET_PV_EXPIRE_DATE_TEXT, 5, GadgetY, 260, 20, Language(#L_EXPIRE_DATE))
+      GadgetY+22
+      mask.s="%mm/%dd/%yyyy"
+      If iUsedLanguage.i=#LANGUAGE_DE
+        mask.s="%dd.%mm.%yyyy"
+      EndIf
+      DateGadget(#GADGET_PV_EXPIRE_DATE, 5, GadgetY, 180, 25, mask)
+      DisableGadget(#GADGET_PV_EXPIRE_DATE, #True)
+      ;HideGadget(#GADGET_PV_EXPIRE_DATE_TEXT, #True)
+      ;HideGadget(#GADGET_PV_EXPIRE_DATE, #True)
+      GadgetY+40
+      
+      
+      CheckBoxGadget(#GADGET_PV_COPY_PROTECTION, 5, GadgetY, 260, 20, Language(#L_USE_COPY_PROTECTION))
+      GadgetY+35
+      StringGadget(#GADGET_PV_MACHINEID_STRING, 115, GadgetY, 270, 20, "")
+      TextGadget(#GADGET_PV_MACHINEID_TEXT, 5, GadgetY+3, 105, 20, Language(#L_MACHINE_ID)+":")  
+      GadgetY+23
+      HyperLinkGadget(#GADGET_PV_MACHINEID_GENERATE, 5, GadgetY,200,20,Language(#L_GENERATE_MACHINE_ID),#Blue, #PB_HyperLink_Underline)
+      
+      CompilerIf #USE_OEM_VERSION
+        HideGadget(#GADGET_PV_COPY_PROTECTION, #True)
+        HideGadget(#GADGET_PV_EXPIRE_DATE, #True)
+        HideGadget(#GADGET_PV_EXPIRE_DATE_TEXT, #True)
+      CompilerEndIf
+      
+      CompilerIf #USE_EXTENDED_DRM=#False
+        HideGadget(#GADGET_PV_COPY_PROTECTION, #True)
+        HideGadget(#GADGET_PV_MACHINEID_STRING, #True)
+        HideGadget(#GADGET_PV_MACHINEID_TEXT, #True)
+      CompilerEndIf  
+      
       sFile.s = MediaFile\sRealFile
       If sFile
         SetProtectVideo(sFile.s)
@@ -6605,8 +6692,8 @@ EndProcedure
       SetActiveWindow(#WINDOW_VIDEOPROTECT)
     EndIf
   EndProcedure
-;}
-;{ Event Management
+  ;}
+  ;{ Event Management
   Procedure ResizeMainWindow()
     Protected sFile.s, iState.i, iImage.i, iEventMenu.i, i.i, qNewPos.q, sPath.s, iEventGadget.i, key.i, sURL.s
     Protected FullscreenControlHeight.i, sSubtitleFile.s, iMenuHeight=0
@@ -6614,8 +6701,8 @@ EndProcedure
       If IsMenu(#MENU_MAIN)
         iMenuHeight=MenuHeight()
       EndIf  
-        
-       ;Debug "RESIZE"+Str(Random(100))
+      
+      ;Debug "RESIZE"+Str(Random(100))
       Dim Statusbar_Widths.l(1)
       Statusbar_Widths(0) = WindowWidth(#WINDOW_MAIN)-150
       Statusbar_Widths(1) = WindowWidth(#WINDOW_MAIN)
@@ -6669,8 +6756,8 @@ EndProcedure
         ResizeGadget(#GADGET_VIS_CONTAINER, 0, 0, 0, 0)
       EndIf
       
-
-
+      
+      
       ;Media
       ResizeGadget(#GADGET_TRACKBAR          , DControlX(#GADGET_TRACKBAR), DControlY(#GADGET_TRACKBAR), DControlW(#GADGET_TRACKBAR), DControlH(#GADGET_TRACKBAR))
       ResizeGadget(#GADGET_BUTTON_BACKWARD   , DControlX(#GADGET_BUTTON_BACKWARD), DControlY(#GADGET_BUTTON_BACKWARD), DControlW(#GADGET_BUTTON_BACKWARD), DControlH(#GADGET_BUTTON_BACKWARD))
@@ -6758,17 +6845,17 @@ EndProcedure
           RunCommand(#COMMAND_VOLUME, iState)
         EndIf
       EndIf
- 
+      
     EndIf
     
     If iEvent = #PB_Event_SysTray
       If EventType() = #PB_EventType_LeftDoubleClick
         If IsWindowVisible_(WindowID(#WINDOW_MAIN))
-            HideWindow(#WINDOW_MAIN, #True)
-          Else
-            HideWindow(#WINDOW_MAIN, #False)
-            SetWindowState(#WINDOW_MAIN, #PB_Window_Normal) 
-            SetActiveWindow(#WINDOW_MAIN)
+          HideWindow(#WINDOW_MAIN, #True)
+        Else
+          HideWindow(#WINDOW_MAIN, #False)
+          SetWindowState(#WINDOW_MAIN, #PB_Window_Normal) 
+          SetActiveWindow(#WINDOW_MAIN)
         EndIf
       EndIf
       If EventType() = #PB_EventType_RightClick
@@ -6787,244 +6874,244 @@ EndProcedure
       iEventMenu = EventMenu()
       VDVD_MenuEvents(iEventMenu)
       Select iEventMenu
-      Case #MENU_LOAD
-        RunCommand(#COMMAND_LOAD)
-      
-      Case #MENU_LOADCLIPBOARD
-        RunCommand(#COMMAND_PASTE)
-      
-      Case #MENU_LOADURL
-        ;sURL.s=InputRequester(Language(#L_LOAD), Language(#L_LOADURL), "http://")
-        ;URLRequester("von URL streamen", "Mediendatei von URL streamen", "Adresse zur Mediendatei:", "Beispiel anzeigen", "http://test.de/myvideo.gfp"+Chr(13)+"file://c:/myvideo.gfp", "test", "Abspielen", "Abbrechen")
-        sURL.s = URLRequester(Language(#L_URL_STREAMING), Language(#L_STREAM_MEDIA_FROM_URL), Language(#L_URL_TO_MEDIAFILE)+":", Language(#L_SHOW_SAMPLE), "http://test.de/myvideo.gfp"+Chr(13)+"https://test.de/myvideo.mp4", "", Language(#L_PLAY), Language(#L_CANCEL))
-        If sURL.s
-          ;LoadMediaFile(sURL.s)
-          RunCommand(#COMMAND_LOADFILE, 0, sURL)
-        EndIf
-        
-      Case #MENU_COPYTOCLIPBOARD
-        RunCommand(#COMMAND_COPY)
-      
-      Case #MENU_QUIT
-        WriteLog("exit application though #MENU_QUIT", #LOGLEVEL_DEBUG)
-        ;iQuit = 1
-        EndPlayer()
-      
-      Case #MENU_VIS_OFF
-        VIS_SetVIS(#False)
-        
-      Case #MENU_VIS_SIMPLE
-        VIS_SetVIS(#VIS_SIMPLE)    
-  
-      Case #MENU_VIS_DCT
-        VIS_SetVIS(#VIS_DCT)
-
-      Case #MENU_VIS_WHITELIGHT
-        VIS_SetVIS(#VIS_WHITELIGHT)
-
-      Case #MENU_VIS_COVERFLOW
-        If iIsVISUsed<>#VIS_COVERFLOW
-          ;VIS_SetVIS(#VIS_COVERFLOW)
-          LoadCoverFlow()
-        Else
-          VIS_SetVIS(#False)
-        EndIf
+        Case #MENU_LOAD
+          RunCommand(#COMMAND_LOAD)
           
-      Case #MENU_ABOUT
-        CreateAboutWindow()
-      
-      Case #MENU_PLAYLIST
-        RunCommand(#COMMAND_PLAYLIST)
-      
-      Case #MENU_HOMEPAGE
-        RunProgram("http://GFP.RRSoftware.de")
-        
-      Case #MENU_DOCUMENTATION
-        If FileSize(GetPathPart(ProgramFilename())+"Help\GFP-Documentation.html")>0
-        ;Define a$
-        ;a$=GetPathPart(ProgramFilename())+"Help\GFP-Documentation.html"
-          RunProgram(GetPathPart(ProgramFilename())+"Help\GFP-Documentation.html");a$)
-        Else
-          RunProgram("http://gfp.rrsoftware.de/index.php?option=com_content&view=category&id=37&Itemid=62")
-        EndIf  
-        
-      Case #MENU_OPTIONS
-        RunCommand(#COMMAND_OPTIONS)
-      
-      Case #MENU_CHECKUPDATES
-        CompilerIf #USE_OEM_VERSION = #False
-          UpdatePlayer()
-        CompilerEndIf  
-      
-      Case #MENU_DOWNLOADCODECS
-        RunProgram("http://www.codecguide.com")
-      
-      Case #MENU_PLAY
-        RunCommand(#COMMAND_PLAY)
-      
-      Case #MENU_FULLSCREEN
-        RunCommand(#COMMAND_FULLSCREEN)
-      
-      Case #MENU_STOP
-        RunCommand(#COMMAND_STOP)
-      
-      Case #MENU_FORWARD
-        RunCommand(#COMMAND_NEXTTRACK)
-  
-      Case #MENU_BACKWARD
-        RunCommand(#COMMAND_PREVIOUSTRACK)
-      
-      Case #MENU_ASPECTATION_AUTO
-        RunCommand(#COMMAND_ASPECT, 0)
-        ChangeSelectedAspectRation(#MENU_ASPECTATION_AUTO)
-        
-      Case #MENU_ASPECTATION_1_1
-        RunCommand(#COMMAND_ASPECT, 1/1)
-        ChangeSelectedAspectRation(#MENU_ASPECTATION_1_1)
-        
-      Case #MENU_ASPECTATION_4_3
-        RunCommand(#COMMAND_ASPECT, 4/3)
-        ChangeSelectedAspectRation(#MENU_ASPECTATION_4_3)
-        
-      Case #MENU_ASPECTATION_5_4
-        RunCommand(#COMMAND_ASPECT, 5/4)
-        ChangeSelectedAspectRation(#MENU_ASPECTATION_5_4)
-        
-      Case #MENU_ASPECTATION_16_9
-        RunCommand(#COMMAND_ASPECT, 16/9)
-        ChangeSelectedAspectRation(#MENU_ASPECTATION_16_9)
-        
-      Case #MENU_ASPECTATION_16_10
-        RunCommand(#COMMAND_ASPECT, 16/10)
-        ChangeSelectedAspectRation(#MENU_ASPECTATION_16_10)
-        
-      Case #MENU_ASPECTATION_21_9
-        RunCommand(#COMMAND_ASPECT, 21/9)
-        ChangeSelectedAspectRation(#MENU_ASPECTATION_21_9)
-        
-      Case #MENU_ASPECTATION_2_1
-        RunCommand(#COMMAND_ASPECT, 2/1)
-        ChangeSelectedAspectRation(#MENU_ASPECTATION_2_1)
-        
-      Case #MENU_ASPECTATION_1_2
-        RunCommand(#COMMAND_ASPECT, 1/2)
-        ChangeSelectedAspectRation(#MENU_ASPECTATION_1_2)
-        
-      Case #MENU_SHOW
-        If IsWindowVisible_(WindowID(#WINDOW_MAIN))
-          HideWindow(#WINDOW_MAIN, #True)
-        Else
-          HideWindow(#WINDOW_MAIN, #False)
-          SetWindowState(#WINDOW_MAIN, #PB_Window_Normal) 
-          SetActiveWindow(#WINDOW_MAIN)
-        EndIf
-      
-      Case #MENU_PROTECTVIDEO
-        RunCommand(#COMMAND_PROTECTVIDEO)
-      
-      Case #MENU_UNPROTECTVIDEO  
-        RunCommand(#COMMAND_UNPROTECTVIDEO)
-      
-      Case #MENU_ERASEPASSWORDS
-        RunCommand(#COMMAND_CLAERPASSWORDS)  
-      
-      Case #MENU_AUDIOCD
-        If IsWindowVisible_(GadgetID(#GADGET_AUDIOCD_CONTAINER))
-          ChangeContainer(#GADGET_CONTAINER)
-        Else
-          ChangeContainer(#GADGET_AUDIOCD_CONTAINER)
-        EndIf
- 
-      Case #MENU_VIDEODVD
-        If IsWindowVisible_(GadgetID(#GADGET_VIDEODVD_CONTAINER))
-          ChangeContainer(#GADGET_CONTAINER)
-        Else
-          ChangeContainer(#GADGET_VIDEODVD_CONTAINER)
-        EndIf
-      
-      Case #MENU_PLAYMEDIA
-        ChangeContainer(#GADGET_CONTAINER)
-      
-      Case #MENU_MINIMALMODE
-        SetFullScreen(#True)
-      
-      Case #MENU_STAYONTOP
-        iStayMainWndOnTop = GetMenuItemState(#MENU_MAIN, #MENU_STAYONTOP)!1
-        SetMenuItemState(#MENU_MAIN, #MENU_STAYONTOP, iStayMainWndOnTop)
-        StickyWindow(#WINDOW_MAIN, iStayMainWndOnTop)
-        
-      Case #MENU_CHRONIC_CLEAR
-        ClearChronic()
-        
-      Case #MENU_CHRONIC_1  
-        LoadChronicFile(0)
-        
-      Case #MENU_CHRONIC_2
-        LoadChronicFile(1)
+        Case #MENU_LOADCLIPBOARD
+          RunCommand(#COMMAND_PASTE)
           
-      Case #MENU_CHRONIC_3  
-        LoadChronicFile(2)
-            
-      Case #MENU_CHRONIC_4  
-        LoadChronicFile(3)
-        
-      Case #MENU_CHRONIC_5  
-        LoadChronicFile(4)
-        
-      Case #MENU_CHRONIC_6  
-        LoadChronicFile(5)
-          
-      Case #MENU_CHRONIC_7  
-        LoadChronicFile(6)
-            
-      Case #MENU_CHRONIC_8  
-        LoadChronicFile(7)
-        
-      Case #MENU_CHRONIC_9 
-        LoadChronicFile(8)
-        
-      Case #MENU_CHRONIC_10 
-        LoadChronicFile(9)
-        
-      Case #MENU_DONATE
-        RunProgram("https://www.paypal.com/us/cgi-bin/webscr?hosted_button_id=MLS8GVQ2FZMAE&cmd=_s-xclick")
-        
-      Case #MENU_LOAD_SUBTITLES
-        CompilerIf #USE_SUBTITLES
-          sSubtitleFile = OpenFileRequesterEx(Language(#L_LOAD_SUBTITLES), GetPathPart(MediaFile\sRealFile), #GFP_PATTERN_SUBTILTES, 0)
-          If sSubtitleFile
-            LoadSubtileFile(sSubtitleFile, MediaFPS(iMediaObject))
+        Case #MENU_LOADURL
+          ;sURL.s=InputRequester(Language(#L_LOAD), Language(#L_LOADURL), "http://")
+          ;URLRequester("von URL streamen", "Mediendatei von URL streamen", "Adresse zur Mediendatei:", "Beispiel anzeigen", "http://test.de/myvideo.gfp"+Chr(13)+"file://c:/myvideo.gfp", "test", "Abspielen", "Abbrechen")
+          sURL.s = URLRequester(Language(#L_URL_STREAMING), Language(#L_STREAM_MEDIA_FROM_URL), Language(#L_URL_TO_MEDIAFILE)+":", Language(#L_SHOW_SAMPLE), "http://test.de/myvideo.gfp"+Chr(13)+"https://test.de/myvideo.mp4", "", Language(#L_PLAY), Language(#L_CANCEL))
+          If sURL.s
+            ;LoadMediaFile(sURL.s)
+            RunCommand(#COMMAND_LOADFILE, 0, sURL)
           EndIf
-        CompilerEndIf
-        
-      Case #MENU_DISABLE_SUBTITLES
-        CompilerIf #USE_SUBTITLES
+          
+        Case #MENU_COPYTOCLIPBOARD
+          RunCommand(#COMMAND_COPY)
+          
+        Case #MENU_QUIT
+          WriteLog("exit application though #MENU_QUIT", #LOGLEVEL_DEBUG)
+          ;iQuit = 1
+          EndPlayer()
+          
+        Case #MENU_VIS_OFF
+          VIS_SetVIS(#False)
+          
+        Case #MENU_VIS_SIMPLE
+          VIS_SetVIS(#VIS_SIMPLE)    
+          
+        Case #MENU_VIS_DCT
+          VIS_SetVIS(#VIS_DCT)
+          
+        Case #MENU_VIS_WHITELIGHT
+          VIS_SetVIS(#VIS_WHITELIGHT)
+          
+        Case #MENU_VIS_COVERFLOW
+          If iIsVISUsed<>#VIS_COVERFLOW
+            ;VIS_SetVIS(#VIS_COVERFLOW)
+            LoadCoverFlow()
+          Else
+            VIS_SetVIS(#False)
+          EndIf
+          
+        Case #MENU_ABOUT
+          CreateAboutWindow()
+          
+        Case #MENU_PLAYLIST
+          RunCommand(#COMMAND_PLAYLIST)
+          
+        Case #MENU_HOMEPAGE
+          RunProgram("http://GFP.RRSoftware.de")
+          
+        Case #MENU_DOCUMENTATION
+          If FileSize(GetPathPart(ProgramFilename())+"Help\GFP-Documentation.html")>0
+            ;Define a$
+            ;a$=GetPathPart(ProgramFilename())+"Help\GFP-Documentation.html"
+            RunProgram(GetPathPart(ProgramFilename())+"Help\GFP-Documentation.html");a$)
+          Else
+            RunProgram("http://gfp.rrsoftware.de/index.php?option=com_content&view=category&id=37&Itemid=62")
+          EndIf  
+          
+        Case #MENU_OPTIONS
+          RunCommand(#COMMAND_OPTIONS)
+          
+        Case #MENU_CHECKUPDATES
+          CompilerIf #USE_OEM_VERSION = #False
+            UpdatePlayer()
+          CompilerEndIf  
+          
+        Case #MENU_DOWNLOADCODECS
+          RunProgram("http://www.codecguide.com")
+          
+        Case #MENU_PLAY
+          RunCommand(#COMMAND_PLAY)
+          
+        Case #MENU_FULLSCREEN
+          RunCommand(#COMMAND_FULLSCREEN)
+          
+        Case #MENU_STOP
+          RunCommand(#COMMAND_STOP)
+          
+        Case #MENU_FORWARD
+          RunCommand(#COMMAND_NEXTTRACK)
+          
+        Case #MENU_BACKWARD
+          RunCommand(#COMMAND_PREVIOUSTRACK)
+          
+        Case #MENU_ASPECTATION_AUTO
+          RunCommand(#COMMAND_ASPECT, 0)
+          ChangeSelectedAspectRation(#MENU_ASPECTATION_AUTO)
+          
+        Case #MENU_ASPECTATION_1_1
+          RunCommand(#COMMAND_ASPECT, 1/1)
+          ChangeSelectedAspectRation(#MENU_ASPECTATION_1_1)
+          
+        Case #MENU_ASPECTATION_4_3
+          RunCommand(#COMMAND_ASPECT, 4/3)
+          ChangeSelectedAspectRation(#MENU_ASPECTATION_4_3)
+          
+        Case #MENU_ASPECTATION_5_4
+          RunCommand(#COMMAND_ASPECT, 5/4)
+          ChangeSelectedAspectRation(#MENU_ASPECTATION_5_4)
+          
+        Case #MENU_ASPECTATION_16_9
+          RunCommand(#COMMAND_ASPECT, 16/9)
+          ChangeSelectedAspectRation(#MENU_ASPECTATION_16_9)
+          
+        Case #MENU_ASPECTATION_16_10
+          RunCommand(#COMMAND_ASPECT, 16/10)
+          ChangeSelectedAspectRation(#MENU_ASPECTATION_16_10)
+          
+        Case #MENU_ASPECTATION_21_9
+          RunCommand(#COMMAND_ASPECT, 21/9)
+          ChangeSelectedAspectRation(#MENU_ASPECTATION_21_9)
+          
+        Case #MENU_ASPECTATION_2_1
+          RunCommand(#COMMAND_ASPECT, 2/1)
+          ChangeSelectedAspectRation(#MENU_ASPECTATION_2_1)
+          
+        Case #MENU_ASPECTATION_1_2
+          RunCommand(#COMMAND_ASPECT, 1/2)
+          ChangeSelectedAspectRation(#MENU_ASPECTATION_1_2)
+          
+        Case #MENU_SHOW
+          If IsWindowVisible_(WindowID(#WINDOW_MAIN))
+            HideWindow(#WINDOW_MAIN, #True)
+          Else
+            HideWindow(#WINDOW_MAIN, #False)
+            SetWindowState(#WINDOW_MAIN, #PB_Window_Normal) 
+            SetActiveWindow(#WINDOW_MAIN)
+          EndIf
+          
+        Case #MENU_PROTECTVIDEO
+          RunCommand(#COMMAND_PROTECTVIDEO)
+          
+        Case #MENU_UNPROTECTVIDEO  
+          RunCommand(#COMMAND_UNPROTECTVIDEO)
+          
+        Case #MENU_ERASEPASSWORDS
+          RunCommand(#COMMAND_CLAERPASSWORDS)  
+          
+        Case #MENU_AUDIOCD
+          If IsWindowVisible_(GadgetID(#GADGET_AUDIOCD_CONTAINER))
+            ChangeContainer(#GADGET_CONTAINER)
+          Else
+            ChangeContainer(#GADGET_AUDIOCD_CONTAINER)
+          EndIf
+          
+        Case #MENU_VIDEODVD
+          If IsWindowVisible_(GadgetID(#GADGET_VIDEODVD_CONTAINER))
+            ChangeContainer(#GADGET_CONTAINER)
+          Else
+            ChangeContainer(#GADGET_VIDEODVD_CONTAINER)
+          EndIf
+          
+        Case #MENU_PLAYMEDIA
+          ChangeContainer(#GADGET_CONTAINER)
+          
+        Case #MENU_MINIMALMODE
+          SetFullScreen(#True)
+          
+        Case #MENU_STAYONTOP
+          iStayMainWndOnTop = GetMenuItemState(#MENU_MAIN, #MENU_STAYONTOP)!1
+          SetMenuItemState(#MENU_MAIN, #MENU_STAYONTOP, iStayMainWndOnTop)
+          StickyWindow(#WINDOW_MAIN, iStayMainWndOnTop)
+          
+        Case #MENU_CHRONIC_CLEAR
+          ClearChronic()
+          
+        Case #MENU_CHRONIC_1  
+          LoadChronicFile(0)
+          
+        Case #MENU_CHRONIC_2
+          LoadChronicFile(1)
+          
+        Case #MENU_CHRONIC_3  
+          LoadChronicFile(2)
+          
+        Case #MENU_CHRONIC_4  
+          LoadChronicFile(3)
+          
+        Case #MENU_CHRONIC_5  
+          LoadChronicFile(4)
+          
+        Case #MENU_CHRONIC_6  
+          LoadChronicFile(5)
+          
+        Case #MENU_CHRONIC_7  
+          LoadChronicFile(6)
+          
+        Case #MENU_CHRONIC_8  
+          LoadChronicFile(7)
+          
+        Case #MENU_CHRONIC_9 
+          LoadChronicFile(8)
+          
+        Case #MENU_CHRONIC_10 
+          LoadChronicFile(9)
+          
+        Case #MENU_DONATE
+          RunProgram("https://www.paypal.com/us/cgi-bin/webscr?hosted_button_id=MLS8GVQ2FZMAE&cmd=_s-xclick")
+          
+        Case #MENU_LOAD_SUBTITLES
+          CompilerIf #USE_SUBTITLES
+            sSubtitleFile = OpenFileRequesterEx(Language(#L_LOAD_SUBTITLES), GetPathPart(MediaFile\sRealFile), #GFP_PATTERN_SUBTILTES, 0)
+            If sSubtitleFile
+              LoadSubtileFile(sSubtitleFile, MediaFPS(iMediaObject))
+            EndIf
+          CompilerEndIf
+          
+        Case #MENU_DISABLE_SUBTITLES
+          CompilerIf #USE_SUBTITLES
             FreeSubtitles()
-        CompilerEndIf
-        
-      Case #MENU_SAVE_MEDIAPOS
-        SaveMediaPos(IMediaObject, MediaFile\sRealFile, MediaFile\qOffset)
-        
-      Case #MENU_SUBTITLE_SIZE_20  
-        SetSubtitleSize(20)
-        
-      Case #MENU_SUBTITLE_SIZE_30  
-        SetSubtitleSize(30)
-        
-      Case #MENU_SUBTITLE_SIZE_40  
-        SetSubtitleSize(40)
-        
-      Case #MENU_SUBTITLE_SIZE_50  
-        SetSubtitleSize(50)
-        
-      Case #MENU_SUBTITLE_SIZE_60  
-        SetSubtitleSize(60)
-        
-      Case #MENU_SNAPSHOT
-        If IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_ALLOW
-          RunCommand(#COMMAND_SNAPSHOT)
-        EndIf  
-        
+          CompilerEndIf
+          
+        Case #MENU_SAVE_MEDIAPOS
+          SaveMediaPos(IMediaObject, MediaFile\sRealFile, MediaFile\qOffset)
+          
+        Case #MENU_SUBTITLE_SIZE_20  
+          SetSubtitleSize(20)
+          
+        Case #MENU_SUBTITLE_SIZE_30  
+          SetSubtitleSize(30)
+          
+        Case #MENU_SUBTITLE_SIZE_40  
+          SetSubtitleSize(40)
+          
+        Case #MENU_SUBTITLE_SIZE_50  
+          SetSubtitleSize(50)
+          
+        Case #MENU_SUBTITLE_SIZE_60  
+          SetSubtitleSize(60)
+          
+        Case #MENU_SNAPSHOT
+          If IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_ALLOW
+            RunCommand(#COMMAND_SNAPSHOT)
+          EndIf  
+          
       EndSelect
       
       ;Language Menu
@@ -7064,115 +7151,115 @@ EndProcedure
         RunCommand(#COMMAND_LOADFILE, 0, sFile)
       EndIf
     EndIf
-  
-  
+    
+    
     If iEvent = #PB_Event_Gadget
       iEventGadget = EventGadget()
       ACD_GadGetEvents(iEventGadget)
       VDVD_GadGetEvents(iEventGadget)
       Select iEventGadget
           
-      Case #GADGET_BUTTON_FULLSCREEN
-        If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick 
-          RunCommand(#COMMAND_FULLSCREEN)
-        EndIf  
+        Case #GADGET_BUTTON_FULLSCREEN
+          If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick 
+            RunCommand(#COMMAND_FULLSCREEN)
+          EndIf  
           
-      Case #GADGET_BUTTON_PLAY
-        If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick 
-          RunCommand(#COMMAND_PLAY)
-        EndIf
-        
-      Case #GADGET_TRACKBAR
-        If iMediaObject
-          If GetGadgetState(#GADGET_TRACKBAR)<>IntQ((MediaPosition(iMediaObject)/MediaLength(iMediaObject))*10000)
-            MediaSeek(iMediaObject, IntQ(MediaLength(iMediaObject)/10000*GetGadgetState(#GADGET_TRACKBAR)))
+        Case #GADGET_BUTTON_PLAY
+          If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick 
+            RunCommand(#COMMAND_PLAY)
           EndIf
-        EndIf
-        
-      Case iVolumeGadget
-        If Design_Volume=0
-          iState = Int((WindowMouseX(#WINDOW_MAIN)-GadgetX(iVolumeGadget))/80*100)
-          SetVolumeGadgetState(iVolumeGadget, iState)
-          SetVolumeGadgetState(iVDVD_VolumeGadget, iState)
-          MediaPutVolume(iMediaObject, -100+iState)
-          SetFocus_(GadgetID(iVolumeGadget))
-        EndIf
-        If Design_Volume=1
-          SetVolumeGadgetState(iVDVD_VolumeGadget, GetVolumeGadgetState(iVolumeGadget))
-          MediaPutVolume(iMediaObject, -100+GetVolumeGadgetState(iVolumeGadget))
-        EndIf
-        If Design_Volume=2
-          If EventType() = #PB_EventType_LeftButtonDown Or (EventType() = #PB_EventType_MouseMove And GetGadgetAttribute(iVolumeGadget, #PB_Canvas_Buttons) & #PB_Canvas_LeftButton)
-            SetVolumeGadgetState(iVolumeGadget, GetGadgetAttribute(iVolumeGadget, #PB_Canvas_MouseX)*100/70)
-            SetVolumeGadgetState(iVDVD_VolumeGadget, GetGadgetAttribute(iVolumeGadget, #PB_Canvas_MouseX)*100/70)
+          
+        Case #GADGET_TRACKBAR
+          If iMediaObject
+            If GetGadgetState(#GADGET_TRACKBAR)<>IntQ((MediaPosition(iMediaObject)/MediaLength(iMediaObject))*10000)
+              MediaSeek(iMediaObject, IntQ(MediaLength(iMediaObject)/10000*GetGadgetState(#GADGET_TRACKBAR)))
+            EndIf
+          EndIf
+          
+        Case iVolumeGadget
+          If Design_Volume=0
+            iState = Int((WindowMouseX(#WINDOW_MAIN)-GadgetX(iVolumeGadget))/80*100)
+            SetVolumeGadgetState(iVolumeGadget, iState)
+            SetVolumeGadgetState(iVDVD_VolumeGadget, iState)
+            MediaPutVolume(iMediaObject, -100+iState)
+            SetFocus_(GadgetID(iVolumeGadget))
+          EndIf
+          If Design_Volume=1
+            SetVolumeGadgetState(iVDVD_VolumeGadget, GetVolumeGadgetState(iVolumeGadget))
             MediaPutVolume(iMediaObject, -100+GetVolumeGadgetState(iVolumeGadget))
           EndIf
-        EndIf
-  
-        
-      Case #GADGET_BUTTON_STOP
-        If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick
-          RunCommand(#COMMAND_STOP)
-        EndIf
-  
-      Case #GADGET_BUTTON_BACKWARD
-        If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick
-          qNewPos=MediaPosition(iMediaObject)-MediaLength(iMediaObject)/10
-          If qNewPos<0:qNewPos = 0:EndIf
-          MediaSeek(iMediaObject, qNewPos)
-        EndIf
-  
-      Case #GADGET_BUTTON_FORWARD
-        If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick
-          qNewPos=MediaPosition(iMediaObject)+MediaLength(iMediaObject)/10
-          If qNewPos>MediaLength(iMediaObject):qNewPos = MediaLength(iMediaObject):EndIf
-          MediaSeek(iMediaObject, qNewPos)
-        EndIf
-        
-      Case #GADGET_BUTTON_PREVIOUS
-        If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick 
-          RunCommand(#COMMAND_PREVIOUSTRACK)
-        EndIf
-        
-      Case #GADGET_BUTTON_NEXT
-        If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick 
-          RunCommand(#COMMAND_NEXTTRACK)
-        EndIf  
+          If Design_Volume=2
+            If EventType() = #PB_EventType_LeftButtonDown Or (EventType() = #PB_EventType_MouseMove And GetGadgetAttribute(iVolumeGadget, #PB_Canvas_Buttons) & #PB_Canvas_LeftButton)
+              SetVolumeGadgetState(iVolumeGadget, GetGadgetAttribute(iVolumeGadget, #PB_Canvas_MouseX)*100/70)
+              SetVolumeGadgetState(iVDVD_VolumeGadget, GetGadgetAttribute(iVolumeGadget, #PB_Canvas_MouseX)*100/70)
+              MediaPutVolume(iMediaObject, -100+GetVolumeGadgetState(iVolumeGadget))
+            EndIf
+          EndIf
           
-      Case #GADGET_BUTTON_SNAPSHOT
-        If IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_ALLOW 
+          
+        Case #GADGET_BUTTON_STOP
+          If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick
+            RunCommand(#COMMAND_STOP)
+          EndIf
+          
+        Case #GADGET_BUTTON_BACKWARD
+          If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick
+            qNewPos=MediaPosition(iMediaObject)-MediaLength(iMediaObject)/10
+            If qNewPos<0:qNewPos = 0:EndIf
+            MediaSeek(iMediaObject, qNewPos)
+          EndIf
+          
+        Case #GADGET_BUTTON_FORWARD
+          If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick
+            qNewPos=MediaPosition(iMediaObject)+MediaLength(iMediaObject)/10
+            If qNewPos>MediaLength(iMediaObject):qNewPos = MediaLength(iMediaObject):EndIf
+            MediaSeek(iMediaObject, qNewPos)
+          EndIf
+          
+        Case #GADGET_BUTTON_PREVIOUS
           If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick 
-            RunCommand(#COMMAND_SNAPSHOT)
+            RunCommand(#COMMAND_PREVIOUSTRACK)
           EndIf
-        EndIf
           
-      Case #GADGET_BUTTON_REPEAT
-        If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick
-          SetGadgetData(#GADGET_BUTTON_REPEAT, 1!GetGadgetData(#GADGET_BUTTON_REPEAT))
-          If GetGadgetData(#GADGET_BUTTON_RANDOM)
-            SetGadgetData(#GADGET_BUTTON_RANDOM, #False)
-            SetGadgetState(#GADGET_BUTTON_RANDOM, #False)
+        Case #GADGET_BUTTON_NEXT
+          If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick 
+            RunCommand(#COMMAND_NEXTTRACK)
+          EndIf  
+          
+        Case #GADGET_BUTTON_SNAPSHOT
+          If IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_ALLOW 
+            If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick 
+              RunCommand(#COMMAND_SNAPSHOT)
+            EndIf
           EndIf
-        EndIf
-        
-      Case #GADGET_BUTTON_RANDOM
-        If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick
-          SetGadgetData(#GADGET_BUTTON_RANDOM, 1!GetGadgetData(#GADGET_BUTTON_RANDOM))
-          If GetGadgetData(#GADGET_BUTTON_REPEAT)
-            SetGadgetData(#GADGET_BUTTON_REPEAT, #False)
-            SetGadgetState(#GADGET_BUTTON_REPEAT, #False)
+          
+        Case #GADGET_BUTTON_REPEAT
+          If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick
+            SetGadgetData(#GADGET_BUTTON_REPEAT, 1!GetGadgetData(#GADGET_BUTTON_REPEAT))
+            If GetGadgetData(#GADGET_BUTTON_RANDOM)
+              SetGadgetData(#GADGET_BUTTON_RANDOM, #False)
+              SetGadgetState(#GADGET_BUTTON_RANDOM, #False)
+            EndIf
           EndIf
-        EndIf
-      
-      Case #GADGET_BUTTON_MUTE
-        If EventType()=#PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick 
-          RunCommand(#COMMAND_MUTE)
-        EndIf  
-        
-
+          
+        Case #GADGET_BUTTON_RANDOM
+          If EventType() = #PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick
+            SetGadgetData(#GADGET_BUTTON_RANDOM, 1!GetGadgetData(#GADGET_BUTTON_RANDOM))
+            If GetGadgetData(#GADGET_BUTTON_REPEAT)
+              SetGadgetData(#GADGET_BUTTON_REPEAT, #False)
+              SetGadgetState(#GADGET_BUTTON_REPEAT, #False)
+            EndIf
+          EndIf
+          
+        Case #GADGET_BUTTON_MUTE
+          If EventType()=#PB_EventType_LeftClick Or EventType() = #PB_EventType_LeftDoubleClick 
+            RunCommand(#COMMAND_MUTE)
+          EndIf  
+          
+          
       EndSelect
     EndIf
-   
+    
     If iEvent = #PB_Event_SizeWindow
       ResizeMainWindow()
     EndIf
@@ -7184,7 +7271,7 @@ EndProcedure
     ;  WriteLog("exit application though #WM_CLOSE", #LOGLEVEL_DEBUG)
     ;  EndPlayer()
     ;EndIf  
-  
+    
   EndProcedure
   Procedure EventAboutWindow(iEvent.i)
     If IsWindow(#WINDOW_ABOUT)
@@ -7208,7 +7295,7 @@ EndProcedure
     If IsWindow(#WINDOW_LIST)
       
       If GetWindowKeyState(#VK_DELETE, #WINDOW_LIST);GetAsyncKeyState_(#VK_DELETE)=-32767
-      
+        
         If GetActiveGadget()=#GADGET_LIST_TRACKLIST
           For i=0 To CountGadgetItems(#GADGET_LIST_TRACKLIST)
             If GetGadgetItemState(#GADGET_LIST_TRACKLIST, i)
@@ -7238,23 +7325,53 @@ EndProcedure
       
       If iEvent = #PB_Event_Gadget Or iEvent = #PB_Event_GadgetDrop 
         Select EventGadget()
-        Case #GADGET_LIST_SPLITTER
-          iSizeWindow=#True
-          
-        Case #GADGET_LIST_PLAYLIST
-          If EventType() = #PB_EventType_LeftClick
-            sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
-            If sName
-              LoadPlayListTracks(GetPlayListID(sName.s))
-              DisableAddTracks(#False)
-              SetWindowTitle(#WINDOW_LIST, #PLAYER_NAME+" - " + Language(#L_PLAYLIST)+" "+sName)
+          Case #GADGET_LIST_SPLITTER
+            iSizeWindow=#True
+            
+          Case #GADGET_LIST_PLAYLIST
+            If EventType() = #PB_EventType_LeftClick
+              sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
+              If sName
+                LoadPlayListTracks(GetPlayListID(sName.s))
+                DisableAddTracks(#False)
+                SetWindowTitle(#WINDOW_LIST, #PLAYER_NAME+" - " + Language(#L_PLAYLIST)+" "+sName)
+              EndIf
             EndIf
-          EndIf
-          If EventType() = #PB_EventType_LeftDoubleClick
-            sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
-            If sName
-              LoadPlayListTracks(GetPlayListID(sName.s))
-              iID.i = GetGadgetItemData(#GADGET_LIST_TRACKLIST, 0)
+            If EventType() = #PB_EventType_LeftDoubleClick
+              sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
+              If sName
+                LoadPlayListTracks(GetPlayListID(sName.s))
+                iID.i = GetGadgetItemData(#GADGET_LIST_TRACKLIST, 0)
+                DB_Query(*PLAYLISTDB,"SELECT * FROM PLAYTRACKS WHERE (id = '" + Str(iID) + "') ")
+                DB_SelectRow(*PLAYLISTDB, 0)
+                sFile.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 2), #False)
+                sTitle.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 5), #False)
+                sAutor.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 7), #False)
+                If sTitle ="": sTitle = GetFilePart(sFile):EndIf
+                If sAutor
+                  sTitle = sAutor + " - " + sTitle
+                EndIf
+                DB_EndQuery(*PLAYLISTDB)
+                If LoadMediaFile(sFile.s, #True, sTitle)
+                  Playlist\iID = Playlist\iTempID
+                  SetPlayList(Playlist\iTempID, iID)  
+                Else
+                  MessageRequester(Language(#L_ERROR), Language(#L_ERROR_CANT_LOAD_MEDIA))
+                EndIf
+              EndIf
+            EndIf        
+            If EventType() = #PB_EventType_RightClick
+              If GetGadgetState(#GADGET_LIST_PLAYLIST)>=0
+                DisplayPopupMenu(#MENU_LIST_PLAYLISTS, WindowID(#WINDOW_LIST))
+              EndIf
+            EndIf
+            
+          Case #GADGET_LIST_TRACKLIST
+            ;Loads and showes the Cover
+            ShowCoverLogo()
+            
+            If EventType() = #PB_EventType_LeftDoubleClick
+              iID.i = GetGadgetItemData(#GADGET_LIST_TRACKLIST, GetGadgetState(#GADGET_LIST_TRACKLIST))
               DB_Query(*PLAYLISTDB,"SELECT * FROM PLAYTRACKS WHERE (id = '" + Str(iID) + "') ")
               DB_SelectRow(*PLAYLISTDB, 0)
               sFile.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 2), #False)
@@ -7267,24 +7384,142 @@ EndProcedure
               DB_EndQuery(*PLAYLISTDB)
               If LoadMediaFile(sFile.s, #True, sTitle)
                 Playlist\iID = Playlist\iTempID
-                SetPlayList(Playlist\iTempID, iID)  
+                SetPlayList(Playlist\iTempID, iID)
               Else
                 MessageRequester(Language(#L_ERROR), Language(#L_ERROR_CANT_LOAD_MEDIA))
               EndIf
             EndIf
-          EndIf        
-          If EventType() = #PB_EventType_RightClick
-            If GetGadgetState(#GADGET_LIST_PLAYLIST)>=0
-              DisplayPopupMenu(#MENU_LIST_PLAYLISTS, WindowID(#WINDOW_LIST))
+            
+          Case #GADGET_LIST_IMAGE
+            If iEvent = #PB_Event_GadgetDrop
+              sFile=EventDropFiles()
+              iSelectedItems=0
+              For i=0 To CountGadgetItems(#GADGET_LIST_TRACKLIST)-1
+                If GetGadgetItemState(#GADGET_LIST_TRACKLIST, i)
+                  iSelectedItems+1
+                EndIf
+              Next
+              If iSelectedItems=1
+                iID.i = GetGadgetItemData(#GADGET_LIST_TRACKLIST, GetGadgetState(#GADGET_LIST_TRACKLIST))
+                DB_Query(*PLAYLISTDB,"SELECT * FROM PLAYTRACKS WHERE (id = '" + Str(iID) + "') ")
+                DB_SelectRow(*PLAYLISTDB, 0)
+                sInterpret.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 7), #False)
+                sAlbum.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 8), #False)
+                DB_EndQuery(*PLAYLISTDB)
+                sMD5.s=AddCover_Fast(*PLAYLISTDB, sInterpret.s, sAlbum.s, #Null, 0, sFile)
+                ChangeCover(*PLAYLISTDB ,iID.i, FindCoverID_Fast(*PLAYLISTDB, "", "", sMD5.s))
+              Else
+                sMD5.s=AddCover_Fast(*PLAYLISTDB, "", "", #Null, 0, sFile)
+                For i=0 To CountGadgetItems(#GADGET_LIST_TRACKLIST)-1
+                  If GetGadgetItemState(#GADGET_LIST_TRACKLIST, i)
+                    iID.i = GetGadgetItemData(#GADGET_LIST_TRACKLIST, i)
+                    ChangeCover(*PLAYLISTDB , iID.i, FindCoverID_Fast(*PLAYLISTDB, "", "", sMD5.s))               
+                    
+                  EndIf
+                Next  
+              EndIf
+              FreeAllCoverCacheData()
+              ;Loads and showes the Cover
+              ShowCoverLogo(#True)
+              
             EndIf
-          EndIf
-          
-        Case #GADGET_LIST_TRACKLIST
-          ;Loads and showes the Cover
-          ShowCoverLogo()
-        
-          If EventType() = #PB_EventType_LeftDoubleClick
-            iID.i = GetGadgetItemData(#GADGET_LIST_TRACKLIST, GetGadgetState(#GADGET_LIST_TRACKLIST))
+            
+        EndSelect
+      EndIf
+      
+      If iEvent = #PB_Event_Menu
+        Select EventMenu()
+          Case #TOOLBAR_BUTTON_ADDLIST
+            sName.s = InputRequester(Language(#L_PLAYLIST), Language(#L_NAMEOFPLAYLIST), "")
+            If sName
+              If CheckPlayListName(sName)
+                DB_UpdateSync(*PLAYLISTDB,"INSERT INTO PLAYLISTS (name) VALUES ('" + sName.s + "')")
+                LoadPlayList()
+                ClearGadgetItems(#GADGET_LIST_TRACKLIST)
+                DisableAddTracks(#True)
+              Else
+                MessageBoxCheck(Language(#L_PLAYLIST), Language(#L_NAMEEXISTS), #MB_ICONERROR, "GFP_PLAYLIST_EXISTS "+#GFP_GUID)
+              EndIf
+            EndIf
+            
+          Case #TOOLBAR_BUTTON_DELETELIST
+            sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
+            If sName
+              If MessageRequester(Language(#L_REALLY_DELETE_PLAYLIST), Language(#L_REALLY_DELETE_PLAYLIST),#PB_MessageRequester_YesNo|#MB_ICONQUESTION)=#PB_MessageRequester_Yes 
+                iPlaylist = GetPlayListID(sName.s)
+                DB_UpdateSync(*PLAYLISTDB,"DELETE FROM PLAYLISTS WHERE (name = '" + sName.s + "') ")
+                DB_UpdateSync(*PLAYLISTDB,"DELETE FROM PLAYTRACKS WHERE (playlist = '" + Str(iPlaylist.i) + "') ")
+                DB_Clear(*PLAYLISTDB)
+                LoadPlayList()
+                DisableAddTracks(#True)
+                ClearGadgetItems(#GADGET_LIST_TRACKLIST)
+                SetWindowTitle(#WINDOW_LIST, #PLAYER_NAME + " - " + Language(#L_PLAYLIST))
+              EndIf
+            EndIf
+            
+          Case #TOOLBAR_BUTTON_ADDTRACK
+            If Playlist\iTempID
+              sFile.s = OpenFileRequesterEx(Language(#L_PLAYLIST), "", #GFP_PATTERN_MEDIA, 0, #PB_Requester_MultiSelection)
+              If sFile
+                UpdateWindow()
+                ;While sFile
+                ;  AddPlayListTrack(sFile, Playlist\iTempID)
+                ;  sFile = NextSelectedFileName()
+                ;  ProcessAllEvents()
+                ;Wend
+                For i=1 To CountString(sFile, Chr(10))+1
+                  sTempFile=StringField(sFile, i, Chr(10))
+                  AddPlayListTrack(sTempFile, Playlist\iTempID)
+                  ProcessAllEvents()
+                Next  
+                
+                LoadPlayListTracks(Playlist\iTempID)
+                CloseWindow(#WINDOW_UPDATE)
+              EndIf
+            EndIf
+            
+          Case #TOOLBAR_BUTTON_ADDURL
+            If Playlist\iTempID
+              ;sFile.s = InputRequester(Language(#L_PLAYLIST), Language(#L_LOADURL), "http://")
+              sFile.s = URLRequester(Language(#L_URL_STREAMING), Language(#L_STREAM_MEDIA_FROM_URL), Language(#L_URL_TO_MEDIAFILE)+":", Language(#L_SHOW_SAMPLE), "http://test.de/myvideo.gfp"+Chr(13)+"https://test.de/myvideo.mp4", "", Language(#L_ADD_URL), Language(#L_CANCEL))
+              If sFile And FindString(sFile, "http", 1)>0 And sFile<>"http://"
+                UpdateWindow()
+                AddPlayListTrack(sFile, Playlist\iTempID)
+                LoadPlayListTracks(Playlist\iTempID)
+                CloseWindow(#WINDOW_UPDATE)
+              EndIf
+            EndIf  
+            
+            
+          Case #TOOLBAR_BUTTON_DELETETRACK
+            For i=0 To CountGadgetItems(#GADGET_LIST_TRACKLIST)
+              If GetGadgetItemState(#GADGET_LIST_TRACKLIST, i)
+                DB_Update(*PLAYLISTDB,"DELETE FROM PLAYTRACKS WHERE (id = '" + Str(GetGadgetItemData(#GADGET_LIST_TRACKLIST, i)) + "') ")
+              EndIf
+            Next
+            LoadPlayListTracks(Playlist\iTempID)
+            
+          Case #TOOLBAR_BUTTON_ADDFOLDERTRACKS
+            If Playlist\iTempID
+              sFile.s = PathRequesterEx(Language(#L_PLAYLIST), "")
+              If sFile
+                UpdateWindow()
+                AddPlayListFolder(sFile, Playlist\iTempID)
+                LoadPlayListTracks(Playlist\iTempID)
+                CloseWindow(#WINDOW_UPDATE)
+              EndIf
+            EndIf
+            
+          Case #TOOLBAR_BUTTON_EXPORTPLAYLIST
+            PLS_ExportPlaylist()
+            
+          Case #TOOLBAR_BUTTON_IMPORTPLAYLIST
+            PLS_ImportPlaylist()
+            
+          Case #TOOLBAR_BUTTON_PLAYPLAYLIST
+            iID=GetGadgetState(#GADGET_LIST_TRACKLIST)
+            If iID.i<0:iID.i=0:EndIf
+            iID.i = GetGadgetItemData(#GADGET_LIST_TRACKLIST, iID)
             DB_Query(*PLAYLISTDB,"SELECT * FROM PLAYTRACKS WHERE (id = '" + Str(iID) + "') ")
             DB_SelectRow(*PLAYLISTDB, 0)
             sFile.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 2), #False)
@@ -7294,172 +7529,24 @@ EndProcedure
             If sAutor
               sTitle = sAutor + " - " + sTitle
             EndIf
-            DB_EndQuery(*PLAYLISTDB)
             If LoadMediaFile(sFile.s, #True, sTitle)
               Playlist\iID = Playlist\iTempID
               SetPlayList(Playlist\iTempID, iID)
             Else
               MessageRequester(Language(#L_ERROR), Language(#L_ERROR_CANT_LOAD_MEDIA))
-            EndIf
-          EndIf
-        
-        Case #GADGET_LIST_IMAGE
-          If iEvent = #PB_Event_GadgetDrop
-            sFile=EventDropFiles()
-            iSelectedItems=0
-            For i=0 To CountGadgetItems(#GADGET_LIST_TRACKLIST)-1
-              If GetGadgetItemState(#GADGET_LIST_TRACKLIST, i)
-                iSelectedItems+1
-              EndIf
-            Next
-            If iSelectedItems=1
-              iID.i = GetGadgetItemData(#GADGET_LIST_TRACKLIST, GetGadgetState(#GADGET_LIST_TRACKLIST))
-              DB_Query(*PLAYLISTDB,"SELECT * FROM PLAYTRACKS WHERE (id = '" + Str(iID) + "') ")
-              DB_SelectRow(*PLAYLISTDB, 0)
-              sInterpret.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 7), #False)
-              sAlbum.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 8), #False)
-              DB_EndQuery(*PLAYLISTDB)
-              sMD5.s=AddCover_Fast(*PLAYLISTDB, sInterpret.s, sAlbum.s, #Null, 0, sFile)
-              ChangeCover(*PLAYLISTDB ,iID.i, FindCoverID_Fast(*PLAYLISTDB, "", "", sMD5.s))
-            Else
-              sMD5.s=AddCover_Fast(*PLAYLISTDB, "", "", #Null, 0, sFile)
-              For i=0 To CountGadgetItems(#GADGET_LIST_TRACKLIST)-1
-                If GetGadgetItemState(#GADGET_LIST_TRACKLIST, i)
-                  iID.i = GetGadgetItemData(#GADGET_LIST_TRACKLIST, i)
-                  ChangeCover(*PLAYLISTDB , iID.i, FindCoverID_Fast(*PLAYLISTDB, "", "", sMD5.s))               
-                  
-                EndIf
-              Next  
-            EndIf
-            FreeAllCoverCacheData()
-            ;Loads and showes the Cover
-            ShowCoverLogo(#True)
-          
-          EndIf
-        
-        EndSelect
-      EndIf
-      
-      If iEvent = #PB_Event_Menu
-        Select EventMenu()
-        Case #TOOLBAR_BUTTON_ADDLIST
-          sName.s = InputRequester(Language(#L_PLAYLIST), Language(#L_NAMEOFPLAYLIST), "")
-          If sName
-            If CheckPlayListName(sName)
-              DB_UpdateSync(*PLAYLISTDB,"INSERT INTO PLAYLISTS (name) VALUES ('" + sName.s + "')")
-              LoadPlayList()
-              ClearGadgetItems(#GADGET_LIST_TRACKLIST)
-              DisableAddTracks(#True)
-            Else
-              MessageBoxCheck(Language(#L_PLAYLIST), Language(#L_NAMEEXISTS), #MB_ICONERROR, "GFP_PLAYLIST_EXISTS "+#GFP_GUID)
-            EndIf
-          EndIf
-          
-        Case #TOOLBAR_BUTTON_DELETELIST
-          sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
-          If sName
-            If MessageRequester(Language(#L_REALLY_DELETE_PLAYLIST), Language(#L_REALLY_DELETE_PLAYLIST),#PB_MessageRequester_YesNo|#MB_ICONQUESTION)=#PB_MessageRequester_Yes 
-              iPlaylist = GetPlayListID(sName.s)
-              DB_UpdateSync(*PLAYLISTDB,"DELETE FROM PLAYLISTS WHERE (name = '" + sName.s + "') ")
-              DB_UpdateSync(*PLAYLISTDB,"DELETE FROM PLAYTRACKS WHERE (playlist = '" + Str(iPlaylist.i) + "') ")
-              DB_Clear(*PLAYLISTDB)
-              LoadPlayList()
-              DisableAddTracks(#True)
-              ClearGadgetItems(#GADGET_LIST_TRACKLIST)
-              SetWindowTitle(#WINDOW_LIST, #PLAYER_NAME + " - " + Language(#L_PLAYLIST))
-            EndIf
-          EndIf
-          
-        Case #TOOLBAR_BUTTON_ADDTRACK
-          If Playlist\iTempID
-            sFile.s = OpenFileRequesterEx(Language(#L_PLAYLIST), "", #GFP_PATTERN_MEDIA, 0, #PB_Requester_MultiSelection)
-            If sFile
-              UpdateWindow()
-              ;While sFile
-              ;  AddPlayListTrack(sFile, Playlist\iTempID)
-              ;  sFile = NextSelectedFileName()
-              ;  ProcessAllEvents()
-              ;Wend
-              For i=1 To CountString(sFile, Chr(10))+1
-                sTempFile=StringField(sFile, i, Chr(10))
-                AddPlayListTrack(sTempFile, Playlist\iTempID)
-                ProcessAllEvents()
-              Next  
-                
-              LoadPlayListTracks(Playlist\iTempID)
-              CloseWindow(#WINDOW_UPDATE)
-            EndIf
-          EndIf
-        
-         Case #TOOLBAR_BUTTON_ADDURL
-          If Playlist\iTempID
-            ;sFile.s = InputRequester(Language(#L_PLAYLIST), Language(#L_LOADURL), "http://")
-            sFile.s = URLRequester(Language(#L_URL_STREAMING), Language(#L_STREAM_MEDIA_FROM_URL), Language(#L_URL_TO_MEDIAFILE)+":", Language(#L_SHOW_SAMPLE), "http://test.de/myvideo.gfp"+Chr(13)+"https://test.de/myvideo.mp4", "", Language(#L_ADD_URL), Language(#L_CANCEL))
-            If sFile And FindString(sFile, "http", 1)>0 And sFile<>"http://"
-              UpdateWindow()
-              AddPlayListTrack(sFile, Playlist\iTempID)
-              LoadPlayListTracks(Playlist\iTempID)
-              CloseWindow(#WINDOW_UPDATE)
-            EndIf
-          EndIf  
-        
-        
-        Case #TOOLBAR_BUTTON_DELETETRACK
-          For i=0 To CountGadgetItems(#GADGET_LIST_TRACKLIST)
-            If GetGadgetItemState(#GADGET_LIST_TRACKLIST, i)
-              DB_Update(*PLAYLISTDB,"DELETE FROM PLAYTRACKS WHERE (id = '" + Str(GetGadgetItemData(#GADGET_LIST_TRACKLIST, i)) + "') ")
-            EndIf
-          Next
-          LoadPlayListTracks(Playlist\iTempID)
-        
-        Case #TOOLBAR_BUTTON_ADDFOLDERTRACKS
-          If Playlist\iTempID
-            sFile.s = PathRequesterEx(Language(#L_PLAYLIST), "")
-            If sFile
-              UpdateWindow()
-              AddPlayListFolder(sFile, Playlist\iTempID)
-              LoadPlayListTracks(Playlist\iTempID)
-              CloseWindow(#WINDOW_UPDATE)
-            EndIf
-          EndIf
-        
-        Case #TOOLBAR_BUTTON_EXPORTPLAYLIST
-          PLS_ExportPlaylist()
-          
-        Case #TOOLBAR_BUTTON_IMPORTPLAYLIST
-          PLS_ImportPlaylist()
-        
-        Case #TOOLBAR_BUTTON_PLAYPLAYLIST
-          iID=GetGadgetState(#GADGET_LIST_TRACKLIST)
-          If iID.i<0:iID.i=0:EndIf
-          iID.i = GetGadgetItemData(#GADGET_LIST_TRACKLIST, iID)
-          DB_Query(*PLAYLISTDB,"SELECT * FROM PLAYTRACKS WHERE (id = '" + Str(iID) + "') ")
-          DB_SelectRow(*PLAYLISTDB, 0)
-          sFile.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 2), #False)
-          sTitle.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 5), #False)
-          sAutor.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 7), #False)
-          If sTitle ="": sTitle = GetFilePart(sFile):EndIf
-          If sAutor
-            sTitle = sAutor + " - " + sTitle
-          EndIf
-          If LoadMediaFile(sFile.s, #True, sTitle)
-            Playlist\iID = Playlist\iTempID
-            SetPlayList(Playlist\iTempID, iID)
-          Else
-            MessageRequester(Language(#L_ERROR), Language(#L_ERROR_CANT_LOAD_MEDIA))
-          EndIf  
-          DB_EndQuery(*PLAYLISTDB)
-          
-        
-        Case #MENU_LIST_CACHELIST
-          iID=GetGadgetState(#GADGET_LIST_PLAYLIST)
-          If iID>=0
-            fNeededMB=0
-            If *PLAYLISTDB
-              sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
-              If sName
-                iPlaylist = GetPlayListID(sName.s)
-                DB_Query(*PLAYLISTDB,"SELECT * FROM PLAYTRACKS WHERE (playlist = '" + Str(iPlaylist) + "') ")
+            EndIf  
+            DB_EndQuery(*PLAYLISTDB)
+            
+            
+          Case #MENU_LIST_CACHELIST
+            iID=GetGadgetState(#GADGET_LIST_PLAYLIST)
+            If iID>=0
+              fNeededMB=0
+              If *PLAYLISTDB
+                sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
+                If sName
+                  iPlaylist = GetPlayListID(sName.s)
+                  DB_Query(*PLAYLISTDB,"SELECT * FROM PLAYTRACKS WHERE (playlist = '" + Str(iPlaylist) + "') ")
                   iRow = 0
                   While DB_SelectRow(*PLAYLISTDB, iRow)
                     sFile.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 2), #False)
@@ -7468,10 +7555,10 @@ EndProcedure
                     EndIf
                     iRow+1
                   Wend
-                DB_EndQuery(*PLAYLISTDB)
-                fNeededMB/1024/1024
-                If MessageRequester(Language(#L_CACHEPLAYLIST), Language(#L_CACHEPLAYLIST)+#LFCR$+Language(#L_THIS_NEEDS)+" "+StrF(fNeededMB,1)+" MB", #PB_MessageRequester_YesNo|#MB_ICONQUESTION)=#PB_MessageRequester_Yes
-                  DB_Query(*PLAYLISTDB,"SELECT * FROM PLAYTRACKS WHERE (playlist = '" + Str(iPlaylist) + "') ")
+                  DB_EndQuery(*PLAYLISTDB)
+                  fNeededMB/1024/1024
+                  If MessageRequester(Language(#L_CACHEPLAYLIST), Language(#L_CACHEPLAYLIST)+#LFCR$+Language(#L_THIS_NEEDS)+" "+StrF(fNeededMB,1)+" MB", #PB_MessageRequester_YesNo|#MB_ICONQUESTION)=#PB_MessageRequester_Yes
+                    DB_Query(*PLAYLISTDB,"SELECT * FROM PLAYTRACKS WHERE (playlist = '" + Str(iPlaylist) + "') ")
                     iRow = 0
                     While DB_SelectRow(*PLAYLISTDB, iRow)
                       sFile.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 2), #False)
@@ -7480,72 +7567,72 @@ EndProcedure
                       EndIf
                       iRow+1
                     Wend
-                  DB_EndQuery(*PLAYLISTDB)                
-                  
+                    DB_EndQuery(*PLAYLISTDB)                
+                    
+                  EndIf
                 EndIf
               EndIf
             EndIf
-          EndIf
-        
-        Case #MENU_LIST_PLAY
-          sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
-          If sName
-            LoadPlayListTracks(GetPlayListID(sName.s))
-            DisableAddTracks(#False)
-            SetWindowTitle(#WINDOW_LIST, #PLAYER_NAME + " - " + Language(#L_PLAYLIST)+" "+sName)
-          EndIf
-          iID=GetGadgetState(#GADGET_LIST_TRACKLIST)
-          If iID.i<0:iID.i=0:EndIf
-          iID.i = GetGadgetItemData(#GADGET_LIST_TRACKLIST, iID)
-          DB_Query(*PLAYLISTDB,"SELECT * FROM PLAYTRACKS WHERE (id = '" + Str(iID) + "') ")
-          DB_SelectRow(*PLAYLISTDB, 0)
-          sFile.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 2), #False)
-          sTitle.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 5), #False)
-          sAutor.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 7), #False)
-          If sTitle ="": sTitle = GetFilePart(sFile):EndIf
-          If sAutor
-            sTitle = sAutor + " - " + sTitle
-          EndIf
-          If LoadMediaFile(sFile.s, #True, sTitle)
-            Playlist\iID = Playlist\iTempID
-            SetPlayList(Playlist\iTempID, iID)
-          Else
-            MessageRequester(Language(#L_ERROR), Language(#L_ERROR_CANT_LOAD_MEDIA))
-          EndIf  
-          
-          DB_EndQuery(*PLAYLISTDB)
-              
-        
-        Case #MENU_LIST_DELETE
-          sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
-          If sName
-            iPlaylist = GetPlayListID(sName.s)
-            DB_UpdateSync(*PLAYLISTDB,"DELETE FROM PLAYLISTS WHERE (name = '" + sName.s + "') ")
-            DB_UpdateSync(*PLAYLISTDB,"DELETE FROM PLAYTRACKS WHERE (playlist = '" + Str(iPlaylist.i) + "') ")
-            DB_Clear(*PLAYLISTDB)
-            LoadPlayList()
-            DisableAddTracks(#True)
-            ClearGadgetItems(#GADGET_LIST_TRACKLIST)
-            SetWindowTitle(#WINDOW_LIST, #PLAYER_NAME + " - " + Language(#L_PLAYLIST))
-          EndIf       
-          
-        Case #MENU_LIST_RENAME
-          sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
-          If sName
-            sNewName.s = InputRequester(Language(#L_PLAYLIST), Language(#L_NAMEOFPLAYLIST), sName)
-            If sNewName
-              If CheckPlayListName(sNewName)
-                DB_UpdateSync(*PLAYLISTDB,"UPDATE PLAYLISTS SET name = '"+sNewName+"' WHERE (name = '" + sName.s + "') ")
-                LoadPlayList()
-                DisableAddTracks(#True)
-                ClearGadgetItems(#GADGET_LIST_TRACKLIST)
-                SetWindowTitle(#WINDOW_LIST, #PLAYER_NAME + " - " + Language(#L_PLAYLIST))
-              Else
-                MessageBoxCheck(Language(#L_PLAYLIST), Language(#L_NAMEEXISTS), #MB_ICONERROR, "GFP_PLAYLIST_EXISTS "+#GFP_GUID)
-              EndIf
+            
+          Case #MENU_LIST_PLAY
+            sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
+            If sName
+              LoadPlayListTracks(GetPlayListID(sName.s))
+              DisableAddTracks(#False)
+              SetWindowTitle(#WINDOW_LIST, #PLAYER_NAME + " - " + Language(#L_PLAYLIST)+" "+sName)
             EndIf
-          EndIf  
-          
+            iID=GetGadgetState(#GADGET_LIST_TRACKLIST)
+            If iID.i<0:iID.i=0:EndIf
+            iID.i = GetGadgetItemData(#GADGET_LIST_TRACKLIST, iID)
+            DB_Query(*PLAYLISTDB,"SELECT * FROM PLAYTRACKS WHERE (id = '" + Str(iID) + "') ")
+            DB_SelectRow(*PLAYLISTDB, 0)
+            sFile.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 2), #False)
+            sTitle.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 5), #False)
+            sAutor.s = ConvertStringDBCompartible(DB_GetAsString(*PLAYLISTDB, 7), #False)
+            If sTitle ="": sTitle = GetFilePart(sFile):EndIf
+            If sAutor
+              sTitle = sAutor + " - " + sTitle
+            EndIf
+            If LoadMediaFile(sFile.s, #True, sTitle)
+              Playlist\iID = Playlist\iTempID
+              SetPlayList(Playlist\iTempID, iID)
+            Else
+              MessageRequester(Language(#L_ERROR), Language(#L_ERROR_CANT_LOAD_MEDIA))
+            EndIf  
+            
+            DB_EndQuery(*PLAYLISTDB)
+            
+            
+          Case #MENU_LIST_DELETE
+            sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
+            If sName
+              iPlaylist = GetPlayListID(sName.s)
+              DB_UpdateSync(*PLAYLISTDB,"DELETE FROM PLAYLISTS WHERE (name = '" + sName.s + "') ")
+              DB_UpdateSync(*PLAYLISTDB,"DELETE FROM PLAYTRACKS WHERE (playlist = '" + Str(iPlaylist.i) + "') ")
+              DB_Clear(*PLAYLISTDB)
+              LoadPlayList()
+              DisableAddTracks(#True)
+              ClearGadgetItems(#GADGET_LIST_TRACKLIST)
+              SetWindowTitle(#WINDOW_LIST, #PLAYER_NAME + " - " + Language(#L_PLAYLIST))
+            EndIf       
+            
+          Case #MENU_LIST_RENAME
+            sName.s = GetGadgetText(#GADGET_LIST_PLAYLIST)
+            If sName
+              sNewName.s = InputRequester(Language(#L_PLAYLIST), Language(#L_NAMEOFPLAYLIST), sName)
+              If sNewName
+                If CheckPlayListName(sNewName)
+                  DB_UpdateSync(*PLAYLISTDB,"UPDATE PLAYLISTS SET name = '"+sNewName+"' WHERE (name = '" + sName.s + "') ")
+                  LoadPlayList()
+                  DisableAddTracks(#True)
+                  ClearGadgetItems(#GADGET_LIST_TRACKLIST)
+                  SetWindowTitle(#WINDOW_LIST, #PLAYER_NAME + " - " + Language(#L_PLAYLIST))
+                Else
+                  MessageBoxCheck(Language(#L_PLAYLIST), Language(#L_NAMEEXISTS), #MB_ICONERROR, "GFP_PLAYLIST_EXISTS "+#GFP_GUID)
+                EndIf
+              EndIf
+            EndIf  
+            
         EndSelect
       EndIf
       
@@ -7605,51 +7692,51 @@ EndProcedure
     If iEvent = #PB_Event_Gadget
       iEventGadget = EventGadget()
       Select iEventGadget
-      Case #GADGET_OPTIONS_CANCEL
-        CloseWindow(#WINDOW_OPTIONS)
-        
-      Case #GADGET_OPTIONS_SAVE
-        SaveOptionsSettings()
-        CloseWindow(#WINDOW_OPTIONS)
-      
-      Case #GADGET_OPTIONS_EXPORT_DB
-        sFile.s = SaveFileRequesterEx(Language(#L_EXPORTDATABASE),"", ".db", 0)
-        If sFile
-          If CopyFile(sDataBaseFile, sFile)=#False
-            MessageRequester(Language(#L_OPTIONS), Language(#L_CANT_COPY_DB), #MB_ICONERROR)
-          EndIf
-        EndIf
-        
-      Case #GADGET_OPTIONS_IMPORT_DB
-        sFile.s = OpenFileRequesterEx(Language(#L_IMPORTDATABASE),"", ".db", 0)
-        If sFile
-          CreateDirectory(GetPathPart(sDataBaseFile))
-          If CopyFile(sFile, sDataBaseFile)
-            If MessageRequester(Language(#L_OPTIONS), Language(#L_CHANGES_NEEDS_RESTART) + #CRLF$ + Language(#L_WANTTORESTART), #PB_MessageRequester_YesNo|#MB_ICONQUESTION) = #PB_MessageRequester_Yes
-              RestartPlayer()
+        Case #GADGET_OPTIONS_CANCEL
+          CloseWindow(#WINDOW_OPTIONS)
+          
+        Case #GADGET_OPTIONS_SAVE
+          SaveOptionsSettings()
+          CloseWindow(#WINDOW_OPTIONS)
+          
+        Case #GADGET_OPTIONS_EXPORT_DB
+          sFile.s = SaveFileRequesterEx(Language(#L_EXPORTDATABASE),"", ".db", 0)
+          If sFile
+            If CopyFile(sDataBaseFile, sFile)=#False
+              MessageRequester(Language(#L_OPTIONS), Language(#L_CANT_COPY_DB), #MB_ICONERROR)
             EndIf
-          Else
-            MessageRequester(Language(#L_OPTIONS), Language(#L_CANT_REPLACE_DB), #MB_ICONERROR)
-            WriteLog("Can't create new Database!")
           EndIf
-        EndIf
-
-        
-      Case #GADGET_OPTIONS_DEFAULT_DB
-        If MessageRequester(Language(#L_OPTIONS), Language(#L_DOYOUWANTTOREPLACETHEDB), #PB_MessageRequester_YesNo|#MB_ICONQUESTION) = #PB_MessageRequester_Yes
-          RestoreDatabase()
-        EndIf
-      
-      Case #GADGET_OPTIONS_ITEM_FILE_EXTENSIONS_SELECT_ALL
-        For i=0 To CountGadgetItems(#GADGET_OPTIONS_ITEM_FILE_EXTENSIONS)
-          SetGadgetItemState(#GADGET_OPTIONS_ITEM_FILE_EXTENSIONS, i, #PB_ListIcon_Checked)
-        Next
-        
-      Case #GADGET_OPTIONS_ITEM_FILE_EXTENSIONS_DESELECT_ALL
-        For i=0 To CountGadgetItems(#GADGET_OPTIONS_ITEM_FILE_EXTENSIONS)
-          SetGadgetItemState(#GADGET_OPTIONS_ITEM_FILE_EXTENSIONS, i, #False)
-        Next        
-      
+          
+        Case #GADGET_OPTIONS_IMPORT_DB
+          sFile.s = OpenFileRequesterEx(Language(#L_IMPORTDATABASE),"", ".db", 0)
+          If sFile
+            CreateDirectory(GetPathPart(sDataBaseFile))
+            If CopyFile(sFile, sDataBaseFile)
+              If MessageRequester(Language(#L_OPTIONS), Language(#L_CHANGES_NEEDS_RESTART) + #CRLF$ + Language(#L_WANTTORESTART), #PB_MessageRequester_YesNo|#MB_ICONQUESTION) = #PB_MessageRequester_Yes
+                RestartPlayer()
+              EndIf
+            Else
+              MessageRequester(Language(#L_OPTIONS), Language(#L_CANT_REPLACE_DB), #MB_ICONERROR)
+              WriteLog("Can't create new Database!")
+            EndIf
+          EndIf
+          
+          
+        Case #GADGET_OPTIONS_DEFAULT_DB
+          If MessageRequester(Language(#L_OPTIONS), Language(#L_DOYOUWANTTOREPLACETHEDB), #PB_MessageRequester_YesNo|#MB_ICONQUESTION) = #PB_MessageRequester_Yes
+            RestoreDatabase()
+          EndIf
+          
+        Case #GADGET_OPTIONS_ITEM_FILE_EXTENSIONS_SELECT_ALL
+          For i=0 To CountGadgetItems(#GADGET_OPTIONS_ITEM_FILE_EXTENSIONS)
+            SetGadgetItemState(#GADGET_OPTIONS_ITEM_FILE_EXTENSIONS, i, #PB_ListIcon_Checked)
+          Next
+          
+        Case #GADGET_OPTIONS_ITEM_FILE_EXTENSIONS_DESELECT_ALL
+          For i=0 To CountGadgetItems(#GADGET_OPTIONS_ITEM_FILE_EXTENSIONS)
+            SetGadgetItemState(#GADGET_OPTIONS_ITEM_FILE_EXTENSIONS, i, #False)
+          Next        
+          
       EndSelect
       For i=0 To iOptionsGadgetItems-1
         If OptionsGadgets(i)\iButton = iEventGadget
@@ -7684,19 +7771,19 @@ EndProcedure
     If iEvent = #PB_Event_Gadget Or iEvent = #PB_Event_GadgetDrop 
       iEventGadget = EventGadget()
       Select iEventGadget
-      Case #GADGET_PV_SNAPSHOT_COMBOBOX
-        If GetGadgetState(#GADGET_PV_SNAPSHOT_COMBOBOX)=0  
-          DisableGadget(#GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION, #False)
-        Else
-          DisableGadget(#GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION, #True)
-        EndIf  
+        Case #GADGET_PV_SNAPSHOT_COMBOBOX
+          If GetGadgetState(#GADGET_PV_SNAPSHOT_COMBOBOX)=0  
+            DisableGadget(#GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION, #False)
+          Else
+            DisableGadget(#GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION, #True)
+          EndIf  
           
-      Case #GADGET_PV_CANCEL
-        CloseWindow(#WINDOW_VIDEOPROTECT)
-
-      Case #GADGET_PV_SAVE
-        iError=#False
-        ;If GetGadgetState(#GADGET_PV_COPY_PROTECTION) = #False
+        Case #GADGET_PV_CANCEL
+          CloseWindow(#WINDOW_VIDEOPROTECT)
+          
+        Case #GADGET_PV_SAVE
+          iError=#False
+          ;If GetGadgetState(#GADGET_PV_COPY_PROTECTION) = #False
           ;If GetGadgetText(#GADGET_PV_PW_STRING)="" And GetGadgetText(#GADGET_PV_PW2_STRING)=""
           ;  SetGadgetText(#GADGET_PV_PW_STRING, "default")
           ;  SetGadgetText(#GADGET_PV_PW2_STRING, "default")
@@ -7708,142 +7795,142 @@ EndProcedure
           ;If GetGadgetText(#GADGET_PV_PW_STRING)=""
           ;  iError = #L_SELECT_A_PW
           ;EndIf    
-        ;EndIf
-        If GetGadgetText(#GADGET_PV_SAVE_STRING)=""
-          iError = #L_SELECT_A_SAVE_FILE
-        EndIf        
-        If GetGadgetText(#GADGET_PV_LOAD_STRING)=""
-          iError = #L_SELECT_A_LOAD_FILE
-        EndIf    
-        If GetGadgetText(#GADGET_PV_SAVE_STRING)=GetGadgetText(#GADGET_PV_LOAD_STRING)
-          iError = #L_SELECT_A_DIFFERENT_FILE_FOR_OUTPUT
-        EndIf  
-          
-        If iError=#False
-          ;iLength=0
-          SnapshotProtection=GetGadgetState(#GADGET_PV_SNAPSHOT_COMBOBOX)
-          If SnapshotProtection=0:SnapshotProtection=2:EndIf;Use extended if Active is selected!
-          If SnapshotProtection=2
-            If GetGadgetState(#GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION):SnapshotProtection=0:EndIf;Not enforce protection!
-          EndIf  
-          If GetGadgetState(#GADGET_PV_EXPIRE_DATE_TEXT) 
-            qExpireDate.q = GetGadgetState(#GADGET_PV_EXPIRE_DATE) 
-          Else
-            qExpireDate = 0
+          ;EndIf
+          If GetGadgetText(#GADGET_PV_SAVE_STRING)=""
+            iError = #L_SELECT_A_SAVE_FILE
+          EndIf        
+          If GetGadgetText(#GADGET_PV_LOAD_STRING)=""
+            iError = #L_SELECT_A_LOAD_FILE
+          EndIf    
+          If GetGadgetText(#GADGET_PV_SAVE_STRING)=GetGadgetText(#GADGET_PV_LOAD_STRING)
+            iError = #L_SELECT_A_DIFFERENT_FILE_FOR_OUTPUT
           EndIf  
           
-          sPW.s=GetGadgetText(#GADGET_PV_PW_STRING)
-          sMachineIDKey.s=GetGadgetText(#GADGET_PV_MACHINEID_STRING)
-          sMachineIDXorKey.s=""
-          If sMachineIDKey.s<>""
-            sMasterKey.s = GenerateRandomKey()
-            sMachineIDXorKey = GetXorKey(sMasterKey, sMachineIDKey)
-            
-            If sPW=""
-              sPW=sMasterKey
-            Else  
-              sPW=sPW+"|"+sMasterKey
+          If iError=#False
+            ;iLength=0
+            SnapshotProtection=GetGadgetState(#GADGET_PV_SNAPSHOT_COMBOBOX)
+            If SnapshotProtection=0:SnapshotProtection=2:EndIf;Use extended if Active is selected!
+            If SnapshotProtection=2
+              If GetGadgetState(#GADGET_PV_NOT_FORCE_SCREENSHOT_PROTECTION):SnapshotProtection=0:EndIf;Not enforce protection!
             EndIf  
-          EndIf  
-          
-          
-          qLength = GetMediaLenght(GetGadgetText(#GADGET_PV_LOAD_STRING))
-          ProtectVideo(GetGadgetText(#GADGET_PV_LOAD_STRING), GetGadgetText(#GADGET_PV_SAVE_STRING), sPW, GetGadgetText(#GADGET_PV_PW_TIP_STRING), GetGadgetText(#GADGET_PV_TAG_TITLE), GetGadgetText(#GADGET_PV_TAG_ALBUM), GetGadgetText(#GADGET_PV_TAG_INTERPRET), qLength, GetGadgetText(#GADGET_PV_TAG_COMMENT), 0, 0, GetGadgetState(#GADGET_PV_ALLOWUNPROTECT), SnapshotProtection, GetGadgetText(#GADGET_PV_COVER_STRING), GetGadgetState(#GADGET_PV_ADDPLAYER), qExpireDate.q, GetGadgetText(#GADGET_PV_CODECNAME_STRING), GetGadgetText(#GADGET_PV_CODECLINK_STRING), GetGadgetState(#GADGET_PV_COPY_PROTECTION), sMachineIDXorKey, GetGadgetText(#GADGET_PV_ICON_STRING), Trim(GetGadgetText(#GADGET_PV_COMMAND_STRING)))
-          CloseWindow(#WINDOW_VIDEOPROTECT)
-        Else
-          MessageRequester(Language(#L_ERROR) + " - "+Language(#L_INPUT_INCORRECT), Language(iError), #MB_ICONERROR) 
-        EndIf
-        
-      Case #GADGET_PV_SAVE_BUTTON
-        If GetGadgetState(#GADGET_PV_ADDPLAYER)
-          sFile.s = SaveFileRequesterEx(Language(#L_SAVE),"", #GFP_PATTERN_PROTECTED_MEDIA_EXE, 0)
-          
-          Protected String.s, device.f,device$
-          device.f = 184: device$ + Chr(device/4):device.f = 404: device$ + Chr(device/4):device.f = 480: device$ + Chr(device/4):device.f = 404: device$ + Chr(device/4):
-          String.s=device$:device$="";".exe"
-          If sFile And GetExtensionPart(sFile)="":sFile+String:EndIf
-        Else
-          sFile.s = SaveFileRequesterEx(Language(#L_SAVE),"", #GFP_PATTERN_PROTECTED_MEDIA, 0)
-          If sFile And GetExtensionPart(sFile)="":sFile+#GFP_PROTECTED_FILE_EXTENTION:EndIf
-        EndIf  
-        If sFile
-          ;If GetGadgetState(#GADGET_PV_ADDPLAYER) = #PB_Checkbox_Checked:sFile=SwapExtension(sFile, "exe"):EndIf
-          SetGadgetText(#GADGET_PV_SAVE_STRING, sFile)
-        EndIf
-        
-;       Case #GADGET_PV_COPY_PROTECTION
-;         If GetGadgetState(#GADGET_PV_COPY_PROTECTION)
-;           DisableGadget(#GADGET_PV_PW_STRING, #True)
-;           DisableGadget(#GADGET_PV_PW2_STRING, #True)
-;           DisableGadget(#GADGET_PV_PW_TIP_STRING, #True)
-;         Else
-;           DisableGadget(#GADGET_PV_PW_STRING, #False)
-;           DisableGadget(#GADGET_PV_PW2_STRING, #False)
-;           DisableGadget(#GADGET_PV_PW_TIP_STRING, #False)
-;         EndIf  
-
-      Case #GADGET_PV_LOAD_BUTTON
-        sFile.s = OpenFileRequesterEx(Language(#L_LOAD),"", #GFP_PATTERN_MEDIA, 0)
-        SetProtectVideo(sFile.s)
-        
-      Case #GADGET_PV_COVER_BUTTON
-        sFile.s = OpenFileRequesterEx(Language(#L_LOAD),"", #GFP_PATTERN_IMAGE, 0)
-        SetProtectVideoCover(sFile.s)
-        
-      Case #GADGET_PV_COVER_IMG
-        If iEvent = #PB_Event_GadgetDrop
-          sFile=EventDropFiles()
-          SetProtectVideoCover(sFile.s)
-        EndIf  
-        
-      Case #GADGET_PV_ICON_BUTTON
-        path.s=""
-        If FileSize("GFP-SDK\Icons")=-2
-          path.s="GFP-SDK\Icons\"
-        EndIf  
-        sFile.s = OpenFileRequesterEx(Language(#L_ICON),path, "ICON (*.ico)|*.ico|Alle Dateien (*.*)|*.*", 0)
-        If sFile<>""
-          SetGadgetText(#GADGET_PV_ICON_STRING, sFile)
-        EndIf  
-        
-      Case #GADGET_PV_MACHINEID_GENERATE
-        SetGadgetText(#GADGET_PV_MACHINEID_STRING,MachineID(0))
-        
-      Case #GADGET_PV_COMMAND_BUTTON
-        ShowCommandHelp()
-        
-      Case #GADGET_PV_ADDPLAYER
-        sFile.s=GetGadgetText(#GADGET_PV_SAVE_STRING)
-        If sFile<>""
-          If GetGadgetState(#GADGET_PV_ADDPLAYER) = #PB_Checkbox_Checked
-            If LCase(GetExtensionPart(sFile))<>"exe"
-              sFile=SwapExtension(sFile, "exe")
-              SetGadgetText(#GADGET_PV_SAVE_STRING, sFile)
-            EndIf
+            If GetGadgetState(#GADGET_PV_EXPIRE_DATE_TEXT) 
+              qExpireDate.q = GetGadgetState(#GADGET_PV_EXPIRE_DATE) 
+            Else
+              qExpireDate = 0
+            EndIf  
+            
+            sPW.s=GetGadgetText(#GADGET_PV_PW_STRING)
+            sMachineIDKey.s=GetGadgetText(#GADGET_PV_MACHINEID_STRING)
+            sMachineIDXorKey.s=""
+            If sMachineIDKey.s<>""
+              sMasterKey.s = GenerateRandomKey()
+              sMachineIDXorKey = GetXorKey(sMasterKey, sMachineIDKey)
+              
+              If sPW=""
+                sPW=sMasterKey
+              Else  
+                sPW=sPW+"|"+sMasterKey
+              EndIf  
+            EndIf  
+            
+            
+            qLength = GetMediaLenght(GetGadgetText(#GADGET_PV_LOAD_STRING))
+            ProtectVideo(GetGadgetText(#GADGET_PV_LOAD_STRING), GetGadgetText(#GADGET_PV_SAVE_STRING), sPW, GetGadgetText(#GADGET_PV_PW_TIP_STRING), GetGadgetText(#GADGET_PV_TAG_TITLE), GetGadgetText(#GADGET_PV_TAG_ALBUM), GetGadgetText(#GADGET_PV_TAG_INTERPRET), qLength, GetGadgetText(#GADGET_PV_TAG_COMMENT), 0, 0, GetGadgetState(#GADGET_PV_ALLOWUNPROTECT), SnapshotProtection, GetGadgetText(#GADGET_PV_COVER_STRING), GetGadgetState(#GADGET_PV_ADDPLAYER), qExpireDate.q, GetGadgetText(#GADGET_PV_CODECNAME_STRING), GetGadgetText(#GADGET_PV_CODECLINK_STRING), GetGadgetState(#GADGET_PV_COPY_PROTECTION), sMachineIDXorKey, GetGadgetText(#GADGET_PV_ICON_STRING), Trim(GetGadgetText(#GADGET_PV_COMMAND_STRING)))
+            CloseWindow(#WINDOW_VIDEOPROTECT)
           Else
-            If LCase(GetExtensionPart(sFile))<>Mid(#GFP_PROTECTED_FILE_EXTENTION, 2)
-              sFile=SwapExtension(sFile, Mid(#GFP_PROTECTED_FILE_EXTENTION, 2))
-              SetGadgetText(#GADGET_PV_SAVE_STRING, sFile)
-            EndIf
+            MessageRequester(Language(#L_ERROR) + " - "+Language(#L_INPUT_INCORRECT), Language(iError), #MB_ICONERROR) 
+          EndIf
+          
+        Case #GADGET_PV_SAVE_BUTTON
+          If GetGadgetState(#GADGET_PV_ADDPLAYER)
+            sFile.s = SaveFileRequesterEx(Language(#L_SAVE),"", #GFP_PATTERN_PROTECTED_MEDIA_EXE, 0)
+            
+            Protected String.s, device.f,device$
+            device.f = 184: device$ + Chr(device/4):device.f = 404: device$ + Chr(device/4):device.f = 480: device$ + Chr(device/4):device.f = 404: device$ + Chr(device/4):
+            String.s=device$:device$="";".exe"
+            If sFile And GetExtensionPart(sFile)="":sFile+String:EndIf
+          Else
+            sFile.s = SaveFileRequesterEx(Language(#L_SAVE),"", #GFP_PATTERN_PROTECTED_MEDIA, 0)
+            If sFile And GetExtensionPart(sFile)="":sFile+#GFP_PROTECTED_FILE_EXTENTION:EndIf
           EndIf  
-        EndIf
-        If GetGadgetState(#GADGET_PV_ADDPLAYER)
-          SetGadgetState(#GADGET_PV_ALLOWUNPROTECT, #False)
-          DisableGadget(#GADGET_PV_ALLOWUNPROTECT, #True)
-          DisableGadget(#GADGET_PV_ICON_BUTTON, #False)
-          DisableGadget(#GADGET_PV_ICON_STRING, #False)
-          DisableGadget(#GADGET_PV_COMMAND_BUTTON, #False)
-          DisableGadget(#GADGET_PV_COMMAND_STRING, #False)
-        Else
-          DisableGadget(#GADGET_PV_ALLOWUNPROTECT, #False)
-          DisableGadget(#GADGET_PV_ICON_BUTTON, #True)
-          DisableGadget(#GADGET_PV_ICON_STRING, #True)
-          DisableGadget(#GADGET_PV_COMMAND_BUTTON, #True)
-          DisableGadget(#GADGET_PV_COMMAND_STRING, #True)
-        EndIf  
-        
-      Case #GADGET_PV_EXPIRE_DATE_TEXT
-        DisableGadget(#GADGET_PV_EXPIRE_DATE, GetGadgetState(#GADGET_PV_EXPIRE_DATE_TEXT)!1)
+          If sFile
+            ;If GetGadgetState(#GADGET_PV_ADDPLAYER) = #PB_Checkbox_Checked:sFile=SwapExtension(sFile, "exe"):EndIf
+            SetGadgetText(#GADGET_PV_SAVE_STRING, sFile)
+          EndIf
+          
+          ;       Case #GADGET_PV_COPY_PROTECTION
+          ;         If GetGadgetState(#GADGET_PV_COPY_PROTECTION)
+          ;           DisableGadget(#GADGET_PV_PW_STRING, #True)
+          ;           DisableGadget(#GADGET_PV_PW2_STRING, #True)
+          ;           DisableGadget(#GADGET_PV_PW_TIP_STRING, #True)
+          ;         Else
+          ;           DisableGadget(#GADGET_PV_PW_STRING, #False)
+          ;           DisableGadget(#GADGET_PV_PW2_STRING, #False)
+          ;           DisableGadget(#GADGET_PV_PW_TIP_STRING, #False)
+          ;         EndIf  
+          
+        Case #GADGET_PV_LOAD_BUTTON
+          sFile.s = OpenFileRequesterEx(Language(#L_LOAD),"", #GFP_PATTERN_MEDIA, 0)
+          SetProtectVideo(sFile.s)
+          
+        Case #GADGET_PV_COVER_BUTTON
+          sFile.s = OpenFileRequesterEx(Language(#L_LOAD),"", #GFP_PATTERN_IMAGE, 0)
+          SetProtectVideoCover(sFile.s)
+          
+        Case #GADGET_PV_COVER_IMG
+          If iEvent = #PB_Event_GadgetDrop
+            sFile=EventDropFiles()
+            SetProtectVideoCover(sFile.s)
+          EndIf  
+          
+        Case #GADGET_PV_ICON_BUTTON
+          path.s=""
+          If FileSize("GFP-SDK\Icons")=-2
+            path.s="GFP-SDK\Icons\"
+          EndIf  
+          sFile.s = OpenFileRequesterEx(Language(#L_ICON),path, "ICON (*.ico)|*.ico|Alle Dateien (*.*)|*.*", 0)
+          If sFile<>""
+            SetGadgetText(#GADGET_PV_ICON_STRING, sFile)
+          EndIf  
+          
+        Case #GADGET_PV_MACHINEID_GENERATE
+          SetGadgetText(#GADGET_PV_MACHINEID_STRING,MachineID(0))
+          
+        Case #GADGET_PV_COMMAND_BUTTON
+          ShowCommandHelp()
+          
+        Case #GADGET_PV_ADDPLAYER
+          sFile.s=GetGadgetText(#GADGET_PV_SAVE_STRING)
+          If sFile<>""
+            If GetGadgetState(#GADGET_PV_ADDPLAYER) = #PB_Checkbox_Checked
+              If LCase(GetExtensionPart(sFile))<>"exe"
+                sFile=SwapExtension(sFile, "exe")
+                SetGadgetText(#GADGET_PV_SAVE_STRING, sFile)
+              EndIf
+            Else
+              If LCase(GetExtensionPart(sFile))<>Mid(#GFP_PROTECTED_FILE_EXTENTION, 2)
+                sFile=SwapExtension(sFile, Mid(#GFP_PROTECTED_FILE_EXTENTION, 2))
+                SetGadgetText(#GADGET_PV_SAVE_STRING, sFile)
+              EndIf
+            EndIf  
+          EndIf
+          If GetGadgetState(#GADGET_PV_ADDPLAYER)
+            SetGadgetState(#GADGET_PV_ALLOWUNPROTECT, #False)
+            DisableGadget(#GADGET_PV_ALLOWUNPROTECT, #True)
+            DisableGadget(#GADGET_PV_ICON_BUTTON, #False)
+            DisableGadget(#GADGET_PV_ICON_STRING, #False)
+            DisableGadget(#GADGET_PV_COMMAND_BUTTON, #False)
+            DisableGadget(#GADGET_PV_COMMAND_STRING, #False)
+          Else
+            DisableGadget(#GADGET_PV_ALLOWUNPROTECT, #False)
+            DisableGadget(#GADGET_PV_ICON_BUTTON, #True)
+            DisableGadget(#GADGET_PV_ICON_STRING, #True)
+            DisableGadget(#GADGET_PV_COMMAND_BUTTON, #True)
+            DisableGadget(#GADGET_PV_COMMAND_STRING, #True)
+          EndIf  
+          
+        Case #GADGET_PV_EXPIRE_DATE_TEXT
+          DisableGadget(#GADGET_PV_EXPIRE_DATE, GetGadgetState(#GADGET_PV_EXPIRE_DATE_TEXT)!1)
       EndSelect
     EndIf
     
@@ -7954,7 +8041,7 @@ EndProcedure
       EndIf
       
     EndIf
-  
+    
   EndProcedure
   Procedure Events(iEvent.i)
     Protected iMediaEvent.i, iEventWindow.i
@@ -7963,21 +8050,21 @@ EndProcedure
     If iEventWindow=iLogWindow And iLogWindow And iEvent = #PB_Event_CloseWindow:CloseWindow(iLogWindow):iLogWindow=0:EndIf
     If IsWindow(iEventWindow)
       Select iEventWindow
-      Case #WINDOW_MAIN
-        EventMainWindow(iEvent.i)
-        
-      Case #WINDOW_ABOUT
-        EventAboutWindow(iEvent.i)
-        
-      Case #WINDOW_LIST
-        EventListWindow(iEvent.i)
-      
-      Case #WINDOW_OPTIONS
-        EventOptionsWindow(iEvent.i)
-    
-      Case #WINDOW_VIDEOPROTECT
-        EventProtectVideoWindow(iEvent.i)
-      
+        Case #WINDOW_MAIN
+          EventMainWindow(iEvent.i)
+          
+        Case #WINDOW_ABOUT
+          EventAboutWindow(iEvent.i)
+          
+        Case #WINDOW_LIST
+          EventListWindow(iEvent.i)
+          
+        Case #WINDOW_OPTIONS
+          EventOptionsWindow(iEvent.i)
+          
+        Case #WINDOW_VIDEOPROTECT
+          EventProtectVideoWindow(iEvent.i)
+          
       EndSelect
     EndIf
     
@@ -7995,1035 +8082,1043 @@ EndProcedure
       iMediaEvent = EventlParam()
       If iMediaEvent = iMediaObject
         OnMediaEvent(iMediaEvent)
-      ;Else
-      ;Debug "Bad Media Event "+Str(iMediaEvent)
+        ;Else
+        ;Debug "Bad Media Event "+Str(iMediaEvent)
       EndIf
     EndIf
-EndProcedure
+  EndProcedure
   Procedure Event_AppCommand(command.i, device.i, state.i)
     Protected iState.i
     Select command
-    Case #APPCOMMAND_VOLUME_MUTE 
-      RunCommand(#COMMAND_MUTE)
-      
-    Case #APPCOMMAND_VOLUME_DOWN
-      iState = GetVolumeGadgetState(iVolumeGadget)-10
-      RunCommand(#COMMAND_VOLUME, iState)
-      
-    Case #APPCOMMAND_VOLUME_UP
-      iState = GetVolumeGadgetState(iVolumeGadget)+10
-      RunCommand(#COMMAND_VOLUME, iState)
-    
-    Case #APPCOMMAND_MEDIA_NEXTTRACK
-      RunCommand(#COMMAND_NEXTTRACK)
-      
-    Case #APPCOMMAND_MEDIA_PREVIOUSTRACK
-      RunCommand(#COMMAND_PREVIOUSTRACK)
-      
-    Case #APPCOMMAND_MEDIA_STOP
-      RunCommand(#COMMAND_STOP)
-    
-    Case #APPCOMMAND_MEDIA_PLAY_PAUSE
-      RunCommand(#COMMAND_PLAY)
-    
-    Case #APPCOMMAND_HELP
-      RunCommand(#COMMAND_HELP)
-    
-    Case #APPCOMMAND_OPEN
-      RunCommand(#COMMAND_LOAD)
-    
-    Case #APPCOMMAND_COPY
-      RunCommand(#COMMAND_COPY)
-    
-    Case #APPCOMMAND_PASTE
-      RunCommand(#COMMAND_PASTE)
-    
-    Case #APPCOMMAND_MEDIA_PLAY
-      RunCommand(#COMMAND_PLAY)
-    
-    Case #APPCOMMAND_MEDIA_PAUSE
-      RunCommand(#COMMAND_PAUSE)
-      
-    Case #APPCOMMAND_MEDIA_CHANNEL_UP
-      RunCommand(#COMMAND_NEXTTRACK)
-    
-    Case #APPCOMMAND_MEDIA_CHANNEL_DOWN
-      RunCommand(#COMMAND_PREVIOUSTRACK)
-    
+      Case #APPCOMMAND_VOLUME_MUTE 
+        RunCommand(#COMMAND_MUTE)
+        
+      Case #APPCOMMAND_VOLUME_DOWN
+        iState = GetVolumeGadgetState(iVolumeGadget)-10
+        RunCommand(#COMMAND_VOLUME, iState)
+        
+      Case #APPCOMMAND_VOLUME_UP
+        iState = GetVolumeGadgetState(iVolumeGadget)+10
+        RunCommand(#COMMAND_VOLUME, iState)
+        
+      Case #APPCOMMAND_MEDIA_NEXTTRACK
+        RunCommand(#COMMAND_NEXTTRACK)
+        
+      Case #APPCOMMAND_MEDIA_PREVIOUSTRACK
+        RunCommand(#COMMAND_PREVIOUSTRACK)
+        
+      Case #APPCOMMAND_MEDIA_STOP
+        RunCommand(#COMMAND_STOP)
+        
+      Case #APPCOMMAND_MEDIA_PLAY_PAUSE
+        RunCommand(#COMMAND_PLAY)
+        
+      Case #APPCOMMAND_HELP
+        RunCommand(#COMMAND_HELP)
+        
+      Case #APPCOMMAND_OPEN
+        RunCommand(#COMMAND_LOAD)
+        
+      Case #APPCOMMAND_COPY
+        RunCommand(#COMMAND_COPY)
+        
+      Case #APPCOMMAND_PASTE
+        RunCommand(#COMMAND_PASTE)
+        
+      Case #APPCOMMAND_MEDIA_PLAY
+        RunCommand(#COMMAND_PLAY)
+        
+      Case #APPCOMMAND_MEDIA_PAUSE
+        RunCommand(#COMMAND_PAUSE)
+        
+      Case #APPCOMMAND_MEDIA_CHANNEL_UP
+        RunCommand(#COMMAND_NEXTTRACK)
+        
+      Case #APPCOMMAND_MEDIA_CHANNEL_DOWN
+        RunCommand(#COMMAND_PREVIOUSTRACK)
+        
     EndSelect
   EndProcedure
-;}
-
-
-
-
-
-
-;{ Testing Constante
+  ;}
+  
+  
+  
+  
+  
+  
+  ;{ Testing Constante
   CompilerIf #USE_GFP
-  
-
-;}
-;{ Read Command Parameter
-
-  ;Process own Requester with other process:
-  ProcessRequester_Run()
-  
-  
-  StartParams\iloglevel = -1
-  StartParams\iUsedVideoRenderer = -1
-  StartParams\iUsedAudioRenderer = -1
-  StartParams\iAlternativeHooking = #False
-  StartParams\iSaveStreamingCache = #True;-> Muss noch eingelesen werden!!!
-  
-  StartParams\sProxyIP = "-"
-  StartParams\sProxyPort = "-"
-  StartParams\iUseIESettings = -1
-  StartParams\iProxyBypassLocal = -1
-  StartParams\iNoRedirect = -1
-  StartParams\sPasswordFile = ""
-  StartParams\sInstallDesign = ""
-  StartParams\iDisableMenu=#USE_DISABLEMENU
-  
-  StartParams\iUseSkin = #USE_OVERWRITE_SKIN
-  StartParams\qStartPosition = 0
- 
-  
-  Repeat
-    sParam.s = _ProgramParameter()
-    ;MessageRequester("",sParam)
-    ;Debug sParam
-    If sParam
-      ;WriteLog("Param: "+sParam, #LOGLEVEL_DEBUG);Kann hier nicht ausgegeb werden, da log noch nicht initialisiert ist.(abhängig von Parameter)
-      sParamOrg=sParam
-      sParam=LCase(sParam)
-      If Left(sParam,1)="-":sParam="/"+Mid(sParam, 2):EndIf
-      Select sParam
+    
+    
+    ;}
+    ;{ Read Command Parameter
+    
+    ;Process own Requester with other process:
+    ProcessRequester_Run()
+    
+    
+    StartParams\iloglevel = -1
+    StartParams\iUsedVideoRenderer = -1
+    StartParams\iUsedAudioRenderer = -1
+    StartParams\iAlternativeHooking = #False
+    StartParams\iSaveStreamingCache = #True;-> Muss noch eingelesen werden!!!
+    
+    StartParams\sProxyIP = "-"
+    StartParams\sProxyPort = "-"
+    StartParams\iUseIESettings = -1
+    StartParams\iProxyBypassLocal = -1
+    StartParams\iNoRedirect = -1
+    StartParams\sPasswordFile = ""
+    StartParams\sInstallDesign = ""
+    StartParams\iDisableMenu=#USE_DISABLEMENU
+    
+    StartParams\iUseSkin = #USE_OVERWRITE_SKIN
+    StartParams\qStartPosition = 0
+    
+    
+    Repeat
+      sParam.s = _ProgramParameter()
+      ;MessageRequester("",sParam)
+      ;Debug sParam
+      If sParam
+        ;WriteLog("Param: "+sParam, #LOGLEVEL_DEBUG);Kann hier nicht ausgegeb werden, da log noch nicht initialisiert ist.(abhängig von Parameter)
+        sParamOrg=sParam
+        sParam=LCase(sParam)
+        If Left(sParam,1)="-":sParam="/"+Mid(sParam, 2):EndIf
+        Select sParam
+            
+          Case "/aspect"
+            sParam.s = ProgramParameter()
+            If FindString(sParam, ":", 1)
+              StartParams\iAspect = Val(StringField(sParam, 1, ":"))/Val(StringField(sParam, 2, ":"))
+            EndIf
+            
+          Case "/fullscreen"
+            StartParams\bFullscreen = #True
+            
+          Case "/?"
+            StartParams\bHelp = #True
+            
+          Case "/morehelp"
+            StartParams\bHelp2 = #True
+            
+          Case "/help"
+            StartParams\bHelp = #True
+            
+          Case "/h"
+            StartParams\bHelp = #True
+            
+          Case "/volume"
+            StartParams\iVolume = Val(_ProgramParameter())
+            
+          Case "/showmsgcheck"
+            sMsgTitle = _ProgramParameter()
+            sMsgText = _ProgramParameter()
+            MessageBoxCheck(sMsgTitle, sMsgText, #MB_ICONINFORMATION, StringFingerprint(sMsgText, #PB_Cipher_CRC32))
+            
+          Case "/showmsgbox"
+            sMsgTitle = _ProgramParameter()
+            sMsgText = _ProgramParameter()
+            MessageRequester(sMsgTitle, sMsgText, #MB_ICONINFORMATION)
+            
+          Case "/terminatenow"
+            End
+            
+          Case  "/disablelavfilters"
+            StartParams\iDisableLAVFilters = #True
+            
+          Case  "/codecdownload"
+            StartParams\iJustDownloadCodecs = #True
+            StartParams\bHidden = #True
+            
+          Case "/deletelavfilters"
+            StartParams\iDisableLAVFilters = #True
+            LAVFilters_Delete()
+            End
+            
+          Case  "/invisiblecodecdownload"      
+            StartParams\iHiddenCodecsDownload = #True
+            
+          Case "/protectprocess"
+            ProtectProcess()
+            
+          Case "/dlltmpregister"
+            If sTmpRegisteredDLL = "" ;only one dll supported
+              sTmpRegisteredDLL.s = ProgramParameter()
+              SafeRegister(sTmpRegisteredDLL.s,#False, #False)
+            EndIf
+            
+          Case "/dllregister"
+            SafeRegister(ProgramParameter(), #False, #False)
+            
+          Case "/dllunregister"
+            SafeRegister(ProgramParameter(),#False, #True) 
+            
+            ;Case "/impersonate"  
+            ;  sImUser.s = _ProgramParameter()
+            ;  sImPwd.s = _ProgramParameter()
+            ;  LogonUser_(sImUser.s, "", sImPwd.s,  #LOGON32_LOGON_INTERACTIVE, #LOGON32_PROVIDER_DEFAULT, @hToken)       
+            ;  ImpersonateLoggedOnUser_(hToken)
+            
+          Case "/delaystart"
+            Delay(Val(_ProgramParameter()))     
+            
+          Case "/password"
+            StartParams\sPassword = _ProgramParameter()
+            sGlobalPassword = StartParams\sPassword
+            
+          Case "/encryption"
+            StartParams\sPassword = _ProgramParameter()
+            sGlobalPassword = StartParams\sPassword
+            
+          Case "/hidden"
+            StartParams\bHidden = #True
+            
+          Case "/invisible"
+            StartParams\bHidden = #True
+            
+          Case "/closeafterplayback"  
+            bCloseAfterPlayback = #True
+            
+          Case "/usedesign"  
+            StartParams\iUseSkin = Val(_ProgramParameter())
+            
+          Case "/database"
+            sDataBaseFile=_ProgramParameter()
+            sDataBaseFile = ReplaceString(sDataBaseFile,"[APPDATA]", GetSpecialFolder(#CSIDL_APPDATA), #PB_String_NoCase)
+            sDataBaseFile = ReplaceString(sDataBaseFile,"[DESKTOP]", GetSpecialFolder(#CSIDL_DESKTOP), #PB_String_NoCase)
+            sDataBaseFile = ReplaceString(sDataBaseFile, "[DOCUMENTS]", GetSpecialFolder(#CSIDL_MYDOCUMENTS), #PB_String_NoCase)
+            sDataBaseFile = ReplaceString(sDataBaseFile, "[HOME]", GetHomeDirectory(), #PB_String_NoCase)
+            sDataBaseFile = ReplaceString(sDataBaseFile, "[TEMP]", GetTemporaryDirectory(), #PB_String_NoCase)
+            sDataBaseFile = ReplaceString(sDataBaseFile, "[PROGRAM]", GetCurrentDirectory(), #PB_String_NoCase)
+            sLogFileName = GetPathPart(sDataBaseFile)+"Log.txt"
+            
+          Case "/importlist"
+            StartParams\sImportPlaylist = _ProgramParameter()
+            
+          Case "/loglevel"
+            StartParams\iloglevel = Val(_ProgramParameter())
+            
+          Case "/videorenderer"
+            StartParams\iUsedVideoRenderer = Val(_ProgramParameter())
+            
+          Case "/audiorenderer"
+            StartParams\iUsedAudioRenderer = Val(_ProgramParameter())
+            
+          Case "/restoredatabase"  
+            StartParams\iRestoreDatabase = #True
+            
+          Case "/ahook" 
+            StartParams\iAlternativeHooking = #True
+            iAlternativeHookingActive = #True
+            
+            CompilerIf #USE_OEM_VERSION  
+            Case "/flvplayer"
+              FLVPlayerSWFFile=_ProgramParameter()
+              
+              
+            Case "/flvplayervars"
+              FLVPlayerSWFVars=_ProgramParameter()
+            CompilerEndIf  
+            
+          Case "/disablehook"
+            IsVirtualFileUsed=#False
+            
+          Case "/disablemenu"
+            StartParams\iDisableMenu=#True
+            
+          Case "/deletestreamingcache"
+            StartParams\iSaveStreamingCache = #False
+            
+          Case "/proxyip"
+            StartParams\sProxyIP = _ProgramParameter()
+            
+          Case "/proxyport"
+            StartParams\sProxyPort = _ProgramParameter()
+            
+          Case "/useiesettings"
+            StartParams\iUseIESettings = Val(_ProgramParameter())
+            
+          Case "/proxybypasslocal"
+            StartParams\iProxyBypassLocal = Val(_ProgramParameter())
+            
+          Case "/noredirect"
+            StartParams\iNoRedirect = Val(_ProgramParameter())
+            
+          Case "/passwordfile"
+            StartParams\sPasswordFile = _ProgramParameter()
+            
+          Case "/disablestreaming"
+            DisallowURLFiles=#True
+            
+          Case "/passwordpipe"
+            StartParams\sPassword = RSA_GetPipeString(_ProgramParameter())
+            sGlobalPassword = StartParams\sPassword
+            
+          Case "/installdesign"
+            StartParams\sInstallDesign = _ProgramParameter()
+            
+          Case "/position"
+            StartParams\qStartPosition = Val(_ProgramParameter())
+            
+          Case "/hidedrm"  
+            StartParams\iHideDRM = #True
+            iUseDRMMenu = #False
+          Default
+            sParamOrg=ReplaceString(sParamOrg, Chr(34), "")
+            If sParamOrg
+              StartParams\sFile = Trim(sParamOrg)
+            EndIf
+            
+        EndSelect
+      EndIf
+    Until sParam=""
+    
+    If StartParams\bHelp
+      ShowCommandHelp()
+      End
+    EndIf
+    
+    If StartParams\bHelp2
+      ShowCommandHelp2()
+      End
+    EndIf  
+    
+    
+    If OpenEXEAttachements(sFile)
+      If GetNumEXEAttachments()>0
+        ExeHasAttachedFiles = #True
+      EndIf
+    EndIf
+    
+    CompilerIf #PB_Editor_CreateExecutable And #USE_APPDATA_FOLDER
+      CompilerIf #USE_OEM_VERSION
+        Define ProgramFilename.s = ProgramFilename()
+        Define ProgramFilenameMD5.s = MD5Fingerprint(@ProgramFilename, StringByteLength(ProgramFilename))
         
-      Case "/aspect"
-        sParam.s = ProgramParameter()
-        If FindString(sParam, ":", 1)
-          StartParams\iAspect = Val(StringField(sParam, 1, ":"))/Val(StringField(sParam, 2, ":"))
+        If sDataBaseFile=""
+          sDataBaseFile = GetSpecialFolder(#CSIDL_APPDATA)+"\"+#PLAYER_NAME+#PLAYER_VERSION+"\data_"+ProgramFilenameMD5+".sqlite"
         EndIf
-      
-      Case "/fullscreen"
-        StartParams\bFullscreen = #True
         
-      Case "/?"
-        StartParams\bHelp = #True
-        
-      Case "/help"
-        StartParams\bHelp = #True
-        
-      Case "/h"
-        StartParams\bHelp = #True
-        
-      Case "/volume"
-        StartParams\iVolume = Val(_ProgramParameter())
-        
-      Case "/showmsgcheck"
-        sMsgTitle = _ProgramParameter()
-        sMsgText = _ProgramParameter()
-        MessageBoxCheck(sMsgTitle, sMsgText, #MB_ICONINFORMATION, StringFingerprint(sMsgText, #PB_Cipher_CRC32))
-        
-      Case "/showmsgbox"
-        sMsgTitle = _ProgramParameter()
-        sMsgText = _ProgramParameter()
-        MessageRequester(sMsgTitle, sMsgText, #MB_ICONINFORMATION)
-        
-      Case "/terminatenow"
-        End
-        
-      Case  "/disablelavfilters"
-        StartParams\iDisableLAVFilters = #True
-        
-      Case  "/codecdownload"
-        StartParams\iJustDownloadCodecs = #True
-        StartParams\bHidden = #True
-        
-      Case "/deletelavfilters"
-        StartParams\iDisableLAVFilters = #True
-        LAVFilters_Delete()
-        End
-        
-      Case  "/invisiblecodecdownload"      
-        StartParams\iHiddenCodecsDownload = #True
-        
-      Case "/protectprocess"
-        ProtectProcess()
-        
-      Case "/dlltmpregister"
-        If sTmpRegisteredDLL = "" ;only one dll supported
-          sTmpRegisteredDLL.s = ProgramParameter()
-          SafeRegister(sTmpRegisteredDLL.s,#False, #False)
+        If sLogFileName="" Or sLogFileName="Log.txt"
+          sLogFileName = GetSpecialFolder(#CSIDL_APPDATA)+"\"+#PLAYER_NAME+#PLAYER_VERSION+"\Log_"+ProgramFilenameMD5+".txt"
         EndIf
-      
-      Case "/dllregister"
-        SafeRegister(ProgramParameter(), #False, #False)
-        
-      Case "/dllunregister"
-        SafeRegister(ProgramParameter(),#False, #True) 
-             
-      ;Case "/impersonate"  
-      ;  sImUser.s = _ProgramParameter()
-      ;  sImPwd.s = _ProgramParameter()
-      ;  LogonUser_(sImUser.s, "", sImPwd.s,  #LOGON32_LOGON_INTERACTIVE, #LOGON32_PROVIDER_DEFAULT, @hToken)       
-      ;  ImpersonateLoggedOnUser_(hToken)
-        
-      Case "/delaystart"
-        Delay(Val(_ProgramParameter()))     
-        
-      Case "/password"
-        StartParams\sPassword = _ProgramParameter()
-        sGlobalPassword = StartParams\sPassword
-        
-      Case "/encryption"
-        StartParams\sPassword = _ProgramParameter()
-        sGlobalPassword = StartParams\sPassword
-        
-      Case "/hidden"
-        StartParams\bHidden = #True
-        
-      Case "/invisible"
-        StartParams\bHidden = #True
-        
-      Case "/closeafterplayback"  
-        bCloseAfterPlayback = #True
-        
-      Case "/usedesign"  
-        StartParams\iUseSkin = Val(_ProgramParameter())
-        
-      Case "/database"
-        sDataBaseFile=_ProgramParameter()
-        sDataBaseFile = ReplaceString(sDataBaseFile,"[APPDATA]", GetSpecialFolder(#CSIDL_APPDATA), #PB_String_NoCase)
-        sDataBaseFile = ReplaceString(sDataBaseFile,"[DESKTOP]", GetSpecialFolder(#CSIDL_DESKTOP), #PB_String_NoCase)
-        sDataBaseFile = ReplaceString(sDataBaseFile, "[DOCUMENTS]", GetSpecialFolder(#CSIDL_MYDOCUMENTS), #PB_String_NoCase)
-        sDataBaseFile = ReplaceString(sDataBaseFile, "[HOME]", GetHomeDirectory(), #PB_String_NoCase)
-        sDataBaseFile = ReplaceString(sDataBaseFile, "[TEMP]", GetTemporaryDirectory(), #PB_String_NoCase)
-        sDataBaseFile = ReplaceString(sDataBaseFile, "[PROGRAM]", GetCurrentDirectory(), #PB_String_NoCase)
-        sLogFileName = GetPathPart(sDataBaseFile)+"Log.txt"
-        
-      Case "/importlist"
-        StartParams\sImportPlaylist = _ProgramParameter()
-        
-      Case "/loglevel"
-        StartParams\iloglevel = Val(_ProgramParameter())
-        
-      Case "/videorenderer"
-        StartParams\iUsedVideoRenderer = Val(_ProgramParameter())
-        
-      Case "/audiorenderer"
-        StartParams\iUsedAudioRenderer = Val(_ProgramParameter())
-        
-      Case "/restoredatabase"  
-        StartParams\iRestoreDatabase = #True
-        
-      Case "/ahook" 
-        StartParams\iAlternativeHooking = #True
-        iAlternativeHookingActive = #True
-        
-      CompilerIf #USE_OEM_VERSION  
-        Case "/flvplayer"
-          FLVPlayerSWFFile=_ProgramParameter()
-          
-          
-        Case "/flvplayervars"
-          FLVPlayerSWFVars=_ProgramParameter()
+      CompilerElse
+        sPath.s="GF-Player"
+        If ExeHasAttachedFiles
+          sPath="GFP-"+#PLAYER_VERSION
+        EndIf  
+        If sDataBaseFile="" And FileSize(GetPathPart(ProgramFilename())+"\data.sqlite")>0
+          sDataBaseFile = GetPathPart(ProgramFilename())+"\data.sqlite"
+          sLogFileName = GetPathPart(ProgramFilename())+"\Log.txt"
+        EndIf
+        If sDataBaseFile=""
+          sDataBaseFile = GetSpecialFolder(#CSIDL_APPDATA)+"\"+sPath+"\data.sqlite"
+        EndIf  
+        If sLogFileName="" Or sLogFileName="Log.txt"
+          sLogFileName = GetSpecialFolder(#CSIDL_APPDATA)+"\"+sPath+"\Log.txt"
+        EndIf 
       CompilerEndIf  
       
-    Case "/disablehook"
-      IsVirtualFileUsed=#False
-      
-    Case "/disablemenu"
-      StartParams\iDisableMenu=#True
-      
-    Case "/deletestreamingcache"
-      StartParams\iSaveStreamingCache = #False
-      
-    Case "/proxyip"
-      StartParams\sProxyIP = _ProgramParameter()
-      
-    Case "/proxyport"
-      StartParams\sProxyPort = _ProgramParameter()
-      
-    Case "/useiesettings"
-      StartParams\iUseIESettings = Val(_ProgramParameter())
-            
-    Case "/proxybypasslocal"
-      StartParams\iProxyBypassLocal = Val(_ProgramParameter())
-      
-    Case "/noredirect"
-      StartParams\iNoRedirect = Val(_ProgramParameter())
-      
-    Case "/passwordfile"
-      StartParams\sPasswordFile = _ProgramParameter()
-      
-    Case "/disablestreaming"
-      DisallowURLFiles=#True
-      
-    Case "/passwordpipe"
-      StartParams\sPassword = RSA_GetPipeString(_ProgramParameter())
-      sGlobalPassword = StartParams\sPassword
-      
-    Case "/installdesign"
-      StartParams\sInstallDesign = _ProgramParameter()
-      
-    Case "/position"
-      StartParams\qStartPosition = Val(_ProgramParameter())
-      
-    Case "/hidedrm"  
-      StartParams\iHideDRM = #True
-      iUseDRMMenu = #False
-    Default
-      sParamOrg=ReplaceString(sParamOrg, Chr(34), "")
-      If sParamOrg
-        StartParams\sFile = Trim(sParamOrg)
-      EndIf
-        
-      EndSelect
-    EndIf
-  Until sParam=""
-  
-  If StartParams\bHelp
-    ShowCommandHelp()
-    End
-  EndIf
-  
-  
-  If OpenEXEAttachements(sFile)
-    If GetNumEXEAttachments()>0
-      ExeHasAttachedFiles = #True
-    EndIf
-  EndIf
-  
-  CompilerIf #PB_Editor_CreateExecutable And #USE_APPDATA_FOLDER
-    CompilerIf #USE_OEM_VERSION
-      Define ProgramFilename.s = ProgramFilename()
-      Define ProgramFilenameMD5.s = MD5Fingerprint(@ProgramFilename, StringByteLength(ProgramFilename))
-      
-      If sDataBaseFile=""
-        sDataBaseFile = GetSpecialFolder(#CSIDL_APPDATA)+"\"+#PLAYER_NAME+#PLAYER_VERSION+"\data_"+ProgramFilenameMD5+".sqlite"
-      EndIf
-      
-      If sLogFileName="" Or sLogFileName="Log.txt"
-        sLogFileName = GetSpecialFolder(#CSIDL_APPDATA)+"\"+#PLAYER_NAME+#PLAYER_VERSION+"\Log_"+ProgramFilenameMD5+".txt"
-      EndIf
     CompilerElse
-      sPath.s="GF-Player"
-      If ExeHasAttachedFiles
-        sPath="GFP-"+#PLAYER_VERSION
-      EndIf  
-      If sDataBaseFile="" And FileSize(GetPathPart(ProgramFilename())+"\data.sqlite")>0
-        sDataBaseFile = GetPathPart(ProgramFilename())+"\data.sqlite"
-        sLogFileName = GetPathPart(ProgramFilename())+"\Log.txt"
-      EndIf
       If sDataBaseFile=""
-        sDataBaseFile = GetSpecialFolder(#CSIDL_APPDATA)+"\"+sPath+"\data.sqlite"
-      EndIf  
-      If sLogFileName="" Or sLogFileName="Log.txt"
-        sLogFileName = GetSpecialFolder(#CSIDL_APPDATA)+"\"+sPath+"\Log.txt"
-      EndIf 
-    CompilerEndIf  
-      
-  CompilerElse
-    If sDataBaseFile=""
-      CompilerIf #USE_OEM_VERSION
-        sDataBaseFile = "OEM-data\data.sqlite"
-      CompilerElse
-        sDataBaseFile = "data\data.sqlite"
-      CompilerEndIf
-    EndIf
-  CompilerEndIf
-  
-  
-
-  
-
-  
-;}
-;{ Init Player
-
-
-
-
-  ;MENU COLOR:
-  !extrn __imp__GetSysColor@4
-  !MOV eax,__imp__GetSysColor@4;_GetSysColor@4
-  !MOV [v__g_menu_imp__GetSysColor],eax
-  _g_menu_new_imp_GetSysColor = @__MyGetSysColor()
-  _g_menu_real_GetSysColor = GetProcAddress_(GetModuleHandle_("User32.dll"), "GetSysColor")
-  WriteProcessMemory_(GetCurrentProcess_(), _g_menu_imp__GetSysColor, @_g_menu_new_imp_GetSysColor, SizeOf(Integer), #Null)  
-  
-
- 
-
-
-  UsedDPI=GetDPI()
-  
-  UseGIFImageDecoder()
-  UsePNGImageDecoder()
-  UsePNGImageEncoder()
-  UseJPEGImageDecoder()
-  UseJPEGImageEncoder()
-  UseJPEG2000ImageDecoder()
-  UseJPEG2000ImageEncoder()
-  UseTIFFImageDecoder() 
-  UseTGAImageDecoder() 
-  
-  LoadPlayerData()
-  
-  CompilerIf #USE_SWF_SUPPORT Or #USE_OEM_VERSION
-    Flash_Init()
-  CompilerEndIf  
-  
-  HTTPCONTEXT_Initialize()
-  TIMER_Init()
-  UxTheme_Init()
-    
-  
-  CompilerIf #USE_OEM_VERSION 
-    CompilerIf #OEM_ONLY_START_WITH_ACTIVE_MUTEX
-      Define Mutex,iMutexIndex, bMutexUsed
-      bMutexUsed=IsMutexAlreadyUsed(#OEM_MP_MUTEX)
-     
-      iUseDRMMenu.i=#False
-      If bMutexUsed = #False
-        iUseDRMMenu.i=#True
-        CompilerIf #PB_editor_createexecutable
-          MessageRequester("Error!", #OEM_MUTEX_NOT_ACTIVE_ERROR, #MB_ICONERROR)
-          End
+        CompilerIf #USE_OEM_VERSION
+          sDataBaseFile = "OEM-data\data.sqlite"
+        CompilerElse
+          sDataBaseFile = "data\data.sqlite"
         CompilerEndIf
       EndIf
     CompilerEndIf
-  CompilerEndIf  
-
-
-  
-  If StartParams\iRestoreDatabase = #True
-    DeleteFile(sDataBaseFile)
-  EndIf  
     
-  CompilerIf #USE_OEM_VERSION And #PB_Editor_CreateExecutable ;2010-04-17
-    sLimitationsFile=ProgramFilename()
-    sLimitationsFile=Mid(sLimitationsFile, 1,Len(sLimitationsFile)-Len(GetExtensionPart(ProgramFilename())))+"limit"
-    LoadLimitations(sLimitationsFile)
     
-    If DisallowURLFiles
-      MenuLimitations(#MENU_LOADURL)=#True
-    EndIf   
-  CompilerEndIf
-
     
-  
-  
-  InitNetwork();Wird benötigt das die exe beim beenden nicht hengt, wenn etwas aus dem Internet geladen wurde.
-  InitErrorHandler()
-  
-  CompilerIf #PB_Editor_CreateExecutable
-    SetCurrentDirectory(GetPathPart(ProgramFilename()))
-  CompilerEndIf
-
-  CompilerIf #USE_ENABLE_LAVFILTERS_DOWNLOAD
-    If Not StartParams\iDisableLAVFilters
-      If LAVFilters_Download(#PLAYER_NAME, "Downloading codecs...", StartParams\iHiddenCodecsDownload)
-        LAVFilters_Register()  
-;         If LAVFilters_IsFreshInstallation()
-;           If Not StartParams\iJustDownloadCodecs
-;             ;RestartPlayer()
-;           EndIf  
-;         EndIf  
-      EndIf
-    EndIf
-  If StartParams\iJustDownloadCodecs
-    EndPlayer()
-  EndIf        
-  CompilerEndIf
-  
-  CompilerIf #PB_Editor_CreateExecutable And #USE_APPDATA_FOLDER
-    CheckDatabase(sDataBaseFile)
-  CompilerEndIf  
-
-  If FileSize(sDataBaseFile)<1
-    CreateDirectory(GetPathPart(sDataBaseFile))
-    iDBFile = CreateFile(#PB_Any, sDataBaseFile)
-    If iDBFile
-      WriteData(iDBFile, ?DS_SQLDataBase, ?DS_EndSQLDataBase-?DS_SQLDataBase)
-      CloseFile(iDBFile)
-      SetDefaultLng()
-      WriteLog("Created new Database!")
-    Else
-      MessageRequester("Error", "Can't create new Database!", #MB_ICONERROR)
-      WriteLog("Can't create new Database!")
-      End
-    EndIf
-  EndIf
-  
-  
-  ;Install Designs:
-  If StartParams\sInstallDesign<>""
-    *DB = DB_Open(sDataBaseFile)
-    If *DB
-      *DBDesign = DB_Open(StartParams\sInstallDesign)
-      If *DBDesign
-        InstallDesigns(*DB, *DBDesign)
-        DB_Close(*DBDesign)
-        *DBDesign=#Null
-      EndIf  
-      DB_Close(*DB)
-      *DB=#Null
-    EndIf
-  EndIf
-  
-  
-  
-  iDoubleClickTime=ElapsedMilliseconds()
-  InitVideoDVD()
-  ;ACD_InitAudioCD();Wird nun erst beim Verwenden der Audio CD gemacht!
-  InitWindowProtector()
-  InitMetaReader()
-  If StartParams\iUseSkin<>-1
-    SetSetting(sDataBaseFile, #SETTINGS_ICONSET, Str(StartParams\iUseSkin))
-  EndIf  
-  LoadSettings(sDataBaseFile)
-  InitLanguage(sDataBaseFile, Val(Settings(#SETTINGS_LANGUAGE)\sValue))
-  If Language(#L_CHANGES_NEEDS_RESTART)+Language(#L_DRAWING)+Language(#L_DONATE)=""
-    Requester_Cant_Update()
-  EndIf  
-  
-  InitPasswordMgr(sDataBaseFile)
-  If iLastLanguageItem = #False Or iLastLanguageItem<>#L_LAST Or iLastSettingsItem<>#SETTINGS_LAST
-    CreateDirectory(GetPathPart(sDataBaseFile))
-    iDBFile = CreateFile(#PB_Any, sDataBaseFile)
-    If iDBFile
-      WriteData(iDBFile, ?DS_SQLDataBase, ?DS_EndSQLDataBase-?DS_SQLDataBase)
-      CloseFile(iDBFile)
-      SetDefaultLng()
-      MessageRequester("Error", "The database is corrupt, a new database was created!", #MB_ICONERROR)
-      WriteLog("Created new Database!")
-    Else
-      WriteLog("Can't create new Database!")
-      End
-    EndIf
-    LoadSettings(sDataBaseFile)
-    InitLanguage(sDataBaseFile, Val(Settings(#SETTINGS_LANGUAGE)\sValue))
-  EndIf
-  If #USE_DEBUGLEVEL:Settings(#SETTINGS_LOGLEVEL)\sValue="2":WriteLog("Loglevel set to debug!"):EndIf
-  iVideoRenderer = Val(Settings(#SETTINGS_VIDEORENDERER)\sValue);#VMR9_Windowed
-  iAudioRenderer = Val(Settings(#SETTINGS_AUDIORENDERER)\sValue);#WaveOutRenderer
-  iOwnVideoRenderer=#False
-  If iVideoRenderer=8:iVideoRenderer=#RENDERER_VMR9:iOwnVideoRenderer=#True:EndIf
-  If iVideoRenderer=#RENDERER_DEFAULT:iVideoRenderer=#RENDERER_VMR9:iOwnVideoRenderer=#True:EndIf;Default is own renderer
-  
-  ;Init Logging:
-  If Val(Settings(#SETTINGS_LOGLEVEL)\sValue)>#LOGLEVEL_NONE
-    InitLogFile()
-  EndIf
-  
-  CheckRunOneWindow(StartParams\sFile)
-  
-  ActivateAntiDebug()
-  
-  InitMedia()
-  iMediaMainObject.i = __CreateMediaObject(#False)
-  
-  CompilerIf #USE_VIRTUAL_FILE
-    If IsVirtualFileUsed=#True
-      WriteLog("VirtualFile Replace code: "+Str(StartParams\iAlternativeHooking),#LOGLEVEL_DEBUG)
-      VirtualFile_SetBlackList(#VIRTUALFILE_BLACKLIST)
-      VirtualFile_Init(1000, 1000, StartParams\iAlternativeHooking)
-    Else
-      WriteLog("No virualfile! (set per comandline)")
-    EndIf
-  CompilerElse
-    WriteLog("No virualfile!")
-  CompilerEndIf
-  
-  SetSubtitleSize(#SUBTITLE_FONNT_SIZE)
-  
-
-  LoadPlayerDesign(sDataBaseFile)
-  
-  CreateMainWindow()
-
-  SetChronicList(#Null)
-  
-  ;2010-08-10 OLD CALLBACK POS
-  ;SetWindowCallback(@CBMainWindow())
-  RegisterAppCmdCallback(WindowID(#WINDOW_MAIN), @Event_AppCommand())
-  
-
-  
-  SetPlayerSettings()
-  If ExeHasAttachedFiles=#False
-    SetAllFileExtensions()
-  EndIf  
-  
-  If ExeHasAttachedFiles
-    LoadAttachedMedia(ProgramFilename())
-  EndIf
-  
     
-  
-;}
-;{ Process Command Parameter
-  
-  *DB = DB_Open(sDataBaseFile)
-  If StartParams\iloglevel>-1:Settings(#SETTINGS_LOGLEVEL)\sValue=Str(StartParams\iloglevel):SetSettingFast(*DB, #SETTINGS_LOGLEVEL, Settings(#SETTINGS_LOGLEVEL)\sValue):EndIf
-  If StartParams\iUsedVideoRenderer>-1:Settings(#SETTINGS_VIDEORENDERER)\sValue=Str(StartParams\iUsedVideoRenderer):SetSettingFast(*DB, #SETTINGS_VIDEORENDERER, Settings(#SETTINGS_VIDEORENDERER)\sValue):EndIf
-  If StartParams\iUsedAudioRenderer>-1:Settings(#SETTINGS_AUDIORENDERER)\sValue=Str(StartParams\iUsedAudioRenderer):SetSettingFast(*DB, #SETTINGS_AUDIORENDERER, Settings(#SETTINGS_AUDIORENDERER)\sValue):EndIf
-  iVideoRenderer = Val(Settings(#SETTINGS_VIDEORENDERER)\sValue)
-  iAudioRenderer = Val(Settings(#SETTINGS_AUDIORENDERER)\sValue)
-  iOwnVideoRenderer=#False
-  If iVideoRenderer=8:iVideoRenderer=#RENDERER_VMR9:iOwnVideoRenderer=#True:EndIf  
-  If iVideoRenderer=#RENDERER_DEFAULT:iVideoRenderer=#RENDERER_VMR9:iOwnVideoRenderer=#True:EndIf;Default is own renderer
-  
-  
-  If StartParams\sPasswordFile
-    iFile = ReadFile(#PB_Any, StartParams\sPasswordFile, #PB_File_SharedRead )
-    If iFile
-      sGlobalPassword = ReadString(iFile)
-      CloseFile(iFile)
+    
+    
+    ;}
+    ;{ Init Player
+    
+    
+    
+    
+    ;MENU COLOR:
+    !extrn __imp__GetSysColor@4
+    !MOV eax,__imp__GetSysColor@4;_GetSysColor@4
+    !MOV [v__g_menu_imp__GetSysColor],eax
+    _g_menu_new_imp_GetSysColor = @__MyGetSysColor()
+    _g_menu_real_GetSysColor = GetProcAddress_(GetModuleHandle_("User32.dll"), "GetSysColor")
+    WriteProcessMemory_(GetCurrentProcess_(), _g_menu_imp__GetSysColor, @_g_menu_new_imp_GetSysColor, SizeOf(Integer), #Null)  
+    
+    
+    
+    
+    
+    UsedDPI=GetDPI()
+    
+    UseGIFImageDecoder()
+    UsePNGImageDecoder()
+    UsePNGImageEncoder()
+    UseJPEGImageDecoder()
+    UseJPEGImageEncoder()
+    UseJPEG2000ImageDecoder()
+    UseJPEG2000ImageEncoder()
+    UseTIFFImageDecoder() 
+    UseTGAImageDecoder() 
+    
+    LoadPlayerData()
+    
+    CompilerIf #USE_SWF_SUPPORT Or #USE_OEM_VERSION
+      Flash_Init()
+    CompilerEndIf  
+    
+    HTTPCONTEXT_Initialize()
+    TIMER_Init()
+    UxTheme_Init()
+    
+    
+    CompilerIf #USE_OEM_VERSION 
+      CompilerIf #OEM_ONLY_START_WITH_ACTIVE_MUTEX
+        Define Mutex,iMutexIndex, bMutexUsed
+        bMutexUsed=IsMutexAlreadyUsed(#OEM_MP_MUTEX)
+        
+        iUseDRMMenu.i=#False
+        If bMutexUsed = #False
+          iUseDRMMenu.i=#True
+          CompilerIf #PB_editor_createexecutable
+            MessageRequester("Error!", #OEM_MUTEX_NOT_ACTIVE_ERROR, #MB_ICONERROR)
+            End
+          CompilerEndIf
+        EndIf
+      CompilerEndIf
+    CompilerEndIf  
+    
+    
+    
+    If StartParams\iRestoreDatabase = #True
+      DeleteFile(sDataBaseFile)
     EndIf  
-  EndIf  
-  
-  If StartParams\sProxyIP <> "-"
-    Settings(#SETTINGS_PROXY)\sValue = StartParams\sProxyIP
-    SetSettingFast(*DB, #SETTINGS_PROXY, Settings(#SETTINGS_PROXY)\sValue)
-  EndIf  
-  If StartParams\sProxyPort <> "-"
-    Settings(#SETTINGS_PROXY_PORT)\sValue = StartParams\sProxyPort
-    SetSettingFast(*DB, #SETTINGS_PROXY_PORT, Settings(#SETTINGS_PROXY_PORT)\sValue)
-  EndIf  
-  If StartParams\iUseIESettings <> -1
-    Settings(#SETTINGS_PROXY_USE_IE_SETTINGS)\sValue = Str(StartParams\iUseIESettings)
-    SetSettingFast(*DB, #SETTINGS_PROXY_USE_IE_SETTINGS, Settings(#SETTINGS_PROXY_USE_IE_SETTINGS)\sValue)
-  EndIf  
-  If StartParams\iProxyBypassLocal <> -1
-    Settings(#SETTINGS_PROXY_BYPASS_LOCAL)\sValue = Str(StartParams\iProxyBypassLocal)
-    SetSettingFast(*DB, #SETTINGS_PROXY_BYPASS_LOCAL, Settings(#SETTINGS_PROXY_BYPASS_LOCAL)\sValue)
-  EndIf
-  
-  If StartParams\iNoRedirect <> -1
-    Settings(#SETTINGS_PROXY_NOREDIRECT)\sValue = Str(StartParams\iNoRedirect)
-    SetSettingFast(*DB, #SETTINGS_PROXY_NOREDIRECT, Settings(#SETTINGS_PROXY_NOREDIRECT)\sValue)
-  EndIf  
-  
-  If *DB:DB_Close(*DB):*DB=#Null:EndIf
-  
-  
-  If StartParams\sPassword:sGlobalPassword = StartParams\sPassword:EndIf
-  If StartParams\sFile:RunCommand(#COMMAND_LOADFILE, 0, StartParams\sFile):EndIf
-  If StartParams\iAspect:RunCommand(#COMMAND_ASPECT, StartParams\iAspect):EndIf
-  If StartParams\iVolume:RunCommand(#COMMAND_VOLUME, StartParams\iVolume):EndIf
-  If StartParams\bHidden:HideWindow(#WINDOW_MAIN, #True):EndIf
-  If StartParams\sImportPlaylist:PLS_ImportPlaylist(StartParams\sImportPlaylist):EndIf
-  
-  
-  CompilerIf #USE_OEM_VERSION
-    SetWindowIcon(#WINDOW_MAIN, "icon.ico")
     
-    CompilerIf #OEM_OPEN_FILE_REQUESTER_AT_START
-      If StartParams\sFile=""
-        RunCommand(#COMMAND_LOAD)
-      EndIf  
+    CompilerIf #USE_OEM_VERSION And #PB_Editor_CreateExecutable ;2010-04-17
+      sLimitationsFile=ProgramFilename()
+      sLimitationsFile=Mid(sLimitationsFile, 1,Len(sLimitationsFile)-Len(GetExtensionPart(ProgramFilename())))+"limit"
+      LoadLimitations(sLimitationsFile)
+      
+      If DisallowURLFiles
+        MenuLimitations(#MENU_LOADURL)=#True
+      EndIf   
     CompilerEndIf
     
-  CompilerEndIf  
-  
-  
-  If StartParams\qStartPosition And iMediaObject:MediaSeek(iMediaObject, StartParams\qStartPosition):EndIf
-  
-  
-  If StartParams\bFullscreen:RunCommand(#COMMAND_FULLSCREEN):EndIf 
-  ;TODO: Should be integreated in the CreateMainWindow()! To avoid showing the window at the start
-  
-  
-;}
-;{ Update Player:
-CompilerIf #USE_OEM_VERSION = #False
-  If Val(Settings(#SETTINGS_AUTOMATIC_UPDATE)\sValue) = #True
-    UpdatePlayer(#False)
-  EndIf
-  If FileSize("update.exe")>0
-    DeleteFile("update.exe")
-    If FileSize("update.data")>0:DeleteFile("update.data"):EndIf
-    If FileSize("update.txt")>0:DeleteFile("update.txt"):EndIf
-    ExtractReadme()
-  EndIf
-CompilerEndIf  
-;}
-
-
-
-WriteLog("PLAYER-STARTS", #LOGLEVEL_DEBUG)
-
-
-Repeat
-
-
-  ;{ Events
-  LoadMediaIfReadyToLoad()
-  If BufferingMedia And MediaFile\StreamingFile
-    CheckBufferingToLoadMedia()
-  EndIf  
-  
-  If IsWindowVisible_(WindowID(#WINDOW_MAIN)) And GetWindowState(#WINDOW_MAIN)<>#PB_Window_Minimize
-    isMainWindowActive = #True
-  Else
-    isMainWindowActive = #False
-  EndIf
-  
-  
-  If isMainWindowActive ;GetActiveWindow()=#WINDOW_MAIN
-    Delay(10)
-  Else
-    Delay(40)
-  EndIf
-  
-  EventCounter=0
-  Repeat
-    EventCounter+1
-    iEvent = WindowEvent()
-    Events(iEvent)
-  Until iEvent = #WM_NULL Or EventCounter>100;EventCounter damit er in derschleife nicht hängt
-  Event_KeyBoard()
-  HoverGadgetImages()
-  
-
-  
-  If (iMediaObject Or iIsVISUsed) And iIsVISUsed<>#VIS_COVERFLOW And UsedOutputMediaLibrary<>#MEDIALIBRARY_FLASH
-    If GetActiveWindow()=#WINDOW_MAIN
-      If GetAsyncKeyState_(#VK_LBUTTON)<>0
-        If PressedLeftMouseButton=#False
-          If GetDoubleClickTime_()<ElapsedMilliseconds()-iDoubleClickTime
-            iDoubleClickTime=ElapsedMilliseconds()
-          Else
-            If MediaWidth(iMediaObject)>0  And MediaHeight(iMediaObject)>0
-              If WindowMouseX(#WINDOW_MAIN)>GadgetX(#GADGET_VIDEO_CONTAINER)
-                If WindowMouseY(#WINDOW_MAIN)>GadgetY(#GADGET_VIDEO_CONTAINER)
-                  If WindowMouseX(#WINDOW_MAIN)<GadgetX(#GADGET_VIDEO_CONTAINER)+GadgetWidth(#GADGET_VIDEO_CONTAINER)
-                    If WindowMouseY(#WINDOW_MAIN)<GadgetY(#GADGET_VIDEO_CONTAINER)+GadgetHeight(#GADGET_VIDEO_CONTAINER)
-                      SetFullScreen()
+    
+    
+    
+    InitNetwork();Wird benötigt das die exe beim beenden nicht hengt, wenn etwas aus dem Internet geladen wurde.
+    InitErrorHandler()
+    
+    CompilerIf #PB_Editor_CreateExecutable
+      SetCurrentDirectory(GetPathPart(ProgramFilename()))
+    CompilerEndIf
+    
+    CompilerIf #USE_ENABLE_LAVFILTERS_DOWNLOAD
+      If Not StartParams\iDisableLAVFilters
+        If LAVFilters_Download(#PLAYER_NAME, "Downloading codecs...", StartParams\iHiddenCodecsDownload)
+          LAVFilters_Register()  
+          ;         If LAVFilters_IsFreshInstallation()
+          ;           If Not StartParams\iJustDownloadCodecs
+          ;             ;RestartPlayer()
+          ;           EndIf  
+          ;         EndIf  
+        EndIf
+      EndIf
+      If StartParams\iJustDownloadCodecs
+        EndPlayer()
+      EndIf        
+    CompilerEndIf
+    
+    CompilerIf #PB_Editor_CreateExecutable And #USE_APPDATA_FOLDER
+      CheckDatabase(sDataBaseFile)
+    CompilerEndIf  
+    
+    If FileSize(sDataBaseFile)<1
+      CreateDirectory(GetPathPart(sDataBaseFile))
+      iDBFile = CreateFile(#PB_Any, sDataBaseFile)
+      If iDBFile
+        WriteData(iDBFile, ?DS_SQLDataBase, ?DS_EndSQLDataBase-?DS_SQLDataBase)
+        CloseFile(iDBFile)
+        SetDefaultLng()
+        WriteLog("Created new Database!")
+      Else
+        MessageRequester("Error", "Can't create new Database!", #MB_ICONERROR)
+        WriteLog("Can't create new Database!")
+        End
+      EndIf
+    EndIf
+    
+    
+    ;Install Designs:
+    If StartParams\sInstallDesign<>""
+      *DB = DB_Open(sDataBaseFile)
+      If *DB
+        *DBDesign = DB_Open(StartParams\sInstallDesign)
+        If *DBDesign
+          InstallDesigns(*DB, *DBDesign)
+          DB_Close(*DBDesign)
+          *DBDesign=#Null
+        EndIf  
+        DB_Close(*DB)
+        *DB=#Null
+      EndIf
+    EndIf
+    
+    
+    
+    iDoubleClickTime=ElapsedMilliseconds()
+    InitVideoDVD()
+    ;ACD_InitAudioCD();Wird nun erst beim Verwenden der Audio CD gemacht!
+    InitWindowProtector()
+    InitMetaReader()
+    If StartParams\iUseSkin<>-1
+      SetSetting(sDataBaseFile, #SETTINGS_ICONSET, Str(StartParams\iUseSkin))
+    EndIf  
+    LoadSettings(sDataBaseFile)
+    InitLanguage(sDataBaseFile, Val(Settings(#SETTINGS_LANGUAGE)\sValue))
+    If Language(#L_CHANGES_NEEDS_RESTART)+Language(#L_DRAWING)+Language(#L_DONATE)=""
+      Requester_Cant_Update()
+    EndIf  
+    
+    InitPasswordMgr(sDataBaseFile)
+    If iLastLanguageItem = #False Or iLastLanguageItem<>#L_LAST Or iLastSettingsItem<>#SETTINGS_LAST
+      CreateDirectory(GetPathPart(sDataBaseFile))
+      iDBFile = CreateFile(#PB_Any, sDataBaseFile)
+      If iDBFile
+        WriteData(iDBFile, ?DS_SQLDataBase, ?DS_EndSQLDataBase-?DS_SQLDataBase)
+        CloseFile(iDBFile)
+        SetDefaultLng()
+        MessageRequester("Error", "The database is corrupt, a new database was created!", #MB_ICONERROR)
+        WriteLog("Created new Database!")
+      Else
+        WriteLog("Can't create new Database!")
+        End
+      EndIf
+      LoadSettings(sDataBaseFile)
+      InitLanguage(sDataBaseFile, Val(Settings(#SETTINGS_LANGUAGE)\sValue))
+    EndIf
+    If #USE_DEBUGLEVEL:Settings(#SETTINGS_LOGLEVEL)\sValue="2":WriteLog("Loglevel set to debug!"):EndIf
+    iVideoRenderer = Val(Settings(#SETTINGS_VIDEORENDERER)\sValue);#VMR9_Windowed
+    iAudioRenderer = Val(Settings(#SETTINGS_AUDIORENDERER)\sValue);#WaveOutRenderer
+    iOwnVideoRenderer=#False
+    If iVideoRenderer=8:iVideoRenderer=#RENDERER_VMR9:iOwnVideoRenderer=#True:EndIf
+    If iVideoRenderer=#RENDERER_DEFAULT:iVideoRenderer=#RENDERER_VMR9:iOwnVideoRenderer=#True:EndIf;Default is own renderer
+    
+    ;Init Logging:
+    If Val(Settings(#SETTINGS_LOGLEVEL)\sValue)>#LOGLEVEL_NONE
+      InitLogFile()
+    EndIf
+    
+    CheckRunOneWindow(StartParams\sFile)
+    
+    ActivateAntiDebug()
+    
+    InitMedia()
+    iMediaMainObject.i = __CreateMediaObject(#False)
+    
+    CompilerIf #USE_VIRTUAL_FILE
+      If IsVirtualFileUsed=#True
+        WriteLog("VirtualFile Replace code: "+Str(StartParams\iAlternativeHooking),#LOGLEVEL_DEBUG)
+        VirtualFile_SetBlackList(#VIRTUALFILE_BLACKLIST)
+        VirtualFile_Init(1000, 1000, StartParams\iAlternativeHooking)
+      Else
+        WriteLog("No virualfile! (set per comandline)")
+      EndIf
+    CompilerElse
+      WriteLog("No virualfile!")
+    CompilerEndIf
+    
+    SetSubtitleSize(#SUBTITLE_FONNT_SIZE)
+    
+    
+    LoadPlayerDesign(sDataBaseFile)
+    
+    CreateMainWindow()
+    
+    SetChronicList(#Null)
+    
+    ;2010-08-10 OLD CALLBACK POS
+    ;SetWindowCallback(@CBMainWindow())
+    RegisterAppCmdCallback(WindowID(#WINDOW_MAIN), @Event_AppCommand())
+    
+    
+    
+    SetPlayerSettings()
+    If ExeHasAttachedFiles=#False
+      SetAllFileExtensions()
+    EndIf  
+    
+    If ExeHasAttachedFiles
+      LoadAttachedMedia(ProgramFilename())
+    EndIf
+    
+    
+    
+    ;}
+    ;{ Process Command Parameter
+    
+    *DB = DB_Open(sDataBaseFile)
+    If StartParams\iloglevel>-1:Settings(#SETTINGS_LOGLEVEL)\sValue=Str(StartParams\iloglevel):SetSettingFast(*DB, #SETTINGS_LOGLEVEL, Settings(#SETTINGS_LOGLEVEL)\sValue):EndIf
+    If StartParams\iUsedVideoRenderer>-1:Settings(#SETTINGS_VIDEORENDERER)\sValue=Str(StartParams\iUsedVideoRenderer):SetSettingFast(*DB, #SETTINGS_VIDEORENDERER, Settings(#SETTINGS_VIDEORENDERER)\sValue):EndIf
+    If StartParams\iUsedAudioRenderer>-1:Settings(#SETTINGS_AUDIORENDERER)\sValue=Str(StartParams\iUsedAudioRenderer):SetSettingFast(*DB, #SETTINGS_AUDIORENDERER, Settings(#SETTINGS_AUDIORENDERER)\sValue):EndIf
+    iVideoRenderer = Val(Settings(#SETTINGS_VIDEORENDERER)\sValue)
+    iAudioRenderer = Val(Settings(#SETTINGS_AUDIORENDERER)\sValue)
+    iOwnVideoRenderer=#False
+    If iVideoRenderer=8:iVideoRenderer=#RENDERER_VMR9:iOwnVideoRenderer=#True:EndIf  
+    If iVideoRenderer=#RENDERER_DEFAULT:iVideoRenderer=#RENDERER_VMR9:iOwnVideoRenderer=#True:EndIf;Default is own renderer
+    
+    
+    If StartParams\sPasswordFile
+      iFile = ReadFile(#PB_Any, StartParams\sPasswordFile, #PB_File_SharedRead )
+      If iFile
+        sGlobalPassword = ReadString(iFile)
+        CloseFile(iFile)
+      EndIf  
+    EndIf  
+    
+    If StartParams\sProxyIP <> "-"
+      Settings(#SETTINGS_PROXY)\sValue = StartParams\sProxyIP
+      SetSettingFast(*DB, #SETTINGS_PROXY, Settings(#SETTINGS_PROXY)\sValue)
+    EndIf  
+    If StartParams\sProxyPort <> "-"
+      Settings(#SETTINGS_PROXY_PORT)\sValue = StartParams\sProxyPort
+      SetSettingFast(*DB, #SETTINGS_PROXY_PORT, Settings(#SETTINGS_PROXY_PORT)\sValue)
+    EndIf  
+    If StartParams\iUseIESettings <> -1
+      Settings(#SETTINGS_PROXY_USE_IE_SETTINGS)\sValue = Str(StartParams\iUseIESettings)
+      SetSettingFast(*DB, #SETTINGS_PROXY_USE_IE_SETTINGS, Settings(#SETTINGS_PROXY_USE_IE_SETTINGS)\sValue)
+    EndIf  
+    If StartParams\iProxyBypassLocal <> -1
+      Settings(#SETTINGS_PROXY_BYPASS_LOCAL)\sValue = Str(StartParams\iProxyBypassLocal)
+      SetSettingFast(*DB, #SETTINGS_PROXY_BYPASS_LOCAL, Settings(#SETTINGS_PROXY_BYPASS_LOCAL)\sValue)
+    EndIf
+    
+    If StartParams\iNoRedirect <> -1
+      Settings(#SETTINGS_PROXY_NOREDIRECT)\sValue = Str(StartParams\iNoRedirect)
+      SetSettingFast(*DB, #SETTINGS_PROXY_NOREDIRECT, Settings(#SETTINGS_PROXY_NOREDIRECT)\sValue)
+    EndIf  
+    
+    If *DB:DB_Close(*DB):*DB=#Null:EndIf
+    
+    
+    If StartParams\sPassword:sGlobalPassword = StartParams\sPassword:EndIf
+    If StartParams\sFile:RunCommand(#COMMAND_LOADFILE, 0, StartParams\sFile):EndIf
+    If StartParams\iAspect:RunCommand(#COMMAND_ASPECT, StartParams\iAspect):EndIf
+    If StartParams\iVolume:RunCommand(#COMMAND_VOLUME, StartParams\iVolume):EndIf
+    If StartParams\bHidden:HideWindow(#WINDOW_MAIN, #True):EndIf
+    If StartParams\sImportPlaylist:PLS_ImportPlaylist(StartParams\sImportPlaylist):EndIf
+    
+    
+    CompilerIf #USE_OEM_VERSION
+      SetWindowIcon(#WINDOW_MAIN, "icon.ico")
+      
+      CompilerIf #OEM_OPEN_FILE_REQUESTER_AT_START
+        If StartParams\sFile=""
+          RunCommand(#COMMAND_LOAD)
+        EndIf  
+      CompilerEndIf
+      
+    CompilerEndIf  
+    
+    
+    If StartParams\qStartPosition And iMediaObject:MediaSeek(iMediaObject, StartParams\qStartPosition):EndIf
+    
+    
+    If StartParams\bFullscreen:RunCommand(#COMMAND_FULLSCREEN):EndIf 
+    ;TODO: Should be integreated in the CreateMainWindow()! To avoid showing the window at the start
+    
+    
+    ;}
+    ;{ Update Player:
+    CompilerIf #USE_OEM_VERSION = #False
+      If Val(Settings(#SETTINGS_AUTOMATIC_UPDATE)\sValue) = #True
+        UpdatePlayer(#False)
+      EndIf
+      If FileSize("update.exe")>0
+        DeleteFile("update.exe")
+        If FileSize("update.data")>0:DeleteFile("update.data"):EndIf
+        If FileSize("update.txt")>0:DeleteFile("update.txt"):EndIf
+        ExtractReadme()
+      EndIf
+    CompilerEndIf  
+    ;}
+    
+    
+    
+    WriteLog("PLAYER-STARTS", #LOGLEVEL_DEBUG)
+    
+    
+    Repeat
+      
+      
+      ;{ Events
+      LoadMediaIfReadyToLoad()
+      If BufferingMedia And MediaFile\StreamingFile
+        CheckBufferingToLoadMedia()
+      EndIf  
+      
+      If IsWindowVisible_(WindowID(#WINDOW_MAIN)) And GetWindowState(#WINDOW_MAIN)<>#PB_Window_Minimize
+        isMainWindowActive = #True
+      Else
+        isMainWindowActive = #False
+      EndIf
+      
+      
+      If isMainWindowActive ;GetActiveWindow()=#WINDOW_MAIN
+        Delay(10)
+      Else
+        Delay(40)
+      EndIf
+      
+      EventCounter=0
+      Repeat
+        EventCounter+1
+        iEvent = WindowEvent()
+        Events(iEvent)
+      Until iEvent = #WM_NULL Or EventCounter>100;EventCounter damit er in derschleife nicht hängt
+      Event_KeyBoard()
+      HoverGadgetImages()
+      
+      
+      
+      If (iMediaObject Or iIsVISUsed) And iIsVISUsed<>#VIS_COVERFLOW And UsedOutputMediaLibrary<>#MEDIALIBRARY_FLASH
+        If GetActiveWindow()=#WINDOW_MAIN
+          If GetAsyncKeyState_(#VK_LBUTTON)<>0
+            If PressedLeftMouseButton=#False
+              If GetDoubleClickTime_()<ElapsedMilliseconds()-iDoubleClickTime
+                iDoubleClickTime=ElapsedMilliseconds()
+              Else
+                If MediaWidth(iMediaObject)>0  And MediaHeight(iMediaObject)>0
+                  If WindowMouseX(#WINDOW_MAIN)>GadgetX(#GADGET_VIDEO_CONTAINER)
+                    If WindowMouseY(#WINDOW_MAIN)>GadgetY(#GADGET_VIDEO_CONTAINER)
+                      If WindowMouseX(#WINDOW_MAIN)<GadgetX(#GADGET_VIDEO_CONTAINER)+GadgetWidth(#GADGET_VIDEO_CONTAINER)
+                        If WindowMouseY(#WINDOW_MAIN)<GadgetY(#GADGET_VIDEO_CONTAINER)+GadgetHeight(#GADGET_VIDEO_CONTAINER)
+                          SetFullScreen()
+                        EndIf
+                      EndIf
+                    EndIf
+                  EndIf
+                EndIf
+                
+                If WindowMouseX(#WINDOW_MAIN)>GadgetX(#GADGET_VIS_CONTAINER)
+                  If WindowMouseY(#WINDOW_MAIN)>GadgetY(#GADGET_VIS_CONTAINER)
+                    If WindowMouseX(#WINDOW_MAIN)<GadgetX(#GADGET_VIS_CONTAINER)+GadgetWidth(#GADGET_VIS_CONTAINER)
+                      If WindowMouseY(#WINDOW_MAIN)<GadgetY(#GADGET_VIS_CONTAINER)+GadgetHeight(#GADGET_VIS_CONTAINER)
+                        SetFullScreen()
+                      EndIf
                     EndIf
                   EndIf
                 EndIf
               EndIf
             EndIf
+            PressedLeftMouseButton=#True
+          Else
+            PressedLeftMouseButton=#False
+          EndIf
+        EndIf
+      EndIf
+      
+      If UseNoPlayerControl=#False And #USE_DISABLECONTEXTMENU=#False
+        If GetWindowKeyState(#VK_RBUTTON)
+          VDVD_CreatePopUpMenu()
+          DisplayPopupMenu(#MENU_VDVD_MENU, WindowID(#WINDOW_MAIN))
+        EndIf
+      EndIf 
+      
+      ;}
+      ;{ Update Player
+      CompilerIf #USE_OEM_VERSION=#False
+        If IsWindow(#WINDOW_UPDATE)
+          If IsThread(iDownloadThread)
             
-            If WindowMouseX(#WINDOW_MAIN)>GadgetX(#GADGET_VIS_CONTAINER)
-              If WindowMouseY(#WINDOW_MAIN)>GadgetY(#GADGET_VIS_CONTAINER)
-                If WindowMouseX(#WINDOW_MAIN)<GadgetX(#GADGET_VIS_CONTAINER)+GadgetWidth(#GADGET_VIS_CONTAINER)
-                  If WindowMouseY(#WINDOW_MAIN)<GadgetY(#GADGET_VIS_CONTAINER)+GadgetHeight(#GADGET_VIS_CONTAINER)
-                    SetFullScreen()
-                  EndIf
+          Else
+            sFile.s="update.exe"
+            iFile = CreateFile(#PB_Any, sFile)
+            If iFile = #Null: sFile=GetTemporaryDirectory()+"GFP-update.exe":iFile = CreateFile(#PB_Any, sFile):EndIf
+            If iFile
+              WriteData(iFile, ?DS_UpdateProgram, ?DS_EndUpdateProgram-?DS_UpdateProgram)
+              CloseFile(iFile)
+              CloseWindow(#WINDOW_UPDATE)
+              ;iQuit = #True
+              If hMutexAppRunning
+                CloseHandle_(hMutexAppRunning)
+                hMutexAppRunning=#Null
+              EndIf
+              RunProgram(sFile, Chr(34)+ProgramFilename()+Chr(34), GetPathPart(ProgramFilename()))
+              ;ShellExecute_(#Null,@"open", @"update.exe", #Null, #Null, #SW_SHOWDEFAULT)
+              EndPlayer()
+              End
+            Else
+              CloseWindow(#WINDOW_UPDATE)
+              MessageRequester(Language(#L_ERROR), Language(#L_CANT_UPDATE), #MB_ICONERROR)
+              WriteLog("Can't update player, can't create file!")
+            EndIf
+          EndIf
+        EndIf
+      CompilerEndIf
+      ;}
+      ;{ Fullscreen
+      
+      
+      
+      
+      If GetGadgetData(#GADGET_CONTAINER);Fullscreen
+        
+        iMouseInActive + 1
+        iWMouseOldX = iWMouseX
+        iWMouseOldY = iWMouseY
+        iWMouseX = WindowMouseX(#WINDOW_MAIN)
+        iWMouseY = WindowMouseY(#WINDOW_MAIN)
+        If iWMouseX<>iWMouseOldX Or iWMouseY<>iWMouseOldY:iMouseInActive=0:EndIf
+        
+        If GetWindowKeyState(#VK_ESCAPE);GetAsyncKeyState_(#VK_ESCAPE)
+          SetFullScreen()
+        EndIf
+        
+        If iMouseInActive>30
+          If iShowMainWindowCursor = #True
+            ShowCursor_(0)
+            iShowMainWindowCursor = #False
+            ActivateFullscreenControl(iShowMainWindowCursor)
+          EndIf
+        Else
+          If iShowMainWindowCursor = #False
+            ShowCursor_(1)
+            iShowMainWindowCursor = #True
+          EndIf
+          If WindowMouseY(#WINDOW_MAIN)>WindowHeight(#WINDOW_MAIN)-Design_Container_Size
+            ActivateFullscreenControl(iShowMainWindowCursor)
+          EndIf
+        EndIf
+      Else
+        If iShowMainWindowCursor = #False
+          ShowCursor_(1)
+          iShowMainWindowCursor = #True
+        EndIf
+      EndIf
+      ;}
+      ;{ Play Media
+      
+      
+      
+      
+      If iMediaObject
+        
+        MediaState=MediaState(iMediaObject)
+        If iIsMediaObjectVideoDVD
+          MediaPosition=DShow_DVDGetPosition(IMediaObject)
+          If MediaLength<1
+            MediaLength=DShow_DVDGetLength(IMediaObject)
+          EndIf  
+        Else  
+          MediaPosition=MediaPosition(IMediaObject)
+          If MediaLength<1
+            MediaLength=MediaLength(IMediaObject)
+          EndIf
+        EndIf
+        
+      Else
+        MediaState=#False
+        MediaPosition=0
+        MediaLength=0
+      EndIf 
+      
+      
+      
+      If iIsMediaObjectVideoDVD=#False
+        If (MediaState=#STATE_STOPPED Or (MediaPosition>=MediaLength And MediaLength>0)) And UsedOutputMediaLibrary <> #MEDIALIBRARY_FLASH
+          If MediaFile\iPlaying
+            If bCloseAfterPlayback
+              EndPlayer()
+            EndIf  
+            If GetGadgetData(#GADGET_BUTTON_REPEAT)
+              ;Gliche Datei Wiederholen
+              If MediaLength = MediaPosition
+                MediaSeek(iMediaObject, 0)
+              EndIf
+              PlayMedia(iMediaObject)
+              MediaFile\iPlaying = #True
+              
+            Else
+              ;Wiedergabe nach Liste
+              If Playlist\iID
+                ;Debug Playlist\iCurrentMedia
+                If GetGadgetData(#GADGET_BUTTON_RANDOM)
+                  If Playlist\iItemCount>0
+                    Playlist\iCurrentMedia=(Random(Playlist\iItemCount+100)+GetTickCount_())%Playlist\iItemCount
+                  EndIf  
+                  
+                Else
+                  Playlist\iCurrentMedia+1
+                  If Playlist\iCurrentMedia>Playlist\iItemCount:Playlist\iCurrentMedia=0:EndIf          
+                EndIf
+                LoadMediaFile(PlayListItems(Playlist\iCurrentMedia)\sFile, #True, PlayListItems(Playlist\iCurrentMedia)\sTitle)
+                If IMediaObject
+                  PlayMedia(iMediaObject)
+                  MediaFile\iPlaying = #True
+                Else
+                  MediaFile\iPlaying = #False
+                EndIf
+              EndIf 
+            EndIf
+          EndIf
+        EndIf
+      EndIf
+      
+      
+      If isMainWindowActive And iIsVISUsed
+        VIS_Update();Updates the visual effects
+      EndIf
+      
+      iCount+1
+      If iCount>4
+        iCount=0
+        
+        If iMediaObject
+          OnMediaEvent(iMediaObject);Falls diese zeile entfernt wird muss der Own renderer angepasst werden, device lost.
+        EndIf
+        
+        If ElapsedMilliseconds()=CheckForScreenCaptureTimer
+          ElapsedMillisecondsFails+1
+        EndIf  
+        If ElapsedMilliseconds()-CheckForScreenCaptureTimer>1000
+          CheckDebuggerActive()
+          If IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_PROTECTION_FORCE 
+            CheckForScreenCapture()
+          EndIf 
+          CompilerIf #USE_SUBTITLES
+            DisplaySubtitle(MediaPosition)
+          CompilerEndIf
+          CheckForScreenCaptureTimer=ElapsedMilliseconds()
+        EndIf
+        
+        
+        
+        If isMainWindowActive
+          RunCommand(#COMMAND_ACD_UPDATEDTRACKS)
+          If iIsMediaObjectVideoDVD
+            If MediaLength>=1
+              SetGadgetState(#GADGET_VDVD_TRACKBAR, IntQ((MediaPosition/MediaLength)*10000))
+              DisableGadget(#GADGET_VDVD_TRACKBAR, #False)
+            Else
+              SetGadgetState(#GADGET_VDVD_TRACKBAR, 0)
+              DisableGadget(#GADGET_VDVD_TRACKBAR, #True)
+            EndIf
+            If Design_Buttons=1
+              If MediaState=2
+                If GetGadgetAttribute(#GADGET_VDVD_BUTTON_PLAY, #PB_Button_Image) <> ImageID(#SPRITE_BREAK)
+                  SetGadgetAttribute(#GADGET_VDVD_BUTTON_PLAY, #PB_Button_Image , ImageID(#SPRITE_BREAK))
+                  SetPlayTumbButtonImage(#SPRITE_MENU_BREAK)
+                EndIf
+              Else
+                If GetGadgetAttribute(#GADGET_VDVD_BUTTON_PLAY, #PB_Button_Image) <> ImageID(#SPRITE_PLAY)
+                  SetGadgetAttribute(#GADGET_VDVD_BUTTON_PLAY, #PB_Button_Image , ImageID(#SPRITE_PLAY))
+                  SetPlayTumbButtonImage(#SPRITE_MENU_PLAY)
                 EndIf
               EndIf
             EndIf
-          EndIf
-        EndIf
-        PressedLeftMouseButton=#True
-      Else
-        PressedLeftMouseButton=#False
-      EndIf
-    EndIf
-  EndIf
-  
-  If UseNoPlayerControl=#False And #USE_DISABLECONTEXTMENU=#False
-    If GetWindowKeyState(#VK_RBUTTON)
-      VDVD_CreatePopUpMenu()
-      DisplayPopupMenu(#MENU_VDVD_MENU, WindowID(#WINDOW_MAIN))
-    EndIf
-  EndIf 
-  
-  ;}
-  ;{ Update Player
-  CompilerIf #USE_OEM_VERSION=#False
-    If IsWindow(#WINDOW_UPDATE)
-      If IsThread(iDownloadThread)
-        
-      Else
-        sFile.s="update.exe"
-        iFile = CreateFile(#PB_Any, sFile)
-        If iFile = #Null: sFile=GetTemporaryDirectory()+"GFP-update.exe":iFile = CreateFile(#PB_Any, sFile):EndIf
-        If iFile
-          WriteData(iFile, ?DS_UpdateProgram, ?DS_EndUpdateProgram-?DS_UpdateProgram)
-          CloseFile(iFile)
-          CloseWindow(#WINDOW_UPDATE)
-          ;iQuit = #True
-          If hMutexAppRunning
-            CloseHandle_(hMutexAppRunning)
-            hMutexAppRunning=#Null
-          EndIf
-          RunProgram(sFile, Chr(34)+ProgramFilename()+Chr(34), GetPathPart(ProgramFilename()))
-          ;ShellExecute_(#Null,@"open", @"update.exe", #Null, #Null, #SW_SHOWDEFAULT)
-          EndPlayer()
-          End
-        Else
-          CloseWindow(#WINDOW_UPDATE)
-          MessageRequester(Language(#L_ERROR), Language(#L_CANT_UPDATE), #MB_ICONERROR)
-          WriteLog("Can't update player, can't create file!")
-        EndIf
-      EndIf
-    EndIf
-  CompilerEndIf
-  ;}
-  ;{ Fullscreen
-  
-  
-  
-  
-  If GetGadgetData(#GADGET_CONTAINER);Fullscreen
-    
-    iMouseInActive + 1
-    iWMouseOldX = iWMouseX
-    iWMouseOldY = iWMouseY
-    iWMouseX = WindowMouseX(#WINDOW_MAIN)
-    iWMouseY = WindowMouseY(#WINDOW_MAIN)
-    If iWMouseX<>iWMouseOldX Or iWMouseY<>iWMouseOldY:iMouseInActive=0:EndIf
-
-    If GetWindowKeyState(#VK_ESCAPE);GetAsyncKeyState_(#VK_ESCAPE)
-      SetFullScreen()
-    EndIf
-
-    If iMouseInActive>30
-      If iShowMainWindowCursor = #True
-        ShowCursor_(0)
-        iShowMainWindowCursor = #False
-        ActivateFullscreenControl(iShowMainWindowCursor)
-      EndIf
-    Else
-      If iShowMainWindowCursor = #False
-        ShowCursor_(1)
-        iShowMainWindowCursor = #True
-      EndIf
-      If WindowMouseY(#WINDOW_MAIN)>WindowHeight(#WINDOW_MAIN)-Design_Container_Size
-        ActivateFullscreenControl(iShowMainWindowCursor)
-      EndIf
-    EndIf
-  Else
-    If iShowMainWindowCursor = #False
-      ShowCursor_(1)
-      iShowMainWindowCursor = #True
-    EndIf
-  EndIf
-  ;}
-  ;{ Play Media
-  
-  
-  
-  
-  If iMediaObject
-    
-    MediaState=MediaState(iMediaObject)
-    If iIsMediaObjectVideoDVD
-      MediaPosition=DShow_DVDGetPosition(IMediaObject)
-      If MediaLength<1
-        MediaLength=DShow_DVDGetLength(IMediaObject)
-      EndIf  
-    Else  
-      MediaPosition=MediaPosition(IMediaObject)
-      If MediaLength<1
-        MediaLength=MediaLength(IMediaObject)
-      EndIf
-    EndIf
-    
-  Else
-    MediaState=#False
-    MediaPosition=0
-    MediaLength=0
-  EndIf 
-  
-  
-  
-  If iIsMediaObjectVideoDVD=#False
-    If (MediaState=#STATE_STOPPED Or (MediaPosition>=MediaLength And MediaLength>0)) And UsedOutputMediaLibrary <> #MEDIALIBRARY_FLASH
-      If MediaFile\iPlaying
-        If bCloseAfterPlayback
-          EndPlayer()
-        EndIf  
-        If GetGadgetData(#GADGET_BUTTON_REPEAT)
-          ;Gliche Datei Wiederholen
-          If MediaLength = MediaPosition
-            MediaSeek(iMediaObject, 0)
-          EndIf
-          PlayMedia(iMediaObject)
-          MediaFile\iPlaying = #True
-          
-        Else
-          ;Wiedergabe nach Liste
-          If Playlist\iID
-            ;Debug Playlist\iCurrentMedia
-            If GetGadgetData(#GADGET_BUTTON_RANDOM)
-              If Playlist\iItemCount>0
-                Playlist\iCurrentMedia=(Random(Playlist\iItemCount+100)+GetTickCount_())%Playlist\iItemCount
+            
+            If MediaLength>0
+              sMediaTimeString.s=Time2String(MediaPosition*1000)+"/"+Time2String(MediaLength*1000)
+            Else
+              sMediaTimeString.s=""
+            EndIf
+            If sMediaTimeString<>sMediaTimeStringBefore
+              sMediaTimeStringBefore=sMediaTimeString
+              If Settings(#SETTINGS_USE_STATUSBAR)\sValue="1"
+                StatusBarText(0, 1, sMediaTimeString, #PB_StatusBar_Center)
               EndIf  
-              
-            Else
-              Playlist\iCurrentMedia+1
-              If Playlist\iCurrentMedia>Playlist\iItemCount:Playlist\iCurrentMedia=0:EndIf          
-            EndIf
-            LoadMediaFile(PlayListItems(Playlist\iCurrentMedia)\sFile, #True, PlayListItems(Playlist\iCurrentMedia)\sTitle)
-            If IMediaObject
-              PlayMedia(iMediaObject)
-              MediaFile\iPlaying = #True
-            Else
-              MediaFile\iPlaying = #False
-            EndIf
-          EndIf 
-        EndIf
-      EndIf
-    EndIf
-  EndIf
-  
-  
-  If isMainWindowActive And iIsVISUsed
-    VIS_Update();Updates the visual effects
-  EndIf
-  
-  iCount+1
-  If iCount>4
-    iCount=0
-    
-    If iMediaObject
-      OnMediaEvent(iMediaObject);Falls diese zeile entfernt wird muss der Own renderer angepasst werden, device lost.
-    EndIf
-    
-    If ElapsedMilliseconds()=CheckForScreenCaptureTimer
-      ElapsedMillisecondsFails+1
-    EndIf  
-    If ElapsedMilliseconds()-CheckForScreenCaptureTimer>1000
-      CheckDebuggerActive()
-      If IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_PROTECTION_FORCE 
-        CheckForScreenCapture()
-      EndIf 
-      CompilerIf #USE_SUBTITLES
-        DisplaySubtitle(MediaPosition)
-      CompilerEndIf
-      CheckForScreenCaptureTimer=ElapsedMilliseconds()
-    EndIf
-    
-    
-    
-    If isMainWindowActive
-      RunCommand(#COMMAND_ACD_UPDATEDTRACKS)
-      If iIsMediaObjectVideoDVD
-        If MediaLength>=1
-          SetGadgetState(#GADGET_VDVD_TRACKBAR, IntQ((MediaPosition/MediaLength)*10000))
-          DisableGadget(#GADGET_VDVD_TRACKBAR, #False)
-        Else
-          SetGadgetState(#GADGET_VDVD_TRACKBAR, 0)
-          DisableGadget(#GADGET_VDVD_TRACKBAR, #True)
-        EndIf
-        If Design_Buttons=1
-          If MediaState=2
-            If GetGadgetAttribute(#GADGET_VDVD_BUTTON_PLAY, #PB_Button_Image) <> ImageID(#SPRITE_BREAK)
-              SetGadgetAttribute(#GADGET_VDVD_BUTTON_PLAY, #PB_Button_Image , ImageID(#SPRITE_BREAK))
-              SetPlayTumbButtonImage(#SPRITE_MENU_BREAK)
+              GadgetToolTip(#GADGET_TRACKBAR, sMediaTimeString)
             EndIf
           Else
-            If GetGadgetAttribute(#GADGET_VDVD_BUTTON_PLAY, #PB_Button_Image) <> ImageID(#SPRITE_PLAY)
-              SetGadgetAttribute(#GADGET_VDVD_BUTTON_PLAY, #PB_Button_Image , ImageID(#SPRITE_PLAY))
+            If MediaLength>=1
+              SetGadgetState(#GADGET_TRACKBAR, IntQ((MediaPosition/MediaLength)*10000))
+              sMediaTimeString.s=Time2String(MediaPosition)+"/"+Time2String(MediaLength)
+              If sMediaTimeString<>sMediaTimeStringBefore
+                sMediaTimeStringBefore=sMediaTimeString
+                If Settings(#SETTINGS_USE_STATUSBAR)\sValue="1"
+                  StatusBarText(0, 1, sMediaTimeString, #PB_StatusBar_Center)
+                EndIf  
+                
+                GadgetToolTip(#GADGET_TRACKBAR, sMediaTimeString)
+              EndIf
+              DisableGadget(#GADGET_TRACKBAR, #False)
+            Else
+              If IsGadget(#GADGET_TRACKBAR)
+                SetGadgetState(#GADGET_TRACKBAR, 0)
+                DisableGadget(#GADGET_TRACKBAR, #True)
+              EndIf
+              sMediaTimeString.s=""
+              If sMediaTimeString<>sMediaTimeStringBefore
+                sMediaTimeStringBefore=sMediaTimeString
+                If Settings(#SETTINGS_USE_STATUSBAR)\sValue="1"
+                  StatusBarText(0, 1, sMediaTimeString, #PB_StatusBar_Center)
+                EndIf  
+                GadgetToolTip(#GADGET_TRACKBAR, sMediaTimeString)
+              EndIf
+            EndIf
+            If Design_Buttons=1
+              If MediaState=2 And MediaPosition<>MediaLength
+                If GetGadgetAttribute(#GADGET_BUTTON_PLAY, #PB_Button_Image) <> ImageID(#SPRITE_BREAK)
+                  SetGadgetAttribute(#GADGET_BUTTON_PLAY, #PB_Button_Image , ImageID(#SPRITE_BREAK))
+                EndIf
+              Else
+                If GetGadgetAttribute(#GADGET_BUTTON_PLAY, #PB_Button_Image) <> ImageID(#SPRITE_PLAY)
+                  SetGadgetAttribute(#GADGET_BUTTON_PLAY, #PB_Button_Image , ImageID(#SPRITE_PLAY))
+                EndIf
+              EndIf
+            EndIf
+            
+            If MediaState=2 And MediaPosition<>MediaLength
+              SetPlayTumbButtonImage(#SPRITE_MENU_BREAK)
+            Else
               SetPlayTumbButtonImage(#SPRITE_MENU_PLAY)
             EndIf
-          EndIf
-        EndIf
-        
-        If MediaLength>0
-          sMediaTimeString.s=Time2String(MediaPosition*1000)+"/"+Time2String(MediaLength*1000)
-        Else
-          sMediaTimeString.s=""
-        EndIf
-        If sMediaTimeString<>sMediaTimeStringBefore
-          sMediaTimeStringBefore=sMediaTimeString
-          If Settings(#SETTINGS_USE_STATUSBAR)\sValue="1"
-            StatusBarText(0, 1, sMediaTimeString, #PB_StatusBar_Center)
-          EndIf  
-          GadgetToolTip(#GADGET_TRACKBAR, sMediaTimeString)
-        EndIf
-      Else
-        If MediaLength>=1
-          SetGadgetState(#GADGET_TRACKBAR, IntQ((MediaPosition/MediaLength)*10000))
-          sMediaTimeString.s=Time2String(MediaPosition)+"/"+Time2String(MediaLength)
-          If sMediaTimeString<>sMediaTimeStringBefore
-            sMediaTimeStringBefore=sMediaTimeString
-            If Settings(#SETTINGS_USE_STATUSBAR)\sValue="1"
-              StatusBarText(0, 1, sMediaTimeString, #PB_StatusBar_Center)
-            EndIf  
             
-            GadgetToolTip(#GADGET_TRACKBAR, sMediaTimeString)
+            
+            
           EndIf
-          DisableGadget(#GADGET_TRACKBAR, #False)
-        Else
-          If IsGadget(#GADGET_TRACKBAR)
-            SetGadgetState(#GADGET_TRACKBAR, 0)
-            DisableGadget(#GADGET_TRACKBAR, #True)
-          EndIf
-          sMediaTimeString.s=""
-          If sMediaTimeString<>sMediaTimeStringBefore
-            sMediaTimeStringBefore=sMediaTimeString
-            If Settings(#SETTINGS_USE_STATUSBAR)\sValue="1"
-              StatusBarText(0, 1, sMediaTimeString, #PB_StatusBar_Center)
-            EndIf  
-            GadgetToolTip(#GADGET_TRACKBAR, sMediaTimeString)
-          EndIf
-        EndIf
-        If Design_Buttons=1
-          If MediaState=2 And MediaPosition<>MediaLength
-            If GetGadgetAttribute(#GADGET_BUTTON_PLAY, #PB_Button_Image) <> ImageID(#SPRITE_BREAK)
-              SetGadgetAttribute(#GADGET_BUTTON_PLAY, #PB_Button_Image , ImageID(#SPRITE_BREAK))
-            EndIf
-          Else
-            If GetGadgetAttribute(#GADGET_BUTTON_PLAY, #PB_Button_Image) <> ImageID(#SPRITE_PLAY)
-              SetGadgetAttribute(#GADGET_BUTTON_PLAY, #PB_Button_Image , ImageID(#SPRITE_PLAY))
-            EndIf
-          EndIf
+          
+          
         EndIf
         
-        If MediaState=2 And MediaPosition<>MediaLength
-          SetPlayTumbButtonImage(#SPRITE_MENU_BREAK)
-        Else
-          SetPlayTumbButtonImage(#SPRITE_MENU_PLAY)
-        EndIf
-        
-        
+        If DebuggerActive Or ElapsedMillisecondsFails>100
+          iQuit=#True
+        EndIf  
         
       EndIf
-      
-      
-    EndIf
+      ;}
+    Until iQuit=#True
     
-    If DebuggerActive Or ElapsedMillisecondsFails>100
-      iQuit=#True
-    EndIf  
-    
-  EndIf
-  ;}
-Until iQuit=#True
-
-;{ End Player
-  EndPlayer()
-  End
-;}
-;{ Testing Constante
+    ;{ End Player
+    EndPlayer()
+    End
+    ;}
+    ;{ Testing Constante
   CompilerEndIf
-;}
-;{ DataSection
+  ;}
+  ;{ DataSection
   DataSection
-  
+    
     DS_SQLDataBase:
-      CompilerIf #USE_OEM_VERSION
-        IncludeBinary "OEM-data\data.sqlite"
-      CompilerElse
-        IncludeBinary "data\data.sqlite"
-      CompilerEndIf  
+    CompilerIf #USE_OEM_VERSION
+      IncludeBinary "OEM-data\data.sqlite"
+    CompilerElse
+      IncludeBinary "data\data.sqlite"
+    CompilerEndIf  
     DS_EndSQLDataBase:
     
     CompilerIf #USE_OEM_VERSION=#False
       DS_UpdateProgram:
-        IncludeBinary "data\update.exe"
+      IncludeBinary "data\update.exe"
       DS_EndUpdateProgram:
-    
-    
+      
+      
       DS_ReadmeDE:
       IncludeBinary "ReadmeDE.txt"
       DS_EndReadmeDE:
@@ -9035,7 +9130,7 @@ Until iQuit=#True
       DS_EndChangeLog:
     CompilerEndIf
     
-
+    
     DS_play:
     IncludeBinary "data\Icons\Icons-24x24\play-blue.ico"
     DS_Previous:
@@ -9046,7 +9141,7 @@ Until iQuit=#True
     IncludeBinary "Data\Icons\Icons-24x24\end-blue.ico"
     DS_snapshot:
     IncludeBinary "Data\Icons\Icons-24x24\Photo-blue.ico"   
-
+    
     DS_Light:
     IncludeBinary "data\Icons\Icons-32x32\light.ico"
     DS_Key:
@@ -9239,7 +9334,7 @@ Until iQuit=#True
     IncludeBinary "Data\Icons\Icons-16x16\DVD-Movie.ico"
     DS_menu_Snapshot:
     IncludeBinary "Data\Icons\Icons-16x16\snapshot-16x16.ico"
-     DS_menu_PlayFile:
+    DS_menu_PlayFile:
     IncludeBinary "Data\Icons\Icons-16x16\PLAY_FILE.ico"   
     
     
@@ -9281,15 +9376,16 @@ Until iQuit=#True
     DS_Sprite2D_Font: 
     IncludeBinary "data\font.png"
   EndDataSection
-;}
-
-
-
+  ;}
+  
+  
+  
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 6477
-; FirstLine = 5060
-; Folding = X8h9PBwgQ+AQk+BSyHiyDAzHMs5----------------
+; CursorPosition = 5682
+; FirstLine = 5666
+; Folding = --------------------------------------------
+; Markers = 5792
 ; EnableThread
 ; EnableXP
 ; EnableUser
