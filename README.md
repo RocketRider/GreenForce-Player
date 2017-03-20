@@ -5,6 +5,7 @@ It is specifically designed for reducing the hard drive access by using a cache 
 - Playing video files (depending on the installed DirectShow codecs; E.g. Windows 7: wmv, avi, mpg, mpeg, vob, asf, ...) 
 - Integrated Ogg and Flac Decoder!
 - automatic download of LAV Filter codecs (divx, mpeg 4 avc, mpeg 4 asp support)
+- no installation of codecs in the windows registry required (LAV filter codecs are used without registering them)
 - Audio playback (depending on the installed DirectShow codecs; E.g. Windows 7: ogg, flac, wma, mp3, wav, ...) 
 - Custom container format (*. gfp) for password protected media (provides configuration options to prevent screenshots and to restore the original file). 
 - For more codecs you can install a codec pack like K-Lite codecs (http://www.codecguide.com)
@@ -27,6 +28,8 @@ It is specifically designed for reducing the hard drive access by using a cache 
 - Intelligent file extension links
 - Command line switch (/aspect, /fullscreen, /?, /volume, /password, /hidden, /Invisible,...) 
 - Standalone EXE with only ~4 MB (there are no other files required) 
+- no installation (portable EXE-File)required
+- no administrator rights required
 - Fully developed in PureBasic 
 
 # Screenshot
