@@ -2,7 +2,7 @@ GF-Player V2.0:
 - Added: Automatic Codec download (LAV Filters)
 - Added: GIF image support
 - Added: Persian language added
-- Added: new commandline parameters /disablelavfilters, /codecdownload, /invisiblecodecdownload, /delaystart
+- Added: new commandline parameters /morehelp /disablelavfilters, /codecdownload, /invisiblecodecdownload, /delaystart and a few more
 - Improved: Updated to PureBasic 5.6
 - Corrected: fixed many bugs
 
