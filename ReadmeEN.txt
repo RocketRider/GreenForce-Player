@@ -13,8 +13,6 @@ In addition, the player supports the ability to encrypt media files to protect t
 
 Bug reports and suggestions are very welcome.
 
-
-
 Currently supported features: 
 -----------------------------
 - automatic Download of Codecs (LAV Filters)
@@ -32,7 +30,7 @@ Currently supported features:
 - Automatic update function
 - Import different playlist formats
 
-- Supported languages are English, German, Turkish, Nederlands, Spanish and French for now (suggestions for improvements and new language translations are welcome) 
+- Supported languages are English, German, Turkish, Nederlands, Spanish, French, Greek, Portuguese, Swedish, Italian, Serbian, Bulgarian, Russian and Persian for now (suggestions for improvements and new language translations are welcome) 
 - Playlists (with support for import, export, tags) 
 - Aspect ratio (1:1, 4:3, 5:4, 16:9, 16:10, 21:9) 
 - Play small files from memory (cache function) to reduce the hard drive usage. 
@@ -50,7 +48,8 @@ Currently supported features:
 
 Commandline params:
 -------------------
-/? /help /h 		shows this help
+/? /help /h 		shows command line parameters
+/morehelp			shows all command line parameters
 /aspect     		predefines aspect ratio (16:9, 21:9, ...)
 /fullscreen 		starts in fullscreen
 /volume     		predefines volume (0 - 100)
@@ -102,11 +101,17 @@ for the great Turkish translation
 Carl Peeraer
 for the great Nederlands translation
 
-Mauricio CantÃºn Caamal
+Mauricio Cantún Caamal
 for the great Spanish translation
 
 Jacobus
 for the fantastic green iconset
+
+Surena Karimpour
+for the great Persian translation
+
+LAV Filters (https://github.com/Nevcairiel/LAVFilters)
+for ffmpeg based DirectShow Splitter and Decoders
 
 http://Xiph.org Xiph.org Foundation
 for the fantastic ogg and flac decoder
