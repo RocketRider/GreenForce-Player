@@ -611,7 +611,8 @@ Enumeration
   #SPRITE_MENU_LANGUAGE_BULGARIA
   #SPRITE_MENU_LANGUAGE_SERBIA
   #SPRITE_MENU_LANGUAGE_PERSIAN
-  #SPRITE_MENU_PLAYFILE    
+  #SPRITE_MENU_PLAYFILE
+  #SPRITE_EXE    
 EndEnumeration
 
 
@@ -3991,6 +3992,7 @@ Procedure LoadPlayerData()
   CatchImage(#SPRITE_BKCOLOR, ?DS_BKColor)
   CatchImage(#SPRITE_LIGHT, ?DS_Light)
   CatchImage(#SPRITE_KEY, ?DS_Key)
+  CatchImage(#SPRITE_EXE, ?DS_EXE)  
   CatchImage(#SPRITE_BIGKEY, ?DS_bigkey)
   CatchImage(#SPRITE_TRESOR, ?DS_Tresor)
   CatchImage(#SPRITE_NOPHOTO, ?DS_NoPhoto)
@@ -6549,11 +6551,16 @@ Procedure CreateMainWindow()
       
       GadgetY+45
       
-      CheckBoxGadget(#GADGET_PV_ADDPLAYER, 5, GadgetY, 270, 20, Language(#L_ADDPLAYERTOVIDEO))
+      
+      CompilerIf Not #USE_OEM_VERSION
+        ImageGadget(#PB_Any, 2, GadgetY, 32, 32, ImageID(#SPRITE_EXE))
+      CompilerEndIf  
+      
+      CheckBoxGadget(#GADGET_PV_ADDPLAYER, 115, GadgetY+5, 390-115, 20, Language(#L_ADDPLAYERTOVIDEO))
       CompilerIf #USE_OEM_VERSION
         HideGadget(#GADGET_PV_ADDPLAYER, #True)
       CompilerEndIf
-      GadgetY+30
+      GadgetY+45
       
       
       CheckBoxGadget(#GADGET_PV_ALLOWUNPROTECT, 5, GadgetY, 340, 20, Language(#L_ALLOWUNPROTECT))
@@ -9144,6 +9151,8 @@ Procedure CreateMainWindow()
     IncludeBinary "data\Icons\Icons-32x32\light.ico"
     DS_Key:
     IncludeBinary "data\Icons\Icons-32x32\KEY.ico"
+    DS_EXE:
+    IncludeBinary "data\Icons\Icons-32x32\EXE.ico"    
     DS_Tresor:
     IncludeBinary "data\Save.png"
     DS_NoPhoto:
@@ -9380,10 +9389,10 @@ Procedure CreateMainWindow()
   
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 5660
-; FirstLine = 5652
+; CursorPosition = 6558
+; FirstLine = 6525
 ; Folding = --------------------------------------------
-; Markers = 5790
+; Markers = 5792
 ; EnableThread
 ; EnableXP
 ; EnableUser
