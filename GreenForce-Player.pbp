@@ -8,12 +8,12 @@
   <section name="data">
     <explorer view="include\" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2017-03-19 20:53" user="benutzer" host="PC1"/>
+    <lastopen date="2017-03-21 11:12" user="admin" host="DESKTOP-1NUDIVF"/>
   </section>
   <section name="files">
     <file name="GFP_Main.pb">
-      <config load="1" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
-      <fingerprint md5="73edc08c3e18eb3c68ea1ef861d6edaa"/>
+      <config load="1" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
+      <fingerprint md5="105f2f9eeec71cf5360dfaced83c1de9"/>
     </file>
     <file name="GFP_OEM.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="+"/>
@@ -108,16 +108,16 @@
       <fingerprint md5="396952199e1e8be41bd9f14c86687e7a"/>
     </file>
     <file name="include\GFP_DShow_140.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
-      <fingerprint md5="b70507a26c2751f30d6ea6e7fe6f1214"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="961deb82584fbc5016e802f8065c61ff"/>
     </file>
     <file name="include\GFP_DShow_Header.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
       <fingerprint md5="d81e2bf85fbbca387f1da113cff15208"/>
     </file>
     <file name="include\GFP_DShow_Helper2.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
-      <fingerprint md5="d7cb563c5ba4a750818091727ece287d"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="6f94d047b22222eb3a34217f98b40905"/>
     </file>
     <file name="include\GFP_exe-attachment4.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
@@ -308,7 +308,7 @@
       <fingerprint md5="3a288bc32d32fdaad2b78268722eb384"/>
     </file>
     <file name="include\GFP_VirtualFile_80_Unicode_OwnString_WIN8.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
       <fingerprint md5="b59d599c945b4c454ef2eb4eeadc9e88"/>
     </file>
     <file name="include\GFP_VIS_Buffering.pbi">
@@ -360,13 +360,12 @@
     <target name="Release" enabled="1" default="1">
       <inputfile value="GFP_Main.pb"/>
       <outputfile value="GreenForce-Player.exe"/>
-      <commandline value="/morehelp"/>
       <executable value="GreenForce-Player.exe"/>
       <options unicode="1" thread="1" xpskin="1" user="1" onerror="1" debug="1"/>
       <icon enable="1">data\GFP.ico</icon>
       <warnings custom="1" type="display"/>
-      <compilecount enable="1" value="10695"/>
-      <buildcount enable="1" value="2507"/>
+      <compilecount enable="1" value="10699"/>
+      <buildcount enable="1" value="2509"/>
       <execonstant enable="1"/>
       <versioninfo enable="1">
         <field0 value="2,0,0,0"/>
