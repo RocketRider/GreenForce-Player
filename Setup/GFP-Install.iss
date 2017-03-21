@@ -41,27 +41,30 @@ Name: "slovenian"; MessagesFile: "compiler:Languages\Slovenian.isl"
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
 
+[Components]
+Name: "core"; Description: "GreenForce-Player"; Types: full compact custom; Flags: fixed
+Name: "sdk"; Description: "GreenForce-Player SDK files"; Types: full
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags:checkedonce
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags:checkedonce
 
 [Files]
-Source: "..\GreenForce-Player.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\GFP-SDK\*"; DestDir: "{app}\GFP-SDK\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\Help\*"; DestDir: "{app}\Help\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\Data\uninstall.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\GreenForce-Player.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: core
+Source: "..\GFP-SDK\*"; DestDir: "{app}\GFP-SDK\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: sdk
+Source: "..\Help\*"; DestDir: "{app}\Help\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: core
+Source: "..\Data\uninstall.ico"; DestDir: "{app}"; Flags: ignoreversion; Components: core
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\GreenForce-Player"; Filename: "{app}\GreenForce-Player.exe"
-Name: "{group}\GFPCrypt-GUI"; Filename: "{app}\GFP-SDK\GFPCrypt-GUI\GFPCrypt-GUI.exe"
-Name: "{group}\Documentation"; Filename: "{app}\Help\GFP-Documentation.html"
-Name: "{group}\FAQ"; Filename: "{app}\Help\FAQ.pdf"
-Name: "{group}\{cm:ProgramOnTheWeb,GreenForce-Player}"; Filename: "http://gfp.rrsoftware.de"
-Name: "{group}\{cm:UninstallProgram,GreenForce-Player}"; Filename: "{uninstallexe}"; IconFilename: "{app}\uninstall.ico"
-Name: "{commondesktop}\GreenForce-Player"; Filename: "{app}\GreenForce-Player.exe"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\GreenForce-Player"; Filename: "{app}\GreenForce-Player.exe"; Tasks: quicklaunchicon
+Name: "{group}\GreenForce-Player"; Filename: "{app}\GreenForce-Player.exe"; Components: core
+Name: "{group}\GFPCrypt-GUI"; Filename: "{app}\GFP-SDK\GFPCrypt-GUI\GFPCrypt-GUI.exe"; Components: sdk
+Name: "{group}\Documentation"; Filename: "{app}\Help\GFP-Documentation.html"; Components: core
+Name: "{group}\FAQ"; Filename: "{app}\Help\FAQ.pdf"; Components: core
+Name: "{group}\{cm:ProgramOnTheWeb,GreenForce-Player}"; Filename: "http://gfp.rrsoftware.de"; Components: core
+Name: "{group}\{cm:UninstallProgram,GreenForce-Player}"; Filename: "{uninstallexe}"; IconFilename: "{app}\uninstall.ico"; Components: core
+Name: "{commondesktop}\GreenForce-Player"; Filename: "{app}\GreenForce-Player.exe"; Tasks: desktopicon; Components: core
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\GreenForce-Player"; Filename: "{app}\GreenForce-Player.exe"; Tasks: quicklaunchicon; Components: core
 
 [Run]
 Filename: "{app}\GreenForce-Player.exe"; Parameters: "/codecdownload"; Flags: runascurrentuser waituntilterminated
