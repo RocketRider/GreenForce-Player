@@ -2321,6 +2321,19 @@ Procedure IsFRAPSLoadedToProcess()
   EndIf 
   ProcedureReturn result
 EndProcedure  
+
+
+
+
+
+Procedure CloseFRAPS()
+  Protected i
+  If IsFRAPSLoadedToProcess()
+    ;can cause a crash :-(
+    ;FreeLibrary_(GetModuleHandle_("FRAPS32.DLL"))   
+  EndIf
+EndProcedure  
+
 Procedure CheckForScreenCapture()
   
   CompilerIf #USE_PROTECTWINDOW_CLIPBOARD
@@ -2334,8 +2347,7 @@ Procedure CheckForScreenCapture()
   
   
   CompilerIf #USE_PROTECTWINDOW_BLACKLIST
-    Protected sTitle.s, hWnd.i, Window, i.i, FoundCaptureWindow=#False, device.f, device$, String.s, sdll.s, hModule, D3D9.i
-    
+    Protected sTitle.s, hWnd.i, Window, i.i, FoundCaptureWindow=#False, device.f, device$, String.s, sdll.s, hModule, D3D9.i 
     
     ;SECURE THE BLACKLIST WAS NOT MANIPULATED!!!
     UseSHA3Fingerprint()
@@ -2352,8 +2364,7 @@ Procedure CheckForScreenCapture()
       ProtectWindow_Ende()
       End    
     EndIf  
-    
-    
+
     
     For i=1 To CountString(#PROTECTWINDOW_BLACKLIST, "|")
       sTitle.s=StringField(#PROTECTWINDOW_BLACKLIST, i, "|")
@@ -2852,6 +2863,7 @@ Procedure _LoadMediaFile_LoadPlay(sFile.s, sMediaTitle.s, IsEncrypted.i, qOffset
         Else
           iMediaObject = LoadMedia(sFile, GadgetID(#GADGET_VIDEO_CONTAINER), #RENDERER_VMR9,  iAudioRenderer, #False, #False, #True)
         EndIf
+        CloseFRAPS() ;close fraps as it can take screenshots        
       EndIf
       
       If UsedOutputMediaLibrary=#MEDIALIBRARY_DSHOW
@@ -8995,6 +9007,8 @@ Procedure CreateMainWindow()
           CheckDebuggerActive()
           If IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_PROTECTION_FORCE 
             CheckForScreenCapture()
+          ElseIf IsSnapshotAllowed=#GFP_DRM_SCREENCAPTURE_DISALLOW
+            CloseFRAPS() ;as fraps can take screenshots
           EndIf 
           CompilerIf #USE_SUBTITLES
             DisplaySubtitle(MediaPosition)
@@ -9389,10 +9403,10 @@ Procedure CreateMainWindow()
   
 
 ; IDE Options = PureBasic 5.60 (Windows - x86)
-; CursorPosition = 6558
-; FirstLine = 6525
+; CursorPosition = 2331
+; FirstLine = 2313
 ; Folding = --------------------------------------------
-; Markers = 5792
+; Markers = 5804
 ; EnableThread
 ; EnableXP
 ; EnableUser
