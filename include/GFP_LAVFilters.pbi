@@ -18,7 +18,7 @@ EndStructure
 
 #LAVFILTERS_DOWNLOAD_WINDOW = 701
 
-#LAVFILTERS_PATH = "\LAVFilters-0.69-x86"
+#LAVFILTERS_PATH = "\LAVFilters-0.71-x86"
 
 #CLSCTX_INPROC_SERVER  = $01
 
@@ -104,11 +104,11 @@ Procedure __Thread_Download_LAVFilters(*Parameters)
   If FileSize(GetPathPart(ProgramFilename()) + "LAVFilters-x86.zip") > 0
     tmpFile.s = GetPathPart(ProgramFilename()) + "LAVFilters-x86.zip"
     isDownload = #False 
-  ElseIf FileSize(GetPathPart(ProgramFilename()) + "LAVFilters-0.69-x86.zip") > 0
-    tmpFile.s = GetPathPart(ProgramFilename()) + "LAVFilters-0.69-x86.zip"
+  ElseIf FileSize(GetPathPart(ProgramFilename()) + "LAVFilters-0.71-x86.zip") > 0
+    tmpFile.s = GetPathPart(ProgramFilename()) + "LAVFilters-0.71-x86.zip"
     isDownload = #False    
   Else 
-    ReceiveHTTPFile("https://github.com/Nevcairiel/LAVFilters/releases/download/0.69/LAVFilters-0.69-x86.zip", tmpFile.s)
+    ReceiveHTTPFile("https://github.com/Nevcairiel/LAVFilters/releases/download/0.71/LAVFilters-0.71-x86.zip", tmpFile.s)
   EndIf
   UseZipPacker()   
   If OpenPack(0, tmpFile.s,#PB_PackerPlugin_Zip) 
