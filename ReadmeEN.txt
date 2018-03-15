@@ -1,4 +1,4 @@
-*************************************** Version: 2.0
+*************************************** Version: 2.1
 *** GreenForce Player *** GF-Player ***
 ***************************************
 *** (c) 2009 - 2017 RocketRider *******
@@ -101,7 +101,7 @@ for the great Turkish translation
 Carl Peeraer
 for the great Nederlands translation
 
-Mauricio Cantún Caamal
+Mauricio CantÃºn Caamal
 for the great Spanish translation
 
 Jacobus
