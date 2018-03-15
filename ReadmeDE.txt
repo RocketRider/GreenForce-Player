@@ -1,4 +1,4 @@
-*************************************** Version: 2.0
+*************************************** Version: 2.1
 *** GreenForce Player *** GF-Player ***
 ***************************************
 *** (c) 2009 - 2017 RocketRider *******
@@ -8,23 +8,23 @@ Support@GFP.RRSoftware.de
 
 
 GreenForce-Player ist eine alternativer Player zum Abspielen von Video- und Audio Mediendateien.
-Er ist speziell für die Reduktion von Festplattenaktivitäten optimiert, um Strom zu sparen und somit die Akkulaufzeit von Laptops zu verlängern.
-Außerdem unterstützt der Player die Möglichkeit Mediendateien mit einem Passwort zu verschlüsseln, um sie vor unbefugtem Zugriff zu schützen.
-Durch die Verwendung der "LAV Filters" Codecs werden viele Video- und Audioformate bereits unterstützt (z.B. mpeg 4 avc, xvid, ...). 
+Er ist speziell fÃ¼r die Reduktion von FestplattenaktivitÃ¤ten optimiert, um Strom zu sparen und somit die Akkulaufzeit von Laptops zu verlÃ¤ngern.
+AuÃŸerdem unterstÃ¼tzt der Player die MÃ¶glichkeit Mediendateien mit einem Passwort zu verschlÃ¼sseln, um sie vor unbefugtem Zugriff zu schÃ¼tzen.
+Durch die Verwendung der "LAV Filters" Codecs werden viele Video- und Audioformate bereits unterstÃ¼tzt (z.B. mpeg 4 avc, xvid, ...). 
 
 Bug Reports und Anregungen sind sehr willkommen.
 Bitte wenden Sie sich an Support@GFP.RRSoftware.de.
 
-Momentan unterstützte Funktionalitäten:
+Momentan unterstÃ¼tzte FunktionalitÃ¤ten:
 ---------------------------------------
 - Automatischer Download von Codecs (LAV Filters)
-- Video Dateien Abspielen (abhängig von den installierten DirectShow Codecs)
+- Video Dateien Abspielen (abhÃ¤ngig von den installierten DirectShow Codecs)
 - z.B. unter Windows 7: wmv, avi, mpg, mpeg, vob, asf, ...
-- Audio Dateien Abspielen (abhängig von den installierten DirectShow Codecs)
+- Audio Dateien Abspielen (abhÃ¤ngig von den installierten DirectShow Codecs)
 - z.B. unter Windows 7: ogg, flac, wma, mp3, wav, ...
 - Integrierte Ogg und Flac Decoder!
-- Eigenes Containerformat(*.gfp) für passwortgeschützte Medien (Bietet Einstellungsmöglichkeiten um Screenshots zu verhindern und Wiederherstellung der Orginaldatei).
-- Für weitere Codecs können Codecpacks installiert werden, wie z. B. die K-Lite Codecs (http://www.codecguide.com)
+- Eigenes Containerformat(*.gfp) fÃ¼r passwortgeschÃ¼tzte Medien (Bietet EinstellungsmÃ¶glichkeiten um Screenshots zu verhindern und Wiederherstellung der Orginaldatei).
+- FÃ¼r weitere Codecs kÃ¶nnen Codecpacks installiert werden, wie z. B. die K-Lite Codecs (http://www.codecguide.com)
 - Audio CDs abspielen
 - Video DVDs abspielen
 - Video- und Audio-Streaming aus dem Internet
@@ -32,18 +32,18 @@ Momentan unterstützte Funktionalitäten:
 - Automatische Updates
 - Importieren von verschiedenen Playlistformaten
 
-- Unterstützt die Sprachen Englisch, Deutsch, Türkisch, Spanisch, Niederländisch, Franszösich, Italienisch, Serbisch, Bulgarisch, Russisch und  Persisch ( Verbesserungsvorschläge und andere Sprachenübersetzungen sind Willkommen)
-- Playlisten (mit Unterstützung für Import, Export und Auslesen der Tags)
-- Seitenverhältnis setzbar (1:1, 4:3, 5:4, 16:9, 16:10, 21:9)
+- UnterstÃ¼tzt die Sprachen Englisch, Deutsch, TÃ¼rkisch, Spanisch, NiederlÃ¤ndisch, FranszÃ¶sich, Italienisch, Serbisch, Bulgarisch, Russisch und  Persisch ( VerbesserungsvorschlÃ¤ge und andere SprachenÃ¼bersetzungen sind Willkommen)
+- Playlisten (mit UnterstÃ¼tzung fÃ¼r Import, Export und Auslesen der Tags)
+- SeitenverhÃ¤ltnis setzbar (1:1, 4:3, 5:4, 16:9, 16:10, 21:9)
 - Cache um kleine Dateien aus dem Arbeitspeicher abzuspielen, um die Festplatte zu schonen.
 - Snapshot Funktion (speicherbar als JPG, JPEG2000, PNG)
-- Verschiedene Wiedergabemöglichkeiten: Wiederholen, zufällige Wiedergabe
+- Verschiedene WiedergabemÃ¶glichkeiten: Wiederholen, zufÃ¤llige Wiedergabe
 - Viele verschiedene Audio- und Video-Renderer einstellbar
 - Fullscreenmodus 
 - Minimalmodus
-- Intelligente Dateiverknüpfungen
+- Intelligente DateiverknÃ¼pfungen
 - Kommandozeilenparameter (/aspect, /fullscreen, /?, /volume, /password, /hidden, /Invisible,...)
-- Standalone EXE mit nur ~4 MB (es werden keine weiteren Dateien benötigt)
+- Standalone EXE mit nur ~4 MB (es werden keine weiteren Dateien benÃ¶tigt)
 - Komplett in PureBasic entwickelt
 
 
@@ -52,7 +52,7 @@ Kommandozeilenparameter:
 /?,/help,/h        - Zeigt EXE-Optionen an
 /morehelp          - Zeigt alle EXE-Optionen an
 /fullscreen        - Player im Fullscreenmodus starten 
-/volume            - Lautstärke setzen
+/volume            - LautstÃ¤rke setzen
 /password          - Passwort 
 /hidden /invisible - Player versteckt starten
 /database          - Alternativer Pfad zur Datenbank (Ist sinnvoll, damit keine Probleme mit verschiedenen Versionen des Players auftreten)
@@ -61,17 +61,17 @@ Automatische Pfadersetzungen:
 z.B:
 [APPDATA]\GFP\1234567.sqlite
 /showmsgbox			- Zeigt eine Meldung mit Titel und Tebxt beim Start an
-/showmsgcheck		- Zeigt eine Meldung mit Titel und Tebxt beim Start an mit der Möglichkeit diese nicht mehr anzeigen zu lassen
+/showmsgcheck		- Zeigt eine Meldung mit Titel und Tebxt beim Start an mit der MÃ¶glichkeit diese nicht mehr anzeigen zu lassen
 
 /importlist - Abspielliste importieren
 /aspect     - aspect ratio vordefinieren z.B: "16:9", "4:3", ...
 /loglevel   - setzt das Loglevel 0=None, 1=Error, 2=Debug
 /videorenderer - setzt den video renderer (0=Default, 1=VMR9_Windowless, 2=VMR7_Windowless, 3=OldVideoRenderer, 4=OverlayMixer, 5=DSHOWDEFAULT, 6=VMR9_Windowed, 7=VMR7_Windowed, 8=OWN_RENDERER)
 /audiorenderer - setzt den audio renderer (0=Default, 1=WAVEOUTRENDERER, 2=DIRECTSOUNDRENDERER)
-/restoredatabase - Wiederherstellung der ursprünglichen Datenbank
+/restoredatabase - Wiederherstellung der ursprÃ¼nglichen Datenbank
 ...
 
-Für weitere Parameter siehe englische Readme(ReadmeEN.txt).
+FÃ¼r weitere Parameter siehe englische Readme(ReadmeEN.txt).
 
 Acknowledgements
 ----------------
@@ -82,7 +82,7 @@ Saner Apaydin
 
 Carl Peeraer
 
-Mauricio Cantún Caamal
+Mauricio CantÃºn Caamal
 
 Jacobus
 
@@ -102,14 +102,14 @@ for the JPEG2000 codec
 Rechtliches:
 ------------
 Dieses Programm wird bereitgestellt wie es ist.
-Der Author ist nicht verantwortlich zu machen für irgendwelche Schäden, die der Software zugeschrieben werden können. Mit Außnahme von Schäden, die gesetzlich nicht ausgeschlossen werden können.
+Der Author ist nicht verantwortlich zu machen fÃ¼r irgendwelche SchÃ¤den, die der Software zugeschrieben werden kÃ¶nnen. Mit AuÃŸnahme von SchÃ¤den, die gesetzlich nicht ausgeschlossen werden kÃ¶nnen.
 Sie wurden gewarnt, dass Sie diese Software auf Ihr eigenes Risiko benutzen.
 Garantien werden vom author oder einem anderen Vertreter weder gegeben noch angedeutet.
-Alle Bestandteile sind urheberrechtlich geschützt. 
-Es ist nicht erlaubt Anwendungsdateien oder andere Datien dieser Software zu ändern.
+Alle Bestandteile sind urheberrechtlich geschÃ¼tzt. 
+Es ist nicht erlaubt Anwendungsdateien oder andere Datien dieser Software zu Ã¤ndern.
 
 Die Software darf in nicht-kommerziellen und komerziellen Produkten genutzt werden.
-Wenn die Software in kommerziellen Produkten verwendet wird, wäre eine Erwähnung des Authors und eine spende wünschenswert, ist jedoch nicht erforderlich.
+Wenn die Software in kommerziellen Produkten verwendet wird, wÃ¤re eine ErwÃ¤hnung des Authors und eine spende wÃ¼nschenswert, ist jedoch nicht erforderlich.
 
 
 OpenJPEG
