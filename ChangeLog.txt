@@ -1,3 +1,6 @@
+GF-Player V2.1:
+- Updated: LAV Filters (0.71)
+
 GF-Player V2.0:
 - Added: Automatic Codec download (LAV Filters)
 - Added: GIF image support
