@@ -7,10 +7,10 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{2318E9DF-8E1D-4E04-84D6-85098CFF854E}}
 AppName=GreenForce-Player
-AppVerName=GreenForce-Player 2.10
+AppVerName=GreenForce-Player 2.20
 VersionInfoVersion=2.10
 AppPublisher=RRSoftware
-VersionInfoCopyright=(c) 2009-2018 RocketRider
+VersionInfoCopyright=(c) 2009-2019 RocketRider
 AppPublisherURL=http://gfp.rrsoftware.de
 AppSupportURL=http://gfp.rrsoftware.de
 AppUpdatesURL=http://gfp.rrsoftware.de
@@ -19,7 +19,7 @@ DefaultGroupName=GreenForce-Player
 AllowNoIcons=yes
 InfoBeforeFile=..\ReadmeEN.txt
 ;OutputDir=C:\Users\Admin\Desktop\Projects\PureBasic\GFP-Install
-OutputBaseFilename=GFP-Setup-v2.10
+OutputBaseFilename=GFP-Setup-v2.20
 SetupIconFile=Icon.ico
 WizardSmallImageFile=Box.bmp
 WizardImageFile=Logo_Gray.bmp
