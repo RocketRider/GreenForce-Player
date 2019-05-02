@@ -1,0 +1,18 @@
+User:benutzer, Graphics: Intel(R) HD Graphics 4000, Processor: Intel(R) Core(TM) i3-3120M CPU @ 2.50GHz, Windows: Windows 7 x64, Program version: 2.2.0 Bulid: 2514, DPI: 96
+
+
+-----------------------------------------------------------------
+30.04.2019, 23:21:33:83: Error: cannot render dvd! (source:  GFP_DShow_140.pbi\3090)
+
+
+-----------------------------------------------------------------
+30.04.2019, 23:22:01:898: Error: cannot render dvd! (source:  GFP_DShow_140.pbi\3090)
+
+
+-----------------------------------------------------------------
+30.04.2019, 23:22:38:89: Error: cannot render dvd! (source:  GFP_DShow_140.pbi\3090)
+
+
+-----------------------------------------------------------------
+30.04.2019, 23:22:53:971: Error: cannot render dvd! (source:  GFP_DShow_140.pbi\3090)
+30.04.2019, 23:23:05:718: Error: cannot render dvd! (source:  GFP_DShow_140.pbi\3090)

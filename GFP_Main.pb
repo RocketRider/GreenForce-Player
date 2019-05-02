@@ -1,7 +1,7 @@
-;*************************************** Version: 2.1
+;*************************************** Version: 2.2
 ;*** GreenForce Player *** GF-Player ***
 ;*** http://GFP.RRSoftware.de **********
-;*** (c) 2009 - 2018 RocketRider *******
+;*** (c) 2009 - 2019 RocketRider *******
 ;***************************************
 EnableExplicit
 #USE_VIRTUAL_FILE = #True;#False;
@@ -146,11 +146,11 @@ CompilerElse
 CompilerEndIf 
 #PANEL_HEIGHT_FLV_PLAYER = 82
 
-#PLAYER_VERSION = "2.1"
+#PLAYER_VERSION = "2.2"
 
 
 CompilerIf #USE_OEM_VERSION = #False
-  #PLAYER_COPYRIGHT = "© 2009 - 2018 RocketRider"
+  #PLAYER_COPYRIGHT = "© 2009 - 2019 RocketRider"
   
   #PLAYER_GLOBAL_MUTEX = "GreenForce-Player"
   #GFP_PATTERN_PROTECTED_MEDIA = "GreenForce-Player (*.gfp)|*.gfp;|All Files (*.*)|*.*"
@@ -5365,14 +5365,15 @@ Procedure HoverGadgetImages()
         HoverGadgetImage(#GADGET_VDVD_BUTTON_PLAY, #SPRITE_PLAY, #SPRITE_PLAY_HOVER, #SPRITE_PLAY_CLICK, MouseX, MouseY, MousePressed)
       EndIf  
       
+      
       HoverGadgetImage(#GADGET_VDVD_BUTTON_PREVIOUS, #SPRITE_PREVIOUS, #SPRITE_PREVIOUS_HOVER, #SPRITE_PREVIOUS_CLICK, MouseX, MouseY, MousePressed)
-      HoverGadgetImage(#GADGET_VDVD_BUTTON_STOP, #SPRITE_STOP, #SPRITE_STOP_HOVER, #SPRITE_STOP_CLICK, MouseX, MouseY, MousePressed)
+    ;  HoverGadgetImage(#GADGET_VDVD_BUTTON_STOP, #SPRITE_STOP, #SPRITE_STOP_HOVER, #SPRITE_STOP_CLICK, MouseX, MouseY, MousePressed)
       HoverGadgetImage(#GADGET_VDVD_BUTTON_NEXT, #SPRITE_NEXT, #SPRITE_NEXT_HOVER, #SPRITE_NEXT_CLICK, MouseX, MouseY, MousePressed)
       HoverGadgetImage(#GADGET_VDVD_BUTTON_EJECT, #SPRITE_EJECT, #SPRITE_EJECT_HOVER, #SPRITE_EJECT_CLICK, MouseX, MouseY, MousePressed)
       HoverGadgetImage(#GADGET_VDVD_BUTTON_LAUFWERK, #SPRITE_CDDRIVE_BLUE, #SPRITE_CDDRIVE_BLUE_HOVER, #SPRITE_CDDRIVE_BLUE_CLICK, MouseX, MouseY, MousePressed)
-      HoverGadgetImage(#GADGET_VDVD_BUTTON_SNAPSHOT, #SPRITE_SNAPSHOT, #SPRITE_SNAPSHOT_HOVER, #SPRITE_SNAPSHOT_CLICK, MouseX, MouseY, MousePressed)
-      HoverGadgetImage(#GADGET_VDVD_BUTTON_BACKWARD, #SPRITE_BACKWARD, #SPRITE_BACKWARD_HOVER, #SPRITE_BACKWARD_CLICK, MouseX, MouseY, MousePressed)
-      HoverGadgetImage(#GADGET_VDVD_BUTTON_FORWARD, #SPRITE_FORWARD, #SPRITE_FORWARD_HOVER, #SPRITE_FORWARD_CLICK, MouseX, MouseY, MousePressed)   
+     ; HoverGadgetImage(#GADGET_VDVD_BUTTON_SNAPSHOT, #SPRITE_SNAPSHOT, #SPRITE_SNAPSHOT_HOVER, #SPRITE_SNAPSHOT_CLICK, MouseX, MouseY, MousePressed)
+     ; HoverGadgetImage(#GADGET_VDVD_BUTTON_BACKWARD, #SPRITE_BACKWARD, #SPRITE_BACKWARD_HOVER, #SPRITE_BACKWARD_CLICK, MouseX, MouseY, MousePressed)
+     ; HoverGadgetImage(#GADGET_VDVD_BUTTON_FORWARD, #SPRITE_FORWARD, #SPRITE_FORWARD_HOVER, #SPRITE_FORWARD_CLICK, MouseX, MouseY, MousePressed)   
     EndIf
     
     If SelectedOutputContainer = #GADGET_AUDIOCD_CONTAINER
@@ -9402,11 +9403,11 @@ Procedure CreateMainWindow()
   
   
 
-; IDE Options = PureBasic 5.62 (Windows - x86)
-; CursorPosition = 152
-; FirstLine = 157
+; IDE Options = PureBasic 5.71 beta 1 LTS (Windows - x86)
+; CursorPosition = 5369
+; FirstLine = 5359
 ; Folding = --------------------------------------------
-; Markers = 5804
+; Markers = 5805
 ; EnableThread
 ; EnableXP
 ; EnableUser
